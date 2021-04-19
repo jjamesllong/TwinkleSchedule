@@ -1,12 +1,33 @@
 package com.keycome.twinkleschedule.database
 
-data class ClassEntity(
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "course_entity")
+data class CourseEntity(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "course_id")
+    var courseId: Int,
+
+    @ColumnInfo(name = "parent_schedule_id")
+    var parentScheduleId: Int,
+
     var title: String,
+
     var day: Day,
+
+    @Embedded
     var section: Section,
+
+    @Embedded
     var week: Week,
+
     var continuity: Continuity,
+
     var teacher: String,
+
     var classroom: String,
 )
 
