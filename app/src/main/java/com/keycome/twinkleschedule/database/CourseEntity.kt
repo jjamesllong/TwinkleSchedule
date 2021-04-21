@@ -31,9 +31,15 @@ data class CourseEntity(
     var classroom: String,
 )
 
-data class Week(var startWeek: Int, var endWeek: Int)
+data class Week(
+    @ColumnInfo(name = "start_week") var startWeek: Int,
+    @ColumnInfo(name = "ene_week") var endWeek: Int
+)
 
-data class Section(var startSection: Int, var endSection: Int)
+data class Section(
+    @ColumnInfo(name = "start_section") var startSection: Int,
+    @ColumnInfo(name = "end_section") var endSection: Int
+)
 
 enum class Day { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 

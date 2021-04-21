@@ -1,8 +1,7 @@
 package com.keycome.twinkleschedule
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.keycome.twinkleschedule.database.*
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
