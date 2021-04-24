@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/display_nav"
+    app:startDestination="@id/displayCoursesFragment">
+    <fragment
+        android:id="@+id/displayCoursesFragment"
+        android:name="com.keycome.twinkleschedule.presentation.display.DisplayCoursesFragment"
+        android:label="fragment_display_courses"
+        tools:layout="@layout/fragment_display_courses" />
+</navigation>
