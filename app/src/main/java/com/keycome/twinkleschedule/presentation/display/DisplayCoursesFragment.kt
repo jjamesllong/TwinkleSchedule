@@ -22,15 +22,27 @@ class DisplayCoursesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val coursesArray = BlockFactory().convertEntityToBlock()
         val gridLayoutManager = GridLayoutManager(
             context,
             TestData.courseSchedule.courses,
             GridLayoutManager.HORIZONTAL,
             false
-        )
+        ).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return coursesArray[position].spanSize
+                }
+
+            }
+        }
+        val courseAdapter = CourseAdapter().apply {
+            courseArray = coursesArray
+        }
         binding.courseRecyclerView.apply {
             layoutManager = gridLayoutManager
-            adapter = CourseAdapter()
+            adapter = courseAdapter
         }
     }
 }

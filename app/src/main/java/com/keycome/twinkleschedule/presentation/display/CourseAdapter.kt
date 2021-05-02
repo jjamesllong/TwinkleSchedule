@@ -4,10 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.databinding.CourseDescriptionBinding
+import com.keycome.twinkleschedule.model.CourseBlock
 
 class CourseAdapter : RecyclerView.Adapter<CourseAdapter.CourseViewHolder>() {
     class CourseViewHolder(val binding: CourseDescriptionBinding) :
         RecyclerView.ViewHolder(binding.root)
+
+    var courseArray: Array<CourseBlock>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
         val binding = CourseDescriptionBinding.inflate(
@@ -22,6 +25,6 @@ class CourseAdapter : RecyclerView.Adapter<CourseAdapter.CourseViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return 45
+        return courseArray?.size ?: 0
     }
 }
