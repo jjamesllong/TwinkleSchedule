@@ -34,11 +34,11 @@ class DisplayCoursesFragment : Fragment() {
                 override fun getSpanSize(position: Int): Int {
                     return coursesArray[position].spanSize
                 }
-
             }
         }
-        val courseAdapter = CourseAdapter().apply {
-            courseArray = coursesArray
+        val courseAdapter = CourseAdapter(5).apply {
+            courseBlockArray = coursesArray
+            courseEntityArray = TestData.courseArray
         }
         binding.courseRecyclerView.apply {
             layoutManager = gridLayoutManager

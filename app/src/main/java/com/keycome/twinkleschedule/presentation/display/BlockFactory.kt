@@ -18,19 +18,19 @@ class BlockFactory {
                 if (cDay == day) {
                     if (c.section.startSection == 1) {
                         val b = CourseBlock(
-                            isPlaceHolder = false,
+                            isCourse = true,
                             spanSize = c.section.endSection - c.section.startSection + 1,
                             courseIndex = i
                         )
                         blockList.add(b)
                     } else {
                         val p = CourseBlock(
-                            isPlaceHolder = true,
+                            isCourse = false,
                             spanSize = c.section.startSection - 1
                         )
                         blockList.add(p)
                         val b = CourseBlock(
-                            isPlaceHolder = false,
+                            isCourse = true,
                             spanSize = c.section.endSection - c.section.startSection + 1,
                             courseIndex = i
                         )
@@ -40,26 +40,26 @@ class BlockFactory {
                     val spanDay = cDay - day - 1
                     for (s in 0 until spanDay) {
                         val p = CourseBlock(
-                            isPlaceHolder = true,
+                            isCourse = false,
                             spanSize = schedule.courses
                         )
                         blockList.add(p)
                     }
                     if (c.section.startSection == 1) {
                         val b = CourseBlock(
-                            isPlaceHolder = false,
+                            isCourse = true,
                             spanSize = c.section.endSection - c.section.startSection + 1,
                             courseIndex = i
                         )
                         blockList.add(b)
                     } else {
                         val p = CourseBlock(
-                            isPlaceHolder = true,
+                            isCourse = false,
                             spanSize = c.section.startSection - 1
                         )
                         blockList.add(p)
                         val b = CourseBlock(
-                            isPlaceHolder = false,
+                            isCourse = true,
                             spanSize = c.section.endSection - c.section.startSection + 1,
                             courseIndex = i
                         )
@@ -73,19 +73,19 @@ class BlockFactory {
                     val spanCourse = c.section.startSection - cBefore.section.endSection
                     if (spanCourse == 1) {
                         val b = CourseBlock(
-                            isPlaceHolder = false,
+                            isCourse = true,
                             spanSize = c.section.endSection - c.section.startSection + 1,
                             courseIndex = i
                         )
                         blockList.add(b)
                     } else {
                         val p = CourseBlock(
-                            isPlaceHolder = true,
+                            isCourse = false,
                             spanSize = c.section.startSection - 1
                         )
                         blockList.add(p)
                         val b = CourseBlock(
-                            isPlaceHolder = false,
+                            isCourse = true,
                             spanSize = c.section.endSection - c.section.startSection + 1,
                             courseIndex = i
                         )
@@ -96,33 +96,33 @@ class BlockFactory {
                     val spanDay = cDay - day - 1
                     if (spanEnd > 0) {
                         val p = CourseBlock(
-                            isPlaceHolder = true,
+                            isCourse = false,
                             spanSize = spanEnd
                         )
                         blockList.add(p)
                     }
                     for (s in 0 until spanDay) {
                         val p = CourseBlock(
-                            isPlaceHolder = true,
+                            isCourse = false,
                             spanSize = schedule.courses
                         )
                         blockList.add(p)
                     }
                     if (c.section.startSection == 1) {
                         val b = CourseBlock(
-                            isPlaceHolder = false,
+                            isCourse = true,
                             spanSize = c.section.endSection - c.section.startSection + 1,
                             courseIndex = i
                         )
                         blockList.add(b)
                     } else {
                         val p = CourseBlock(
-                            isPlaceHolder = true,
+                            isCourse = false,
                             spanSize = c.section.startSection - 1
                         )
                         blockList.add(p)
                         val b = CourseBlock(
-                            isPlaceHolder = false,
+                            isCourse = true,
                             spanSize = c.section.endSection - c.section.startSection + 1,
                             courseIndex = i
                         )

@@ -9,8 +9,9 @@ class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        // binding = ActivityMainBinding.inflate(layoutInflater)
+        // setContentView(binding.root)
         startActivity(Intent(this, DisplayActivity::class.java))
+        finish()
     }
 }
