@@ -27,12 +27,12 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.14" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    <ImageButton
+        android:id="@+id/imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:background="@drawable/ripple_background"
+        android:padding="10dp"
         android:src="@drawable/ic_fi_rr_align_right"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

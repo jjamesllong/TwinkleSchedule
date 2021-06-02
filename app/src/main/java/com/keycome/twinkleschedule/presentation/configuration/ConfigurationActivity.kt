@@ -1,0 +1,27 @@
+package com.keycome.twinkleschedule.presentation.configuration
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import com.keycome.twinkleschedule.R
+import com.keycome.twinkleschedule.databinding.ActivityConfigurationBinding
+
+class ConfigurationActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityConfigurationBinding
+    private lateinit var navController: NavController
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityConfigurationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.configuration_activity_host_fragmnet) as
+                    NavHostFragment
+        navController = navHostFragment.navController
+    }
+
+    override fun onBackPressed() {
+        if (!navController.popBackStack()) super.onBackPressed()
+    }
+}
