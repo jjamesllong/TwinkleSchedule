@@ -1,6 +1,7 @@
 package com.keycome.twinkleschedule.presentation.display
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.custom.CustomPopupMenu
 import com.keycome.twinkleschedule.database.TestData
 import com.keycome.twinkleschedule.databinding.FragmentDisplayCoursesBinding
+import com.keycome.twinkleschedule.presentation.configuration.ConfigurationActivity
 
 class DisplayCoursesFragment : Fragment() {
     private lateinit var binding: FragmentDisplayCoursesBinding
@@ -66,8 +68,7 @@ class DisplayCoursesFragment : Fragment() {
             setOnItemSelectedListener {
                 when (it.id) {
                     R.id.add_schedule_item -> {
-                        findNavController()
-                            .navigate(R.id.action_displayCoursesFragment_to_addScheduleFragment)
+                        startActivity(Intent(requireContext(), ConfigurationActivity::class.java))
                     }
                 }
             }

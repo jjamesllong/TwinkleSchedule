@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_add_schedule" >
         <action
             android:id="@+id/action_addScheduleFragment_to_editScheduleFragment"
-            app:destination="@id/editScheduleFragment" />
+            app:destination="@id/editScheduleFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_from_left"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
     </fragment>
     <fragment
         android:id="@+id/editScheduleFragment"

@@ -1,13 +1,13 @@
 package com.keycome.twinkleschedule.presentation.configuration
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.keycome.twinkleschedule.BaseActivity
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.databinding.ActivityConfigurationBinding
 
-class ConfigurationActivity : AppCompatActivity() {
+class ConfigurationActivity : BaseActivity() {
     private lateinit var binding: ActivityConfigurationBinding
     private lateinit var navController: NavController
 
