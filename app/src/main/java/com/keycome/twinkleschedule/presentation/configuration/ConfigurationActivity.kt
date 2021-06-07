@@ -16,7 +16,7 @@ class ConfigurationActivity : BaseActivity() {
         binding = ActivityConfigurationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.configuration_activity_host_fragmnet) as
+            supportFragmentManager.findFragmentById(R.id.configuration_activity_host_fragment) as
                     NavHostFragment
         navController = navHostFragment.navController
     }

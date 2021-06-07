@@ -6,16 +6,17 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.database.CourseEntity
-import com.keycome.twinkleschedule.databinding.CourseDescriptionBinding
+import com.keycome.twinkleschedule.databinding.CustomCourseDescriptionBinding
 import com.keycome.twinkleschedule.model.CourseBlock
 
-class CourseAdapter(val daySpan: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CourseAdapter(private val daySpan: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_PLACEHOLDER = -1
         const val TYPE_COURSE = 1
     }
 
-    class Course(view: View, val binding: CourseDescriptionBinding) : RecyclerView.ViewHolder(view)
+    class Course(view: View, val binding: CustomCourseDescriptionBinding) :
+        RecyclerView.ViewHolder(view)
 
     class Placeholder(view: View) : RecyclerView.ViewHolder(view)
 
@@ -32,7 +33,7 @@ class CourseAdapter(val daySpan: Int) : RecyclerView.Adapter<RecyclerView.ViewHo
 
         return when (viewType) {
             TYPE_COURSE -> {
-                val binding = CourseDescriptionBinding.inflate(
+                val binding = CustomCourseDescriptionBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
                 Course(frameLayout.apply { addView(binding.root) }, binding)

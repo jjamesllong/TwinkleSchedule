@@ -14,10 +14,10 @@ import android.view.WindowManager
 import android.widget.EditText
 import android.widget.TextView
 import com.keycome.twinkleschedule.R
+import com.keycome.twinkleschedule.databinding.CustomDatePickerLayoutBinding
 import com.keycome.twinkleschedule.databinding.CustomDialogLayoutBinding
-import com.keycome.twinkleschedule.databinding.DatePickerLayoutBinding
-import com.keycome.twinkleschedule.databinding.TimePickerLayoutBinding
-import com.keycome.twinkleschedule.databinding.WheelListLayoutBinding
+import com.keycome.twinkleschedule.databinding.CustomTimePickerLayoutBinding
+import com.keycome.twinkleschedule.databinding.CustomWheelListLayoutBinding
 
 abstract class CustomDialog(context: Context) : Dialog(context, R.style.CustomDialog), BodyView {
 
@@ -186,7 +186,7 @@ class DatePickerDialog(context: Context, block: (DatePickerDialog.() -> Unit)? =
 
     override val body: View
         get() {
-            val b = DatePickerLayoutBinding.inflate(layoutInflater)
+            val b = CustomDatePickerLayoutBinding.inflate(layoutInflater)
             b.datePickerView.setDate("1970-01-01", "2100-01-01", datePickerPosition)
             return b.root
         }
@@ -207,7 +207,7 @@ class TimePickerDialog(context: Context, block: (TimePickerDialog.() -> Unit)? =
 
     override val body: View
         get() {
-            val b = TimePickerLayoutBinding.inflate(layoutInflater)
+            val b = CustomTimePickerLayoutBinding.inflate(layoutInflater)
             val list = mutableListOf<String>()
             (0..59).forEach {
                 list.add(if (it < 10) "0$it" else it.toString())
@@ -230,7 +230,7 @@ class WheelDialog(context: Context, block: (WheelDialog.() -> Unit)? = null) :
     CustomDialog(context) {
     override val body: View
         get() {
-            val b = WheelListLayoutBinding.inflate(layoutInflater)
+            val b = CustomWheelListLayoutBinding.inflate(layoutInflater)
             val list = mutableListOf<String>()
             (0..59).forEach {
                 list.add(if (it < 10) "0$it" else it.toString())

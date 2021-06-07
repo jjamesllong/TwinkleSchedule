@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.custom.CustomPopupMenu
@@ -62,7 +61,7 @@ class DisplayCoursesFragment : Fragment() {
     @SuppressLint("InflateParams")
     private fun onCreatePopupMenu() {
         val content = LayoutInflater.from(context).inflate(
-            R.layout.popup_menu, null, false
+            R.layout.custom_popup_menu, null, false
         ) as LinearLayout
         popupMenu = CustomPopupMenu(requireContext(), content).apply {
             setOnItemSelectedListener {

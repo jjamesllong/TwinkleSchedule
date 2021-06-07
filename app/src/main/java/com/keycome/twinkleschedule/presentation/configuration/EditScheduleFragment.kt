@@ -6,17 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
-import androidx.fragment.app.Fragment
+import com.keycome.twinkleschedule.BaseFragment
+import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.custom.DatePickerDialog
 import com.keycome.twinkleschedule.custom.EditTextDialog
 import com.keycome.twinkleschedule.custom.TimePickerDialog
 import com.keycome.twinkleschedule.custom.WheelDialog
+import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentEditScheduleBinding
 import com.keycome.twinkleschedule.extension.toast
 
-class EditScheduleFragment : Fragment(), View.OnClickListener {
+class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.OnClickListener {
 
-    private lateinit var binding: FragmentEditScheduleBinding
     private lateinit var safeContext: Context
 
     private val editTextDialog: EditTextDialog by lazy {
@@ -43,14 +44,16 @@ class EditScheduleFragment : Fragment(), View.OnClickListener {
         WheelDialog(safeContext)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentEditScheduleBinding.inflate(
-            inflater, container, false
-        )
-        return binding.root
+    override fun deployBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentEditScheduleBinding {
+        return FragmentEditScheduleBinding.inflate(inflater, container, false)
+    }
+
+    override fun supportToolbar(title: Array<Int>): CustomToolbarLayoutBinding {
+        title[0] = R.string.editScheduleFragmentLabel
+        return binding.toolbar
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/addScheduleFragment"
         android:name="com.keycome.twinkleschedule.presentation.configuration.AddScheduleFragment"
-        android:label="fragment_add_schedule"
-        tools:layout="@layout/fragment_add_schedule" >
+        android:label="@string/addScheduleFragmentLabel"
+        tools:layout="@layout/fragment_add_schedule">
         <action
             android:id="@+id/action_addScheduleFragment_to_editScheduleFragment"
             app:destination="@id/editScheduleFragment"
@@ -21,6 +21,6 @@
     <fragment
         android:id="@+id/editScheduleFragment"
         android:name="com.keycome.twinkleschedule.presentation.configuration.EditScheduleFragment"
-        android:label="fragment_edit_schedule"
+        android:label="@string/editScheduleFragmentLabel"
         tools:layout="@layout/fragment_edit_schedule" />
 </navigation>
