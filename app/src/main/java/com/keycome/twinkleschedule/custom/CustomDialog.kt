@@ -140,6 +140,7 @@ class EditTextDialog(context: Context, block: (EditTextDialog.() -> Unit)? = nul
     CustomDialog(context) {
 
     private var textChangedAction: TextChangedAction? = null
+    var textContent: String? = null
 
     override val body: View
         get() = EditText(context).apply {
@@ -161,6 +162,7 @@ class EditTextDialog(context: Context, block: (EditTextDialog.() -> Unit)? = nul
                 }
 
                 override fun afterTextChanged(s: Editable?) {
+                    textContent = s.toString()
                     textChangedAction?.action(s.toString())
                 }
             })
@@ -182,19 +184,22 @@ class EditTextDialog(context: Context, block: (EditTextDialog.() -> Unit)? = nul
 class DatePickerDialog(context: Context, block: (DatePickerDialog.() -> Unit)? = null) :
     CustomDialog(context) {
 
+    private val b: CustomDatePickerLayoutBinding =
+        CustomDatePickerLayoutBinding.inflate(layoutInflater)
     var datePickerPosition = "2021-06-05"
+    val currentDateStringList: List<String>
+        get() {
+            return b.datePickerView.dateString.split("-")
+        }
 
     override val body: View
         get() {
-            val b = CustomDatePickerLayoutBinding.inflate(layoutInflater)
             b.datePickerView.setDate("1970-01-01", "2100-01-01", datePickerPosition)
             return b.root
         }
 
     init {
         hasTitle = false
-        singleActionButton = true
-        singleText = "确定"
         block?.invoke(this)
     }
 
@@ -219,23 +224,24 @@ class TimePickerDialog(context: Context, block: (TimePickerDialog.() -> Unit)? =
 
     init {
         hasTitle = false
-        singleActionButton = true
-        singleText = "确定"
         block?.invoke(this)
     }
 
 }
 
-class WheelDialog(context: Context, block: (WheelDialog.() -> Unit)? = null) :
-    CustomDialog(context) {
+class WheelDialog(
+    context: Context,
+    val list: List<String>,
+    block: (WheelDialog.() -> Unit)? = null
+) : CustomDialog(context) {
+
+    private val b = CustomWheelListLayoutBinding.inflate(layoutInflater)
+    var position = 0
+    val currentValue: String get() = b.wheelDialogPicker.currentValue
+
     override val body: View
         get() {
-            val b = CustomWheelListLayoutBinding.inflate(layoutInflater)
-            val list = mutableListOf<String>()
-            (0..59).forEach {
-                list.add(if (it < 10) "0$it" else it.toString())
-            }
-            b.wheelDialogPicker.setData(list, 20)
+            b.wheelDialogPicker.setData(list, position)
             return b.root
         }
 

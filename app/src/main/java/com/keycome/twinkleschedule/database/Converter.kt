@@ -29,12 +29,12 @@ class Converter {
     }
 
     @TypeConverter
-    fun timeLineRevert(timeLineString: String): Array<String> =
-        gSon.fromJson(timeLineString, object : TypeToken<Array<String>>() {}.type)
+    fun timeLineRevert(timeLineString: String): Map<String, Array<String>> =
+        gSon.fromJson(timeLineString, object : TypeToken<Map<String, Array<String>>>() {}.type)
 
     @TypeConverter
-    fun timeLineConvert(timeLineArray: Array<String>): String =
-        gSon.toJson(timeLineArray)
+    fun timeLineConvert(timeLineMap: Map<String, Array<String>>): String =
+        gSon.toJson(timeLineMap)
 
     @TypeConverter
     fun dayRevert(dayString: String) = try {

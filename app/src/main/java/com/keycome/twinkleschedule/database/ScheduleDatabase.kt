@@ -7,8 +7,8 @@ import androidx.room.TypeConverters
 import com.keycome.twinkleschedule.App
 
 @Database(
-    entities = [CourseSchedule::class, CourseEntity::class],
-    version = 1,
+    entities = [ScheduleEntity::class, CourseEntity::class],
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converter::class)

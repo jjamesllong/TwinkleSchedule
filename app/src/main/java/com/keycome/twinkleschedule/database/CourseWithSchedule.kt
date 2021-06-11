@@ -5,7 +5,7 @@ import androidx.room.Relation
 
 data class CourseWithSchedule(
     @Embedded
-    var schedule: CourseSchedule,
+    var schedule: ScheduleEntity,
     @Relation(parentColumn = "schedule_id", entityColumn = "parent_schedule_id")
     var courseEntityList: List<CourseEntity>
 )

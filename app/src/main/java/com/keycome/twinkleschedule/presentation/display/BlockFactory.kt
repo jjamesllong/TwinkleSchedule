@@ -8,7 +8,7 @@ class BlockFactory {
     private val blockList = mutableListOf<CourseBlock>()
 
     fun convertEntityToBlock(): Array<CourseBlock> {
-        val schedule = TestData.courseSchedule
+        val schedule = TestData.schedule
         val array = TestData.courseArray
         var day = convertDayToNum(Day.Monday)
         for (i in array.indices) {
