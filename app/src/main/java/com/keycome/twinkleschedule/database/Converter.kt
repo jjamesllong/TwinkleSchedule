@@ -10,9 +10,9 @@ class Converter {
     @TypeConverter
     fun dateRevert(dateString: String): Date {
         return Date(
-            dateString.substring(0..4).toInt(),
+            dateString.substring(0..3).toInt(),
             dateString.substring(5..6).toInt(),
-            dateString.substring(7..8).toInt()
+            dateString.substring(8..9).toInt()
         )
     }
 
@@ -29,12 +29,12 @@ class Converter {
     }
 
     @TypeConverter
-    fun timeLineRevert(timeLineString: String): Map<String, Array<String>> =
-        gSon.fromJson(timeLineString, object : TypeToken<Map<String, Array<String>>>() {}.type)
+    fun timeLineRevert(timeLineString: String): Map<String, List<String>> =
+        gSon.fromJson(timeLineString, object : TypeToken<Map<String, List<String>>>() {}.type)
 
     @TypeConverter
-    fun timeLineConvert(timeLineMap: Map<String, Array<String>>): String =
-        gSon.toJson(timeLineMap)
+    fun timeLineConvert(timeLine: Map<String, List<String>>): String =
+        gSon.toJson(timeLine)
 
     @TypeConverter
     fun dayRevert(dayString: String) = try {

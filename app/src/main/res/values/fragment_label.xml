@@ -2,4 +2,5 @@
 <resources>
     <string name="addScheduleFragmentLabel">添加</string>
     <string name="editScheduleFragmentLabel">编辑</string>
+    <string name="timeLineFragmentLabel">编辑时间线</string>
 </resources>

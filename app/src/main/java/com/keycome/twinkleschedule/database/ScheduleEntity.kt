@@ -20,8 +20,18 @@ data class ScheduleEntity(
     val duration: Int,
 
     @ColumnInfo(name = "time_line")
-    val timeLine: Map<String, Array<String>>
+    val timeLine: Map<String, List<String>>
 )
+//{
+//    constructor() : this(
+//        scheduleId = 0,
+//        name = "",
+//        schoolBeginDate = Date(1970, 1, 1),
+//        courses = 0,
+//        duration = 0,
+//        timeLine = mapOf("" to listOf<String>(""))
+//    )
+//}
 
 data class Date(val year: Int, val month: Int, val dayOfMonth: Int) {
     init {

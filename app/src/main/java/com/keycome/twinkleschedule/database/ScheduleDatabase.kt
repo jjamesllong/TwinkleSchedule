@@ -8,7 +8,7 @@ import com.keycome.twinkleschedule.App
 
 @Database(
     entities = [ScheduleEntity::class, CourseEntity::class],
-    version = 2,
+    version = 11,
     exportSchema = false
 )
 @TypeConverters(Converter::class)
@@ -26,7 +26,7 @@ abstract class ScheduleDatabase : RoomDatabase() {
                     App.context,
                     ScheduleDatabase::class.java,
                     databaseName
-                ).build().also { INSTANCE = it }
+                ).fallbackToDestructiveMigration().build().also { INSTANCE = it }
             }
         }
     }

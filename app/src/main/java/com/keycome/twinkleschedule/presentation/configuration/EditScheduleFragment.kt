@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
@@ -15,6 +16,7 @@ import com.keycome.twinkleschedule.custom.EditTextDialog
 import com.keycome.twinkleschedule.custom.TimePickerDialog
 import com.keycome.twinkleschedule.custom.WheelDialog
 import com.keycome.twinkleschedule.database.Date
+import com.keycome.twinkleschedule.database.ScheduleEntity
 import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentEditScheduleBinding
 import com.keycome.twinkleschedule.extension.toast
@@ -57,7 +59,7 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
         (1..16).forEach { list.add(it.toString()) }
         WheelDialog(safeContext, list) {
             onPositiveButtonPressed {
-                scheduleMap["courses"] = currentValue
+                scheduleMap["courses"] = currentValue.toInt()
             }
         }
     }
@@ -67,7 +69,7 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
         (30..60).step(5).forEach { list.add(it.toString()) }
         WheelDialog(safeContext, list) {
             onPositiveButtonPressed {
-                scheduleMap["duration"] = currentValue
+                scheduleMap["duration"] = currentValue.toInt()
             }
         }
     }
@@ -81,7 +83,7 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
 
     override fun supportToolbar(title: Array<Int>): CustomToolbarLayoutBinding {
         title[0] = R.string.editScheduleFragmentLabel
-        return binding.toolbar
+        return binding.fragmentEditScheduleToolbar
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -111,7 +113,23 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
             binding.editSchoolBeginDateItem.id -> datePickerDialog.show()
             binding.editCourseNumberItem.id -> coursesWheelDialog.show()
             binding.editCourseDurationItem.id -> durationWheelDialog.show()
-            binding.editCourseTimeLineItem.id -> toast(scheduleMap.toString())
+            binding.editCourseTimeLineItem.id -> findNavController()
+                .navigate(R.id.action_editScheduleFragment_to_addTimeLineFragment)
+            binding.testButton.id -> {
+                viewModel.insertSchedule(
+                    ScheduleEntity(
+                        scheduleId = 0,
+                        name = scheduleMap["name"] as String,
+                        schoolBeginDate = scheduleMap["schoolBeginDate"] as Date,
+                        courses = scheduleMap["courses"] as Int,
+                        duration = scheduleMap["duration"] as Int,
+                        timeLine = mapOf("test" to listOf("1", "2"))
+                    )
+                )
+            }
+            binding.button2.id -> {
+                binding.scheduleRecyclerView.visibility = View.GONE
+            }
             else -> toast("none")
         }
     }

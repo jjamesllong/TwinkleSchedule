@@ -2,17 +2,16 @@ package com.keycome.twinkleschedule.database
 
 class TestData {
     companion object {
-        private val timeLineArray = arrayOf(
+        private val timeLineList = listOf(
             "08:00", "08:55", "10:00", "10:55", "14:00", "14:55", "15:50", "16:45", "17:40", "19:00"
         )
-        private val timeLineMap = mapOf("normal" to timeLineArray)
         val schedule = ScheduleEntity(
             scheduleId = 0,
             name = "SecondSemesterOfSophomoreYear",
             schoolBeginDate = Date(2021, 3, 1),
-            courses = timeLineArray.size,
+            courses = timeLineList.size,
             duration = 45,
-            timeLine = timeLineMap
+            timeLine = mapOf()
         )
         private val course = CourseEntity(
             courseId = 0,

@@ -21,7 +21,7 @@ class AddScheduleFragment : BaseFragment<FragmentAddScheduleBinding>() {
 
     override fun supportToolbar(title: Array<Int>): CustomToolbarLayoutBinding {
         title[0] = R.string.addScheduleFragmentLabel
-        return binding.toolbar
+        return binding.fragmentAddScheduleToolbar
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
