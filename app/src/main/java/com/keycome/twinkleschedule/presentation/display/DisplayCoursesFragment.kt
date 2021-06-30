@@ -34,7 +34,7 @@ class DisplayCoursesFragment : Fragment() {
         val coursesArray = BlockFactory().convertEntityToBlock()
         val gridLayoutManager = GridLayoutManager(
             context,
-            TestData.schedule.courses,
+            TestData.schedule.dailyCourses,
             GridLayoutManager.HORIZONTAL,
             false
         ).apply {

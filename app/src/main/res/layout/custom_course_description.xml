@@ -15,6 +15,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="?android:attr/textColorPrimary"
+        android:textStyle="bold"
         tools:text="textView" />
 
 </androidx.cardview.widget.CardView>

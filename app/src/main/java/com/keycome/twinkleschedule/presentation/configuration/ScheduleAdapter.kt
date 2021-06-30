@@ -17,7 +17,7 @@ class ScheduleAdapter :
             oldItem: ScheduleEntity,
             newItem: ScheduleEntity
         ): Boolean {
-            return oldItem === newItem
+            return oldItem.scheduleId == newItem.scheduleId
         }
 
         override fun areContentsTheSame(

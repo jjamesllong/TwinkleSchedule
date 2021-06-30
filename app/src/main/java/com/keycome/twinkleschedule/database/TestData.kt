@@ -1,16 +1,41 @@
 package com.keycome.twinkleschedule.database
 
+import com.keycome.twinkleschedule.model.Date
+import com.keycome.twinkleschedule.model.Day
+import com.keycome.twinkleschedule.model.Time
+
 class TestData {
     companion object {
         private val timeLineList = listOf(
             "08:00", "08:55", "10:00", "10:55", "14:00", "14:55", "15:50", "16:45", "17:40", "19:00"
         )
+
+        private fun getTimeList(): List<Time> {
+            val l = mutableListOf<Time>()
+            for (t in timeLineList) {
+                l.add(
+                    Time(
+                        t.substring(0..1).toInt(),
+                        t.substring(3..4).toInt(),
+                        0
+                    )
+                )
+            }
+            return l.toList()
+        }
+
+        val timeLine = TimeLine(
+            Date(2021, 3, 1),
+            getTimeList()
+        )
+
         val schedule = ScheduleEntity(
             scheduleId = 0,
             name = "SecondSemesterOfSophomoreYear",
             schoolBeginDate = Date(2021, 3, 1),
-            courses = timeLineList.size,
-            duration = 45,
+            dailyCourses = timeLineList.size,
+            weeklyEndDay = Day.Friday,
+            courseDuration = 45,
             timeLine = mapOf()
         )
         private val course = CourseEntity(

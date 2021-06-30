@@ -1,8 +1,8 @@
 package com.keycome.twinkleschedule.presentation.display
 
-import com.keycome.twinkleschedule.database.Day
 import com.keycome.twinkleschedule.database.TestData
 import com.keycome.twinkleschedule.model.CourseBlock
+import com.keycome.twinkleschedule.model.Day
 
 class BlockFactory {
     private val blockList = mutableListOf<CourseBlock>()
@@ -41,7 +41,7 @@ class BlockFactory {
                     for (s in 0 until spanDay) {
                         val p = CourseBlock(
                             isCourse = false,
-                            spanSize = schedule.courses
+                            spanSize = schedule.dailyCourses
                         )
                         blockList.add(p)
                     }
@@ -92,7 +92,7 @@ class BlockFactory {
                         blockList.add(b)
                     }
                 } else {
-                    val spanEnd = schedule.courses - cBefore.section.endSection
+                    val spanEnd = schedule.dailyCourses - cBefore.section.endSection
                     val spanDay = cDay - day - 1
                     if (spanEnd > 0) {
                         val p = CourseBlock(
@@ -104,7 +104,7 @@ class BlockFactory {
                     for (s in 0 until spanDay) {
                         val p = CourseBlock(
                             isCourse = false,
-                            spanSize = schedule.courses
+                            spanSize = schedule.dailyCourses
                         )
                         blockList.add(p)
                     }

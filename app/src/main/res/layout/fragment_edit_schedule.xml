@@ -30,12 +30,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/schedule_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/edit_schedule_name_item"
                 android:layout_width="match_parent"
@@ -184,6 +178,14 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView11" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/schedule_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+            </androidx.recyclerview.widget.RecyclerView>
 
             <Button
                 android:id="@+id/testButton"

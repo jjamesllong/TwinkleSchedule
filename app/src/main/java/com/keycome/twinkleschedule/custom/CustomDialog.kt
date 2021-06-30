@@ -19,8 +19,9 @@ import com.keycome.twinkleschedule.databinding.CustomDialogLayoutBinding
 import com.keycome.twinkleschedule.databinding.CustomTimePickerLayoutBinding
 import com.keycome.twinkleschedule.databinding.CustomWheelListLayoutBinding
 
-abstract class CustomDialog(context: Context) : Dialog(context, R.style.CustomDialog), BodyView {
+abstract class CustomDialog(context: Context) : Dialog(context, R.style.CustomDialog) {
 
+    abstract val body: View
     private lateinit var binding: CustomDialogLayoutBinding
     private var positiveAction: PositiveAction? = null
     private var negativeAction: NegativeAction? = null
@@ -113,10 +114,6 @@ abstract class CustomDialog(context: Context) : Dialog(context, R.style.CustomDi
     fun interface SingleAction {
         fun action()
     }
-}
-
-interface BodyView {
-    val body: View
 }
 
 class TextDialog(context: Context, block: (TextDialog.() -> Unit)? = null) : CustomDialog(context) {

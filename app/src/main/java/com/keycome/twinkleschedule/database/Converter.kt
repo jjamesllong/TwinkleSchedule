@@ -3,37 +3,41 @@ package com.keycome.twinkleschedule.database
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.keycome.twinkleschedule.model.Date
+import com.keycome.twinkleschedule.model.Day
 
 class Converter {
     private val gSon = Gson()
 
     @TypeConverter
     fun dateRevert(dateString: String): Date {
-        return Date(
-            dateString.substring(0..3).toInt(),
-            dateString.substring(5..6).toInt(),
-            dateString.substring(8..9).toInt()
-        )
+//        return Date(
+//            dateString.substring(0..3).toInt(),
+//            dateString.substring(5..6).toInt(),
+//            dateString.substring(8..9).toInt()
+//        )
+        return gSon.fromJson(dateString, Date::class.java)
     }
 
     @TypeConverter
     fun dateConverter(date: Date): String {
-        val builder = StringBuilder().apply {
-            append(date.year)
-            append("-")
-            append(if (date.month < 10) "0${date.month}" else date.month)
-            append("-")
-            append(if (date.dayOfMonth < 10) "0${date.dayOfMonth}" else date.dayOfMonth)
-        }
-        return builder.toString()
+//        val builder = StringBuilder().apply {
+//            append(date.year)
+//            append("-")
+//            append(if (date.month < 10) "0${date.month}" else date.month)
+//            append("-")
+//            append(if (date.dayOfMonth < 10) "0${date.dayOfMonth}" else date.dayOfMonth)
+//        }
+//        return builder.toString()
+        return gSon.toJson(date)
     }
 
     @TypeConverter
-    fun timeLineRevert(timeLineString: String): Map<String, List<String>> =
-        gSon.fromJson(timeLineString, object : TypeToken<Map<String, List<String>>>() {}.type)
+    fun timeLineRevert(timeLineString: String): Map<String, TimeLine> =
+        gSon.fromJson(timeLineString, object : TypeToken<Map<String, TimeLine>>() {}.type)
 
     @TypeConverter
-    fun timeLineConvert(timeLine: Map<String, List<String>>): String =
+    fun timeLineConvert(timeLine: Map<String, TimeLine>): String =
         gSon.toJson(timeLine)
 
     @TypeConverter

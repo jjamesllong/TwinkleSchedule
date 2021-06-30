@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.keycome.twinkleschedule.model.Day
 
 @Entity(tableName = "course_entity")
 data class CourseEntity(
@@ -40,7 +41,5 @@ data class Section(
     @ColumnInfo(name = "start_section") var startSection: Int,
     @ColumnInfo(name = "end_section") var endSection: Int
 )
-
-enum class Day { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 
 enum class Continuity { Continuous, Odd, Even }
