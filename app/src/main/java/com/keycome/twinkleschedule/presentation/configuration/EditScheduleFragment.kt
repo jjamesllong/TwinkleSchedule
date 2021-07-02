@@ -14,25 +14,20 @@ import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.custom.DatePickerDialog
 import com.keycome.twinkleschedule.custom.EditTextDialog
 import com.keycome.twinkleschedule.custom.WheelDialog
-import com.keycome.twinkleschedule.database.ScheduleEntity
-import com.keycome.twinkleschedule.database.TestData
 import com.keycome.twinkleschedule.database.TimeLine
 import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentEditScheduleBinding
 import com.keycome.twinkleschedule.extension.toast
 import com.keycome.twinkleschedule.model.Date
-import com.keycome.twinkleschedule.model.Day
 
 class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.OnClickListener {
-
     private lateinit var safeContext: Context
     private val viewModel: ConfigurationViewModel by activityViewModels()
-    private val scheduleMap = mutableMapOf<String, Any>()
 
     private val editTextDialog: EditTextDialog by lazy {
         EditTextDialog(safeContext) {
             onPositiveButtonPressed {
-                textContent?.let { scheduleMap["name"] = it }
+                textContent?.let { viewModel.updateLiveSchedule(ConfigurationViewModel.name_, it) }
             }
         }
     }
@@ -41,10 +36,13 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
         DatePickerDialog(safeContext) {
             datePickerPosition = "2021-06-04"
             onPositiveButtonPressed {
-                scheduleMap["schoolBeginDate"] = Date(
-                    currentDateStringList[0].toInt(),
-                    currentDateStringList[1].toInt(),
-                    currentDateStringList[2].toInt()
+                viewModel.updateLiveSchedule(
+                    ConfigurationViewModel.school_begin_date,
+                    Date(
+                        currentDateStringList[0].toInt(),
+                        currentDateStringList[1].toInt(),
+                        currentDateStringList[2].toInt()
+                    )
                 )
             }
         }
@@ -55,7 +53,10 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
         (1..16).forEach { list.add(it.toString()) }
         WheelDialog(safeContext, list) {
             onPositiveButtonPressed {
-                scheduleMap["dailyCourses"] = currentValue.toInt()
+                viewModel.updateLiveSchedule(
+                    ConfigurationViewModel.daily_courses,
+                    currentValue.toInt()
+                )
             }
         }
     }
@@ -65,7 +66,10 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
         (30..60).step(5).forEach { list.add(it.toString()) }
         WheelDialog(safeContext, list) {
             onPositiveButtonPressed {
-                scheduleMap["courseDuration"] = currentValue.toInt()
+                viewModel.updateLiveSchedule(
+                    ConfigurationViewModel.course_duration,
+                    currentValue.toInt()
+                )
             }
         }
     }
@@ -86,20 +90,29 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
         super.onViewCreated(view, savedInstanceState)
         safeContext = requireContext()
         for (child in binding.linearLayout.children)
-            child.setOnClickListener(this)
-        val scheduleAdapter = ScheduleAdapter()
-        binding.scheduleRecyclerView.apply {
-            adapter = scheduleAdapter
+            if (child.id != binding.timeLineRecyclerView.id)
+                child.setOnClickListener(this)
+        val timeLineAdapter = TimeLineAdapter { adapterOnClickHandler(it) }
+        binding.timeLineRecyclerView.apply {
+            adapter = timeLineAdapter
             layoutManager = LinearLayoutManager(safeContext).apply {
                 orientation = LinearLayoutManager.HORIZONTAL
             }
         }
-        viewModel.liveScheduleList.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
-                if (binding.scheduleRecyclerView.visibility == View.VISIBLE)
-                    binding.scheduleRecyclerView.visibility = View.GONE
+        viewModel.liveSchedule.observe(viewLifecycleOwner) {
+            binding.scheduleNameText.text = it.name
+            binding.schoolBeginDateText.text = it.schoolBeginDate.toDotDateString()
+            binding.dailyCoursesText.text = it.dailyCourses.toString()
+            binding.courseDurationText.text = it.courseDuration.toString()
+            val timeLineSet = it.timeLine
+            if (timeLineSet.isEmpty()) {
+                if (binding.timeLineRecyclerView.visibility == View.VISIBLE)
+                    binding.timeLineRecyclerView.visibility = View.GONE
+            } else {
+                val list = mutableListOf<TimeLine>()
+                timeLineSet.forEach { t -> list.add(t) }
+                timeLineAdapter.submitList(list)
             }
-            scheduleAdapter.submitList(it)
         }
     }
 
@@ -111,24 +124,19 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
             binding.editCourseDurationItem.id -> durationWheelDialog.show()
             binding.editCourseTimeLineItem.id -> findNavController()
                 .navigate(R.id.action_editScheduleFragment_to_addTimeLineFragment)
-            binding.testButton.id -> {
-                scheduleMap["weeklyEndDay"] = Day.Friday
-                viewModel.insertSchedule(
-                    ScheduleEntity(
-                        scheduleId = 0,
-                        name = scheduleMap["name"] as String,
-                        schoolBeginDate = scheduleMap["schoolBeginDate"] as Date,
-                        dailyCourses = scheduleMap["dailyCourses"] as Int,
-                        weeklyEndDay = scheduleMap["weeklyEndDay"] as Day,
-                        courseDuration = scheduleMap["courseDuration"] as Int,
-                        timeLine = mapOf("test" to TestData.timeLine)
-                    )
-                )
-            }
+            binding.testButton.id -> viewModel.insertSchedule()
             binding.button2.id -> {
-                binding.scheduleRecyclerView.visibility = View.GONE
+                binding.timeLineRecyclerView.visibility = View.GONE
             }
             else -> toast("none")
         }
+    }
+
+    private fun adapterOnClickHandler(timeLine: TimeLine) {
+        val action =
+            EditScheduleFragmentDirections.actionEditScheduleFragmentToAddTimeLineFragment(
+                timeLine.id
+            )
+        findNavController().navigate(action)
     }
 }

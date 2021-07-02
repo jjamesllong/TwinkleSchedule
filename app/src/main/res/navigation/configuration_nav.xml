@@ -29,10 +29,19 @@
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_from_left"
             app:popEnterAnim="@anim/pop_enter"
-            app:popExitAnim="@anim/pop_exit" />
+            app:popExitAnim="@anim/pop_exit" >
+            <argument
+                android:name="timeLineId"
+                android:defaultValue="0" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/addTimeLineFragment"
         android:name="com.keycome.twinkleschedule.presentation.configuration.AddTimeLineFragment"
-        android:label="AddTimeLineFragment" />
+        android:label="AddTimeLineFragment" >
+        <argument
+            android:name="timeLineId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

@@ -8,7 +8,7 @@ import com.keycome.twinkleschedule.App
 
 @Database(
     entities = [ScheduleEntity::class, CourseEntity::class],
-    version = 12,
+    version = 13,
     exportSchema = false
 )
 @TypeConverters(Converter::class)

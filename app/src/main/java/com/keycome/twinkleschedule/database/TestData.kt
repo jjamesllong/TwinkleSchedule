@@ -25,6 +25,8 @@ class TestData {
         }
 
         val timeLine = TimeLine(
+            1,
+            "test",
             Date(2021, 3, 1),
             getTimeList()
         )
@@ -36,7 +38,7 @@ class TestData {
             dailyCourses = timeLineList.size,
             weeklyEndDay = Day.Friday,
             courseDuration = 45,
-            timeLine = mapOf()
+            timeLine = setOf()
         )
         private val course = CourseEntity(
             courseId = 0,

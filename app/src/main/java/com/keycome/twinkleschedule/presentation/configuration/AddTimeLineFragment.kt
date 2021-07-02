@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
@@ -14,10 +15,12 @@ import com.keycome.twinkleschedule.custom.TimePickerDialog
 import com.keycome.twinkleschedule.custom.WheelDialog
 import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentAddTimeLineBinding
+import com.keycome.twinkleschedule.databinding.ViewAddTimeLineHeaderBinding
 
 class AddTimeLineFragment : BaseFragment<FragmentAddTimeLineBinding>() {
 
     private val viewModel: ConfigurationViewModel by activityViewModels()
+    private val args by navArgs<AddTimeLineFragmentArgs>()
 
     val editTextDialog: EditTextDialog by lazy {
         EditTextDialog(requireContext()) {

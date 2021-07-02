@@ -11,6 +11,28 @@ data class Date(val year: Int, val month: Int, val dayOfMonth: Int) {
         if (dayOfMonth !in 1..31)
             throw IllegalArgumentException("parameter dayOfYear should between [1, 31]")
     }
+
+    fun toHyphenDateString(): String {
+        val builder = StringBuilder().apply {
+            append(year)
+            append("-")
+            append(if (month < 10) "0$month" else month)
+            append("-")
+            append(if (dayOfMonth < 10) "0$dayOfMonth" else dayOfMonth)
+        }
+        return builder.toString()
+    }
+
+    fun toDotDateString(): String {
+        val builder = StringBuffer().apply {
+            append(year)
+            append(". ")
+            append(month)
+            append(". ")
+            append(dayOfMonth)
+        }
+        return builder.toString()
+    }
 }
 
 enum class Day { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }

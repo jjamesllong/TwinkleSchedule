@@ -15,7 +15,7 @@ class AddTimeLineHeaderAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBindClickListener(fragment: AddTimeLineFragment) {
-            binding.headerAddTimeLine.setOnClickListener {  }
+            binding.headerCourseDuration.setOnClickListener {  }
         }
 
         fun onBindData() {

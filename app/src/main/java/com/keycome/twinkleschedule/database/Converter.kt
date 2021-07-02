@@ -33,11 +33,11 @@ class Converter {
     }
 
     @TypeConverter
-    fun timeLineRevert(timeLineString: String): Map<String, TimeLine> =
-        gSon.fromJson(timeLineString, object : TypeToken<Map<String, TimeLine>>() {}.type)
+    fun timeLineRevert(timeLineString: String): Set<TimeLine> =
+        gSon.fromJson(timeLineString, object : TypeToken<Set<TimeLine>>() {}.type)
 
     @TypeConverter
-    fun timeLineConvert(timeLine: Map<String, TimeLine>): String =
+    fun timeLineConvert(timeLine: Set<TimeLine>): String =
         gSon.toJson(timeLine)
 
     @TypeConverter
