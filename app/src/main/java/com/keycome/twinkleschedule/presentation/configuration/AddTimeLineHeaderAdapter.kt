@@ -1,47 +1,59 @@
 package com.keycome.twinkleschedule.presentation.configuration
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
+import com.keycome.twinkleschedule.database.ScheduleEntity
 import com.keycome.twinkleschedule.databinding.ViewAddTimeLineHeaderBinding
 
 class AddTimeLineHeaderAdapter(
-    private val fragment: AddTimeLineFragment
+    var schedule: ScheduleEntity? = null,
+    private val timeLineId: Int = 0,
+    private val onClick: (ViewAddTimeLineHeaderBinding, Int) -> Unit
 ) : RecyclerView.Adapter<AddTimeLineHeaderAdapter.HeaderViewHolder>() {
     class HeaderViewHolder(
-        private val binding: ViewAddTimeLineHeaderBinding
+        private val binding: ViewAddTimeLineHeaderBinding,
+        private val onClick: (ViewAddTimeLineHeaderBinding, Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBindClickListener(fragment: AddTimeLineFragment) {
-            binding.headerCourseDuration.setOnClickListener {  }
+        init {
+            for (view in binding.root.children)
+                view.setOnClickListener { onClick(binding, it.id) }
         }
 
-        fun onBindData() {
+        fun onBindData(schedule: ScheduleEntity?, timeLineId: Int) {
+            schedule?.let {
+                it.timeLine.find { timeLine -> timeLine.id == timeLineId }?.let { timeLine ->
+                    binding.headerCurrentTimeLineText.text = timeLine.name
+                }
+                binding.headerCourseDurationText.text = it.courseDuration.toString()
+                binding.headerCoursesNumberText.text = it.dailyCourses.toString()
+            }
         }
 
         companion object {
-            fun from(parent: ViewGroup): HeaderViewHolder {
+            fun from(
+                parent: ViewGroup,
+                onClick: (ViewAddTimeLineHeaderBinding, Int) -> Unit
+            ): HeaderViewHolder {
                 val b = ViewAddTimeLineHeaderBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
-                return HeaderViewHolder(b)
+                return HeaderViewHolder(b, onClick)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {
-        val holder = HeaderViewHolder.from(parent)
-        holder.onBindClickListener(fragment)
-        return holder
+        return HeaderViewHolder.from(parent, onClick)
     }
 
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
-        holder.onBindData()
+        holder.onBindData(schedule, timeLineId)
     }
 
-    override fun getItemCount() = 1
+    override fun getItemCount() = if (schedule == null) 0 else 1
 }

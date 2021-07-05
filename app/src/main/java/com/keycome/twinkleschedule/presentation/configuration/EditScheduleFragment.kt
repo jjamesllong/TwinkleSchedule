@@ -19,6 +19,7 @@ import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentEditScheduleBinding
 import com.keycome.twinkleschedule.extension.toast
 import com.keycome.twinkleschedule.model.Date
+import com.keycome.twinkleschedule.model.LiveSchedule
 
 class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.OnClickListener {
     private lateinit var safeContext: Context
@@ -27,7 +28,7 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
     private val editTextDialog: EditTextDialog by lazy {
         EditTextDialog(safeContext) {
             onPositiveButtonPressed {
-                textContent?.let { viewModel.updateLiveSchedule(ConfigurationViewModel.name_, it) }
+                textContent?.let { viewModel.liveSchedule.updateValue(LiveSchedule.name_, it) }
             }
         }
     }
@@ -36,8 +37,8 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
         DatePickerDialog(safeContext) {
             datePickerPosition = "2021-06-04"
             onPositiveButtonPressed {
-                viewModel.updateLiveSchedule(
-                    ConfigurationViewModel.school_begin_date,
+                viewModel.liveSchedule.updateValue(
+                    LiveSchedule.school_begin_date,
                     Date(
                         currentDateStringList[0].toInt(),
                         currentDateStringList[1].toInt(),
@@ -53,8 +54,8 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
         (1..16).forEach { list.add(it.toString()) }
         WheelDialog(safeContext, list) {
             onPositiveButtonPressed {
-                viewModel.updateLiveSchedule(
-                    ConfigurationViewModel.daily_courses,
+                viewModel.liveSchedule.updateValue(
+                    LiveSchedule.daily_courses,
                     currentValue.toInt()
                 )
             }
@@ -66,8 +67,8 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
         (30..60).step(5).forEach { list.add(it.toString()) }
         WheelDialog(safeContext, list) {
             onPositiveButtonPressed {
-                viewModel.updateLiveSchedule(
-                    ConfigurationViewModel.course_duration,
+                viewModel.liveSchedule.updateValue(
+                    LiveSchedule.course_duration,
                     currentValue.toInt()
                 )
             }

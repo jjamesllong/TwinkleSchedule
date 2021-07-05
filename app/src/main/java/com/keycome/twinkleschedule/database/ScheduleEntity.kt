@@ -11,24 +11,24 @@ import com.keycome.twinkleschedule.model.Time
 data class ScheduleEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "schedule_id")
-    var scheduleId: Int,
+    val scheduleId: Int,
 
-    var name: String,
+    val name: String,
 
     @ColumnInfo(name = "school_begin_date")
-    var schoolBeginDate: Date,
+    val schoolBeginDate: Date,
 
     @ColumnInfo(name = "daily_courses")
-    var dailyCourses: Int,
+    val dailyCourses: Int,
 
     @ColumnInfo(name = "weekly_end_day")
-    var weeklyEndDay: Day,
+    val weeklyEndDay: Day,
 
     @ColumnInfo(name = "course_duration")
-    var courseDuration: Int,
+    val courseDuration: Int,
 
     @ColumnInfo(name = "time_line")
-    var timeLine: Set<TimeLine>
+    val timeLine: Set<TimeLine>
 )
 
 data class TimeLine(

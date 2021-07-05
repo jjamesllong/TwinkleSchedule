@@ -32,7 +32,7 @@
             app:popExitAnim="@anim/pop_exit" >
             <argument
                 android:name="timeLineId"
-                android:defaultValue="0" />
+                android:defaultValue="-1" />
         </action>
     </fragment>
     <fragment
@@ -42,6 +42,6 @@
         <argument
             android:name="timeLineId"
             app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="-1" />
     </fragment>
 </navigation>
