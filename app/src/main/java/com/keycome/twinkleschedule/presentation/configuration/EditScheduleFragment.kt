@@ -39,11 +39,7 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
             onPositiveButtonPressed {
                 viewModel.liveSchedule.updateValue(
                     LiveSchedule.school_begin_date,
-                    Date(
-                        currentDateStringList[0].toInt(),
-                        currentDateStringList[1].toInt(),
-                        currentDateStringList[2].toInt()
-                    )
+                    currentDate
                 )
             }
         }

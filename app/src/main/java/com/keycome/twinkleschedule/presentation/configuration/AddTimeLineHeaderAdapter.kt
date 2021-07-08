@@ -26,9 +26,9 @@ class AddTimeLineHeaderAdapter(
             schedule?.let {
                 it.timeLine.find { timeLine -> timeLine.id == timeLineId }?.let { timeLine ->
                     binding.headerCurrentTimeLineText.text = timeLine.name
+                    binding.headerStartDateText.text = timeLine.startDate.toDotDateString()
                 }
                 binding.headerCourseDurationText.text = it.courseDuration.toString()
-                binding.headerCoursesNumberText.text = it.dailyCourses.toString()
             }
         }
 

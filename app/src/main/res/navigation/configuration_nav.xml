@@ -13,10 +13,10 @@
         <action
             android:id="@+id/action_addScheduleFragment_to_editScheduleFragment"
             app:destination="@id/editScheduleFragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_from_left"
-            app:popEnterAnim="@anim/pop_enter"
-            app:popExitAnim="@anim/pop_exit" />
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_from_right" />
     </fragment>
     <fragment
         android:id="@+id/editScheduleFragment"
@@ -26,10 +26,10 @@
         <action
             android:id="@+id/action_editScheduleFragment_to_addTimeLineFragment"
             app:destination="@id/addTimeLineFragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_from_left"
-            app:popEnterAnim="@anim/pop_enter"
-            app:popExitAnim="@anim/pop_exit" >
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_from_right" >
             <argument
                 android:name="timeLineId"
                 android:defaultValue="-1" />

@@ -5,53 +5,52 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.keycome.twinkleschedule.databinding.CustomAddTimeLineItemBinding
+import com.keycome.twinkleschedule.databinding.CellAddTimeLineBinding
+import com.keycome.twinkleschedule.model.Time
 
-class AddTimeLineAdapter :
-    ListAdapter<String, AddTimeLineAdapter.AddTimeLineViewHolder>(TitleDiffCallback) {
+class AddTimeLineAdapter(
+    private val onclick: (CellAddTimeLineBinding, Int, Int) -> Unit
+) : ListAdapter<Time, AddTimeLineAdapter.AddTimeLineViewHolder>(TitleDiffCallback) {
 
-    object TitleDiffCallback : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem === newItem
+    object TitleDiffCallback : DiffUtil.ItemCallback<Time>() {
+        override fun areItemsTheSame(oldItem: Time, newItem: Time): Boolean {
+            return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        override fun areContentsTheSame(oldItem: Time, newItem: Time): Boolean {
             return oldItem == newItem
         }
 
     }
 
-    class AddTimeLineViewHolder(private val binding: CustomAddTimeLineItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class AddTimeLineViewHolder(
+        private val binding: CellAddTimeLineBinding,
+        onclick: (CellAddTimeLineBinding, Int, Int) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener {
-
+            binding.root.setOnClickListener { onclick(binding, it.id, bindingAdapterPosition) }
+            binding.cellAddTimeLineDeleteButton.setOnClickListener {
+                onclick(binding, it.id, bindingAdapterPosition)
             }
         }
 
-        fun onBind(timeLineTitle: String, position: Int) {
-            binding.cusomAddTimeLineTitleText.text = timeLineTitle
-        }
-
-        companion object {
-            fun from(parent: ViewGroup): AddTimeLineViewHolder {
-                val b = CustomAddTimeLineItemBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-                return AddTimeLineViewHolder(b)
-            }
+        fun onBind(time: Time) {
+            binding.cellAddTimeLineTitleText.text = time.to24StyleString()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddTimeLineViewHolder {
-        return AddTimeLineViewHolder.from(parent)
+        val b = CellAddTimeLineBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return AddTimeLineViewHolder(b, onclick)
     }
 
     override fun onBindViewHolder(holder: AddTimeLineViewHolder, position: Int) {
-        holder.onBind(currentList[position], position)
+        holder.onBind(currentList[position])
     }
 
 }

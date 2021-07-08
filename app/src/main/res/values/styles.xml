@@ -13,9 +13,9 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
     <style name="ActivityAnim">
-        <item name="android:activityOpenEnterAnimation">@anim/enter_from_right</item>
-        <item name="android:activityCloseExitAnimation">@anim/pop_exit</item>
-        <item name="android:activityOpenExitAnimation">@anim/exit_from_left</item>
-        <item name="android:activityCloseEnterAnimation">@anim/pop_enter</item>
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_from_right</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_from_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_from_left</item>
     </style>
 </resources>

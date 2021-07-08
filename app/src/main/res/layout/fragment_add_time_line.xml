@@ -17,14 +17,14 @@
         android:id="@+id/fragment_add_time_line_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_add_time_line_bottom_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment__add_time_line_toolbar" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/fragment_add_time_line_bottom_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

@@ -18,6 +18,8 @@ import com.keycome.twinkleschedule.databinding.CustomDatePickerLayoutBinding
 import com.keycome.twinkleschedule.databinding.CustomDialogLayoutBinding
 import com.keycome.twinkleschedule.databinding.CustomTimePickerLayoutBinding
 import com.keycome.twinkleschedule.databinding.CustomWheelListLayoutBinding
+import com.keycome.twinkleschedule.model.Date
+import com.keycome.twinkleschedule.model.Time
 
 abstract class CustomDialog(context: Context) : Dialog(context, R.style.CustomDialog) {
 
@@ -184,9 +186,14 @@ class DatePickerDialog(context: Context, block: (DatePickerDialog.() -> Unit)? =
     private val b: CustomDatePickerLayoutBinding =
         CustomDatePickerLayoutBinding.inflate(layoutInflater)
     var datePickerPosition = "2021-06-05"
-    val currentDateStringList: List<String>
+    val currentDate: Date
         get() {
-            return b.datePickerView.dateString.split("-")
+            val stringList = b.datePickerView.dateString.split("-")
+            return Date(
+                stringList[0].toInt(),
+                stringList[1].toInt(),
+                stringList[2].toInt()
+            )
         }
 
     override val body: View
@@ -205,11 +212,11 @@ class DatePickerDialog(context: Context, block: (DatePickerDialog.() -> Unit)? =
 class TimePickerDialog(context: Context, block: (TimePickerDialog.() -> Unit)? = null) :
     CustomDialog(context) {
 
+    private val b = CustomTimePickerLayoutBinding.inflate(layoutInflater)
     var timePickerPosition = arrayOf(15, 24)
 
     override val body: View
         get() {
-            val b = CustomTimePickerLayoutBinding.inflate(layoutInflater)
             val list = mutableListOf<String>()
             (0..59).forEach {
                 list.add(if (it < 10) "0$it" else it.toString())
@@ -218,6 +225,12 @@ class TimePickerDialog(context: Context, block: (TimePickerDialog.() -> Unit)? =
             b.timePickerOfMinute.setData(list, timePickerPosition[1])
             return b.root
         }
+
+    val currentTime: Time get() = Time(
+        b.timePickerOfHour.currentValue.toInt(),
+        b.timePickerOfMinute.currentValue.toInt(),
+        0
+    )
 
     init {
         hasTitle = false
