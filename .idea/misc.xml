@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/fragment_edit_schedule.xml" value="0.25364583333333335" />
+        <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/view_end_day_picker.xml" value="0.2390625" />
+        <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/view_time_line_description_footer.xml" value="0.25364583333333335" />
+      </map>
+    </option>
+  </component>
   <component name="EntryPointsManager">
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="androidx.room.TypeConverter" />

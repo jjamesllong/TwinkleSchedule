@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.database.TimeLine
 import com.keycome.twinkleschedule.databinding.CellTimeLineDescriptionBinding
 
-class TimeLineAdapter(private val onClick: (TimeLine) -> Unit) :
+class TimeLineAdapter(private val onClick: (CellTimeLineDescriptionBinding, Int, TimeLine) -> Unit) :
     ListAdapter<TimeLine, TimeLineAdapter.TimeLineViewHolder>(TimeLineDiffCallback) {
 
     object TimeLineDiffCallback : DiffUtil.ItemCallback<TimeLine>() {
@@ -19,43 +19,40 @@ class TimeLineAdapter(private val onClick: (TimeLine) -> Unit) :
         override fun areContentsTheSame(oldItem: TimeLine, newItem: TimeLine): Boolean {
             return oldItem == newItem
         }
-
-
     }
 
     class TimeLineViewHolder(
         private val binding: CellTimeLineDescriptionBinding,
-        private val onClick: (TimeLine) -> Unit
+        private val onClick: (CellTimeLineDescriptionBinding, Int, TimeLine) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private var currentTimeLine: TimeLine? = null
 
         init {
-            binding.root.setOnClickListener { currentTimeLine?.let { onClick(it) } }
+            binding.root.setOnClickListener { v ->
+                currentTimeLine?.let { onClick(binding, v.id, it) }
+            }
+            binding.cellTimeLineDescriptionDeleteButton.setOnClickListener { v ->
+                currentTimeLine?.let { onClick(binding, v.id, it) }
+            }
         }
 
-        fun onBindData(timeLine: TimeLine, position: Int) {
+        fun onBindData(timeLine: TimeLine) {
             currentTimeLine = timeLine
             binding.timeLineDescription.text = timeLine.name
-        }
-
-        companion object {
-            fun from(parent: ViewGroup, onClick: (TimeLine) -> Unit): TimeLineViewHolder {
-                val b = CellTimeLineDescriptionBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-                return TimeLineViewHolder(b, onClick)
-            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeLineViewHolder {
-        return TimeLineViewHolder.from(parent, onClick)
+        val b = CellTimeLineDescriptionBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return TimeLineViewHolder(b, onClick)
     }
 
     override fun onBindViewHolder(holder: TimeLineViewHolder, position: Int) {
-        holder.onBindData(getItem(position), position)
+        holder.onBindData(getItem(position))
     }
 }

@@ -13,12 +13,11 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.view.children
 import com.keycome.twinkleschedule.R
-import com.keycome.twinkleschedule.databinding.CustomDatePickerLayoutBinding
-import com.keycome.twinkleschedule.databinding.CustomDialogLayoutBinding
-import com.keycome.twinkleschedule.databinding.CustomTimePickerLayoutBinding
-import com.keycome.twinkleschedule.databinding.CustomWheelListLayoutBinding
+import com.keycome.twinkleschedule.databinding.*
 import com.keycome.twinkleschedule.model.Date
+import com.keycome.twinkleschedule.model.Day
 import com.keycome.twinkleschedule.model.Time
 
 abstract class CustomDialog(context: Context) : Dialog(context, R.style.CustomDialog) {
@@ -40,10 +39,10 @@ abstract class CustomDialog(context: Context) : Dialog(context, R.style.CustomDi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = CustomDialogLayoutBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         setCanceledOnTouchOutside(false)
         initStyle()
         initEvent()
+        setContentView(binding.root)
     }
 
     override fun show() {
@@ -226,11 +225,12 @@ class TimePickerDialog(context: Context, block: (TimePickerDialog.() -> Unit)? =
             return b.root
         }
 
-    val currentTime: Time get() = Time(
-        b.timePickerOfHour.currentValue.toInt(),
-        b.timePickerOfMinute.currentValue.toInt(),
-        0
-    )
+    val currentTime: Time
+        get() = Time(
+            b.timePickerOfHour.currentValue.toInt(),
+            b.timePickerOfMinute.currentValue.toInt(),
+            0
+        )
 
     init {
         hasTitle = false
@@ -258,5 +258,45 @@ class WheelDialog(
     init {
         hasTitle = false
         block?.invoke(this)
+    }
+}
+
+class EndDayDialog(
+    context: Context,
+    block: (EndDayDialog.() -> Unit)? = null
+) : CustomDialog(context) {
+
+    private val b = ViewEndDayPickerBinding.inflate(layoutInflater)
+    var day: Day = Day.Friday
+        private set
+    private var action: OnItemSelected? = null
+
+    override val body: View
+        get() {
+            return b.root
+        }
+
+    init {
+        for (v in b.root.children) {
+            v.setOnClickListener {
+                when (v) {
+                    b.endDayFriday -> day = Day.Friday
+                    b.endDaySaturday -> day = Day.Saturday
+                    b.endDaySunday -> day = Day.Sunday
+                }
+                dismiss()
+                action?.onItemSelected(day)
+            }
+        }
+        hasActionButton = false
+        block?.invoke(this)
+    }
+
+    fun onItemSelected(action: OnItemSelected) {
+        this.action = action
+    }
+
+    fun interface OnItemSelected {
+        fun onItemSelected(day: Day)
     }
 }

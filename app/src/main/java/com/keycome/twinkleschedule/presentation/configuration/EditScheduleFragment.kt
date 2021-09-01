@@ -1,32 +1,35 @@
 package com.keycome.twinkleschedule.presentation.configuration
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.custom.DatePickerDialog
 import com.keycome.twinkleschedule.custom.EditTextDialog
+import com.keycome.twinkleschedule.custom.EndDayDialog
 import com.keycome.twinkleschedule.custom.WheelDialog
 import com.keycome.twinkleschedule.database.TimeLine
+import com.keycome.twinkleschedule.databinding.CellTimeLineDescriptionBinding
 import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentEditScheduleBinding
-import com.keycome.twinkleschedule.extension.toast
-import com.keycome.twinkleschedule.model.Date
 import com.keycome.twinkleschedule.model.LiveSchedule
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.OnClickListener {
-    private lateinit var safeContext: Context
+
     private val viewModel: ConfigurationViewModel by activityViewModels()
 
     private val editTextDialog: EditTextDialog by lazy {
-        EditTextDialog(safeContext) {
+        EditTextDialog(requireContext()) {
             onPositiveButtonPressed {
                 textContent?.let { viewModel.liveSchedule.updateValue(LiveSchedule.name_, it) }
             }
@@ -34,7 +37,7 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
     }
 
     private val datePickerDialog: DatePickerDialog by lazy {
-        DatePickerDialog(safeContext) {
+        DatePickerDialog(requireContext()) {
             datePickerPosition = "2021-06-04"
             onPositiveButtonPressed {
                 viewModel.liveSchedule.updateValue(
@@ -48,7 +51,7 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
     private val coursesWheelDialog: WheelDialog by lazy {
         val list = mutableListOf<String>()
         (1..16).forEach { list.add(it.toString()) }
-        WheelDialog(safeContext, list) {
+        WheelDialog(requireContext(), list) {
             onPositiveButtonPressed {
                 viewModel.liveSchedule.updateValue(
                     LiveSchedule.daily_courses,
@@ -58,10 +61,16 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
         }
     }
 
+    private val endDayDialog: EndDayDialog by lazy {
+        EndDayDialog(requireContext()) {
+            onItemSelected { viewModel.liveSchedule.updateValue(LiveSchedule.weekly_end_day, day) }
+        }
+    }
+
     private val durationWheelDialog: WheelDialog by lazy {
         val list = mutableListOf<String>()
         (30..60).step(5).forEach { list.add(it.toString()) }
-        WheelDialog(safeContext, list) {
+        WheelDialog(requireContext(), list) {
             onPositiveButtonPressed {
                 viewModel.liveSchedule.updateValue(
                     LiveSchedule.course_duration,
@@ -85,14 +94,15 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        safeContext = requireContext()
         for (child in binding.linearLayout.children)
             if (child.id != binding.timeLineRecyclerView.id)
                 child.setOnClickListener(this)
-        val timeLineAdapter = TimeLineAdapter { adapterOnClickHandler(it) }
+        val timeLineAdapter = TimeLineAdapter(adapterOnClickHandler)
+        val timeLineFooterAdapter = TimeLineFooterAdapter(footerAdapterOnClickHandler)
+        val concatAdapter = ConcatAdapter(timeLineAdapter, timeLineFooterAdapter)
         binding.timeLineRecyclerView.apply {
-            adapter = timeLineAdapter
-            layoutManager = LinearLayoutManager(safeContext).apply {
+            adapter = concatAdapter
+            layoutManager = LinearLayoutManager(requireContext()).apply {
                 orientation = LinearLayoutManager.HORIZONTAL
             }
         }
@@ -100,16 +110,9 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
             binding.scheduleNameText.text = it.name
             binding.schoolBeginDateText.text = it.schoolBeginDate.toDotDateString()
             binding.dailyCoursesText.text = it.dailyCourses.toString()
+            binding.editEndDayText.text = it.weeklyEndDay.toString()
             binding.courseDurationText.text = it.courseDuration.toString()
-            val timeLineSet = it.timeLine
-            if (timeLineSet.isEmpty()) {
-                if (binding.timeLineRecyclerView.visibility == View.VISIBLE)
-                    binding.timeLineRecyclerView.visibility = View.GONE
-            } else {
-                val list = mutableListOf<TimeLine>()
-                timeLineSet.forEach { t -> list.add(t) }
-                timeLineAdapter.submitList(list)
-            }
+            timeLineAdapter.submitList(it.timeLine.toMutableList())
         }
     }
 
@@ -118,22 +121,39 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
             binding.editScheduleNameItem.id -> editTextDialog.show()
             binding.editSchoolBeginDateItem.id -> datePickerDialog.show()
             binding.editCourseNumberItem.id -> coursesWheelDialog.show()
+            binding.editEndDayItem.id -> endDayDialog.show()
             binding.editCourseDurationItem.id -> durationWheelDialog.show()
             binding.editCourseTimeLineItem.id -> findNavController()
                 .navigate(R.id.action_editScheduleFragment_to_addTimeLineFragment)
-            binding.testButton.id -> viewModel.insertSchedule()
-            binding.button2.id -> {
-                binding.timeLineRecyclerView.visibility = View.GONE
-            }
-            else -> toast("none")
+            binding.editScheduleSubmitButton.id -> viewModel.insertSchedule()
         }
     }
 
-    private fun adapterOnClickHandler(timeLine: TimeLine) {
+    private val adapterOnClickHandler = fun(
+        binding: CellTimeLineDescriptionBinding, viewId: Int, timeLine: TimeLine
+    ) {
+        when (viewId) {
+            binding.root.id -> {
+                val action =
+                    EditScheduleFragmentDirections.actionEditScheduleFragmentToAddTimeLineFragment(
+                        timeLine.id
+                    )
+                findNavController().navigate(action)
+            }
+            binding.cellTimeLineDescriptionDeleteButton.id -> {
+                viewModel.liveSchedule.removeTimeLine(timeLine.id)
+            }
+        }
+    }
+
+    private val footerAdapterOnClickHandler = fun(_: View) {
         val action =
             EditScheduleFragmentDirections.actionEditScheduleFragmentToAddTimeLineFragment(
-                timeLine.id
+                viewModel.liveSchedule.createTimeLine()
             )
-        findNavController().navigate(action)
+        lifecycleScope.launch {
+            delay(500)
+            findNavController().navigate(action)
+        }
     }
 }

@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView111"
-    android:layout_width="50dp"
-    android:layout_height="70dp"
+    android:layout_width="70dp"
+    android:layout_height="100dp"
     android:layout_margin="4dp"
     app:cardCornerRadius="4dp">
 
@@ -12,10 +12,24 @@
         android:id="@+id/time_line_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="24dp"
         android:gravity="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textStyle="bold"
+        android:textSize="16sp"
         tools:text="textView" />
+
+    <Button
+        android:id="@+id/cell_time_line_description_delete_button"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="3dp"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        android:text="删除"
+        android:textSize="12sp" />
 
 </androidx.cardview.widget.CardView>

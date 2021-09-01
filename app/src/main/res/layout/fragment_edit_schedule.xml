@@ -119,6 +119,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/edit_end_day_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_ripple"
@@ -136,7 +137,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/edit_end_day_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
@@ -210,7 +211,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/time_line_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="78dp"
+                android:layout_height="108dp"
                 android:orientation="horizontal"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
@@ -220,16 +221,11 @@
             </androidx.recyclerview.widget.RecyclerView>
 
             <Button
-                android:id="@+id/testButton"
+                android:id="@+id/edit_schedule_submit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
+                android:layout_margin="16dp"
+                android:text="提交" />
 
         </LinearLayout>
     </ScrollView>

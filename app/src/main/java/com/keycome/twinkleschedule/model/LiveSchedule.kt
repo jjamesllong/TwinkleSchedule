@@ -24,15 +24,15 @@ class LiveSchedule(
         const val weekly_end_day = -5
         const val course_duration = -6
         const val time_line = -7
-        const val time_line_id = -8
-        const val time_line_name = -9
-        const val time_line_start_date = -10
-        const val time_line_list = -11
+//        const val time_line_id = -8
+//        const val time_line_name = -9
+//        const val time_line_start_date = -10
+//        const val time_line_list = -11
     }
 
     fun updateValue(key: Int, value: Any) {
-        val schedule = super.getValue()!!
-        super.setValue(
+        val schedule = getValue()
+        setValue(
             when (key) {
                 schedule_id -> schedule.copy(scheduleId = value as Int)
                 name_ -> schedule.copy(name = value as String)
@@ -52,36 +52,28 @@ class LiveSchedule(
     }
 
     fun updateTimeLineName(timeLineId: Int, name: String) {
-        super.setValue(
-            actionToTimeLine(super.getValue()!!, timeLineId) { it.copy(name = name) }
-        )
+        value = actionToTimeLine(value, timeLineId) { it.copy(name = name) }
     }
 
     fun updateTimeLineDate(timeLineId: Int, date: Date) {
-        super.setValue(
-            actionToTimeLine(super.getValue()!!, timeLineId) { it.copy(startDate = date) }
-        )
+        value = actionToTimeLine(value, timeLineId) { it.copy(startDate = date) }
     }
 
     fun removeTimeLineListElement(timeLineId: Int, index: Int) {
-        super.setValue(
-            actionToTimeLine(super.getValue()!!, timeLineId) {
-                val list = it.timeLineList.toMutableList()
-                list.removeAt(index)
-                it.copy(timeLineList = list)
-            }
-        )
+        value = actionToTimeLine(value, timeLineId) {
+            val list = it.timeLineList.toMutableList()
+            list.removeAt(index)
+            it.copy(timeLineList = list)
+        }
     }
 
     fun addOrUpdateTimeLineListElement(timeLineId: Int, time: Time, index: Int = -1): Boolean {
         var result = false
-        super.setValue(
-            actionToTimeLine(super.getValue()!!, timeLineId) {
-                val list = it.timeLineList.toMutableList()
-                result = insertTime(time, list, index)
-                it.copy(timeLineList = list)
-            }
-        )
+        value = actionToTimeLine(value, timeLineId) {
+            val list = it.timeLineList.toMutableList()
+            result = insertTime(time, list, index)
+            it.copy(timeLineList = list)
+        }
         return result
     }
 
@@ -135,6 +127,30 @@ class LiveSchedule(
             }
         }
         return false
+    }
+
+    fun createTimeLine(): Int {
+        val set = value.timeLine.toMutableSet()
+        val id = requireTimeLineId()
+        set.add(
+            TimeLine(
+                id, "test", Date(2021, 7, 17), TestData.getTimeList()
+            )
+        )
+        value = value.copy(timeLine = set)
+        return id
+    }
+
+    fun removeTimeLine(id: Int) {
+        val set = value.timeLine.toMutableSet()
+        set.find { it.id == id }?.let { set.remove(it) }
+        value = value.copy(timeLine = set)
+    }
+
+    private fun requireTimeLineId(): Int {
+        var id = -1
+        value.timeLine.forEach { if (it.id > id) id = it.id }
+        return ++id
     }
 
     override fun setValue(value: ScheduleEntity) {
