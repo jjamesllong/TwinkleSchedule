@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/end_day_friday"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:padding="16dp"
+        android:text="星期五"
+        app:layout_constraintBottom_toTopOf="@+id/end_day_saturday"
+        app:layout_constraintStart_toStartOf="@+id/end_day_saturday"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/end_day_saturday"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:padding="16dp"
+        android:text="星期六"
+        app:layout_constraintBottom_toTopOf="@+id/end_day_sunday"
+        app:layout_constraintStart_toStartOf="@+id/end_day_sunday"
+        app:layout_constraintTop_toBottomOf="@+id/end_day_friday" />
+
+    <TextView
+        android:id="@+id/end_day_sunday"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:padding="16dp"
+        android:text="星期日"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/end_day_saturday" />
+</androidx.constraintlayout.widget.ConstraintLayout>
