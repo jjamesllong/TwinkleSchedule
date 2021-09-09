@@ -4,10 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.keycome.twinkleschedule.model.Day
+import com.keycome.twinkleschedule.model.horizon.Day
 
 @Entity(tableName = "course_entity")
-data class CourseEntity(
+data class Course(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "course_id")
     var courseId: Int,

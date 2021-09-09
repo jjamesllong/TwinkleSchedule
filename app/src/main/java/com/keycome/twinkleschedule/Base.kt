@@ -31,7 +31,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = deployBinding(inflater, container)
+        _binding = supportBinding(inflater, container)
         return binding.root
     }
 
@@ -52,7 +52,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         _binding = null
     }
 
-    protected abstract fun deployBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+    protected abstract fun supportBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
     protected abstract fun supportToolbar(title: Array<Int>): CustomToolbarLayoutBinding?
 }

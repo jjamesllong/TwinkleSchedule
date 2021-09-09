@@ -16,9 +16,9 @@ import android.widget.TextView
 import androidx.core.view.children
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.databinding.*
-import com.keycome.twinkleschedule.model.Date
-import com.keycome.twinkleschedule.model.Day
-import com.keycome.twinkleschedule.model.Time
+import com.keycome.twinkleschedule.model.horizon.Date
+import com.keycome.twinkleschedule.model.horizon.Day
+import com.keycome.twinkleschedule.model.horizon.Time
 
 abstract class CustomDialog(context: Context) : Dialog(context, R.style.CustomDialog) {
 

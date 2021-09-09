@@ -80,7 +80,7 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
         }
     }
 
-    override fun deployBinding(
+    override fun supportBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentEditScheduleBinding {
@@ -123,8 +123,6 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
             binding.editCourseNumberItem.id -> coursesWheelDialog.show()
             binding.editEndDayItem.id -> endDayDialog.show()
             binding.editCourseDurationItem.id -> durationWheelDialog.show()
-            binding.editCourseTimeLineItem.id -> findNavController()
-                .navigate(R.id.action_editScheduleFragment_to_addTimeLineFragment)
             binding.editScheduleSubmitButton.id -> viewModel.insertSchedule()
         }
     }

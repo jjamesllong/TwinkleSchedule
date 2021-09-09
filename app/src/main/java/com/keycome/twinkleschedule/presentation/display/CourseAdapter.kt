@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.keycome.twinkleschedule.database.CourseEntity
 import com.keycome.twinkleschedule.databinding.CustomCourseDescriptionBinding
 import com.keycome.twinkleschedule.model.CourseBlock
 
@@ -21,7 +20,7 @@ class CourseAdapter(private val daySpan: Int) : RecyclerView.Adapter<RecyclerVie
     class Placeholder(view: View) : RecyclerView.ViewHolder(view)
 
     lateinit var courseBlockArray: Array<CourseBlock>
-    lateinit var courseEntityArray: Array<CourseEntity>
+    lateinit var courseArray: Array<com.keycome.twinkleschedule.database.Course>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val frameLayout = FrameLayout(parent.context).apply {
@@ -47,9 +46,9 @@ class CourseAdapter(private val daySpan: Int) : RecyclerView.Adapter<RecyclerVie
             holder.apply {
                 val index = courseBlockArray[position].courseIndex
                 val courseInfoText = StringBuilder()
-                    .append(courseEntityArray[index].title)
+                    .append(courseArray[index].title)
                     .append("\n@")
-                    .append(courseEntityArray[index].classroom)
+                    .append(courseArray[index].classroom)
                     .toString()
                 binding.courseInfo.text = courseInfoText
             }

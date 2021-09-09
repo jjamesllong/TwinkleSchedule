@@ -1,8 +1,8 @@
 package com.keycome.twinkleschedule.database
 
-import com.keycome.twinkleschedule.model.Date
-import com.keycome.twinkleschedule.model.Day
-import com.keycome.twinkleschedule.model.Time
+import com.keycome.twinkleschedule.model.horizon.Date
+import com.keycome.twinkleschedule.model.horizon.Day
+import com.keycome.twinkleschedule.model.horizon.Time
 
 class TestData {
     companion object {
@@ -40,7 +40,7 @@ class TestData {
             courseDuration = 45,
             timeLine = setOf()
         )
-        private val course = CourseEntity(
+        private val course = Course(
             courseId = 0,
             parentScheduleId = 0,
             title = "",
@@ -52,7 +52,7 @@ class TestData {
             classroom = ""
         )
         val courseArray = arrayOf(
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "马克思主义基本原理概论",
@@ -63,7 +63,7 @@ class TestData {
                 teacher = "袁夫友",
                 classroom = "文通205"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "有氧健身俱乐部",
@@ -74,7 +74,7 @@ class TestData {
                 teacher = "陆守芹",
                 classroom = "第二田径场(东)"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "信号与系统",
@@ -85,7 +85,7 @@ class TestData {
                 teacher = "施彩平",
                 classroom = "文华103"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "海洋世界",
@@ -96,7 +96,7 @@ class TestData {
                 teacher = "苏振霞",
                 classroom = "文华105"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "电磁场与电磁波",
@@ -107,7 +107,7 @@ class TestData {
                 teacher = "张之光",
                 classroom = "主楼208"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "大学英语(四)",
@@ -118,7 +118,7 @@ class TestData {
                 teacher = "刘伟",
                 classroom = "文通119"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "数字电子技术B",
@@ -129,7 +129,7 @@ class TestData {
                 teacher = "栾晓东",
                 classroom = "文华102"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "马克思主义基本原理概论",
@@ -140,7 +140,7 @@ class TestData {
                 teacher = "袁夫友",
                 classroom = "文通205"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "数值计算",
@@ -151,7 +151,7 @@ class TestData {
                 teacher = "李步军",
                 classroom = "文通213"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "形势与政策",
@@ -162,7 +162,7 @@ class TestData {
                 teacher = "丁小青",
                 classroom = "文通302"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "信号与系统",
@@ -173,7 +173,7 @@ class TestData {
                 teacher = "施彩平",
                 classroom = "文华103"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "电磁场与电磁波",
@@ -184,7 +184,7 @@ class TestData {
                 teacher = "张之光",
                 classroom = "主楼208"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "大学英语(四)",
@@ -195,7 +195,7 @@ class TestData {
                 teacher = "刘伟",
                 classroom = "文通119"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "数值计算",
@@ -206,7 +206,7 @@ class TestData {
                 teacher = "李步军",
                 classroom = "文通213"
             ),
-            CourseEntity(
+            Course(
                 courseId = 0,
                 parentScheduleId = 0,
                 title = "数字电子技术B",

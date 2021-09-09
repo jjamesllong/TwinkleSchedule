@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import com.keycome.twinkleschedule.database.ScheduleEntity
 import com.keycome.twinkleschedule.database.TestData
 import com.keycome.twinkleschedule.database.TimeLine
+import com.keycome.twinkleschedule.model.horizon.Date
+import com.keycome.twinkleschedule.model.horizon.Day
+import com.keycome.twinkleschedule.model.horizon.Time
 
 class LiveSchedule(
     schedule: ScheduleEntity = ScheduleEntity(

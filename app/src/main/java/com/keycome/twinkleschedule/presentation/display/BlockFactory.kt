@@ -2,7 +2,7 @@ package com.keycome.twinkleschedule.presentation.display
 
 import com.keycome.twinkleschedule.database.TestData
 import com.keycome.twinkleschedule.model.CourseBlock
-import com.keycome.twinkleschedule.model.Day
+import com.keycome.twinkleschedule.model.horizon.Day
 
 class BlockFactory {
     private val blockList = mutableListOf<CourseBlock>()

@@ -7,5 +7,5 @@ data class CourseWithSchedule(
     @Embedded
     var schedule: ScheduleEntity,
     @Relation(parentColumn = "schedule_id", entityColumn = "parent_schedule_id")
-    var courseEntityList: List<CourseEntity>
+    var courseList: List<Course>
 )

@@ -15,6 +15,7 @@ import com.keycome.twinkleschedule.custom.CustomPopupMenu
 import com.keycome.twinkleschedule.database.TestData
 import com.keycome.twinkleschedule.databinding.FragmentDisplayCoursesBinding
 import com.keycome.twinkleschedule.presentation.configuration.ConfigurationActivity
+import com.keycome.twinkleschedule.presentation.record.RecordActivity
 
 class DisplayCoursesFragment : Fragment() {
     private lateinit var binding: FragmentDisplayCoursesBinding
@@ -46,13 +47,13 @@ class DisplayCoursesFragment : Fragment() {
         }
         val courseAdapter = CourseAdapter(5).apply {
             courseBlockArray = coursesArray
-            courseEntityArray = TestData.courseArray
+            courseArray = TestData.courseArray
         }
         binding.courseRecyclerView.apply {
             layoutManager = gridLayoutManager
             adapter = courseAdapter
         }
-        binding.imageButton.setOnClickListener { v ->
+        binding.menuButton.setOnClickListener { v ->
             if (popupMenu == null) onCreatePopupMenu()
             popupMenu!!.run { if (isShowing) dismiss() else showAsDropDown(v) }
         }
@@ -61,13 +62,16 @@ class DisplayCoursesFragment : Fragment() {
     @SuppressLint("InflateParams")
     private fun onCreatePopupMenu() {
         val content = LayoutInflater.from(context).inflate(
-            R.layout.custom_popup_menu, null, false
+            R.layout.view_popup_menu, null, false
         ) as LinearLayout
         popupMenu = CustomPopupMenu(requireContext(), content).apply {
             setOnItemSelectedListener {
                 when (it.id) {
                     R.id.add_schedule_item -> {
                         startActivity(Intent(requireContext(), ConfigurationActivity::class.java))
+                    }
+                    R.id.record_course_item -> {
+                        startActivity(Intent(requireContext(), RecordActivity::class.java))
                     }
                 }
             }

@@ -3,4 +3,6 @@
     <string name="addScheduleFragmentLabel">添加</string>
     <string name="editScheduleFragmentLabel">编辑</string>
     <string name="timeLineFragmentLabel">编辑课程时间表</string>
+    <string name="scheduleListFragmentLabel">选择课表</string>
+    <string name="addCourseFragmentLabel">录入课程</string>
 </resources>

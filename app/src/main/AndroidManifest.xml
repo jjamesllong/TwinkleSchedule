@@ -10,9 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TwinkleSchedule">
+        <activity
+            android:name=".presentation.record.RecordActivity"
+            android:exported="false" />
         <activity android:name=".presentation.configuration.ConfigurationActivity" />
         <activity android:name=".presentation.display.DisplayActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

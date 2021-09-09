@@ -12,7 +12,7 @@ import com.keycome.twinkleschedule.databinding.FragmentAddScheduleBinding
 
 class AddScheduleFragment : BaseFragment<FragmentAddScheduleBinding>() {
 
-    override fun deployBinding(
+    override fun supportBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentAddScheduleBinding {

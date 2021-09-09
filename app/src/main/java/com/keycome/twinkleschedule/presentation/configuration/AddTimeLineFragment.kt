@@ -61,7 +61,7 @@ class AddTimeLineFragment : BaseFragment<FragmentAddTimeLineBinding>() {
         }
     }
 
-    override fun deployBinding(
+    override fun supportBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentAddTimeLineBinding {
@@ -83,9 +83,7 @@ class AddTimeLineFragment : BaseFragment<FragmentAddTimeLineBinding>() {
         }
         val concatAdapter = ConcatAdapter(addTimeLineHeaderAdapter, addTimeLineAdapter)
         binding.fragmentAddTimeLineRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext()).apply {
-                orientation = LinearLayoutManager.VERTICAL
-            }
+            layoutManager = LinearLayoutManager(requireContext())
             adapter = concatAdapter
         }
         binding.fragmentAddTimeLineBottomButton.setOnClickListener {

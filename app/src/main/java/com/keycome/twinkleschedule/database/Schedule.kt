@@ -3,9 +3,9 @@ package com.keycome.twinkleschedule.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.keycome.twinkleschedule.model.Date
-import com.keycome.twinkleschedule.model.Day
-import com.keycome.twinkleschedule.model.Time
+import com.keycome.twinkleschedule.model.horizon.Date
+import com.keycome.twinkleschedule.model.horizon.Day
+import com.keycome.twinkleschedule.model.horizon.Time
 
 @Entity(tableName = "schedule_entity")
 data class ScheduleEntity(
