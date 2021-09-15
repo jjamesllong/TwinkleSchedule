@@ -5,10 +5,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.keycome.twinkleschedule.App
+import com.keycome.twinkleschedule.model.sketch.Course
+import com.keycome.twinkleschedule.model.sketch.Schedule
 
 @Database(
-    entities = [ScheduleEntity::class, Course::class],
-    version = 13,
+    entities = [Schedule::class, Course::class],
+    version = 14,
     exportSchema = false
 )
 @TypeConverters(Converter::class)

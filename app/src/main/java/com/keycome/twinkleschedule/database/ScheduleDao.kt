@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.keycome.twinkleschedule.model.sketch.Schedule
 
 @Dao
 interface ScheduleDao {
     @Insert
-    suspend fun insertSchedule(schedule: ScheduleEntity)
+    suspend fun insertSchedule(schedule: Schedule)
 
-    @Query("SELECT * FROM schedule_entity ORDER BY school_begin_date DESC")
-    fun queryAllSchedule(): LiveData<List<ScheduleEntity>>
+    @Query("SELECT * FROM schedule ORDER BY school_begin_date DESC")
+    fun queryAllSchedule(): LiveData<List<Schedule>>
 }

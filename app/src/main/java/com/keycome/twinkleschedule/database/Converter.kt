@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.keycome.twinkleschedule.model.horizon.Date
 import com.keycome.twinkleschedule.model.horizon.Day
+import com.keycome.twinkleschedule.model.sketch.TimeLine
 
 class Converter {
     private val gSon = Gson()
@@ -38,12 +39,9 @@ class Converter {
     fun dayConvert(day: Day): String = day.name
 
     @TypeConverter
-    fun continuityRevert(continuityString: String) = try {
-        Continuity.valueOf(continuityString)
-    } catch (e: Exception) {
-        throw IllegalArgumentException(e)
-    }
+    fun intListRevert(gSonString: String): List<Int> =
+        gSon.fromJson(gSonString, object : TypeToken<List<Int>>() {}.type)
 
     @TypeConverter
-    fun continuityConvert(continuity: Continuity): String = continuity.name
+    fun intListConvert(intList: List<Int>): String = gSon.toJson(intList)
 }

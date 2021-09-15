@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
-import com.keycome.twinkleschedule.database.ScheduleEntity
+import com.keycome.twinkleschedule.model.sketch.Schedule
 import com.keycome.twinkleschedule.databinding.ViewAddTimeLineHeaderBinding
 
 class AddTimeLineHeaderAdapter(
-    var schedule: ScheduleEntity? = null,
+    var schedule: Schedule? = null,
     private val timeLineId: Int = 0,
     private val onClick: (ViewAddTimeLineHeaderBinding, Int) -> Unit
 ) : RecyclerView.Adapter<AddTimeLineHeaderAdapter.HeaderViewHolder>() {
@@ -22,7 +22,7 @@ class AddTimeLineHeaderAdapter(
                 view.setOnClickListener { onClick(binding, it.id) }
         }
 
-        fun onBindData(schedule: ScheduleEntity?, timeLineId: Int) {
+        fun onBindData(schedule: Schedule?, timeLineId: Int) {
             schedule?.let {
                 it.timeLine.find { timeLine -> timeLine.id == timeLineId }?.let { timeLine ->
                     binding.headerCurrentTimeLineText.text = timeLine.name

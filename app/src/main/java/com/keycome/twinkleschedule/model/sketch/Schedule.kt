@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.database
+package com.keycome.twinkleschedule.model.sketch
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -7,8 +7,8 @@ import com.keycome.twinkleschedule.model.horizon.Date
 import com.keycome.twinkleschedule.model.horizon.Day
 import com.keycome.twinkleschedule.model.horizon.Time
 
-@Entity(tableName = "schedule_entity")
-data class ScheduleEntity(
+@Entity(tableName = "schedule")
+data class Schedule(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "schedule_id")
     val scheduleId: Int,
@@ -35,5 +35,5 @@ data class TimeLine(
     val id: Int,
     val name: String,
     val startDate: Date,
-    val timeLineList: List<Time>
+    val lineList: List<Time>
 )

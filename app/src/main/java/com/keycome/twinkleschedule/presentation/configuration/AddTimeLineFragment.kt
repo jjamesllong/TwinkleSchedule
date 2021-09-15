@@ -108,7 +108,7 @@ class AddTimeLineFragment : BaseFragment<FragmentAddTimeLineBinding>() {
                 notifyDataSetChanged()
             }
             it.timeLine.find { timeLine -> timeLine.id == args.timeLineId }?.let { timeLine ->
-                addTimeLineAdapter.submitList(timeLine.timeLineList)
+                addTimeLineAdapter.submitList(timeLine.lineList)
             }
         }
     }

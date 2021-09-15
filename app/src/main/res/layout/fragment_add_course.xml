@@ -13,57 +13,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/tvv2"
-        app:layout_constraintEnd_toEndOf="@+id/tvv2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/tvv2"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_add_course_toolbar" />
-
-    <TextView
-        android:id="@+id/tvv2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/tvv3"
-        app:layout_constraintEnd_toEndOf="@+id/tvv3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/tvv3"
-        app:layout_constraintTop_toBottomOf="@+id/tvv1" />
-
-    <TextView
-        android:id="@+id/tvv3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/tvv4"
-        app:layout_constraintEnd_toEndOf="@+id/tvv4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/tvv4"
-        app:layout_constraintTop_toBottomOf="@+id/tvv2" />
-
-    <TextView
-        android:id="@+id/tvv4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/tvv5"
-        app:layout_constraintEnd_toEndOf="@+id/tvv5"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/tvv5"
-        app:layout_constraintTop_toBottomOf="@+id/tvv3" />
-
-    <TextView
-        android:id="@+id/tvv5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/editing_course_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvv4" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_add_course_toolbar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

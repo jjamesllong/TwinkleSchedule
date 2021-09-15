@@ -16,7 +16,7 @@ import com.keycome.twinkleschedule.custom.DatePickerDialog
 import com.keycome.twinkleschedule.custom.EditTextDialog
 import com.keycome.twinkleschedule.custom.EndDayDialog
 import com.keycome.twinkleschedule.custom.WheelDialog
-import com.keycome.twinkleschedule.database.TimeLine
+import com.keycome.twinkleschedule.model.sketch.TimeLine
 import com.keycome.twinkleschedule.databinding.CellTimeLineDescriptionBinding
 import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentEditScheduleBinding

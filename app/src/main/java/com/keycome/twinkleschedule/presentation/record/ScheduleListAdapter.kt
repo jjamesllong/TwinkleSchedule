@@ -6,24 +6,24 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.keycome.twinkleschedule.database.ScheduleEntity
+import com.keycome.twinkleschedule.model.sketch.Schedule
 import com.keycome.twinkleschedule.databinding.CellScheduleTitleBinding
 
 class ScheduleListAdapter :
-    ListAdapter<ScheduleEntity, ScheduleListAdapter.ScheduleViewHolder>(ScheduleDiffCallback) {
+    ListAdapter<Schedule, ScheduleListAdapter.ScheduleViewHolder>(ScheduleDiffCallback) {
 
-    object ScheduleDiffCallback : DiffUtil.ItemCallback<ScheduleEntity>() {
+    object ScheduleDiffCallback : DiffUtil.ItemCallback<Schedule>() {
 
         override fun areItemsTheSame(
-            oldItem: ScheduleEntity,
-            newItem: ScheduleEntity
+            oldItem: Schedule,
+            newItem: Schedule
         ): Boolean {
             return oldItem.scheduleId == newItem.scheduleId
         }
 
         override fun areContentsTheSame(
-            oldItem: ScheduleEntity,
-            newItem: ScheduleEntity
+            oldItem: Schedule,
+            newItem: Schedule
         ): Boolean {
             return oldItem == newItem
         }
@@ -32,7 +32,7 @@ class ScheduleListAdapter :
     class ScheduleViewHolder(private val binding: CellScheduleTitleBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        private var itemSchedule: ScheduleEntity? = null
+        private var itemSchedule: Schedule? = null
 
         init {
             binding.root.setOnClickListener { v ->
@@ -46,7 +46,7 @@ class ScheduleListAdapter :
             }
         }
 
-        fun onBind(schedule: ScheduleEntity, position: Int) {
+        fun onBind(schedule: Schedule, position: Int) {
             itemSchedule = schedule
             binding.scheduleTitle.text = schedule.name
         }

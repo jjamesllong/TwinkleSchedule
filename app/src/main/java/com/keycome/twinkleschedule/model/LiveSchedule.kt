@@ -1,15 +1,15 @@
 package com.keycome.twinkleschedule.model
 
 import androidx.lifecycle.LiveData
-import com.keycome.twinkleschedule.database.ScheduleEntity
 import com.keycome.twinkleschedule.database.TestData
-import com.keycome.twinkleschedule.database.TimeLine
 import com.keycome.twinkleschedule.model.horizon.Date
 import com.keycome.twinkleschedule.model.horizon.Day
 import com.keycome.twinkleschedule.model.horizon.Time
+import com.keycome.twinkleschedule.model.sketch.Schedule
+import com.keycome.twinkleschedule.model.sketch.TimeLine
 
 class LiveSchedule(
-    schedule: ScheduleEntity = ScheduleEntity(
+    schedule: Schedule = Schedule(
         scheduleId = 0,
         name = "课表一",
         schoolBeginDate = Date(2021, 3, 1),
@@ -18,7 +18,7 @@ class LiveSchedule(
         courseDuration = 45,
         timeLine = setOf(TestData.timeLine)
     )
-) : LiveData<ScheduleEntity>(schedule) {
+) : LiveData<Schedule>(schedule) {
     companion object {
         const val schedule_id = -1
         const val name_ = -2
@@ -64,27 +64,27 @@ class LiveSchedule(
 
     fun removeTimeLineListElement(timeLineId: Int, index: Int) {
         value = actionToTimeLine(value, timeLineId) {
-            val list = it.timeLineList.toMutableList()
+            val list = it.lineList.toMutableList()
             list.removeAt(index)
-            it.copy(timeLineList = list)
+            it.copy(lineList = list)
         }
     }
 
     fun addOrUpdateTimeLineListElement(timeLineId: Int, time: Time, index: Int = -1): Boolean {
         var result = false
         value = actionToTimeLine(value, timeLineId) {
-            val list = it.timeLineList.toMutableList()
+            val list = it.lineList.toMutableList()
             result = insertTime(time, list, index)
-            it.copy(timeLineList = list)
+            it.copy(lineList = list)
         }
         return result
     }
 
     private inline fun actionToTimeLine(
-        schedule: ScheduleEntity,
+        schedule: Schedule,
         timeLineId: Int,
         action: (TimeLine) -> TimeLine
-    ): ScheduleEntity {
+    ): Schedule {
         return schedule.timeLine.find { it.id == timeLineId }?.let {
             val timeLine = action(it)
             val set = schedule.timeLine.toMutableSet()
@@ -156,11 +156,11 @@ class LiveSchedule(
         return ++id
     }
 
-    override fun setValue(value: ScheduleEntity) {
+    override fun setValue(value: Schedule) {
         super.setValue(value)
     }
 
-    override fun getValue(): ScheduleEntity {
+    override fun getValue(): Schedule {
         return super.getValue()!!
     }
 }

@@ -5,8 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.keycome.twinkleschedule.model.sketch.Course
 import com.keycome.twinkleschedule.databinding.CustomCourseDescriptionBinding
-import com.keycome.twinkleschedule.model.CourseBlock
+import com.keycome.twinkleschedule.model.ViewBlock
 
 class CourseAdapter(private val daySpan: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
@@ -14,13 +15,13 @@ class CourseAdapter(private val daySpan: Int) : RecyclerView.Adapter<RecyclerVie
         const val TYPE_COURSE = 1
     }
 
-    class Course(view: View, val binding: CustomCourseDescriptionBinding) :
+    class CourseView(view: View, val binding: CustomCourseDescriptionBinding) :
         RecyclerView.ViewHolder(view)
 
     class Placeholder(view: View) : RecyclerView.ViewHolder(view)
 
-    lateinit var courseBlockArray: Array<CourseBlock>
-    lateinit var courseArray: Array<com.keycome.twinkleschedule.database.Course>
+    lateinit var courseBlockArray: Array<ViewBlock>
+    lateinit var courseArray: Array<Course>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val frameLayout = FrameLayout(parent.context).apply {
@@ -35,14 +36,14 @@ class CourseAdapter(private val daySpan: Int) : RecyclerView.Adapter<RecyclerVie
                 val binding = CustomCourseDescriptionBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
-                Course(frameLayout.apply { addView(binding.root) }, binding)
+                CourseView(frameLayout.apply { addView(binding.root) }, binding)
             }
             else -> Placeholder(frameLayout)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is Course) {
+        if (holder is CourseView) {
             holder.apply {
                 val index = courseBlockArray[position].courseIndex
                 val courseInfoText = StringBuilder()

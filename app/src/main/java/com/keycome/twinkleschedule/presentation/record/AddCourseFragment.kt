@@ -6,15 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentAddCourseBinding
+import com.keycome.twinkleschedule.extension.toast
 
 class AddCourseFragment : BaseFragment<FragmentAddCourseBinding>() {
 
-    val viewModel by activityViewModels<RecordViewModel>()
-    val args by navArgs<AddCourseFragmentArgs>()
+    private val viewModel by activityViewModels<RecordViewModel>()
+    private val args by navArgs<AddCourseFragmentArgs>()
 
     override fun supportBinding(
         inflater: LayoutInflater,
@@ -30,13 +32,14 @@ class AddCourseFragment : BaseFragment<FragmentAddCourseBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val schedule = viewModel.liveScheduleList.value?.find { it.scheduleId == args.scheduleId }
-        schedule?.let {
-            binding.tvv1.text = it.scheduleId.toString()
-            binding.tvv2.text = it.name
-            binding.tvv3.text = it.schoolBeginDate.toDotDateString()
-            binding.tvv4.text = it.dailyCourses.toString()
-            binding.tvv5.text = it.weeklyEndDay.toString()
+
+        val addCourseAdapter = AddCourseAdapter(viewModel)
+        binding.editingCourseRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = addCourseAdapter
+        }
+        viewModel.liveCourseList.observe(viewLifecycleOwner) {
+            addCourseAdapter.submitList(it)
         }
     }
 
