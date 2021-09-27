@@ -20,28 +20,27 @@ import com.keycome.twinkleschedule.model.horizon.Date
 import com.keycome.twinkleschedule.model.horizon.Day
 import com.keycome.twinkleschedule.model.horizon.Time
 
-abstract class CustomDialog(context: Context) : Dialog(context, R.style.CustomDialog) {
+abstract class TemplateDialog(context: Context) : Dialog(context, R.style.TemplateDialog) {
 
     abstract val body: View
-    private lateinit var binding: CustomDialogLayoutBinding
+    private lateinit var binding: ViewDialogTemplateBinding
     private var positiveAction: PositiveAction? = null
     private var negativeAction: NegativeAction? = null
-    private var singleAction: SingleAction? = null
+    private var neutralAction: NeutralAction? = null
     var autoDismiss: Boolean = true
     var hasTitle = true
     var hasActionButton = true
-    var singleActionButton = false
+    var neutralActionButton = false
     var negativeText = "取消"
     var positiveText = "确定"
-    var singleText = "好"
+    var neutralText = "好"
     var titleText = "标题"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = CustomDialogLayoutBinding.inflate(layoutInflater)
+        binding = ViewDialogTemplateBinding.inflate(layoutInflater)
         setCanceledOnTouchOutside(false)
-        initStyle()
-        initEvent()
+        initTemplate()
         setContentView(binding.root)
     }
 
@@ -53,43 +52,43 @@ abstract class CustomDialog(context: Context) : Dialog(context, R.style.CustomDi
         window?.attributes = lp
     }
 
-    private fun initStyle() {
-        if (!hasTitle) binding.dialogHead.visibility = View.GONE
-        if (!hasActionButton) binding.dialogFoot.visibility = View.GONE
-        if (singleActionButton) {
-            if (hasActionButton) binding.dialogNegativeFrame.visibility = View.GONE
-            else throw IllegalArgumentException("this dialog has been defined to no action buttons")
+    private fun initTemplate() {
+        if (!hasTitle)
+            binding.dialogHead.visibility = View.GONE
+        else
+            binding.dialogHead.text = titleText
+        if (!hasActionButton)
+            binding.dialogFoot.visibility = View.GONE
+        else {
+            if (neutralActionButton) {
+                binding.dialogNegativeFrame.visibility = View.GONE
+                binding.dialogPositiveText.text = neutralText
+                binding.dialogPositiveText.setOnClickListener {
+                    neutralAction?.action()
+                    if (autoDismiss && isShowing) dismiss()
+                }
+            } else {
+                binding.dialogPositiveText.text = positiveText
+                binding.dialogNegativeText.text = negativeText
+                binding.dialogPositiveText.setOnClickListener {
+                    positiveAction?.action()
+                    if (autoDismiss && isShowing) dismiss()
+                }
+                binding.dialogNegativeText.setOnClickListener {
+                    negativeAction?.action()
+                    if (autoDismiss && isShowing) dismiss()
+                }
+            }
         }
         binding.dialogBody.addView(body)
-
-        binding.run {
-            dialogHead.text = titleText
-            if (singleActionButton) dialogPositiveText.text = singleText
-            else {
-                dialogPositiveText.text = positiveText
-                dialogNegativeText.text = negativeText
-            }
-        }
     }
 
-    private fun initEvent() {
-
-        if (singleActionButton) {
-            binding.dialogPositiveText.setOnClickListener {
-                singleAction?.action()
-                if (autoDismiss && isShowing) dismiss()
-            }
-        } else {
-            binding.dialogPositiveText.setOnClickListener {
-                positiveAction?.action()
-                if (autoDismiss && isShowing) dismiss()
-            }
-
-            binding.dialogNegativeText.setOnClickListener {
-                negativeAction?.action()
-                if (autoDismiss && isShowing) dismiss()
-            }
-        }
+    protected fun requireWidth(): Int {
+        val metrics = Resources.getSystem().displayMetrics
+        val w = (metrics.widthPixels * 0.85).toInt()
+        val l = binding.root.paddingLeft
+        val r = binding.root.paddingRight
+        return w - l - r
     }
 
     fun onPositiveButtonPressed(action: PositiveAction) {
@@ -100,8 +99,8 @@ abstract class CustomDialog(context: Context) : Dialog(context, R.style.CustomDi
         this.negativeAction = action
     }
 
-    fun onSingleButtonPressed(action: SingleAction) {
-        this.singleAction = action
+    fun onNeutralButtonPressed(action: NeutralAction) {
+        this.neutralAction = action
     }
 
     fun interface PositiveAction {
@@ -112,12 +111,13 @@ abstract class CustomDialog(context: Context) : Dialog(context, R.style.CustomDi
         fun action()
     }
 
-    fun interface SingleAction {
+    fun interface NeutralAction {
         fun action()
     }
 }
 
-class TextDialog(context: Context, block: (TextDialog.() -> Unit)? = null) : CustomDialog(context) {
+class TextDialog(context: Context, block: (TextDialog.() -> Unit)? = null) :
+    TemplateDialog(context) {
 
     var content: String = ""
 
@@ -135,7 +135,7 @@ class TextDialog(context: Context, block: (TextDialog.() -> Unit)? = null) : Cus
 }
 
 class EditTextDialog(context: Context, block: (EditTextDialog.() -> Unit)? = null) :
-    CustomDialog(context) {
+    TemplateDialog(context) {
 
     private var textChangedAction: TextChangedAction? = null
     var textContent: String? = null
@@ -180,7 +180,7 @@ class EditTextDialog(context: Context, block: (EditTextDialog.() -> Unit)? = nul
 }
 
 class DatePickerDialog(context: Context, block: (DatePickerDialog.() -> Unit)? = null) :
-    CustomDialog(context) {
+    TemplateDialog(context) {
 
     private val b: CustomDatePickerLayoutBinding =
         CustomDatePickerLayoutBinding.inflate(layoutInflater)
@@ -209,7 +209,7 @@ class DatePickerDialog(context: Context, block: (DatePickerDialog.() -> Unit)? =
 }
 
 class TimePickerDialog(context: Context, block: (TimePickerDialog.() -> Unit)? = null) :
-    CustomDialog(context) {
+    TemplateDialog(context) {
 
     private val b = CustomTimePickerLayoutBinding.inflate(layoutInflater)
     var timePickerPosition = arrayOf(15, 24)
@@ -243,7 +243,7 @@ class WheelDialog(
     context: Context,
     val list: List<String>,
     block: (WheelDialog.() -> Unit)? = null
-) : CustomDialog(context) {
+) : TemplateDialog(context) {
 
     private val b = CustomWheelListLayoutBinding.inflate(layoutInflater)
     var position = 0
@@ -264,7 +264,7 @@ class WheelDialog(
 class EndDayDialog(
     context: Context,
     block: (EndDayDialog.() -> Unit)? = null
-) : CustomDialog(context) {
+) : TemplateDialog(context) {
 
     private val b = ViewEndDayPickerBinding.inflate(layoutInflater)
     var day: Day = Day.Friday

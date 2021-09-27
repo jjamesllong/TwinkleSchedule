@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.custom.EditTextDialog
+import com.keycome.twinkleschedule.custom.listdialog.ListDialog
 import com.keycome.twinkleschedule.databinding.CellCourseEditingInfoBinding
+import com.keycome.twinkleschedule.model.LayoutSpec
+import com.keycome.twinkleschedule.model.horizon.Day
 import com.keycome.twinkleschedule.model.sketch.Course
 import com.keycome.twinkleschedule.model.sketch.CourseField
 
@@ -33,6 +36,68 @@ class AddCourseAdapter(val viewModel: RecordViewModel) :
 
         private val itemEvent: (View) -> Unit = { v ->
             when (v) {
+                binding.editingInfoWeek -> ListDialog(
+                    v.context,
+                    object : ListDialog.Adapter<Int>((1..24).toList()) {
+                        override val layoutSpec: LayoutSpec
+                            get() = LayoutSpec.Grid(LayoutSpec.vertical, 5)
+
+                        override fun converter(element: Int): String {
+                            return element.toString()
+                        }
+                    }
+                ) {
+                    onPositiveButtonPressed {
+                        viewModel.liveCourseList.updateField(
+                            CourseField.Week(requestSelectedList()),
+                            bindingAdapterPosition
+                        )
+                    }
+                }.show()
+                binding.editingInfoDay -> ListDialog(
+                    v.context,
+                    object : ListDialog.Adapter<Day>(Day.values().toList()) {
+                        override val layoutSpec: LayoutSpec
+                            get() = LayoutSpec.Linear(LayoutSpec.vertical)
+
+                        override fun converter(element: Day): String {
+                            return element.name
+                        }
+                    }
+                ) {
+                    onPositiveButtonPressed {
+                        viewModel.liveCourseList.updateField(
+                            CourseField.FDay(requestSelectedList()[0]),
+                            bindingAdapterPosition
+                        )
+                    }
+                }.show()
+                binding.editingInfoSection -> ListDialog(
+                    v.context,
+                    object : ListDialog.Adapter<Int>((1..14).toList()) {
+                        override val layoutSpec: LayoutSpec
+                            get() = LayoutSpec.Grid(LayoutSpec.vertical, 5)
+
+                        override fun converter(element: Int): String {
+                            return element.toString()
+                        }
+                    }
+                ) {
+                    onPositiveButtonPressed {
+                        viewModel.liveCourseList.updateField(
+                            CourseField.Section(requestSelectedList()),
+                            bindingAdapterPosition
+                        )
+                    }
+                }.show()
+                binding.editingInfoTeacher -> EditTextDialog(v.context) {
+                    onPositiveButtonPressed {
+                        viewModel.liveCourseList.updateField(
+                            CourseField.Teacher(textContent!!),
+                            bindingAdapterPosition
+                        )
+                    }
+                }.show()
                 binding.editingInfoClassroom -> EditTextDialog(v.context) {
                     onPositiveButtonPressed {
                         viewModel.liveCourseList.updateField(
