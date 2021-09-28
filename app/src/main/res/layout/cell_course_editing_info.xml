@@ -6,6 +6,20 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <Button
+        android:id="@+id/cell_course_editing_info_delete_button"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal|end"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        android:text="删除"
+        android:textSize="12sp" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/editing_info_week"
         android:layout_width="match_parent"

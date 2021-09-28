@@ -2,7 +2,6 @@ package com.keycome.twinkleschedule
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -25,15 +24,15 @@ class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // binding = ActivityMainBinding.inflate(layoutInflater)
-        // setContentView(binding.root)
-        setContent {
-            MainContent {
-                startActivity(Intent(this, DisplayActivity::class.java))
-            }
-        }
-//        startActivity(Intent(this, DisplayActivity::class.java))
-//        finish()
+//         binding = ActivityMainBinding.inflate(layoutInflater)
+//         setContentView(binding.root)
+//         setContent {
+//             MainContent {
+//                startActivity(Intent(this, DisplayActivity::class.java))
+//            }
+//        }
+        startActivity(Intent(this, DisplayActivity::class.java))
+        finish()
     }
 }
 
@@ -73,9 +72,4 @@ fun MainContent(buttonEvent: () -> Unit) {
 @Preview
 @Composable
 fun CompletePreview() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    )
 }

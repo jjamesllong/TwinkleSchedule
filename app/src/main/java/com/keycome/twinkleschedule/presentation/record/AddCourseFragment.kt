@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentAddCourseBinding
-import com.keycome.twinkleschedule.extension.toast
+import com.keycome.twinkleschedule.model.sketch.CourseField
 
 class AddCourseFragment : BaseFragment<FragmentAddCourseBinding>() {
 
@@ -33,14 +34,30 @@ class AddCourseFragment : BaseFragment<FragmentAddCourseBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.initLiveCourseList(CourseField.ParentScheduleId(args.scheduleId))
         val addCourseAdapter = AddCourseAdapter(viewModel)
+        val addCourseHeaderAdapter = AddCourseHeaderAdapter(viewModel)
+        val concatAdapter = ConcatAdapter(addCourseHeaderAdapter, addCourseAdapter)
         binding.editingCourseRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = addCourseAdapter
+            adapter = concatAdapter
         }
         viewModel.liveCourseList.observe(viewLifecycleOwner) {
+            addCourseHeaderAdapter.updateList(it)
             addCourseAdapter.submitList(it)
         }
+        binding.editingCourseAddButton.setOnClickListener {
+            val resultSize = viewModel.liveCourseList.addCourse()
+            binding.editingCourseRecyclerView.smoothScrollToPosition(resultSize)
+        }
+        binding.editingCourseSaveButton.setOnClickListener {
+            viewModel.insertCourse()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.clearLiveCourseList()
     }
 
 }

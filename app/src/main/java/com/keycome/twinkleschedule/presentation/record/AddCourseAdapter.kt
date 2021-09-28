@@ -15,7 +15,7 @@ import com.keycome.twinkleschedule.model.horizon.Day
 import com.keycome.twinkleschedule.model.sketch.Course
 import com.keycome.twinkleschedule.model.sketch.CourseField
 
-class AddCourseAdapter(val viewModel: RecordViewModel) :
+class AddCourseAdapter(private val viewModel: RecordViewModel) :
     ListAdapter<Course, AddCourseAdapter.EditingInfoHolder>(EditingInfoDiff) {
 
     object EditingInfoDiff : DiffUtil.ItemCallback<Course>() {
@@ -36,6 +36,8 @@ class AddCourseAdapter(val viewModel: RecordViewModel) :
 
         private val itemEvent: (View) -> Unit = { v ->
             when (v) {
+                binding.cellCourseEditingInfoDeleteButton ->
+                    viewModel.liveCourseList.deleteCourse(bindingAdapterPosition)
                 binding.editingInfoWeek -> ListDialog(
                     v.context,
                     object : ListDialog.Adapter<Int>((1..24).toList()) {

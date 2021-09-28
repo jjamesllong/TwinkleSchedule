@@ -11,7 +11,7 @@ import com.keycome.twinkleschedule.model.horizon.Time
 data class Schedule(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "schedule_id")
-    val scheduleId: Int,
+    val scheduleId: Long,
 
     val name: String,
 

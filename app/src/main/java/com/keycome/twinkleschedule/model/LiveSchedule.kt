@@ -10,7 +10,7 @@ import com.keycome.twinkleschedule.model.sketch.TimeLine
 
 class LiveSchedule(
     schedule: Schedule = Schedule(
-        scheduleId = 0,
+        scheduleId = System.currentTimeMillis(),
         name = "课表一",
         schoolBeginDate = Date(2021, 3, 1),
         dailyCourses = 10,
@@ -37,7 +37,7 @@ class LiveSchedule(
         val schedule = getValue()
         setValue(
             when (key) {
-                schedule_id -> schedule.copy(scheduleId = value as Int)
+                schedule_id -> schedule.copy(scheduleId = value as Long)
                 name_ -> schedule.copy(name = value as String)
                 school_begin_date -> schedule.copy(schoolBeginDate = value as Date)
                 daily_courses -> schedule.copy(dailyCourses = value as Int)
@@ -151,7 +151,7 @@ class LiveSchedule(
     }
 
     private fun requireTimeLineId(): Int {
-        var id = -1
+        var id = 0
         value.timeLine.forEach { if (it.id > id) id = it.id }
         return ++id
     }

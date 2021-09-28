@@ -20,7 +20,7 @@
             app:popExitAnim="@anim/slide_out_from_right" >
             <argument
                 android:name="scheduleId"
-                android:defaultValue="-1" />
+                android:defaultValue="-1L" />
         </action>
     </fragment>
     <fragment
@@ -30,7 +30,7 @@
         tools:layout="@layout/fragment_add_course" >
         <argument
             android:name="scheduleId"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            app:argType="long"
+            android:defaultValue="-1L" />
     </fragment>
 </navigation>

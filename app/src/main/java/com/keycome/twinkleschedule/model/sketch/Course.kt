@@ -10,10 +10,10 @@ import com.keycome.twinkleschedule.model.horizon.Day
 data class Course(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "course_id")
-    val courseId: Int,
+    val courseId: Long,
 
     @ColumnInfo(name = "parent_schedule_id")
-    val parentScheduleId: Int,
+    val parentScheduleId: Long,
 
     val title: String,
 
