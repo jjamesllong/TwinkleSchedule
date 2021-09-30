@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.keycome.twinkleschedule.App
 import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentAddScheduleBinding
+import com.keycome.twinkleschedule.repository.Repository
+import kotlinx.coroutines.launch
 
 class AddScheduleFragment : BaseFragment<FragmentAddScheduleBinding>() {
 
@@ -30,6 +33,11 @@ class AddScheduleFragment : BaseFragment<FragmentAddScheduleBinding>() {
             findNavController().navigate(
                 R.id.action_addScheduleFragment_to_editScheduleFragment
             )
+        }
+        binding.insertScheduleTestButton.setOnClickListener {
+            App.applicationScope.launch {
+                Repository.deleteAllSchedule()
+            }
         }
     }
 }

@@ -16,11 +16,11 @@ import com.keycome.twinkleschedule.custom.DatePickerDialog
 import com.keycome.twinkleschedule.custom.EditTextDialog
 import com.keycome.twinkleschedule.custom.EndDayDialog
 import com.keycome.twinkleschedule.custom.WheelDialog
-import com.keycome.twinkleschedule.model.sketch.TimeLine
 import com.keycome.twinkleschedule.databinding.CellTimeLineDescriptionBinding
 import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentEditScheduleBinding
 import com.keycome.twinkleschedule.model.LiveSchedule
+import com.keycome.twinkleschedule.model.sketch.TimeLine
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -123,7 +123,9 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
             binding.editCourseNumberItem.id -> coursesWheelDialog.show()
             binding.editEndDayItem.id -> endDayDialog.show()
             binding.editCourseDurationItem.id -> durationWheelDialog.show()
-            binding.editScheduleSubmitButton.id -> viewModel.insertSchedule()
+            binding.editScheduleSubmitButton.id -> {
+                viewModel.insertSchedule(false)
+            }
         }
     }
 

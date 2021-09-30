@@ -25,4 +25,21 @@ object Repository {
     }
 
     fun queryAllSchedule(): LiveData<List<Schedule>> = scheduleDao.queryAllSchedule()
+
+    suspend fun queryScheduleCount(): Int {
+        return withContext(Dispatchers.IO) {
+            scheduleDao.queryScheduleCount()
+        }
+    }
+
+    suspend fun deleteAllSchedule() {
+        withContext(Dispatchers.IO) {
+            scheduleDao.deleteAllSchedule()
+        }
+    }
+
+    fun queryCourseByParent(
+        parentScheduleId: Long
+    ): LiveData<List<Course>> =
+        courseDao.queryCourseByParent(parentScheduleId)
 }

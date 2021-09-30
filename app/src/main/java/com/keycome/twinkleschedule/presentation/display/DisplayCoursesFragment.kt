@@ -9,17 +9,31 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.custom.CustomPopupMenu
-import com.keycome.twinkleschedule.database.TestData
 import com.keycome.twinkleschedule.databinding.FragmentDisplayCoursesBinding
 import com.keycome.twinkleschedule.presentation.configuration.ConfigurationActivity
 import com.keycome.twinkleschedule.presentation.record.RecordActivity
+import com.tencent.mmkv.MMKV
+import kotlinx.coroutines.launch
 
 class DisplayCoursesFragment : Fragment() {
     private lateinit var binding: FragmentDisplayCoursesBinding
     private var popupMenu: PopupWindow? = null
+    private lateinit var kv: MMKV
+    private val viewModel by viewModels<DisplayCourseViewModel>(factoryProducer = {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return modelClass.getConstructor(Long::class.java).newInstance(
+                    kv.decodeLong("display_schedule_id", -1L)
+                )
+            }
+        }
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,27 +46,11 @@ class DisplayCoursesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val coursesArray = ViewBlockFactory().convertEntityToBlock()
-        val gridLayoutManager = GridLayoutManager(
-            context,
-            TestData.schedule.dailyCourses,
-            GridLayoutManager.HORIZONTAL,
-            false
-        ).apply {
-            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return coursesArray[position].spanSize
-                }
-            }
+        kv = MMKV.defaultMMKV()
+        lifecycleScope.launch {
+
         }
-        val courseAdapter = CourseAdapter(5).apply {
-            courseBlockArray = coursesArray
-            courseArray = TestData.courseArray
-        }
-        binding.courseRecyclerView.apply {
-            layoutManager = gridLayoutManager
-            adapter = courseAdapter
-        }
+        // binding.courseRecyclerView.toScheduleTable()
         binding.menuButton.setOnClickListener { v ->
             if (popupMenu == null) onCreatePopupMenu()
             popupMenu!!.run { if (isShowing) dismiss() else showAsDropDown(v) }

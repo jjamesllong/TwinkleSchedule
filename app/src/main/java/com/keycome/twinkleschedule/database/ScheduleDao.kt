@@ -13,4 +13,10 @@ interface ScheduleDao {
 
     @Query("SELECT * FROM schedule ORDER BY school_begin_date DESC")
     fun queryAllSchedule(): LiveData<List<Schedule>>
+
+    @Query("SELECT COUNT(schedule_id) FROM schedule")
+    suspend fun queryScheduleCount(): Int
+
+    @Query("DELETE FROM schedule")
+    suspend fun deleteAllSchedule()
 }

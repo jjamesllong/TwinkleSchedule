@@ -1,19 +1,20 @@
-package com.keycome.twinkleschedule.presentation.display
+package com.keycome.twinkleschedule.custom.courseschedule
 
-import com.keycome.twinkleschedule.database.TestData
 import com.keycome.twinkleschedule.model.ViewBlock
 import com.keycome.twinkleschedule.model.horizon.Day
+import com.keycome.twinkleschedule.model.sketch.Course
+import com.keycome.twinkleschedule.model.sketch.Schedule
 
-class ViewBlockFactory {
-    private val blockList = mutableListOf<ViewBlock>()
+object ViewBlockFactory {
 
-    fun convertEntityToBlock(): Array<ViewBlock> {
-        val schedule = TestData.schedule
-        val array = TestData.courseArray
-        var day = convertDayToNum(Day.Monday)
-        for (i in array.indices) {
-            val c = array[i]
-            val cDay = convertDayToNum(c.day)
+    fun convertEntityToBlock(
+        schedule: Schedule, courseList: List<Course>
+    ): List<ViewBlock> {
+        val blockList = mutableListOf<ViewBlock>()
+        var day = Day.Monday.toNumber()
+        for (i in courseList.indices) {
+            val c = courseList[i]
+            val cDay = c.day.toNumber()
             if (i == 0) {
                 if (cDay == day) {
                     if (c.section.first() == 1) {
@@ -68,7 +69,7 @@ class ViewBlockFactory {
                     day = cDay
                 }
             } else {
-                val cBefore = array[i - 1]
+                val cBefore = courseList[i - 1]
                 if (cDay == day) {
                     val spanCourse = c.section.first() - cBefore.section.last()
                     if (spanCourse == 1) {
@@ -132,16 +133,6 @@ class ViewBlockFactory {
                 }
             }
         }
-        return blockList.toTypedArray()
-    }
-
-    private fun convertDayToNum(day: Day) = when (day) {
-        Day.Monday -> 1
-        Day.Tuesday -> 2
-        Day.Wednesday -> 3
-        Day.Thursday -> 4
-        Day.Friday -> 5
-        Day.Saturday -> 6
-        Day.Sunday -> 7
+        return blockList
     }
 }
