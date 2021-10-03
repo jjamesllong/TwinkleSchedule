@@ -1,5 +1,9 @@
 package com.keycome.twinkleschedule.model.horizon
 
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+
 data class Date(val year: Int, val month: Int, val dayOfMonth: Int) {
     init {
         if (year !in 1970..9999)
@@ -30,5 +34,17 @@ data class Date(val year: Int, val month: Int, val dayOfMonth: Int) {
             append(dayOfMonth)
         }
         return builder.toString()
+    }
+
+    fun toMillis(): Long {
+        val format = SimpleDateFormat(HYPHEN_DATE_STRING, Locale.CHINA)
+        val jdkDate = format.parse(toHyphenDateString())
+        return jdkDate?.time ?: throw ParseException("failed to parse date $this", 0)
+    }
+
+    companion object {
+
+        private const val HYPHEN_DATE_STRING = "yyyy-MM-dd"
+
     }
 }

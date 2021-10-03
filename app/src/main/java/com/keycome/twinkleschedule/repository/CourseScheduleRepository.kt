@@ -7,7 +7,7 @@ import com.keycome.twinkleschedule.model.sketch.Schedule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-object Repository {
+object CourseScheduleRepository {
     private val database = ScheduleDatabase.getInstance()
     private val scheduleDao = database.scheduleDao()
     private val courseDao = database.courseDao()
@@ -42,4 +42,7 @@ object Repository {
         parentScheduleId: Long
     ): LiveData<List<Course>> =
         courseDao.queryCourseByParent(parentScheduleId)
+
+    fun queryScheduleById(scheduleId: Long): LiveData<Schedule> =
+        scheduleDao.queryScheduleById(scheduleId)
 }

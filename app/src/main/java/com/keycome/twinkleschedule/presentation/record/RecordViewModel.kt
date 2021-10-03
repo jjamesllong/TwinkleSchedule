@@ -6,12 +6,12 @@ import com.keycome.twinkleschedule.App
 import com.keycome.twinkleschedule.model.LiveCourseList
 import com.keycome.twinkleschedule.model.sketch.CourseField
 import com.keycome.twinkleschedule.model.sketch.Schedule
-import com.keycome.twinkleschedule.repository.Repository
+import com.keycome.twinkleschedule.repository.CourseScheduleRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RecordViewModel : ViewModel() {
-    val liveScheduleList: LiveData<List<Schedule>> = Repository.queryAllSchedule()
+    val liveScheduleList: LiveData<List<Schedule>> = CourseScheduleRepository.queryAllSchedule()
 
     private var _liveCourseList: LiveCourseList? = null
     val liveCourseList get() = _liveCourseList!!
@@ -21,7 +21,7 @@ class RecordViewModel : ViewModel() {
             val insertable: Boolean = liveCourseList.checkFieldRight()
             if (insertable)
                 for (c in liveCourseList.value) {
-                    Repository.insertCourse(c)
+                    CourseScheduleRepository.insertCourse(c)
                 }
         }
     }

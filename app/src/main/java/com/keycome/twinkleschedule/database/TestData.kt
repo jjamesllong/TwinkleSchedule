@@ -56,7 +56,7 @@ class TestData {
             teacher = "",
             classroom = ""
         )
-        val courseArray = arrayOf(
+        val courseList = listOf(
             Course(
                 courseId = 0,
                 parentScheduleId = 0,

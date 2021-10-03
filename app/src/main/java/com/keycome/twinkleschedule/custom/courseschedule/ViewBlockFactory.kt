@@ -7,10 +7,45 @@ import com.keycome.twinkleschedule.model.sketch.Schedule
 
 object ViewBlockFactory {
 
-    fun convertEntityToBlock(
+    fun selectToGroupAndSort(sourceList: List<Course>, targetWeek: Int): List<Course> {
+        val unselectedList = mutableListOf<Course>()
+        sourceList.forEach {
+            if (it.week.contains(targetWeek))
+                unselectedList.add(it)
+        }
+        val unorderedMap: Map<Day, List<Course>> = unselectedList.groupBy { it.day }
+        val unorderedList = mutableListOf<MutableList<Course>>()
+        for (d in 0 until 7) {
+            unorderedMap.forEach {
+                if (it.key.ordinal == d)
+                    unorderedList.add(it.value.toMutableList())
+            }
+        }
+        unorderedList.forEach { list ->
+            val l = list.size
+            for (i in 0 until l - 1) {
+                for (j in 0 until l - 1 - i) {
+                    if (list[j].section.first() > list[j + 1].section.first()) {
+                        val temp = list[j]
+                        list[j] = list[j + 1]
+                        list[j + 1] = temp
+                    }
+                }
+            }
+        }
+        val resultList = mutableListOf<Course>()
+        unorderedList.forEach { l ->
+            l.forEach { c ->
+                resultList.add(c)
+            }
+        }
+        return resultList
+    }
+
+    fun produceViewBlock(
         schedule: Schedule, courseList: List<Course>
     ): List<ViewBlock> {
-        val blockList = mutableListOf<ViewBlock>()
+        val viewBlockList = mutableListOf<ViewBlock>()
         var day = Day.Monday.toNumber()
         for (i in courseList.indices) {
             val c = courseList[i]
@@ -23,19 +58,19 @@ object ViewBlockFactory {
                             spanSize = c.section.size,
                             courseIndex = i
                         )
-                        blockList.add(b)
+                        viewBlockList.add(b)
                     } else {
                         val p = ViewBlock(
                             isCourse = false,
                             spanSize = c.section.first() - 1
                         )
-                        blockList.add(p)
+                        viewBlockList.add(p)
                         val b = ViewBlock(
                             isCourse = true,
                             spanSize = c.section.size,
                             courseIndex = i
                         )
-                        blockList.add(b)
+                        viewBlockList.add(b)
                     }
                 } else {
                     val spanDay = cDay - day - 1
@@ -44,7 +79,7 @@ object ViewBlockFactory {
                             isCourse = false,
                             spanSize = schedule.dailyCourses
                         )
-                        blockList.add(p)
+                        viewBlockList.add(p)
                     }
                     if (c.section.first() == 1) {
                         val b = ViewBlock(
@@ -52,19 +87,19 @@ object ViewBlockFactory {
                             spanSize = c.section.size,
                             courseIndex = i
                         )
-                        blockList.add(b)
+                        viewBlockList.add(b)
                     } else {
                         val p = ViewBlock(
                             isCourse = false,
                             spanSize = c.section.first() - 1
                         )
-                        blockList.add(p)
+                        viewBlockList.add(p)
                         val b = ViewBlock(
                             isCourse = true,
                             spanSize = c.section.size,
                             courseIndex = i
                         )
-                        blockList.add(b)
+                        viewBlockList.add(b)
                     }
                     day = cDay
                 }
@@ -78,19 +113,19 @@ object ViewBlockFactory {
                             spanSize = c.section.size,
                             courseIndex = i
                         )
-                        blockList.add(b)
+                        viewBlockList.add(b)
                     } else {
                         val p = ViewBlock(
                             isCourse = false,
                             spanSize = c.section.first() - 1
                         )
-                        blockList.add(p)
+                        viewBlockList.add(p)
                         val b = ViewBlock(
                             isCourse = true,
                             spanSize = c.section.size,
                             courseIndex = i
                         )
-                        blockList.add(b)
+                        viewBlockList.add(b)
                     }
                 } else {
                     val spanEnd = schedule.dailyCourses - cBefore.section.last()
@@ -100,14 +135,14 @@ object ViewBlockFactory {
                             isCourse = false,
                             spanSize = spanEnd
                         )
-                        blockList.add(p)
+                        viewBlockList.add(p)
                     }
                     for (s in 0 until spanDay) {
                         val p = ViewBlock(
                             isCourse = false,
                             spanSize = schedule.dailyCourses
                         )
-                        blockList.add(p)
+                        viewBlockList.add(p)
                     }
                     if (c.section.first() == 1) {
                         val b = ViewBlock(
@@ -115,24 +150,24 @@ object ViewBlockFactory {
                             spanSize = c.section.size,
                             courseIndex = i
                         )
-                        blockList.add(b)
+                        viewBlockList.add(b)
                     } else {
                         val p = ViewBlock(
                             isCourse = false,
                             spanSize = c.section.first() - 1
                         )
-                        blockList.add(p)
+                        viewBlockList.add(p)
                         val b = ViewBlock(
                             isCourse = true,
                             spanSize = c.section.size,
                             courseIndex = i
                         )
-                        blockList.add(b)
+                        viewBlockList.add(b)
                     }
                     day = cDay
                 }
             }
         }
-        return blockList
+        return viewBlockList
     }
 }

@@ -10,7 +10,7 @@ import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentAddScheduleBinding
-import com.keycome.twinkleschedule.repository.Repository
+import com.keycome.twinkleschedule.repository.CourseScheduleRepository
 import kotlinx.coroutines.launch
 
 class AddScheduleFragment : BaseFragment<FragmentAddScheduleBinding>() {
@@ -36,7 +36,7 @@ class AddScheduleFragment : BaseFragment<FragmentAddScheduleBinding>() {
         }
         binding.insertScheduleTestButton.setOnClickListener {
             App.applicationScope.launch {
-                Repository.deleteAllSchedule()
+                CourseScheduleRepository.deleteAllSchedule()
             }
         }
     }
