@@ -106,8 +106,8 @@ object ViewBlockFactory {
             } else {
                 val cBefore = courseList[i - 1]
                 if (cDay == day) {
-                    val spanCourse = c.section.first() - cBefore.section.last()
-                    if (spanCourse == 1) {
+                    val spanCourse = c.section.first() - cBefore.section.last() - 1
+                    if (spanCourse == 0) {
                         val b = ViewBlock(
                             isCourse = true,
                             spanSize = c.section.size,
@@ -117,7 +117,7 @@ object ViewBlockFactory {
                     } else {
                         val p = ViewBlock(
                             isCourse = false,
-                            spanSize = c.section.first() - 1
+                            spanSize = spanCourse
                         )
                         viewBlockList.add(p)
                         val b = ViewBlock(

@@ -38,10 +38,8 @@ object CourseScheduleRepository {
         }
     }
 
-    fun queryCourseByParent(
-        parentScheduleId: Long
-    ): LiveData<List<Course>> =
-        courseDao.queryCourseByParent(parentScheduleId)
+    fun queryCourseByParent(parentScheduleId: Long, week: Int): LiveData<List<Course>> =
+        courseDao.queryCourseByParent(parentScheduleId, week)
 
     fun queryScheduleById(scheduleId: Long): LiveData<Schedule> =
         scheduleDao.queryScheduleById(scheduleId)
