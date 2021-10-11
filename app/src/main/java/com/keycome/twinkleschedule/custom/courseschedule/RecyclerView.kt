@@ -3,6 +3,7 @@ package com.keycome.twinkleschedule.custom.courseschedule
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.model.sketch.Course
 import com.keycome.twinkleschedule.model.sketch.Schedule
@@ -41,4 +42,28 @@ fun RecyclerView.toCourseTable(
         layoutManager = gridLayoutManager
         adapter = courseAdapter
     }
+}
+
+fun RecyclerView.toSectionTable(schedule: Schedule) {
+
+    val linearLayoutManager = LinearLayoutManager(context).apply {
+        orientation = LinearLayoutManager.VERTICAL
+    }
+
+    val sectionAdapter = SectionAdapter(schedule)
+
+    layoutManager = linearLayoutManager
+    adapter = sectionAdapter
+}
+
+fun RecyclerView.toDayTable(schedule: Schedule) {
+
+    val linearLayoutManager = LinearLayoutManager(context).apply {
+        orientation = LinearLayoutManager.HORIZONTAL
+    }
+
+    val dayAdapter = DayAdapter(schedule)
+
+    layoutManager = linearLayoutManager
+    adapter = dayAdapter
 }

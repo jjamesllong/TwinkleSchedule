@@ -12,6 +12,20 @@
         <!--是否产生遮罩-->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
+    <style name="PopupMenu" parent="android:style/Theme.Dialog">
+        <!--背景颜色及和透明程度-->
+<!--        <item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--是否去除标题 -->
+<!--        <item name="android:windowNoTitle">true</item>-->
+        <!--是否去除边框-->
+<!--        <item name="android:windowFrame">@null</item>-->
+        <!--是否浮现在activity之上-->
+<!--        <item name="android:windowIsFloating">true</item>-->
+        <!--是否产生遮罩-->
+<!--        <item name="android:backgroundDimEnabled">true</item>-->
+    </style>
+
     <style name="ActivityAnim">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_from_right</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_out_from_right</item>

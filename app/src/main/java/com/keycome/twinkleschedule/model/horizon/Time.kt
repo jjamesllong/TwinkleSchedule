@@ -1,6 +1,7 @@
 package com.keycome.twinkleschedule.model.horizon
 
 data class Time(val hour: Int, val minute: Int, val second: Int) {
+
     fun to24StyleString(withoutSecond: Boolean = true): String {
         val builder = StringBuilder().apply {
             append(if (hour < 10) "0$hour" else hour)

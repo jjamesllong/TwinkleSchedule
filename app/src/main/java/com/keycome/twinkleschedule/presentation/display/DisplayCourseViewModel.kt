@@ -19,7 +19,7 @@ class DisplayCourseViewModel : ViewModel() {
                 val weekNow = HorizonDifference.weeklyDiff(
                     schedule.schoolBeginDate.toMillis(),
                     System.currentTimeMillis()
-                )
+                ) + 1
                 val liveCourseList =
                     CourseScheduleRepository.queryCourseByParent(schedule.scheduleId, weekNow)
                 Transformations.switchMap(liveCourseList) { courseList ->
