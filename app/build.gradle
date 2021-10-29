@@ -9,6 +9,15 @@ android {
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
+
+    sourceSets {
+        main {
+            java {
+                java.srcDirs += 'src/main/kotlin'
+            }
+        }
+    }
+
     defaultConfig {
         applicationId "com.keycome.twinkleschedule"
         minSdkVersion 23

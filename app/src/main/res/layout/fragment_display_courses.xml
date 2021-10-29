@@ -35,8 +35,7 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/bg_circle_selector_white"
         android:contentDescription="menu"
-        android:padding="10dp"
-        android:src="@drawable/ic_fi_rr_align_right"
+        android:src="@drawable/ic_fi_rr_menu_burger"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

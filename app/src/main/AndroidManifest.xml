@@ -13,8 +13,12 @@
         <activity
             android:name=".presentation.record.RecordActivity"
             android:exported="false" />
-        <activity android:name=".presentation.configuration.ConfigurationActivity" />
-        <activity android:name=".presentation.display.DisplayActivity" />
+        <activity
+            android:name=".presentation.configuration.ConfigurationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.display.DisplayActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
