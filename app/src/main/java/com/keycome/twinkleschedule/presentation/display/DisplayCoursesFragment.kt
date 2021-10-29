@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.keycome.twinkleschedule.custom.PopupMenu
 import com.keycome.twinkleschedule.custom.courseschedule.toCourseTable
 import com.keycome.twinkleschedule.custom.courseschedule.toDayTable
@@ -22,7 +23,7 @@ import kotlinx.coroutines.launch
 class DisplayCoursesFragment : Fragment() {
 
     private lateinit var binding: FragmentDisplayCoursesBinding
-    private val viewModel by viewModels<DisplayCourseViewModel>()
+    private val viewModel by activityViewModels<DisplayViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +44,13 @@ class DisplayCoursesFragment : Fragment() {
                     viewLifecycleOwner,
                     it.schedule,
                     it.courseList
-                )
+                ) { c ->
+                    val direction =
+                        DisplayCoursesFragmentDirections.actionDisplayCoursesFragmentToCourseDetailDialogFragment(
+                            c.courseId
+                        )
+                    findNavController().navigate(direction)
+                }
             }
         }
 

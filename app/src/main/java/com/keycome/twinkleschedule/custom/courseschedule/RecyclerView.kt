@@ -14,7 +14,8 @@ import kotlinx.coroutines.withContext
 fun RecyclerView.toCourseTable(
     lifecycleOwner: LifecycleOwner,
     schedule: Schedule,
-    courseList: List<Course>
+    courseList: List<Course>,
+    itemEvent: ((Course) -> Unit)? = null
 ) {
 
     lifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
@@ -37,7 +38,8 @@ fun RecyclerView.toCourseTable(
         val courseAdapter = CourseAdapter(
             daySpan = schedule.weeklyEndDay.toNumber(),
             courseList = courseList,
-            viewBlockList = viewBlockList
+            viewBlockList = viewBlockList,
+            itemEvent
         )
         layoutManager = gridLayoutManager
         adapter = courseAdapter

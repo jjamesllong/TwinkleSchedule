@@ -8,5 +8,22 @@
         android:id="@+id/displayCoursesFragment"
         android:name="com.keycome.twinkleschedule.presentation.display.DisplayCoursesFragment"
         android:label="fragment_display_courses"
-        tools:layout="@layout/fragment_display_courses" />
+        tools:layout="@layout/fragment_display_courses" >
+        <action
+            android:id="@+id/action_displayCoursesFragment_to_courseDetailDialogFragment"
+            app:destination="@id/courseDetailDialogFragment" >
+            <argument
+                android:name="courseId"
+                android:defaultValue="0L" />
+        </action>
+    </fragment>
+    <dialog
+        android:id="@+id/courseDetailDialogFragment"
+        android:name="com.keycome.twinkleschedule.presentation.display.CourseDetailDialogFragment"
+        android:label="CourseDetailDialogFragment" >
+        <argument
+            android:name="courseId"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </dialog>
 </navigation>

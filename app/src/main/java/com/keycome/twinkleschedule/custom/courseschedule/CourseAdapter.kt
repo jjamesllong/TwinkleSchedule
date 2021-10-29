@@ -12,7 +12,8 @@ import com.keycome.twinkleschedule.model.sketch.Course
 class CourseAdapter(
     private val daySpan: Int,
     private val courseList: List<Course>,
-    private val viewBlockList: List<ViewBlock>
+    private val viewBlockList: List<ViewBlock>,
+    private val itemEvent: ((Course) -> Unit)? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -20,7 +21,7 @@ class CourseAdapter(
         const val TYPE_COURSE = 1
     }
 
-    class CourseView(view: View, val binding: CellCourseDescriptionBinding) :
+    class CourseView(val binding: CellCourseDescriptionBinding, val view: View) :
         RecyclerView.ViewHolder(view)
 
     class Placeholder(view: View) : RecyclerView.ViewHolder(view)
@@ -38,7 +39,7 @@ class CourseAdapter(
                 val binding = CellCourseDescriptionBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
-                CourseView(frameLayout.apply { addView(binding.root) }, binding)
+                CourseView(binding, frameLayout.apply { addView(binding.root) })
             }
             else -> Placeholder(frameLayout)
         }
@@ -48,12 +49,14 @@ class CourseAdapter(
         if (holder is CourseView) {
             holder.apply {
                 val index = viewBlockList[position].courseIndex
+                val c = courseList[index]
                 val courseInfoText = StringBuilder()
-                    .append(courseList[index].title)
+                    .append(c.title)
                     .append("\n@")
-                    .append(courseList[index].classroom)
+                    .append(c.classroom)
                     .toString()
                 binding.courseInfo.text = courseInfoText
+                view.setOnClickListener { itemEvent?.invoke(c) }
             }
         }
     }

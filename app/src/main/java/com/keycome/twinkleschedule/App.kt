@@ -21,14 +21,15 @@ class App : Application() {
         val applicationScope: CoroutineScope =
             CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
-        val displayScheduleId: LiveData<Long>
-            get() = MutableLiveData<Long>().also {
+        val displayScheduleId: LiveData<Long> by lazy {
+            MutableLiveData<Long>().also {
                 applicationScope.launch {
                     val kv = MMKV.defaultMMKV()
                     val id = kv.decodeLong(DISPLAY_SCHEDULE_ID, DISPLAY_SCHEDULE_ID_DEFAULT_VALUE)
                     it.postValue(id)
                 }
             }
+        }
     }
 
     override fun onCreate() {

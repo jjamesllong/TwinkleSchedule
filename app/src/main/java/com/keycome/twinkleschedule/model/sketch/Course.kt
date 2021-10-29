@@ -1,7 +1,6 @@
 package com.keycome.twinkleschedule.model.sketch
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.keycome.twinkleschedule.model.horizon.Day
