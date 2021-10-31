@@ -1,7 +1,5 @@
 package com.keycome.twinkleschedule.model.horizon
 
-import java.lang.Exception
-
 enum class Day {
     Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday;
 

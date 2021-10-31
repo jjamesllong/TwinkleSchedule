@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
-import com.keycome.twinkleschedule.model.sketch.Schedule
 import com.keycome.twinkleschedule.databinding.ViewAddTimeLineHeaderBinding
+import com.keycome.twinkleschedule.model.sketch.Schedule
 
 class AddTimeLineHeaderAdapter(
     var schedule: Schedule? = null,

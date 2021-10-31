@@ -28,7 +28,7 @@ class MainActivity : BaseActivity() {
 //         setContentView(binding.root)
 //         setContent {
 //             MainContent {
-//                startActivity(Intent(this, DisplayActivity::class.kotlin))
+//                startActivity(Intent(this, DisplayActivity::class.java))
 //            }
 //        }
         startActivity(Intent(this, DisplayActivity::class.java))
