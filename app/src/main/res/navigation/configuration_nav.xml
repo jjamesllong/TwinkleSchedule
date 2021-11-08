@@ -3,15 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/configuration_nav"
-    app:startDestination="@id/addScheduleFragment">
+    app:startDestination="@id/guideScheduleFragment">
 
     <fragment
-        android:id="@+id/addScheduleFragment"
-        android:name="com.keycome.twinkleschedule.presentation.configuration.AddScheduleFragment"
-        android:label="@string/addScheduleFragmentLabel"
-        tools:layout="@layout/fragment_add_schedule">
+        android:id="@+id/guideScheduleFragment"
+        android:name="com.keycome.twinkleschedule.presentation.configuration.GuideScheduleFragment"
+        android:label="@string/guideScheduleFragmentLabel"
+        tools:layout="@layout/fragment_guide_schedule">
         <action
-            android:id="@+id/action_addScheduleFragment_to_editScheduleFragment"
+            android:id="@+id/action_guideScheduleFragment_to_manageScheduleFragment"
+            app:destination="@id/manageScheduleFragment"
+            app:popUpTo="@id/guideScheduleFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_guideScheduleFragment_to_editScheduleFragment"
             app:destination="@id/editScheduleFragment"
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_from_left"
@@ -25,7 +30,7 @@
         tools:layout="@layout/fragment_edit_schedule">
         <action
             android:id="@+id/action_editScheduleFragment_to_addTimeLineFragment"
-            app:destination="@id/addTimeLineFragment"
+            app:destination="@id/editTimeLineFragment"
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_from_left"
             app:popEnterAnim="@anim/slide_in_from_left"
@@ -36,12 +41,21 @@
         </action>
     </fragment>
     <fragment
-        android:id="@+id/addTimeLineFragment"
-        android:name="com.keycome.twinkleschedule.presentation.configuration.AddTimeLineFragment"
-        android:label="AddTimeLineFragment" >
+        android:id="@+id/editTimeLineFragment"
+        android:name="com.keycome.twinkleschedule.presentation.configuration.EditTimeLineFragment"
+        android:label="@string/editTimeLineFragmentLabel">
         <argument
             android:name="timeLineId"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageScheduleFragment"
+        android:name="com.keycome.twinkleschedule.presentation.configuration.ManageScheduleFragment"
+        android:label="fragment_manage_schedule"
+        tools:layout="@layout/fragment_manage_schedule" >
+        <action
+            android:id="@+id/action_manageScheduleFragment_to_editScheduleFragment"
+            app:destination="@id/editScheduleFragment" />
     </fragment>
 </navigation>

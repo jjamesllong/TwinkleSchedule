@@ -2,7 +2,6 @@ package com.keycome.twinkleschedule
 
 import android.app.Application
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.keycome.twinkleschedule.model.DISPLAY_SCHEDULE_ID
 import com.keycome.twinkleschedule.model.DISPLAY_SCHEDULE_ID_DEFAULT_VALUE
@@ -21,7 +20,7 @@ class App : Application() {
         val applicationScope: CoroutineScope =
             CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
-        val displayScheduleId: LiveData<Long> by lazy {
+        val displayScheduleId: MutableLiveData<Long> by lazy {
             MutableLiveData<Long>().also {
                 applicationScope.launch {
                     val kv = MMKV.defaultMMKV()

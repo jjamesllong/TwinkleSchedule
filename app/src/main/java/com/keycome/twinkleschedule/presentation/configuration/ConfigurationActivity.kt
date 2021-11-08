@@ -27,4 +27,9 @@ class ConfigurationActivity : BaseActivity() {
     override fun onBackPressed() {
         if (!navController.popBackStack()) super.onBackPressed()
     }
+
+    companion object {
+        const val NAV_KEY_TO_MANAGE = "NAV_KEY_TO_MANAGE"
+        const val NAV_VALUE_TO_MANAGE = "TO_MANAGE"
+    }
 }

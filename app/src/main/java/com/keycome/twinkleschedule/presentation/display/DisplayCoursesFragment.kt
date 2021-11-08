@@ -22,14 +22,15 @@ import kotlinx.coroutines.launch
 
 class DisplayCoursesFragment : Fragment() {
 
-    private lateinit var binding: FragmentDisplayCoursesBinding
+    private var _binding: FragmentDisplayCoursesBinding? = null
+    private val binding get() = _binding!!
     private val viewModel by activityViewModels<DisplayViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDisplayCoursesBinding.inflate(inflater, container, false)
+        _binding = FragmentDisplayCoursesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -45,10 +46,8 @@ class DisplayCoursesFragment : Fragment() {
                     it.schedule,
                     it.courseList
                 ) { c ->
-                    val direction =
-                        DisplayCoursesFragmentDirections.actionDisplayCoursesFragmentToCourseDetailDialogFragment(
-                            c.courseId
-                        )
+                    val direction = DisplayCoursesFragmentDirections
+                        .actionDisplayCoursesFragmentToCourseDetailDialogFragment(c.courseId)
                     findNavController().navigate(direction)
                 }
             }
@@ -60,19 +59,32 @@ class DisplayCoursesFragment : Fragment() {
     }
 
     private fun onCreatePopupMenu(): PopupMenu {
-        val binding = ViewFragmentDisplayPopupMenuBinding.inflate(
+        val menuBinding = ViewFragmentDisplayPopupMenuBinding.inflate(
             LayoutInflater.from(context),
             null,
             false
         )
-        return PopupMenu(requireContext(), binding.root) {
+        return PopupMenu(requireContext(), menuBinding.root) {
             when (it) {
-                binding.toConfigurationMenuItem ->
+                menuBinding.toConfigurationMenuItem ->
                     startActivity(Intent(requireContext(), ConfigurationActivity::class.java))
-                binding.toRecordMenuItem ->
+                menuBinding.toRecordMenuItem ->
                     startActivity(Intent(requireContext(), RecordActivity::class.java))
+                menuBinding.toManageScheduleMenuItem -> {
+                    val intent = Intent(requireContext(), ConfigurationActivity::class.java)
+                    intent.putExtra(
+                        ConfigurationActivity.NAV_KEY_TO_MANAGE,
+                        ConfigurationActivity.NAV_VALUE_TO_MANAGE
+                    )
+                    startActivity(intent)
+                }
             }
             dismiss()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

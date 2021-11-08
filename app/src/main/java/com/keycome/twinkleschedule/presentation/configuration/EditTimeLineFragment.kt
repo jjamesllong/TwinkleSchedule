@@ -14,17 +14,17 @@ import com.keycome.twinkleschedule.custom.DatePickerDialog
 import com.keycome.twinkleschedule.custom.EditTextDialog
 import com.keycome.twinkleschedule.custom.TimePickerDialog
 import com.keycome.twinkleschedule.custom.WheelDialog
-import com.keycome.twinkleschedule.databinding.CellAddTimeLineBinding
-import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
-import com.keycome.twinkleschedule.databinding.FragmentAddTimeLineBinding
-import com.keycome.twinkleschedule.databinding.ViewAddTimeLineHeaderBinding
+import com.keycome.twinkleschedule.databinding.CellEditTimeLineBinding
+import com.keycome.twinkleschedule.databinding.FragmentEditTimeLineBinding
+import com.keycome.twinkleschedule.databinding.ViewEditTimeLineHeaderBinding
+import com.keycome.twinkleschedule.databinding.ViewToolbarLayoutBinding
 import com.keycome.twinkleschedule.extension.toast
 import com.keycome.twinkleschedule.model.LiveSchedule
 
-class AddTimeLineFragment : BaseFragment<FragmentAddTimeLineBinding>() {
+class EditTimeLineFragment : BaseFragment<FragmentEditTimeLineBinding>() {
 
     private val viewModel: ConfigurationViewModel by activityViewModels()
-    private val args by navArgs<AddTimeLineFragmentArgs>()
+    private val args by navArgs<EditTimeLineFragmentArgs>()
 
     private val editTextDialog: EditTextDialog by lazy {
         EditTextDialog(requireContext()) {
@@ -64,21 +64,21 @@ class AddTimeLineFragment : BaseFragment<FragmentAddTimeLineBinding>() {
     override fun supportBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentAddTimeLineBinding {
-        return FragmentAddTimeLineBinding.inflate(inflater, container, false)
+    ): FragmentEditTimeLineBinding {
+        return FragmentEditTimeLineBinding.inflate(inflater, container, false)
     }
 
-    override fun supportToolbar(title: Array<Int>): CustomToolbarLayoutBinding {
-        title[0] = R.string.timeLineFragmentLabel
+    override fun supportToolbar(title: Array<Int>): ViewToolbarLayoutBinding {
+        title[0] = R.string.editTimeLineFragmentLabel
         return binding.fragmentAddTimeLineToolbar
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val addTimeLineHeaderAdapter = AddTimeLineHeaderAdapter(
+        val addTimeLineHeaderAdapter = EditTimeLineHeaderAdapter(
             null, args.timeLineId
         ) { binding, id -> headerAdapterOnclickHandler(binding, id) }
-        val addTimeLineAdapter = AddTimeLineAdapter { binding, id, index ->
+        val addTimeLineAdapter = EditTimeLineAdapter { binding, id, index ->
             adapterOnclickHandler(binding, id, index)
         }
         val concatAdapter = ConcatAdapter(addTimeLineHeaderAdapter, addTimeLineAdapter)
@@ -113,7 +113,7 @@ class AddTimeLineFragment : BaseFragment<FragmentAddTimeLineBinding>() {
         }
     }
 
-    private fun headerAdapterOnclickHandler(binding: ViewAddTimeLineHeaderBinding, id: Int) {
+    private fun headerAdapterOnclickHandler(binding: ViewEditTimeLineHeaderBinding, id: Int) {
         when (id) {
             binding.headerCurrentTimeLine.id -> editTextDialog.show()
             binding.headerCourseDuration.id -> durationWheelDialog.show()
@@ -121,7 +121,7 @@ class AddTimeLineFragment : BaseFragment<FragmentAddTimeLineBinding>() {
         }
     }
 
-    private fun adapterOnclickHandler(binding: CellAddTimeLineBinding, id: Int, index: Int) {
+    private fun adapterOnclickHandler(binding: CellEditTimeLineBinding, id: Int, index: Int) {
         when (id) {
             binding.cellAddTimeLineDeleteButton.id -> {
                 if (index == -1) return

@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
-    tools:context=".presentation.configuration.AddScheduleFragment">
+    tools:context=".presentation.configuration.GuideScheduleFragment">
 
     <include
         android:id="@+id/fragment_add_schedule_toolbar"
-        layout="@layout/custom_toolbar_layout"
+        layout="@layout/view_toolbar_layout"
         app:layout_constraintBottom_toTopOf="@+id/configuration_pattern_scroll_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

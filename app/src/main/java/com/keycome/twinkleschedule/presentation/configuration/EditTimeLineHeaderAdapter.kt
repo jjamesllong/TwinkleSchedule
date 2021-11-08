@@ -4,17 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
-import com.keycome.twinkleschedule.databinding.ViewAddTimeLineHeaderBinding
+import com.keycome.twinkleschedule.databinding.ViewEditTimeLineHeaderBinding
 import com.keycome.twinkleschedule.model.sketch.Schedule
 
-class AddTimeLineHeaderAdapter(
+class EditTimeLineHeaderAdapter(
     var schedule: Schedule? = null,
     private val timeLineId: Int = 0,
-    private val onClick: (ViewAddTimeLineHeaderBinding, Int) -> Unit
-) : RecyclerView.Adapter<AddTimeLineHeaderAdapter.HeaderViewHolder>() {
+    private val onClick: (ViewEditTimeLineHeaderBinding, Int) -> Unit
+) : RecyclerView.Adapter<EditTimeLineHeaderAdapter.HeaderViewHolder>() {
     class HeaderViewHolder(
-        private val binding: ViewAddTimeLineHeaderBinding,
-        private val onClick: (ViewAddTimeLineHeaderBinding, Int) -> Unit
+        private val binding: ViewEditTimeLineHeaderBinding,
+        private val onClick: (ViewEditTimeLineHeaderBinding, Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -35,9 +35,9 @@ class AddTimeLineHeaderAdapter(
         companion object {
             fun from(
                 parent: ViewGroup,
-                onClick: (ViewAddTimeLineHeaderBinding, Int) -> Unit
+                onClick: (ViewEditTimeLineHeaderBinding, Int) -> Unit
             ): HeaderViewHolder {
-                val b = ViewAddTimeLineHeaderBinding.inflate(
+                val b = ViewEditTimeLineHeaderBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false

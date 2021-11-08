@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
-import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentAddCourseBinding
+import com.keycome.twinkleschedule.databinding.ViewToolbarLayoutBinding
 import com.keycome.twinkleschedule.model.sketch.CourseField
 
 class AddCourseFragment : BaseFragment<FragmentAddCourseBinding>() {
@@ -26,7 +26,7 @@ class AddCourseFragment : BaseFragment<FragmentAddCourseBinding>() {
         return FragmentAddCourseBinding.inflate(inflater, container, false)
     }
 
-    override fun supportToolbar(title: Array<Int>): CustomToolbarLayoutBinding {
+    override fun supportToolbar(title: Array<Int>): ViewToolbarLayoutBinding {
         title[0] = R.string.addCourseFragmentLabel
         return binding.fragmentAddCourseToolbar
     }

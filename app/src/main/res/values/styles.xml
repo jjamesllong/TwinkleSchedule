@@ -26,7 +26,7 @@
 <!--        <item name="android:backgroundDimEnabled">true</item>-->
     </style>
 
-    <style name="ActivityAnim">
+    <style name="DefaultTransitionAnim">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_from_right</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_out_from_right</item>
         <item name="android:activityOpenExitAnimation">@anim/slide_out_from_left</item>

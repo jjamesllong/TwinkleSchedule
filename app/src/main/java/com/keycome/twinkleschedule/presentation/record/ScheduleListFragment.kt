@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.databinding.CellScheduleTitleBinding
-import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentScheduleListBinding
+import com.keycome.twinkleschedule.databinding.ViewToolbarLayoutBinding
 import com.keycome.twinkleschedule.extension.toast
 
 class ScheduleListFragment : BaseFragment<FragmentScheduleListBinding>() {
@@ -23,7 +23,7 @@ class ScheduleListFragment : BaseFragment<FragmentScheduleListBinding>() {
         return FragmentScheduleListBinding.inflate(inflater, container, false)
     }
 
-    override fun supportToolbar(title: Array<Int>): CustomToolbarLayoutBinding {
+    override fun supportToolbar(title: Array<Int>): ViewToolbarLayoutBinding {
         title[0] = R.string.scheduleListFragmentLabel
         return binding.fragmentScheduleListToolbar
     }

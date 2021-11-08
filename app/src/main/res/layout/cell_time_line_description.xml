@@ -22,7 +22,7 @@
     <Button
         android:id="@+id/cell_time_line_description_delete_button"
         android:layout_width="50dp"
-        android:layout_height="40dp"
+        android:layout_height="42dp"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="3dp"
         android:paddingLeft="0dp"

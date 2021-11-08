@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header_current_time_line"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:background="@drawable/bg_ripple"
         android:padding="16dp">
 
@@ -44,7 +44,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header_course_duration"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:background="@drawable/bg_ripple"
         android:padding="16dp">
 
@@ -80,7 +80,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header_start_date"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:background="@drawable/bg_ripple"
         android:padding="16dp">
 

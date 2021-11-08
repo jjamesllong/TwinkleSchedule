@@ -17,10 +17,11 @@ import com.keycome.twinkleschedule.custom.EditTextDialog
 import com.keycome.twinkleschedule.custom.EndDayDialog
 import com.keycome.twinkleschedule.custom.WheelDialog
 import com.keycome.twinkleschedule.databinding.CellTimeLineDescriptionBinding
-import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
 import com.keycome.twinkleschedule.databinding.FragmentEditScheduleBinding
+import com.keycome.twinkleschedule.databinding.ViewToolbarLayoutBinding
 import com.keycome.twinkleschedule.model.LiveSchedule
 import com.keycome.twinkleschedule.model.sketch.TimeLine
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -87,7 +88,7 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
         return FragmentEditScheduleBinding.inflate(inflater, container, false)
     }
 
-    override fun supportToolbar(title: Array<Int>): CustomToolbarLayoutBinding {
+    override fun supportToolbar(title: Array<Int>): ViewToolbarLayoutBinding {
         title[0] = R.string.editScheduleFragmentLabel
         return binding.fragmentEditScheduleToolbar
     }
@@ -124,7 +125,12 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
             binding.editEndDayItem.id -> endDayDialog.show()
             binding.editCourseDurationItem.id -> durationWheelDialog.show()
             binding.editScheduleSubmitButton.id -> {
-                viewModel.insertSchedule(false)
+                v.isEnabled = false
+                lifecycleScope.launch(Dispatchers.Main) {
+                    val toDisplay = binding.toDisplayCheckBox.isChecked
+                    viewModel.insertSchedule(toDisplay)
+                    requireActivity().finish()
+                }
             }
         }
     }
@@ -147,13 +153,13 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
     }
 
     private val footerAdapterOnClickHandler = fun(_: View) {
-        val action =
+        val direction =
             EditScheduleFragmentDirections.actionEditScheduleFragmentToAddTimeLineFragment(
                 viewModel.liveSchedule.createTimeLine()
             )
         lifecycleScope.launch {
             delay(500)
-            findNavController().navigate(action)
+            findNavController().navigate(direction)
         }
     }
 }

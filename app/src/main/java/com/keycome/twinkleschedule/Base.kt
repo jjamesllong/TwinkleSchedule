@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.keycome.twinkleschedule.databinding.CustomToolbarLayoutBinding
+import com.keycome.twinkleschedule.databinding.ViewToolbarLayoutBinding
 
 class Base
 
@@ -32,6 +32,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = supportBinding(inflater, container)
+        Log.d(TAG, javaClass.simpleName)
         return binding.root
     }
 
@@ -54,5 +55,9 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     protected abstract fun supportBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
-    protected abstract fun supportToolbar(title: Array<Int>): CustomToolbarLayoutBinding?
+    protected abstract fun supportToolbar(title: Array<Int>): ViewToolbarLayoutBinding?
+
+    companion object {
+        private const val TAG = "BaseFragment"
+    }
 }

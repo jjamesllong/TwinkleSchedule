@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.keycome.twinkleschedule.databinding.CellAddTimeLineBinding
+import com.keycome.twinkleschedule.databinding.CellEditTimeLineBinding
 import com.keycome.twinkleschedule.model.horizon.Time
 
-class AddTimeLineAdapter(
-    private val onclick: (CellAddTimeLineBinding, Int, Int) -> Unit
-) : ListAdapter<Time, AddTimeLineAdapter.AddTimeLineViewHolder>(TitleDiffCallback) {
+class EditTimeLineAdapter(
+    private val onclick: (CellEditTimeLineBinding, Int, Int) -> Unit
+) : ListAdapter<Time, EditTimeLineAdapter.AddTimeLineViewHolder>(TitleDiffCallback) {
 
     object TitleDiffCallback : DiffUtil.ItemCallback<Time>() {
         override fun areItemsTheSame(oldItem: Time, newItem: Time): Boolean {
@@ -24,8 +24,8 @@ class AddTimeLineAdapter(
     }
 
     class AddTimeLineViewHolder(
-        private val binding: CellAddTimeLineBinding,
-        onclick: (CellAddTimeLineBinding, Int, Int) -> Unit
+        private val binding: CellEditTimeLineBinding,
+        onclick: (CellEditTimeLineBinding, Int, Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -41,7 +41,7 @@ class AddTimeLineAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddTimeLineViewHolder {
-        val b = CellAddTimeLineBinding.inflate(
+        val b = CellEditTimeLineBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
