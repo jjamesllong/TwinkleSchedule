@@ -24,6 +24,12 @@ object CourseScheduleRepository {
         }
     }
 
+    suspend fun updateSchedule(schedule: Schedule) {
+        withContext(Dispatchers.IO) {
+            scheduleDao.updateSchedule(schedule)
+        }
+    }
+
     fun queryAllSchedule(): LiveData<List<Schedule>> = scheduleDao.queryAllSchedule()
 
     suspend fun queryScheduleCount(): Int {
@@ -43,4 +49,7 @@ object CourseScheduleRepository {
 
     fun queryScheduleById(scheduleId: Long): LiveData<Schedule> =
         scheduleDao.queryScheduleById(scheduleId)
+
+    suspend fun deleteSchedule(schedule: Schedule) =
+        scheduleDao.deleteSchedule(schedule)
 }

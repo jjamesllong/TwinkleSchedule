@@ -34,11 +34,15 @@
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_from_left"
             app:popEnterAnim="@anim/slide_in_from_left"
-            app:popExitAnim="@anim/slide_out_from_right" >
+            app:popExitAnim="@anim/slide_out_from_right">
             <argument
                 android:name="timeLineId"
                 android:defaultValue="-1" />
         </action>
+        <argument
+            android:name="isModify"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/editTimeLineFragment"
@@ -53,9 +57,13 @@
         android:id="@+id/manageScheduleFragment"
         android:name="com.keycome.twinkleschedule.presentation.configuration.ManageScheduleFragment"
         android:label="fragment_manage_schedule"
-        tools:layout="@layout/fragment_manage_schedule" >
+        tools:layout="@layout/fragment_manage_schedule">
         <action
             android:id="@+id/action_manageScheduleFragment_to_editScheduleFragment"
-            app:destination="@id/editScheduleFragment" />
+            app:destination="@id/editScheduleFragment">
+            <argument
+                android:name="isModify"
+                android:defaultValue="true" />
+        </action>
     </fragment>
 </navigation>

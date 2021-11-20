@@ -8,6 +8,7 @@ import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.BaseFragment
@@ -28,6 +29,8 @@ import kotlinx.coroutines.launch
 class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.OnClickListener {
 
     private val viewModel: ConfigurationViewModel by activityViewModels()
+
+    private val args: EditScheduleFragmentArgs by navArgs()
 
     private val editTextDialog: EditTextDialog by lazy {
         EditTextDialog(requireContext()) {
@@ -96,7 +99,9 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         for (child in binding.linearLayout.children)
-            if (child.id != binding.timeLineRecyclerView.id)
+            if (child.id != binding.timeLineRecyclerView.id ||
+                child.id != binding.toDisplayCheckBox.id
+            )
                 child.setOnClickListener(this)
         val timeLineAdapter = TimeLineAdapter(adapterOnClickHandler)
         val timeLineFooterAdapter = TimeLineFooterAdapter(footerAdapterOnClickHandler)
@@ -128,7 +133,7 @@ class EditScheduleFragment : BaseFragment<FragmentEditScheduleBinding>(), View.O
                 v.isEnabled = false
                 lifecycleScope.launch(Dispatchers.Main) {
                     val toDisplay = binding.toDisplayCheckBox.isChecked
-                    viewModel.insertSchedule(toDisplay)
+                    viewModel.insertSchedule(toDisplay, args.isModify)
                     requireActivity().finish()
                 }
             }

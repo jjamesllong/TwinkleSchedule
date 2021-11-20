@@ -10,7 +10,6 @@ import com.keycome.twinkleschedule.model.sketch.Schedule
 import com.keycome.twinkleschedule.repository.CourseScheduleRepository
 import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -22,10 +21,13 @@ class ConfigurationViewModel : ViewModel() {
         CourseScheduleRepository.queryAllSchedule()
     }
 
-    suspend fun insertSchedule(toDisplay: Boolean) {
+    suspend fun insertSchedule(toDisplay: Boolean, isModify: Boolean) {
         withContext(Dispatchers.IO) {
             val scheduleCount: Int = CourseScheduleRepository.queryScheduleCount()
-            CourseScheduleRepository.insertSchedule(liveSchedule.value)
+            if (isModify)
+                CourseScheduleRepository.updateSchedule(liveSchedule.value)
+            else
+                CourseScheduleRepository.insertSchedule(liveSchedule.value)
             if (scheduleCount == 0 || toDisplay) {
                 launch(Dispatchers.Main) {
                     val kv = MMKV.defaultMMKV()
@@ -36,5 +38,15 @@ class ConfigurationViewModel : ViewModel() {
             }
             launch(Dispatchers.Main) { toast("数据写入成功") }
         }
+    }
+
+    suspend fun deleteSchedule(schedule: Schedule) {
+        CourseScheduleRepository.deleteSchedule(schedule)
+    }
+
+    fun displaySchedule(id: Long) {
+        val kv = MMKV.defaultMMKV()
+        kv.encode(DISPLAY_SCHEDULE_ID, id)
+        App.displayScheduleId.value = id
     }
 }

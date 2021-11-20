@@ -156,7 +156,7 @@ class LiveSchedule(
         return ++id
     }
 
-    override fun setValue(value: Schedule) {
+    public override fun setValue(value: Schedule) {
         super.setValue(value)
     }
 

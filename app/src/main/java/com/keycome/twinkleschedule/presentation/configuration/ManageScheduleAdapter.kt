@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.databinding.CellScheduleManagerBinding
 import com.keycome.twinkleschedule.model.sketch.Schedule
 
-class ManageScheduleAdapter :
-    ListAdapter<Schedule, ManageScheduleAdapter.ScheduleItem>(ScheduleDiffCallback) {
+class ManageScheduleAdapter(
+    private val holderClickListener: (Int) -> Unit,
+) : ListAdapter<Schedule, ManageScheduleAdapter.ScheduleItem>(ScheduleDiffCallback) {
 
     object ScheduleDiffCallback : DiffUtil.ItemCallback<Schedule>() {
 
@@ -29,8 +30,15 @@ class ManageScheduleAdapter :
     }
 
     class ScheduleItem(
-        val binding: CellScheduleManagerBinding
+        val binding: CellScheduleManagerBinding,
+        val listener: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                listener(bindingAdapterPosition)
+            }
+        }
 
         fun onBind(schedule: Schedule) {
             binding.cellScheduleManagerTitle.text = schedule.name
@@ -43,7 +51,7 @@ class ManageScheduleAdapter :
             parent,
             false
         )
-        return ScheduleItem(b)
+        return ScheduleItem(b, holderClickListener)
     }
 
     override fun onBindViewHolder(holder: ScheduleItem, position: Int) {

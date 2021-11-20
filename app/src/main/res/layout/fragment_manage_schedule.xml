@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".presentation.configuration.ManageScheduleFragment" >
+    android:orientation="vertical">
 
     <include
-        android:id="@+id/fragmentManageScheduleToolbar"
+        android:id="@+id/fragment_manage_schedule_toolbar"
         layout="@layout/view_toolbar_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -15,4 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
+    <ViewStub
+        android:id="@+id/stub_manage_schedule_options"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout="@layout/view_manage_schedule_options" />
 </LinearLayout>

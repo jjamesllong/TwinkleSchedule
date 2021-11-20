@@ -1,9 +1,7 @@
 package com.keycome.twinkleschedule.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.keycome.twinkleschedule.model.sketch.Schedule
 
 @Dao
@@ -22,4 +20,10 @@ interface ScheduleDao {
 
     @Query("SELECT * FROM schedule WHERE schedule_id = :scheduleId")
     fun queryScheduleById(scheduleId: Long): LiveData<Schedule>
+
+    @Delete
+    suspend fun deleteSchedule(schedule: Schedule)
+
+    @Update
+    suspend fun updateSchedule(schedule: Schedule)
 }
