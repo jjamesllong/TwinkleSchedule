@@ -15,8 +15,8 @@ import com.keycome.twinkleschedule.model.horizon.Day
 import com.keycome.twinkleschedule.model.sketch.Course
 import com.keycome.twinkleschedule.model.sketch.CourseField
 
-class AddCourseAdapter(private val viewModel: RecordViewModel) :
-    ListAdapter<Course, AddCourseAdapter.EditingInfoHolder>(EditingInfoDiff) {
+class EditCourseAdapter(private val viewModel: RecordViewModel) :
+    ListAdapter<Course, EditCourseAdapter.EditingInfoHolder>(EditingInfoDiff) {
 
     object EditingInfoDiff : DiffUtil.ItemCallback<Course>() {
         override fun areItemsTheSame(oldItem: Course, newItem: Course): Boolean {
@@ -37,7 +37,7 @@ class AddCourseAdapter(private val viewModel: RecordViewModel) :
         private val itemEvent: (View) -> Unit = { v ->
             when (v) {
                 binding.cellCourseEditingInfoDeleteButton ->
-                    viewModel.liveCourseList.deleteCourse(bindingAdapterPosition)
+                    viewModel.liveEditingCourse.deleteCourse(bindingAdapterPosition)
                 binding.editingInfoWeek -> ListDialog(
                     v.context,
                     object : ListDialog.Adapter<Int>((1..24).toList()) {
@@ -50,7 +50,7 @@ class AddCourseAdapter(private val viewModel: RecordViewModel) :
                     }
                 ) {
                     onPositiveButtonPressed {
-                        viewModel.liveCourseList.updateField(
+                        viewModel.liveEditingCourse.updateField(
                             CourseField.Week(requestSelectedList()),
                             bindingAdapterPosition
                         )
@@ -68,7 +68,7 @@ class AddCourseAdapter(private val viewModel: RecordViewModel) :
                     }
                 ) {
                     onPositiveButtonPressed {
-                        viewModel.liveCourseList.updateField(
+                        viewModel.liveEditingCourse.updateField(
                             CourseField.FDay(requestSelectedList()[0]),
                             bindingAdapterPosition
                         )
@@ -86,7 +86,7 @@ class AddCourseAdapter(private val viewModel: RecordViewModel) :
                     }
                 ) {
                     onPositiveButtonPressed {
-                        viewModel.liveCourseList.updateField(
+                        viewModel.liveEditingCourse.updateField(
                             CourseField.Section(requestSelectedList()),
                             bindingAdapterPosition
                         )
@@ -94,7 +94,7 @@ class AddCourseAdapter(private val viewModel: RecordViewModel) :
                 }.show()
                 binding.editingInfoTeacher -> EditTextDialog(v.context) {
                     onPositiveButtonPressed {
-                        viewModel.liveCourseList.updateField(
+                        viewModel.liveEditingCourse.updateField(
                             CourseField.Teacher(textContent!!),
                             bindingAdapterPosition
                         )
@@ -102,7 +102,7 @@ class AddCourseAdapter(private val viewModel: RecordViewModel) :
                 }.show()
                 binding.editingInfoClassroom -> EditTextDialog(v.context) {
                     onPositiveButtonPressed {
-                        viewModel.liveCourseList.updateField(
+                        viewModel.liveEditingCourse.updateField(
                             CourseField.Classroom(textContent!!),
                             bindingAdapterPosition
                         )

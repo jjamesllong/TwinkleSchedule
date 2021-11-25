@@ -2,6 +2,7 @@ package com.keycome.twinkleschedule.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.keycome.twinkleschedule.model.sketch.Course
@@ -50,4 +51,10 @@ interface CourseDao {
         """
     )
     fun queryCourseByParent(scheduleId: Long, week: Int): LiveData<List<Course>>
+
+    @Query("select * from course where parent_schedule_id == :scheduleId")
+    fun queryCourseOfParent(scheduleId: Long): LiveData<List<Course>>
+
+    @Delete
+    suspend fun deleteCourse(course: Course)
 }

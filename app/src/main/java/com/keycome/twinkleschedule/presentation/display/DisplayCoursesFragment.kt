@@ -73,8 +73,16 @@ class DisplayCoursesFragment : Fragment() {
                 menuBinding.toManageScheduleMenuItem -> {
                     val intent = Intent(requireContext(), ConfigurationActivity::class.java)
                     intent.putExtra(
-                        ConfigurationActivity.NAV_KEY_TO_MANAGE,
-                        ConfigurationActivity.NAV_VALUE_TO_MANAGE
+                        ConfigurationActivity.NAV_KEY_TO_MANAGE_SCHEDULE,
+                        ConfigurationActivity.NAV_VALUE_TO_MANAGE_SCHEDULE
+                    )
+                    startActivity(intent)
+                }
+                menuBinding.toManageCourseMenuItem -> {
+                    val intent = Intent(requireContext(), RecordActivity::class.java)
+                    intent.putExtra(
+                        RecordActivity.NAV_KEY_TO_MANAGE_COURSE,
+                        RecordActivity.NAV_VALUE_TO_MANAGE_COURSE
                     )
                     startActivity(intent)
                 }

@@ -22,12 +22,32 @@
                 android:name="scheduleId"
                 android:defaultValue="-1L" />
         </action>
+        <action
+            android:id="@+id/action_scheduleListFragment_to_manageCourseFragment"
+            app:destination="@id/manageCourseFragment" >
+            <argument
+                android:name="scheduleId"
+                android:defaultValue="-1L" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/addCourseFragment"
-        android:name="com.keycome.twinkleschedule.presentation.record.AddCourseFragment"
+        android:name="com.keycome.twinkleschedule.presentation.record.EditCourseFragment"
         android:label="fragment_add_course"
-        tools:layout="@layout/fragment_add_course" >
+        tools:layout="@layout/fragment_edit_course" >
+        <argument
+            android:name="scheduleId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageCourseFragment"
+        android:name="com.keycome.twinkleschedule.presentation.record.ManageCourseFragment"
+        android:label="fragment_manage_course"
+        tools:layout="@layout/fragment_manage_course" >
+        <action
+            android:id="@+id/action_manageCourseFragment_to_addCourseFragment"
+            app:destination="@id/addCourseFragment" />
         <argument
             android:name="scheduleId"
             app:argType="long"

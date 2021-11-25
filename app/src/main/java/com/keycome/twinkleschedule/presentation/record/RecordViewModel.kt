@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.keycome.twinkleschedule.App
 import com.keycome.twinkleschedule.model.LiveCourseList
+import com.keycome.twinkleschedule.model.sketch.Course
 import com.keycome.twinkleschedule.model.sketch.CourseField
 import com.keycome.twinkleschedule.model.sketch.Schedule
 import com.keycome.twinkleschedule.repository.CourseScheduleRepository
@@ -13,24 +14,46 @@ import kotlinx.coroutines.launch
 class RecordViewModel : ViewModel() {
     val liveScheduleList: LiveData<List<Schedule>> = CourseScheduleRepository.queryAllSchedule()
 
-    private var _liveCourseList: LiveCourseList? = null
-    val liveCourseList get() = _liveCourseList!!
+    private var _currentScheduleId: Long = 0L
+    val currentScheduleId get() = _currentScheduleId
 
-    fun insertCourse() {
+    private var _liveEditingCourse: LiveCourseList? = null
+    val liveEditingCourse get() = _liveEditingCourse!!
+
+    private var _liveQueriedCourse: LiveData<List<Course>>? = null
+    val liveQueriedCourse get() = _liveQueriedCourse!!
+
+    fun requestQueriedCourse(scheduleId: Long): LiveData<List<Course>> {
+        return if (_currentScheduleId == scheduleId && _liveQueriedCourse != null)
+            _liveQueriedCourse!!
+        else
+            CourseScheduleRepository.queryCourseOfParent(scheduleId).also {
+                _currentScheduleId = scheduleId
+                _liveQueriedCourse = it
+            }
+    }
+
+    fun deleteQueriedCourse(course: Course) {
+        App.applicationScope.launch {
+            CourseScheduleRepository.deleteCourse(course)
+        }
+    }
+
+    fun insertEditingCourse() {
         App.applicationScope.launch(Dispatchers.IO) {
-            val insertable: Boolean = liveCourseList.checkFieldRight()
+            val insertable: Boolean = liveEditingCourse.checkFieldRight()
             if (insertable)
-                for (c in liveCourseList.value) {
+                for (c in liveEditingCourse.value) {
                     CourseScheduleRepository.insertCourse(c)
                 }
         }
     }
 
-    fun initLiveCourseList(parentScheduleId: CourseField.ParentScheduleId) {
-        this._liveCourseList = LiveCourseList(parentScheduleId)
+    fun initEditingCourseList(parentScheduleId: CourseField.ParentScheduleId) {
+        this._liveEditingCourse = LiveCourseList(parentScheduleId)
     }
 
-    fun clearLiveCourseList() {
-        this._liveCourseList = null
+    fun clearEditingCourseList() {
+        this._liveEditingCourse = null
     }
 }

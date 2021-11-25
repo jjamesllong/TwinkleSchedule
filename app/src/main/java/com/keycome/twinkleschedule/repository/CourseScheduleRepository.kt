@@ -52,4 +52,9 @@ object CourseScheduleRepository {
 
     suspend fun deleteSchedule(schedule: Schedule) =
         scheduleDao.deleteSchedule(schedule)
+
+    fun queryCourseOfParent(scheduleId: Long): LiveData<List<Course>> =
+        courseDao.queryCourseOfParent(scheduleId)
+
+    suspend fun deleteCourse(course: Course) = courseDao.deleteCourse(course)
 }

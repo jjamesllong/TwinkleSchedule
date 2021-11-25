@@ -8,9 +8,9 @@ import com.keycome.twinkleschedule.databinding.ViewCourseEditingInfoHeaderBindin
 import com.keycome.twinkleschedule.model.sketch.Course
 import com.keycome.twinkleschedule.model.sketch.CourseField
 
-class AddCourseHeaderAdapter(
+class EditCourseHeaderAdapter(
     private val viewModel: RecordViewModel
-) : RecyclerView.Adapter<AddCourseHeaderAdapter.HeaderView>() {
+) : RecyclerView.Adapter<EditCourseHeaderAdapter.HeaderView>() {
 
     class HeaderView(
         private val viewModel: RecordViewModel,
@@ -21,7 +21,7 @@ class AddCourseHeaderAdapter(
             binding.root.setOnClickListener {
                 EditTextDialog(it.context) {
                     onPositiveButtonPressed {
-                        viewModel.liveCourseList.updateField(
+                        viewModel.liveEditingCourse.updateField(
                             CourseField.Title(textContent!!),
                             bindingAdapterPosition
                         )

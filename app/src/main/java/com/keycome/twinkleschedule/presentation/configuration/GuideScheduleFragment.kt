@@ -28,8 +28,8 @@ class GuideScheduleFragment : BaseFragment<FragmentGuideScheduleBinding>() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val intent = requireActivity().intent
-        val k = intent.getStringExtra(ConfigurationActivity.NAV_KEY_TO_MANAGE)
-        val v = ConfigurationActivity.NAV_VALUE_TO_MANAGE
+        val k = intent.getStringExtra(ConfigurationActivity.NAV_KEY_TO_MANAGE_SCHEDULE)
+        val v = ConfigurationActivity.NAV_VALUE_TO_MANAGE_SCHEDULE
         val action = R.id.action_guideScheduleFragment_to_manageScheduleFragment
         if (k == v) findNavController().navigate(action)
     }

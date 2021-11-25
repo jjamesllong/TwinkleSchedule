@@ -10,20 +10,20 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
-import com.keycome.twinkleschedule.databinding.FragmentAddCourseBinding
+import com.keycome.twinkleschedule.databinding.FragmentEditCourseBinding
 import com.keycome.twinkleschedule.databinding.ViewToolbarLayoutBinding
 import com.keycome.twinkleschedule.model.sketch.CourseField
 
-class AddCourseFragment : BaseFragment<FragmentAddCourseBinding>() {
+class EditCourseFragment : BaseFragment<FragmentEditCourseBinding>() {
 
     private val viewModel by activityViewModels<RecordViewModel>()
-    private val args by navArgs<AddCourseFragmentArgs>()
+    private val args by navArgs<EditCourseFragmentArgs>()
 
     override fun supportBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentAddCourseBinding {
-        return FragmentAddCourseBinding.inflate(inflater, container, false)
+    ): FragmentEditCourseBinding {
+        return FragmentEditCourseBinding.inflate(inflater, container, false)
     }
 
     override fun supportToolbar(title: Array<Int>): ViewToolbarLayoutBinding {
@@ -34,30 +34,30 @@ class AddCourseFragment : BaseFragment<FragmentAddCourseBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.initLiveCourseList(CourseField.ParentScheduleId(args.scheduleId))
-        val addCourseAdapter = AddCourseAdapter(viewModel)
-        val addCourseHeaderAdapter = AddCourseHeaderAdapter(viewModel)
+        viewModel.initEditingCourseList(CourseField.ParentScheduleId(args.scheduleId))
+        val addCourseAdapter = EditCourseAdapter(viewModel)
+        val addCourseHeaderAdapter = EditCourseHeaderAdapter(viewModel)
         val concatAdapter = ConcatAdapter(addCourseHeaderAdapter, addCourseAdapter)
         binding.editingCourseRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = concatAdapter
         }
-        viewModel.liveCourseList.observe(viewLifecycleOwner) {
+        viewModel.liveEditingCourse.observe(viewLifecycleOwner) {
             addCourseHeaderAdapter.updateList(it)
             addCourseAdapter.submitList(it)
         }
         binding.editingCourseAddButton.setOnClickListener {
-            val resultSize = viewModel.liveCourseList.addCourse()
+            val resultSize = viewModel.liveEditingCourse.addCourse()
             binding.editingCourseRecyclerView.smoothScrollToPosition(resultSize)
         }
         binding.editingCourseSaveButton.setOnClickListener {
-            viewModel.insertCourse()
+            viewModel.insertEditingCourse()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.clearLiveCourseList()
+        viewModel.clearEditingCourseList()
     }
 
 }

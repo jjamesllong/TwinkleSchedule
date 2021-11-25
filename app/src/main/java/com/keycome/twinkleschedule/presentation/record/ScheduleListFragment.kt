@@ -8,14 +8,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
-import com.keycome.twinkleschedule.databinding.CellScheduleTitleBinding
 import com.keycome.twinkleschedule.databinding.FragmentScheduleListBinding
 import com.keycome.twinkleschedule.databinding.ViewToolbarLayoutBinding
-import com.keycome.twinkleschedule.extension.toast
 
 class ScheduleListFragment : BaseFragment<FragmentScheduleListBinding>() {
 
     private val viewModel by activityViewModels<RecordViewModel>()
+
+    private val isManage: Boolean by lazy {
+        val bundle = requireActivity().intent.extras
+        return@lazy bundle?.getBoolean(RecordActivity.NAV_KEY_TO_MANAGE_COURSE) ?: false
+    }
 
     override fun supportBinding(
         inflater: LayoutInflater, container: ViewGroup?
@@ -31,7 +34,7 @@ class ScheduleListFragment : BaseFragment<FragmentScheduleListBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val scheduleListAdapter = ScheduleListAdapter()
+        val scheduleListAdapter = ScheduleListAdapter(isManage)
         binding.fragmentScheduleListRecyclerView.apply {
             adapter = scheduleListAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -39,9 +42,5 @@ class ScheduleListFragment : BaseFragment<FragmentScheduleListBinding>() {
         viewModel.liveScheduleList.observe(viewLifecycleOwner) {
             scheduleListAdapter.submitList(it)
         }
-    }
-
-    val itemEventHandler = { binding: CellScheduleTitleBinding ->
-        binding.root.setOnClickListener { toast("hello") }
     }
 }

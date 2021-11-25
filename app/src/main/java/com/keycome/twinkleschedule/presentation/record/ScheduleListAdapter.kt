@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.databinding.CellScheduleTitleBinding
 import com.keycome.twinkleschedule.model.sketch.Schedule
 
-class ScheduleListAdapter :
+class ScheduleListAdapter(private val isManage: Boolean) :
     ListAdapter<Schedule, ScheduleListAdapter.ScheduleViewHolder>(ScheduleDiffCallback) {
 
     object ScheduleDiffCallback : DiffUtil.ItemCallback<Schedule>() {
@@ -29,19 +29,27 @@ class ScheduleListAdapter :
         }
     }
 
-    class ScheduleViewHolder(private val binding: CellScheduleTitleBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class ScheduleViewHolder(
+        private val binding: CellScheduleTitleBinding,
+        private val isManage: Boolean
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private var itemSchedule: Schedule? = null
 
         init {
             binding.root.setOnClickListener { v ->
                 itemSchedule?.let { s ->
-                    val direction =
-                        ScheduleListFragmentDirections.actionScheduleListFragmentToAddCourseFragment(
-                            scheduleId = s.scheduleId
-                        )
-                    Navigation.findNavController(v).navigate(direction)
+                    val direction = ScheduleListFragmentDirections
+                    Navigation.findNavController(v).navigate(
+                        when (isManage) {
+                            true -> direction.actionScheduleListFragmentToManageCourseFragment(
+                                scheduleId = s.scheduleId
+                            )
+                            else -> direction.actionScheduleListFragmentToAddCourseFragment(
+                                scheduleId = s.scheduleId
+                            )
+                        }
+                    )
                 }
             }
         }
@@ -58,7 +66,7 @@ class ScheduleListAdapter :
             parent,
             false
         )
-        return ScheduleViewHolder(b)
+        return ScheduleViewHolder(b, isManage)
     }
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {

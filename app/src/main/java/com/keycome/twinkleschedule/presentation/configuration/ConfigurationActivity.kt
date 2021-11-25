@@ -29,7 +29,7 @@ class ConfigurationActivity : BaseActivity() {
     }
 
     companion object {
-        const val NAV_KEY_TO_MANAGE = "NAV_KEY_TO_MANAGE"
-        const val NAV_VALUE_TO_MANAGE = "TO_MANAGE"
+        const val NAV_KEY_TO_MANAGE_SCHEDULE = "NAV_KEY_TO_MANAGE_SCHEDULE"
+        const val NAV_VALUE_TO_MANAGE_SCHEDULE = "TO_MANAGE_SCHEDULE"
     }
 }

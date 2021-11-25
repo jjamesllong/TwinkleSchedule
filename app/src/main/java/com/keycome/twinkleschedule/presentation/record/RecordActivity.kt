@@ -29,4 +29,9 @@ class RecordActivity : BaseActivity() {
         if (!navController.popBackStack()) super.onBackPressed()
     }
 
+    companion object {
+        const val NAV_KEY_TO_MANAGE_COURSE = "NAV_KEY_TO_MANAGE_COURSE"
+        const val NAV_VALUE_TO_MANAGE_COURSE = true
+    }
+
 }

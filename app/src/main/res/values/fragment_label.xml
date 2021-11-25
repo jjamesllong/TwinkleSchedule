@@ -6,4 +6,5 @@
     <string name="scheduleListFragmentLabel">选择课表</string>
     <string name="addCourseFragmentLabel">录入课程</string>
     <string name="manageScheduleFragmentLabel">管理课表</string>
+    <string name="manageCourseFragmentLabel">管理课程</string>
 </resources>
