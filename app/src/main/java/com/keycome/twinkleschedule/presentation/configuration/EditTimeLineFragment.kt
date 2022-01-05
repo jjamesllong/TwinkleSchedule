@@ -19,7 +19,7 @@ import com.keycome.twinkleschedule.databinding.FragmentEditTimeLineBinding
 import com.keycome.twinkleschedule.databinding.ViewEditTimeLineHeaderBinding
 import com.keycome.twinkleschedule.databinding.ViewToolbarLayoutBinding
 import com.keycome.twinkleschedule.extension.toast
-import com.keycome.twinkleschedule.model.LiveSchedule
+import com.keycome.twinkleschedule.record.LiveSchedule
 
 class EditTimeLineFragment : BaseFragment<FragmentEditTimeLineBinding>() {
 

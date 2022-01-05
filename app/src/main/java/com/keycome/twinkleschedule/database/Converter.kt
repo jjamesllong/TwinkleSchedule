@@ -3,9 +3,9 @@ package com.keycome.twinkleschedule.database
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.keycome.twinkleschedule.model.horizon.Date
-import com.keycome.twinkleschedule.model.horizon.Day
-import com.keycome.twinkleschedule.model.sketch.TimeLine
+import com.keycome.twinkleschedule.record.horizon.Date
+import com.keycome.twinkleschedule.record.horizon.Day
+import com.keycome.twinkleschedule.record.sketch.TimeLine
 
 class Converter {
     private val gSon = Gson()

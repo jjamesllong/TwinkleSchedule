@@ -12,7 +12,7 @@ import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.databinding.FragmentEditCourseBinding
 import com.keycome.twinkleschedule.databinding.ViewToolbarLayoutBinding
-import com.keycome.twinkleschedule.model.sketch.CourseField
+import com.keycome.twinkleschedule.record.sketch.CourseField
 
 class EditCourseFragment : BaseFragment<FragmentEditCourseBinding>() {
 

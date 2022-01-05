@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.databinding.CellScheduleTitleBinding
-import com.keycome.twinkleschedule.model.sketch.Schedule
+import com.keycome.twinkleschedule.record.sketch.Schedule
 
 class ScheduleListAdapter(private val isManage: Boolean) :
     ListAdapter<Schedule, ScheduleListAdapter.ScheduleViewHolder>(ScheduleDiffCallback) {

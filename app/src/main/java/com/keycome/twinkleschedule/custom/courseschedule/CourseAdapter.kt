@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.databinding.CellCourseDescriptionBinding
-import com.keycome.twinkleschedule.model.ViewBlock
-import com.keycome.twinkleschedule.model.sketch.Course
+import com.keycome.twinkleschedule.record.ViewBlock
+import com.keycome.twinkleschedule.record.sketch.Course
 
 class CourseAdapter(
     private val daySpan: Int,

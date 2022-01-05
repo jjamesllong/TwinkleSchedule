@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.keycome.twinkleschedule.App
 import com.keycome.twinkleschedule.extension.toast
-import com.keycome.twinkleschedule.model.DISPLAY_SCHEDULE_ID
-import com.keycome.twinkleschedule.model.LiveSchedule
-import com.keycome.twinkleschedule.model.sketch.Schedule
+import com.keycome.twinkleschedule.record.DISPLAY_SCHEDULE_ID
+import com.keycome.twinkleschedule.record.LiveSchedule
+import com.keycome.twinkleschedule.record.sketch.Schedule
 import com.keycome.twinkleschedule.repository.CourseScheduleRepository
 import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.Dispatchers

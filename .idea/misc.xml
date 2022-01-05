@@ -13,6 +13,7 @@
         <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/activity_configuration.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/activity_display.xml" value="0.24947916666666667" />
         <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/activity_record.xml" value="0.2390625" />
+        <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/activity_second.xml" value="0.23489583333333333" />
         <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/cell_add_time_line.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/cell_course_edit_info.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/cell_course_editing_info.xml" value="0.4" />
@@ -30,6 +31,7 @@
         <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/fragment_add_course.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/fragment_add_schedule.xml" value="0.264" />
         <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/fragment_add_time_line.xml" value="0.2" />
+        <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/fragment_blank.xml" value="0.24947916666666667" />
         <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/fragment_course_detail_dialog.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/fragment_display_courses.xml" value="0.264" />
         <entry key="..\:/AndroidProject/TwinkleSchedule/app/src/main/res/layout/fragment_edit_schedule.xml" value="0.264" />

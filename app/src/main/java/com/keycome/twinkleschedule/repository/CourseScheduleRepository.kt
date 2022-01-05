@@ -2,8 +2,8 @@ package com.keycome.twinkleschedule.repository
 
 import androidx.lifecycle.LiveData
 import com.keycome.twinkleschedule.database.ScheduleDatabase
-import com.keycome.twinkleschedule.model.sketch.Course
-import com.keycome.twinkleschedule.model.sketch.Schedule
+import com.keycome.twinkleschedule.record.sketch.Course
+import com.keycome.twinkleschedule.record.sketch.Schedule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

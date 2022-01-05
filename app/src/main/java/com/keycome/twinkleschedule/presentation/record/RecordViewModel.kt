@@ -3,10 +3,10 @@ package com.keycome.twinkleschedule.presentation.record
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.keycome.twinkleschedule.App
-import com.keycome.twinkleschedule.model.LiveCourseList
-import com.keycome.twinkleschedule.model.sketch.Course
-import com.keycome.twinkleschedule.model.sketch.CourseField
-import com.keycome.twinkleschedule.model.sketch.Schedule
+import com.keycome.twinkleschedule.record.LiveCourseList
+import com.keycome.twinkleschedule.record.sketch.Course
+import com.keycome.twinkleschedule.record.sketch.CourseField
+import com.keycome.twinkleschedule.record.sketch.Schedule
 import com.keycome.twinkleschedule.repository.CourseScheduleRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.custom.EditTextDialog
 import com.keycome.twinkleschedule.custom.listdialog.ListDialog
 import com.keycome.twinkleschedule.databinding.CellCourseEditingInfoBinding
-import com.keycome.twinkleschedule.model.LayoutSpec
-import com.keycome.twinkleschedule.model.horizon.Day
-import com.keycome.twinkleschedule.model.sketch.Course
-import com.keycome.twinkleschedule.model.sketch.CourseField
+import com.keycome.twinkleschedule.record.LayoutSpec
+import com.keycome.twinkleschedule.record.horizon.Day
+import com.keycome.twinkleschedule.record.sketch.Course
+import com.keycome.twinkleschedule.record.sketch.CourseField
 
 class EditCourseAdapter(private val viewModel: RecordViewModel) :
     ListAdapter<Course, EditCourseAdapter.EditingInfoHolder>(EditingInfoDiff) {

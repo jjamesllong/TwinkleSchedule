@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.databinding.ViewEditTimeLineHeaderBinding
-import com.keycome.twinkleschedule.model.sketch.Schedule
+import com.keycome.twinkleschedule.record.sketch.Schedule
 
 class EditTimeLineHeaderAdapter(
     var schedule: Schedule? = null,

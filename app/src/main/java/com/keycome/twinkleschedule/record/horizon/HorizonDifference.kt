@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.model.horizon
+package com.keycome.twinkleschedule.record.horizon
 
 object HorizonDifference {
 

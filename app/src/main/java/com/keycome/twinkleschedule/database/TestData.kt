@@ -1,11 +1,11 @@
 package com.keycome.twinkleschedule.database
 
-import com.keycome.twinkleschedule.model.horizon.Date
-import com.keycome.twinkleschedule.model.horizon.Day
-import com.keycome.twinkleschedule.model.horizon.Time
-import com.keycome.twinkleschedule.model.sketch.Course
-import com.keycome.twinkleschedule.model.sketch.Schedule
-import com.keycome.twinkleschedule.model.sketch.TimeLine
+import com.keycome.twinkleschedule.record.horizon.Date
+import com.keycome.twinkleschedule.record.horizon.Day
+import com.keycome.twinkleschedule.record.horizon.Time
+import com.keycome.twinkleschedule.record.sketch.Course
+import com.keycome.twinkleschedule.record.sketch.Schedule
+import com.keycome.twinkleschedule.record.sketch.TimeLine
 
 class TestData {
     companion object {

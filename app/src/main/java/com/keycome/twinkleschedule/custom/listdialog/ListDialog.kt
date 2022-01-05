@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.custom.TemplateDialog
-import com.keycome.twinkleschedule.model.LayoutSpec
+import com.keycome.twinkleschedule.record.LayoutSpec
 
 class ListDialog<T>(
     context: Context,

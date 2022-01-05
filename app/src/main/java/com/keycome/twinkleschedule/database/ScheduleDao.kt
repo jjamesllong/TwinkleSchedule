@@ -2,7 +2,7 @@ package com.keycome.twinkleschedule.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.keycome.twinkleschedule.model.sketch.Schedule
+import com.keycome.twinkleschedule.record.sketch.Schedule
 
 @Dao
 interface ScheduleDao {

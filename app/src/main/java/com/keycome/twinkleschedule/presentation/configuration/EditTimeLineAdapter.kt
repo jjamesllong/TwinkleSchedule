@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.databinding.CellEditTimeLineBinding
-import com.keycome.twinkleschedule.model.horizon.Time
+import com.keycome.twinkleschedule.record.horizon.Time
 
 class EditTimeLineAdapter(
     private val onclick: (CellEditTimeLineBinding, Int, Int) -> Unit

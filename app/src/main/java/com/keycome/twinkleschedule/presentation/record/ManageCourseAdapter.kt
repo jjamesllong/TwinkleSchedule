@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.databinding.CellCourseManagerBinding
-import com.keycome.twinkleschedule.model.sketch.Course
+import com.keycome.twinkleschedule.record.sketch.Course
 
 class ManageCourseAdapter(val fragment: ManageCourseFragment) :
     ListAdapter<Course, ManageCourseAdapter.CourseItem>(CourseDiffCallback) {

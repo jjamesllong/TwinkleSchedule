@@ -20,8 +20,8 @@ import com.keycome.twinkleschedule.custom.WheelDialog
 import com.keycome.twinkleschedule.databinding.CellTimeLineDescriptionBinding
 import com.keycome.twinkleschedule.databinding.FragmentEditScheduleBinding
 import com.keycome.twinkleschedule.databinding.ViewToolbarLayoutBinding
-import com.keycome.twinkleschedule.model.LiveSchedule
-import com.keycome.twinkleschedule.model.sketch.TimeLine
+import com.keycome.twinkleschedule.record.LiveSchedule
+import com.keycome.twinkleschedule.record.sketch.TimeLine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

@@ -3,8 +3,8 @@ package com.keycome.twinkleschedule
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
-import com.keycome.twinkleschedule.model.DISPLAY_SCHEDULE_ID
-import com.keycome.twinkleschedule.model.DISPLAY_SCHEDULE_ID_DEFAULT_VALUE
+import com.keycome.twinkleschedule.record.DISPLAY_SCHEDULE_ID
+import com.keycome.twinkleschedule.record.DISPLAY_SCHEDULE_ID_DEFAULT_VALUE
 import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

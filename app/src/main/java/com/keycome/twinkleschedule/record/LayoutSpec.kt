@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.model
+package com.keycome.twinkleschedule.record
 
 sealed interface LayoutSpec {
     companion object {

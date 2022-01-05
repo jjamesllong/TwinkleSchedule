@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.model
+package com.keycome.twinkleschedule.record
 
 data class ViewBlock(
     val isCourse: Boolean,

@@ -1,12 +1,12 @@
-package com.keycome.twinkleschedule.model
+package com.keycome.twinkleschedule.record
 
 import androidx.lifecycle.LiveData
 import com.keycome.twinkleschedule.database.TestData
-import com.keycome.twinkleschedule.model.horizon.Date
-import com.keycome.twinkleschedule.model.horizon.Day
-import com.keycome.twinkleschedule.model.horizon.Time
-import com.keycome.twinkleschedule.model.sketch.Schedule
-import com.keycome.twinkleschedule.model.sketch.TimeLine
+import com.keycome.twinkleschedule.record.horizon.Date
+import com.keycome.twinkleschedule.record.horizon.Day
+import com.keycome.twinkleschedule.record.horizon.Time
+import com.keycome.twinkleschedule.record.sketch.Schedule
+import com.keycome.twinkleschedule.record.sketch.TimeLine
 
 class LiveSchedule(
     schedule: Schedule = Schedule(

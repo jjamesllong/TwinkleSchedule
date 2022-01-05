@@ -15,7 +15,7 @@ import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.databinding.FragmentManageScheduleBinding
 import com.keycome.twinkleschedule.databinding.ViewToolbarLayoutBinding
-import com.keycome.twinkleschedule.model.DISPLAY_SCHEDULE_ID_DEFAULT_VALUE
+import com.keycome.twinkleschedule.record.DISPLAY_SCHEDULE_ID_DEFAULT_VALUE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

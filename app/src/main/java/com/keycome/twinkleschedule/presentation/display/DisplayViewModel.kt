@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.keycome.twinkleschedule.App
-import com.keycome.twinkleschedule.model.horizon.HorizonDifference
-import com.keycome.twinkleschedule.model.sketch.Course
-import com.keycome.twinkleschedule.model.sketch.CourseSchedule
+import com.keycome.twinkleschedule.record.horizon.HorizonDifference
+import com.keycome.twinkleschedule.record.sketch.Course
+import com.keycome.twinkleschedule.record.sketch.CourseSchedule
 import com.keycome.twinkleschedule.repository.CourseScheduleRepository
 
 class DisplayViewModel : ViewModel() {
