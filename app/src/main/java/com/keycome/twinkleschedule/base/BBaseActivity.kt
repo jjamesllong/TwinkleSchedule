@@ -6,19 +6,25 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.keycome.twinkleschedule.App
 import kotlinx.coroutines.*
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
-abstract class BBaseActivity : AppCompatActivity(), CoroutineScope by MainScope() {
+abstract class BBaseActivity : AppCompatActivity() {
 
     protected abstract suspend fun main()
 
-    private var design: Design<*>? = null
+    val coroutineScope = MainScope()
+
+    private var designInitializing = false
+
+    private var design: Design? = null
         set(parameter) {
             field = parameter
-            setContentView(parameter?.binding?.root ?: View(this))
+            setContentView(parameter?.rootView ?: View(this))
         }
+        get() = if (designInitializing) null else field
+
+    private var _navHostFragmentId: Int? = null
 
     private var _navController: NavController? = null
     protected val navController: NavController
@@ -30,32 +36,19 @@ abstract class BBaseActivity : AppCompatActivity(), CoroutineScope by MainScope(
         this.defer = operation
     }
 
-    private var _key: String? = null
-    protected fun supportKey(key: String) {
-        _key = key
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        launch {
+        coroutineScope.launch {
             main()
             finish()
         }
     }
 
     override fun onDestroy() {
-        Log.d("BBaseActivity", "onDestroy")
-        design?.cancel()
-        this.cancel()
-        Log.d("BBaseActivity", javaClass.simpleName)
-        Pipette.pipettes.shareTarget.forEach {
-            Log.d("BBaseActivity", "before release " + "${it.value}")
-        }
-        releasePipettes(_key ?: "")
-        Pipette.pipettes.shareTarget.forEach {
-            Log.d("BBaseActivity", "after release " + "${it.value}")
-        }
+        Log.d("BBaseActivity", "${javaClass.simpleName} onDestroy")
+        design?.coroutineScope?.cancel()
+        coroutineScope.cancel()
         super.onDestroy()
     }
 
@@ -65,7 +58,7 @@ abstract class BBaseActivity : AppCompatActivity(), CoroutineScope by MainScope(
 
         deferRunning = true
 
-        launch {
+        coroutineScope.launch {
             try {
                 defer?.invoke()
             } finally {
@@ -84,20 +77,28 @@ abstract class BBaseActivity : AppCompatActivity(), CoroutineScope by MainScope(
 
     protected inline fun <reified P : Pipette> pipettes() = Pipette.pipettes<P>()
 
-    private fun releasePipettes(key: String) = Pipette.releasePipettes(key)
-
-    protected suspend fun setContentDesign(design: Design<*>) {
-        suspendCoroutine<Unit> {
-            window.decorView.post {
-                this.design = design
-                it.resume(Unit)
-            }
+    protected fun supportNavigation(navHostFragmentId: Int) {
+        _navHostFragmentId = navHostFragmentId
+        design?.let {
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(navHostFragmentId) as NavHostFragment
+            _navController = navHostFragment.navController
         }
     }
 
-    protected fun supportNavigation(navHostFragmentId: Int): NavController {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(navHostFragmentId) as NavHostFragment
-        return navHostFragment.navController.also { _navController = it }
+    protected fun supportDesign(design: Design) {
+        coroutineScope.launch {
+            delay(App.designDelay)
+            withContext(NonCancellable) {
+                designInitializing = true
+                this@BBaseActivity.design = design
+            }
+            designInitializing = false
+            _navHostFragmentId?.let { id ->
+                val navHostFragment =
+                    supportFragmentManager.findFragmentById(id) as NavHostFragment
+                _navController = navHostFragment.navController
+            }
+        }
     }
 }

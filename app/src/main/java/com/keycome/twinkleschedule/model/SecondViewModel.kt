@@ -12,7 +12,7 @@ class SecondViewModel : BaseViewModel() {
     private val pipette: SecondPipette by pipettes()
 
     init {
-        launch {
+        coroutineScope.launch {
             while (isActive) {
                 select<Unit> {
                     pipette.requestChannel.onReceive {

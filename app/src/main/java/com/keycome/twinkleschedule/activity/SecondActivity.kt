@@ -17,17 +17,15 @@ class SecondActivity : BBaseActivity() {
     private val viewModel: SecondViewModel by viewModels()
 
     override suspend fun main() {
-        val design = SecondDesign(context = this)
-        setContentDesign(design)
+        supportDesign(SecondDesign(context = this))
         supportNavigation(secondFragmentContainer)
-        supportKey(SecondPipette::class.simpleName!!)
         defer {
             Log.d("SecondActivity", "defer")
         }
 
-        viewModel
+        viewModel.supportKey(SecondPipette::class.simpleName!!)
 
-        while (isActive) {
+        while (coroutineScope.isActive) {
             select<Unit> {
                 pipette.actionChannel.onReceive {
                     when (it) {

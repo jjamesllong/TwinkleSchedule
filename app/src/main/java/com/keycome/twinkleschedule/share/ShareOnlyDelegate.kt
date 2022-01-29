@@ -2,13 +2,13 @@ package com.keycome.twinkleschedule.share
 
 import kotlin.reflect.KProperty
 
-class ShareOnlyDelegate<K, V>(
-    private val key: K,
-    private val map: MutableMap<K, Pair<Target<*>?, Int>>
-) : ShareOnly<K, V> by ShareOnlyImpl(key, map) {
+class ShareOnlyDelegate<K, T>(private val shareSpace: ShareSpace<K>, private val key: K) {
 
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): V? {
-        return get(key, map)
+    init {
+        shareSpace.shareOnlyInit(key)
     }
 
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): T? {
+        return shareSpace[key]
+    }
 }

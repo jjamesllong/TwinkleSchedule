@@ -1,5 +1,5 @@
 package com.keycome.twinkleschedule.share
 
-interface Target<T> {
+interface Target<out T> {
     val target: T
 }

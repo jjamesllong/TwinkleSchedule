@@ -1,12 +1,14 @@
 package com.keycome.twinkleschedule.base
 
-import androidx.viewbinding.ViewBinding
+import android.view.View
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
-abstract class Design<VB : ViewBinding> : CoroutineScope by CoroutineScope(Dispatchers.Unconfined) {
+abstract class Design {
 
-    abstract val binding: VB
+    val coroutineScope = CoroutineScope(Dispatchers.Unconfined)
+
+    abstract val rootView: View
 
     protected inline fun <reified P : Pipette> pipettes() = Pipette.pipettes<P>()
 

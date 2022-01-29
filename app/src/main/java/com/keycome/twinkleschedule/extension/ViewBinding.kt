@@ -1,5 +1,6 @@
 package com.keycome.twinkleschedule.extension
 
+import android.view.View
 import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -18,12 +19,16 @@ fun <VB : ViewBinding> viewBindings(
     coroutineScope: CoroutineScope,
     initializer: () -> VB,
     block: suspend VB.() -> Unit
-): Lazy<VB> = ViewBindingImpl(coroutineScope, initializer, block)
+): Lazy<View> = ViewBindingImpl(coroutineScope, initializer, block)
 
 private class ViewBindingImpl<VB : ViewBinding>(
     coroutineScope: CoroutineScope,
     initializer: () -> VB,
     block: suspend VB.() -> Unit
-) : Lazy<VB> by lazy(initializer = {
-    initializer().init(coroutineScope, block)
-})
+) : Lazy<View> by lazy(
+    mode = LazyThreadSafetyMode.NONE,
+    initializer = {
+        val binding = initializer().init(coroutineScope, block)
+        return@lazy binding.root
+    }
+)

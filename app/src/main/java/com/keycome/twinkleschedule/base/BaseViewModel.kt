@@ -5,13 +5,23 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 
-abstract class BaseViewModel :
-    ViewModel(),
-    CoroutineScope by CoroutineScope(Dispatchers.Unconfined) {
+abstract class BaseViewModel : ViewModel() {
+
+    val coroutineScope = CoroutineScope(Dispatchers.Unconfined)
+
+    private var _key: String? = null
+    fun supportKey(key: String) {
+        _key = key
+    }
 
     override fun onCleared() {
         super.onCleared()
-        cancel()
+        coroutineScope.cancel()
+        try {
+            Pipette.releasePipettes(_key ?: throw Exception())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     protected inline fun <reified P : Pipette> pipettes() = Pipette.pipettes<P>()

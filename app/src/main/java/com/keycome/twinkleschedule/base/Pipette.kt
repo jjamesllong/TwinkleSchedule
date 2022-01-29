@@ -1,5 +1,6 @@
 package com.keycome.twinkleschedule.base
 
+import com.keycome.twinkleschedule.share.SharePostVariable
 import com.keycome.twinkleschedule.share.ShareSpace
 
 abstract class Pipette {
@@ -8,7 +9,8 @@ abstract class Pipette {
 
         val pipettes = ShareSpace<String>()
 
-        inline fun <reified P : Pipette> pipettes() = pipettes.SharePostVariable(
+        inline fun <reified P : Pipette> pipettes() = SharePostVariable(
+            shareSpace = pipettes,
             key = P::class.simpleName ?: throw Exception()
         ) { P::class.java.newInstance() }
 
