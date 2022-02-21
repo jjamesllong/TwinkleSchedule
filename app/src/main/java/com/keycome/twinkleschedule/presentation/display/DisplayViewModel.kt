@@ -22,7 +22,7 @@ class DisplayViewModel : ViewModel() {
                     System.currentTimeMillis()
                 ) + 1
                 val liveCourseList =
-                    CourseScheduleRepository.queryCourseByParent(schedule.scheduleId, weekNow)
+                    CourseScheduleRepository.queryCourseByParent(schedule.scheduleId, 1)
                 Transformations.switchMap(liveCourseList) { courseList ->
                     MutableLiveData<CourseSchedule>().also {
                         it.value = CourseSchedule(schedule, courseList)

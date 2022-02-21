@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--        android:id="@+id/second_page_1"-->
+    <item
+        android:id="@id/displayCoursesFragment2"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_android_24"
+        android:title="主页" />
+    <!--        android:id="@+id/second_page_2"-->
+    <item
+        android:id="@id/settingsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="设置" />
+</menu>

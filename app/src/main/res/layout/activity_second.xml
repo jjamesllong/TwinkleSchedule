@@ -14,19 +14,11 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/second_nav_graph" />
 
-    <Button
-        android:id="@+id/secondButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Button" />
-
-    <TextView
-        android:id="@+id/secondText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:text="TextView" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/second_navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        app:menu="@menu/second_navigation_bar_menu" />
 
 </FrameLayout>

@@ -73,7 +73,7 @@ object ViewBlockFactory {
                         viewBlockList.add(b)
                     }
                 } else {
-                    val spanDay = cDay - day - 1
+                    val spanDay = cDay - day
                     for (s in 0 until spanDay) {
                         val p = ViewBlock(
                             isCourse = false,

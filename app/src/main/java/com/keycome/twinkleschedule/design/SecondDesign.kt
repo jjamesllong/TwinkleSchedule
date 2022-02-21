@@ -1,41 +1,41 @@
 package com.keycome.twinkleschedule.design
 
-import android.content.Context
-import android.view.View
-import com.keycome.twinkleschedule.base.Design
+import com.keycome.twinkleschedule.R
+import com.keycome.twinkleschedule.activity.SecondActivity
+import com.keycome.twinkleschedule.base.BindingDesign
 import com.keycome.twinkleschedule.databinding.ActivitySecondBinding
-import com.keycome.twinkleschedule.extension.layoutInflater
-import com.keycome.twinkleschedule.extension.root
-import com.keycome.twinkleschedule.extension.viewBindings
 import com.keycome.twinkleschedule.pipette.SecondPipette
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.selects.select
 
-class SecondDesign(val context: Context) : Design() {
+class SecondDesign(private val activity: SecondActivity) : BindingDesign<ActivitySecondBinding>() {
 
     private val pipette: SecondPipette by pipettes()
 
-    override val rootView: View by viewBindings(coroutineScope, {
-        ActivitySecondBinding.inflate(
-            context.layoutInflater,
-            context.root,
-            false
-        )
-    }) {
+    override fun onBind(binding: ActivitySecondBinding) {
 
-        coroutineScope.launch {
-            while (isActive) {
-                select<Unit> {
-                    pipette.modelChannel.onReceive {
-                        secondText.text = it.toString()
+        binding.secondNavigationBar.setOnItemSelectedListener {
+            val navController = activity.navController
+            when (it.itemId) {
+                R.id.displayCoursesFragment2 -> {
+                    navController.navigateUp()
+                    true
+                }
+                R.id.settingsFragment -> {
+                    if (navController.currentDestination?.id == R.id.settingsFragment)
+                        return@setOnItemSelectedListener true
+                    else {
+                        navController.navigate(R.id.settingsFragment)
+                        true
                     }
                 }
+                else -> false
             }
         }
 
-        secondButton.setOnClickListener {
-            pipette.actionChannel.trySend("button")
-        }
+    }
+
+    override fun onInit() {
+    }
+
+    override suspend fun onAsync() {
     }
 }

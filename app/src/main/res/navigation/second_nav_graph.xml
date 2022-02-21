@@ -3,10 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/second_nav_graph"
-    app:startDestination="@id/blankFragment">
+    app:startDestination="@id/displayCoursesFragment2">
     <fragment
         android:id="@+id/blankFragment"
         android:name="com.keycome.twinkleschedule.fragment.BlankFragment"
         android:label="fragment_blank"
         tools:layout="@layout/fragment_blank" />
+    <fragment
+        android:id="@+id/displayCoursesFragment2"
+        android:name="com.keycome.twinkleschedule.fragment.DisplayCoursesFragment"
+        android:label="DisplayCoursesFragment" >
+        <action
+            android:id="@+id/action_displayCoursesFragment2_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.keycome.twinkleschedule.fragment.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

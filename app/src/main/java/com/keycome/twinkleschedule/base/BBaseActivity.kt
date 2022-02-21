@@ -2,32 +2,33 @@ package com.keycome.twinkleschedule.base
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.keycome.twinkleschedule.App
+import androidx.viewbinding.ViewBinding
+import com.keycome.twinkleschedule.extension.BindingProvider
 import kotlinx.coroutines.*
+
 
 abstract class BBaseActivity : AppCompatActivity() {
 
-    protected abstract suspend fun main()
+    abstract fun onInit()
+
+    abstract suspend fun onAsync()
 
     val coroutineScope = MainScope()
 
-    private var designInitializing = false
-
     private var design: Design? = null
-        set(parameter) {
-            field = parameter
-            setContentView(parameter?.rootView ?: View(this))
-        }
-        get() = if (designInitializing) null else field
+
+    var baseViewModel: Lazy<BaseViewModel>? = null
 
     private var _navHostFragmentId: Int? = null
 
     private var _navController: NavController? = null
-    protected val navController: NavController
+    val navController: NavController
         get() = _navController ?: throw Exception()
 
     private var defer: (suspend () -> Unit)? = null
@@ -38,35 +39,38 @@ abstract class BBaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val windowInsetsController = ViewCompat.getWindowInsetsController(
+            findViewById(android.R.id.content)
+        )
+        windowInsetsController?.isAppearanceLightStatusBars = true
+        onInit()
         coroutineScope.launch {
-            main()
+            onAsync()
             finish()
         }
     }
 
     override fun onDestroy() {
-        Log.d("BBaseActivity", "${javaClass.simpleName} onDestroy")
-        design?.coroutineScope?.cancel()
+        Log.d("BBaseActivity", "${javaClass.simpleName} onDestroy()")
         coroutineScope.cancel()
         super.onDestroy()
     }
 
     override fun finish() {
-
         if (deferRunning) return
-
-        deferRunning = true
-
-        coroutineScope.launch {
-            try {
-                defer?.invoke()
-            } finally {
-                withContext(NonCancellable) {
-                    super.finish()
+        defer?.let { operation ->
+            deferRunning = true
+            coroutineScope.launch {
+                try {
+                    operation()
+                } finally {
+                    withContext(NonCancellable) {
+                        super.finish()
+                    }
                 }
             }
-        }
+            Unit
+        } ?: super.finish()
     }
 
     override fun onBackPressed() {
@@ -77,28 +81,29 @@ abstract class BBaseActivity : AppCompatActivity() {
 
     protected inline fun <reified P : Pipette> pipettes() = Pipette.pipettes<P>()
 
+    protected inline fun <reified VM : BaseViewModel> activityViewModels(
+        noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
+    ) = viewModels<VM>(factoryProducer).also { baseViewModel = it }
+
     protected fun supportNavigation(navHostFragmentId: Int) {
         _navHostFragmentId = navHostFragmentId
-        design?.let {
-            val navHostFragment =
-                supportFragmentManager.findFragmentById(navHostFragmentId) as NavHostFragment
-            _navController = navHostFragment.navController
-        }
     }
 
-    protected fun supportDesign(design: Design) {
-        coroutineScope.launch {
-            delay(App.designDelay)
-            withContext(NonCancellable) {
-                designInitializing = true
-                this@BBaseActivity.design = design
-            }
-            designInitializing = false
-            _navHostFragmentId?.let { id ->
-                val navHostFragment =
-                    supportFragmentManager.findFragmentById(id) as NavHostFragment
-                _navController = navHostFragment.navController
-            }
+    protected fun <VB : ViewBinding, BD : BindingDesign<VB>> supportBindingDesign(
+        bindingDesign: BindingDesign<VB>,
+        bindingProvider: BindingProvider<VB>
+    ) {
+        val binding = bindingProvider.doBind()
+        setContentView(binding.root)
+        _navHostFragmentId?.let { id ->
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(id) as NavHostFragment
+            _navController = navHostFragment.navController
         }
+        design = bindingDesign
+        design?.performInit(this)
+        baseViewModel?.value?.performInit(this)
+
+        bindingDesign.onBind(binding)
     }
 }
