@@ -17,8 +17,6 @@ abstract class Design : DefaultLifecycleObserver {
 
     protected val attachToParentFalse = false
 
-    protected inline fun <reified P : Pipette> pipettes() = Pipette.pipettes<P>()
-
     override fun onDestroy(owner: LifecycleOwner) {
         super.onDestroy(owner)
         coroutineScope.cancel()

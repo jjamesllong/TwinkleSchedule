@@ -11,18 +11,22 @@ import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.record.sketch.Schedule
 import com.keycome.twinkleschedule.record.sketch.TimeLine
 
-class SectionAdapter(val schedule: Schedule) : RecyclerView.Adapter<SectionAdapter.SectionView>() {
+class SectionAdapter : TableAdapter<SectionAdapter.SectionView, Schedule>() {
 
     class SectionView(view: FrameLayout) : RecyclerView.ViewHolder(view) {
         val textView = view[0] as TextView
     }
 
+    private var schedule: Schedule? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionView {
         val frameLayout = FrameLayout(parent.context).apply {
-            layoutParams = FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                parent.height / schedule.dailyCourses
-            )
+            schedule?.let {
+                layoutParams = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    parent.height / it.dailyCourses
+                )
+            }
             addView(TextView(parent.context).apply {
                 layoutParams = FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT,
@@ -39,7 +43,7 @@ class SectionAdapter(val schedule: Schedule) : RecyclerView.Adapter<SectionAdapt
     }
 
     override fun onBindViewHolder(holder: SectionView, position: Int) {
-        val t: TimeLine? = schedule.timeLine.find { it.id == 0 }
+        val t: TimeLine? = schedule?.timeLine?.find { it.id == 0 }
         t?.let {
             val text = StringBuilder()
                 .append(position + 1)
@@ -49,5 +53,10 @@ class SectionAdapter(val schedule: Schedule) : RecyclerView.Adapter<SectionAdapt
         }
     }
 
-    override fun getItemCount() = schedule.dailyCourses
+    override fun getItemCount() = schedule?.dailyCourses ?: 0
+
+    override fun onSubmitTableData(data: Schedule) {
+        schedule = data
+        notifyDataSetChanged()
+    }
 }

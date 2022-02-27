@@ -21,6 +21,9 @@ interface ScheduleDao {
     @Query("SELECT * FROM schedule WHERE schedule_id = :scheduleId")
     fun queryScheduleById(scheduleId: Long): LiveData<Schedule>
 
+    @Query("SELECT * FROM schedule WHERE schedule_id = :scheduleId")
+    suspend fun queryScheduleByIdQuietly(scheduleId: Long): Schedule
+
     @Delete
     suspend fun deleteSchedule(schedule: Schedule)
 

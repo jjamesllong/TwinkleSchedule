@@ -1,35 +1,48 @@
 package com.keycome.twinkleschedule.activity
 
-import android.util.Log
+import android.os.Bundle
 import androidx.activity.viewModels
-import com.keycome.twinkleschedule.R.id.secondFragmentContainer
-import com.keycome.twinkleschedule.base.BBaseActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import com.keycome.twinkleschedule.R
+import com.keycome.twinkleschedule.base.BaseActivity2
 import com.keycome.twinkleschedule.databinding.ActivitySecondBinding
-import com.keycome.twinkleschedule.design.SecondDesign
 import com.keycome.twinkleschedule.model.SecondViewModel
-import com.keycome.twinkleschedule.pipette.SecondPipette
-import kotlinx.coroutines.awaitCancellation
 
-class SecondActivity : BBaseActivity() {
-
-    private val pipette: SecondPipette by pipettes()
+class SecondActivity : BaseActivity2() {
 
     private val viewModel: SecondViewModel by viewModels()
 
-    override fun onInit() {
-        Log.d("SecondActivity", "onInit()")
-        supportNavigation(secondFragmentContainer)
-        supportBindingDesign(SecondDesign(activity = this)) {
-            ActivitySecondBinding.inflate(layoutInflater)
-        }
-        viewModel.supportKey(SecondPipette::class.simpleName!!)
+    private val binding: ActivitySecondBinding by lazy {
+        ActivitySecondBinding.inflate(layoutInflater)
     }
 
-    override suspend fun onAsync() {
-        defer {
-            Log.d("SecondActivity", "defer")
-        }
+    private val navController: NavController by lazy {
+        val navHostFragment = supportFragmentManager.findFragmentById(
+            R.id.secondFragmentContainer
+        ) as NavHostFragment
+        navHostFragment.navController
+    }
 
-        awaitCancellation()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+        binding.secondNavigationBar.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.displayCoursesFragment2 -> {
+                    navController.navigateUp()
+                    true
+                }
+                R.id.settingsFragment -> {
+                    if (navController.currentDestination?.id == R.id.settingsFragment)
+                        return@setOnItemSelectedListener true
+                    else {
+                        navController.navigate(R.id.settingsFragment)
+                        true
+                    }
+                }
+                else -> false
+            }
+        }
     }
 }

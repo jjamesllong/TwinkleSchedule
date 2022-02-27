@@ -79,8 +79,6 @@ abstract class BBaseActivity : AppCompatActivity() {
         } ?: super.onBackPressed()
     }
 
-    protected inline fun <reified P : Pipette> pipettes() = Pipette.pipettes<P>()
-
     protected inline fun <reified VM : BaseViewModel> activityViewModels(
         noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
     ) = viewModels<VM>(factoryProducer).also { baseViewModel = it }
@@ -107,3 +105,5 @@ abstract class BBaseActivity : AppCompatActivity() {
         bindingDesign.onBind(binding)
     }
 }
+
+abstract class BaseActivity2 : AppCompatActivity()

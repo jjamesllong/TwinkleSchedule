@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.record.horizon
+package com.keycome.twinkleschedule.record.span
 
 enum class Day {
     Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday;

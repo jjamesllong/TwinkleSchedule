@@ -43,7 +43,7 @@ abstract class BaseViewModel : ViewModel(), DefaultLifecycleObserver {
             onAsync()
         }
     }
-
-    protected inline fun <reified P : Pipette> pipettes() = Pipette.pipettes<P>()
 }
+
+abstract class BaseViewModel2 : ViewModel()
 

@@ -3,7 +3,7 @@ package com.keycome.twinkleschedule.extension
 import android.content.Context
 import android.widget.Toast
 import com.keycome.twinkleschedule.App
-import com.keycome.twinkleschedule.record.horizon.Day
+import com.keycome.twinkleschedule.record.span.Day
 
 fun toast(
     content: String,

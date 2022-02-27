@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".activity.SecondActivity">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/second_navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        app:menu="@menu/second_navigation_bar_menu" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/secondFragmentContainer"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -13,12 +20,5 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/second_nav_graph" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/second_navigation_bar"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_gravity="bottom"
-        app:menu="@menu/second_navigation_bar_menu" />
 
 </FrameLayout>

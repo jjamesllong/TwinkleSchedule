@@ -8,16 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.databinding.CellCourseDescriptionBinding
 import com.keycome.twinkleschedule.record.ViewBlock
 import com.keycome.twinkleschedule.record.sketch.Course
+import com.keycome.twinkleschedule.record.sketch.CourseSchedule
+import com.keycome.twinkleschedule.record.sketch.Schedule
 
-class CourseAdapter(
-    private val daySpan: Int,
-    private val courseList: List<Course>,
-    private val viewBlockList: List<ViewBlock>,
-    private val itemEvent: ((Course) -> Unit)? = null
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CourseAdapter : TableAdapter<RecyclerView.ViewHolder, CourseSchedule>() {
 
     companion object {
         const val TYPE_PLACEHOLDER = -1
+        const val TYPE_UNDEFINED = 0
         const val TYPE_COURSE = 1
     }
 
@@ -25,6 +23,12 @@ class CourseAdapter(
         RecyclerView.ViewHolder(view)
 
     class Placeholder(view: View) : RecyclerView.ViewHolder(view)
+
+    var daySpan: Int = 1
+    var viewBlockList: List<ViewBlock>? = null
+    var schedule: Schedule? = null
+    var courseList: List<Course>? = null
+    var itemEvent: ((Course) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val frameLayout = FrameLayout(parent.context).apply {
@@ -41,28 +45,40 @@ class CourseAdapter(
                 )
                 CourseView(binding, frameLayout.apply { addView(binding.root) })
             }
-            else -> Placeholder(frameLayout)
+            TYPE_PLACEHOLDER -> Placeholder(frameLayout)
+            else -> throw Exception()
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is CourseView) {
             holder.apply {
-                val index = viewBlockList[position].courseIndex
-                val c = courseList[index]
-                val courseInfoText = StringBuilder()
-                    .append(c.title)
-                    .append("\n@")
-                    .append(c.classroom)
-                    .toString()
-                binding.courseInfo.text = courseInfoText
-                view.setOnClickListener { itemEvent?.invoke(c) }
+                viewBlockList?.let { _viewBlockList ->
+                    courseList?.let { _courseList ->
+                        val index = _viewBlockList[position].courseIndex
+                        val c = _courseList[index]
+                        val courseInfoText = StringBuilder()
+                            .append(c.title)
+                            .append("\n@")
+                            .append(c.classroom)
+                            .toString()
+                        binding.courseInfo.text = courseInfoText
+                        view.setOnClickListener { itemEvent?.invoke(c) }
+                    }
+                }
             }
         }
     }
 
-    override fun getItemCount(): Int = viewBlockList.size
+    override fun getItemCount(): Int = viewBlockList?.size ?: 0
 
     override fun getItemViewType(position: Int): Int =
-        if (viewBlockList[position].isCourse) TYPE_COURSE else TYPE_PLACEHOLDER
+        viewBlockList?.let {
+            if (it[position].isCourse) TYPE_COURSE else TYPE_PLACEHOLDER
+        } ?: TYPE_UNDEFINED
+
+    override fun onSubmitTableData(data: CourseSchedule) {
+        notifyDataSetChanged()
+    }
 }
+

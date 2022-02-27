@@ -1,6 +1,6 @@
-package com.keycome.twinkleschedule.record.horizon
+package com.keycome.twinkleschedule.record.span
 
-object HorizonDifference {
+object SpanDifference {
 
     fun weeklyDiff(startTimeMillis: Long, endTimeMillis: Long): Int {
         val duration = endTimeMillis - startTimeMillis

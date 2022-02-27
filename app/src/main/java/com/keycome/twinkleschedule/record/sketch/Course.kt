@@ -3,7 +3,7 @@ package com.keycome.twinkleschedule.record.sketch
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.keycome.twinkleschedule.record.horizon.Day
+import com.keycome.twinkleschedule.record.span.Day
 
 @Entity(tableName = "course")
 data class Course(

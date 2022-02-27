@@ -1,7 +1,7 @@
 package com.keycome.twinkleschedule.record
 
 import androidx.lifecycle.LiveData
-import com.keycome.twinkleschedule.record.horizon.Day
+import com.keycome.twinkleschedule.record.span.Day
 import com.keycome.twinkleschedule.record.sketch.Course
 import com.keycome.twinkleschedule.record.sketch.CourseField
 

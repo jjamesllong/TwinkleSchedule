@@ -1,8 +1,8 @@
 package com.keycome.twinkleschedule.database
 
-import com.keycome.twinkleschedule.record.horizon.Date
-import com.keycome.twinkleschedule.record.horizon.Day
-import com.keycome.twinkleschedule.record.horizon.Time
+import com.keycome.twinkleschedule.record.span.Date
+import com.keycome.twinkleschedule.record.span.Day
+import com.keycome.twinkleschedule.record.span.Time
 import com.keycome.twinkleschedule.record.sketch.Course
 import com.keycome.twinkleschedule.record.sketch.Schedule
 import com.keycome.twinkleschedule.record.sketch.TimeLine

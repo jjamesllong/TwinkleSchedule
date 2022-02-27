@@ -2,9 +2,9 @@ package com.keycome.twinkleschedule.record
 
 import androidx.lifecycle.LiveData
 import com.keycome.twinkleschedule.database.TestData
-import com.keycome.twinkleschedule.record.horizon.Date
-import com.keycome.twinkleschedule.record.horizon.Day
-import com.keycome.twinkleschedule.record.horizon.Time
+import com.keycome.twinkleschedule.record.span.Date
+import com.keycome.twinkleschedule.record.span.Day
+import com.keycome.twinkleschedule.record.span.Time
 import com.keycome.twinkleschedule.record.sketch.Schedule
 import com.keycome.twinkleschedule.record.sketch.TimeLine
 

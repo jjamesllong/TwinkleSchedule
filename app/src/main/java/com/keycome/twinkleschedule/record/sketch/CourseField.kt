@@ -1,6 +1,6 @@
 package com.keycome.twinkleschedule.record.sketch
 
-import com.keycome.twinkleschedule.record.horizon.Day
+import com.keycome.twinkleschedule.record.span.Day
 
 sealed class CourseField {
     data class CourseId(val courseId: Long) : CourseField()

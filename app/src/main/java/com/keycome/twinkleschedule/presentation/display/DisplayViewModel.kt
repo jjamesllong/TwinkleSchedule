@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.keycome.twinkleschedule.App
-import com.keycome.twinkleschedule.record.horizon.HorizonDifference
+import com.keycome.twinkleschedule.record.span.SpanDifference
 import com.keycome.twinkleschedule.record.sketch.Course
 import com.keycome.twinkleschedule.record.sketch.CourseSchedule
 import com.keycome.twinkleschedule.repository.CourseScheduleRepository
@@ -17,7 +17,7 @@ class DisplayViewModel : ViewModel() {
             val liveParentSchedule =
                 CourseScheduleRepository.queryScheduleById(id)
             Transformations.switchMap(liveParentSchedule) { schedule ->
-                val weekNow = HorizonDifference.weeklyDiff(
+                val weekNow = SpanDifference.weeklyDiff(
                     schedule.schoolBeginDate.toMillis(),
                     System.currentTimeMillis()
                 ) + 1

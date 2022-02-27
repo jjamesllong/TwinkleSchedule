@@ -93,8 +93,6 @@ abstract class BindingFragment<VB : ViewBinding, BD : BindingDesign<VB>> : BaseF
 
     abstract fun supportBindingDesign(): BD
 
-    protected inline fun <reified P : Pipette> pipettes() = Pipette.pipettes<P>()
-
     protected inline fun <reified VM : BaseViewModel> fragmentViewModels(
         noinline ownerProducer: () -> ViewModelStoreOwner = { this },
         noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null

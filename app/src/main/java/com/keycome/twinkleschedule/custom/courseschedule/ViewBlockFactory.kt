@@ -1,7 +1,7 @@
 package com.keycome.twinkleschedule.custom.courseschedule
 
 import com.keycome.twinkleschedule.record.ViewBlock
-import com.keycome.twinkleschedule.record.horizon.Day
+import com.keycome.twinkleschedule.record.span.Day
 import com.keycome.twinkleschedule.record.sketch.Course
 import com.keycome.twinkleschedule.record.sketch.Schedule
 

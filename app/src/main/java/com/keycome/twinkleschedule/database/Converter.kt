@@ -3,8 +3,8 @@ package com.keycome.twinkleschedule.database
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.keycome.twinkleschedule.record.horizon.Date
-import com.keycome.twinkleschedule.record.horizon.Day
+import com.keycome.twinkleschedule.record.span.Date
+import com.keycome.twinkleschedule.record.span.Day
 import com.keycome.twinkleschedule.record.sketch.TimeLine
 
 class Converter {

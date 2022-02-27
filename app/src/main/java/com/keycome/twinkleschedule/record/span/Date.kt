@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.record.horizon
+package com.keycome.twinkleschedule.record.span
 
 import java.text.ParseException
 import java.text.SimpleDateFormat

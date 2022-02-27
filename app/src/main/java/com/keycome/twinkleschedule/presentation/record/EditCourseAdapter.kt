@@ -11,7 +11,7 @@ import com.keycome.twinkleschedule.custom.EditTextDialog
 import com.keycome.twinkleschedule.custom.listdialog.ListDialog
 import com.keycome.twinkleschedule.databinding.CellCourseEditingInfoBinding
 import com.keycome.twinkleschedule.record.LayoutSpec
-import com.keycome.twinkleschedule.record.horizon.Day
+import com.keycome.twinkleschedule.record.span.Day
 import com.keycome.twinkleschedule.record.sketch.Course
 import com.keycome.twinkleschedule.record.sketch.CourseField
 

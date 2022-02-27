@@ -47,8 +47,14 @@ object CourseScheduleRepository {
     fun queryCourseByParent(parentScheduleId: Long, week: Int): LiveData<List<Course>> =
         courseDao.queryCourseByParent(parentScheduleId, week)
 
+    suspend fun queryCourseByParentQuietly(parentScheduleId: Long, week: Int): List<Course> =
+        courseDao.queryCourseByParentQuietly(parentScheduleId, week)
+
     fun queryScheduleById(scheduleId: Long): LiveData<Schedule> =
         scheduleDao.queryScheduleById(scheduleId)
+
+    suspend fun queryScheduleByIdQuietly(scheduleId: Long): Schedule =
+        scheduleDao.queryScheduleByIdQuietly(scheduleId)
 
     suspend fun deleteSchedule(schedule: Schedule) =
         scheduleDao.deleteSchedule(schedule)
