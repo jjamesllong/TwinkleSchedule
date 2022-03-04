@@ -3,11 +3,13 @@ package com.keycome.twinkleschedule.activity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseActivity2
 import com.keycome.twinkleschedule.databinding.ActivitySecondBinding
 import com.keycome.twinkleschedule.model.SecondViewModel
+import com.keycome.twinkleschedule.utils.TextColor
 
 class SecondActivity : BaseActivity2() {
 
@@ -26,10 +28,13 @@ class SecondActivity : BaseActivity2() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setStatusBarAppearance(binding.root, TextColor.Dark)
         setContentView(binding.root)
         binding.secondNavigationBar.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.displayCoursesFragment2 -> {
+                R.id.displayCoursesFragment -> {
+                    if (navController.currentDestination?.id == R.id.displayCoursesFragment)
+                        return@setOnItemSelectedListener true
                     navController.navigateUp()
                     true
                 }
@@ -42,6 +47,12 @@ class SecondActivity : BaseActivity2() {
                     }
                 }
                 else -> false
+            }
+        }
+        navController.addOnDestinationChangedListener { _, navDestination: NavDestination, _ ->
+            R.id.displayCoursesFragment.let {
+                if (navDestination.id == it && binding.secondNavigationBar.selectedItemId != it)
+                    binding.secondNavigationBar.selectedItemId = it
             }
         }
     }

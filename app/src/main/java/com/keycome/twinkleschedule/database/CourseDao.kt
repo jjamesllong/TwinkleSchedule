@@ -96,4 +96,7 @@ interface CourseDao {
 
     @Delete
     suspend fun deleteCourse(course: Course)
+
+    @Query("select week from course where parent_schedule_id == :scheduleId order by length(week) desc limit 1")
+    suspend fun queryLastWeek(scheduleId: Long): Int
 }

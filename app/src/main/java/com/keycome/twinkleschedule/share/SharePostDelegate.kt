@@ -14,11 +14,9 @@ class SharePostDelegate<K, T>(
     }
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
-        val result = shareSpace[key] ?: shareSpace.set(
+        return shareSpace[key] ?: shareSpace.set<T>(
             key,
-            _generator?.invoke() ?: throw Exception()
+            _generator?.invoke().also { _generator = null } ?: throw Exception()
         )
-        if (_generator != null) _generator = null
-        return result
     }
 }

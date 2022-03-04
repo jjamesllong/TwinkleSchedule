@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <!--        android:id="@+id/second_page_1"-->
     <item
-        android:id="@id/displayCoursesFragment2"
+        android:id="@id/displayCoursesFragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_android_24"
         android:title="主页" />

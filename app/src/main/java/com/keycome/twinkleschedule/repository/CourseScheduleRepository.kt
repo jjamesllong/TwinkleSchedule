@@ -63,4 +63,6 @@ object CourseScheduleRepository {
         courseDao.queryCourseOfParent(scheduleId)
 
     suspend fun deleteCourse(course: Course) = courseDao.deleteCourse(course)
+
+    suspend fun queryLastWeek(scheduleId: Long) = courseDao.queryLastWeek(scheduleId)
 }

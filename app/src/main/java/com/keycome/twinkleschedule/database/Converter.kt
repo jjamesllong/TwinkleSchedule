@@ -3,9 +3,9 @@ package com.keycome.twinkleschedule.database
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.keycome.twinkleschedule.record.sketch.TimeLine
 import com.keycome.twinkleschedule.record.span.Date
 import com.keycome.twinkleschedule.record.span.Day
-import com.keycome.twinkleschedule.record.sketch.TimeLine
 
 class Converter {
     private val gSon = Gson()
@@ -44,4 +44,10 @@ class Converter {
 
     @TypeConverter
     fun intListConvert(intList: List<Int>): String = gSon.toJson(intList)
+
+    @TypeConverter
+    fun lastWeekRevert(gSonString: String): Int {
+        val weekList: List<Int> = gSon.fromJson(gSonString, object : TypeToken<List<Int>>() {}.type)
+        return weekList.last()
+    }
 }

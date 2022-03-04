@@ -2,13 +2,16 @@ package com.keycome.twinkleschedule.custom.courseschedule
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.keycome.twinkleschedule.record.sketch.Course
 import com.keycome.twinkleschedule.record.sketch.CourseSchedule
 
 class CourseTable(recyclerView: RecyclerView) : RecyclerTable<CourseSchedule>() {
 
     private val reverseLayout = false
 
-    private val courseAdapter = CourseAdapter()
+    private val courseAdapter = CourseAdapter().also { it.courseTable = this }
+
+    var pagerAdapter: PagerAdapter? = null
 
     init {
         super.recyclerView = recyclerView
@@ -38,5 +41,9 @@ class CourseTable(recyclerView: RecyclerView) : RecyclerTable<CourseSchedule>() 
         courseAdapter.schedule = data.schedule
         courseAdapter.courseList = data.courseList
         super.submitData(data)
+    }
+
+    fun onCourseViewClicked(course: Course) {
+        pagerAdapter?.onCourseViewClicked(course)
     }
 }

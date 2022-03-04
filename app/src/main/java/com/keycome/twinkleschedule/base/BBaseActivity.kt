@@ -2,6 +2,7 @@ package com.keycome.twinkleschedule.base
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.viewbinding.ViewBinding
 import com.keycome.twinkleschedule.extension.BindingProvider
+import com.keycome.twinkleschedule.utils.TextColor
 import kotlinx.coroutines.*
 
 
@@ -106,4 +108,12 @@ abstract class BBaseActivity : AppCompatActivity() {
     }
 }
 
-abstract class BaseActivity2 : AppCompatActivity()
+abstract class BaseActivity2 : AppCompatActivity() {
+    fun setStatusBarAppearance(view: View, color: TextColor) {
+        val windowInsetsController = ViewCompat.getWindowInsetsController(view)
+        windowInsetsController?.isAppearanceLightStatusBars = when (color) {
+            TextColor.Light -> false
+            TextColor.Dark -> true
+        }
+    }
+}

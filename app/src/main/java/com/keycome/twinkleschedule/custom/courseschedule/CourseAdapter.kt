@@ -19,8 +19,25 @@ class CourseAdapter : TableAdapter<RecyclerView.ViewHolder, CourseSchedule>() {
         const val TYPE_COURSE = 1
     }
 
-    class CourseView(val binding: CellCourseDescriptionBinding, val view: View) :
-        RecyclerView.ViewHolder(view)
+    class CourseView(
+        frameLayout: FrameLayout,
+        private val courseAdapter: CourseAdapter
+    ) : RecyclerView.ViewHolder(frameLayout) {
+
+        var course: Course? = null
+        val binding = CellCourseDescriptionBinding.inflate(
+            LayoutInflater.from(frameLayout.context), frameLayout, false
+        )
+
+        init {
+            frameLayout.addView(binding.root)
+            binding.root.setOnClickListener {
+                course?.let { _course ->
+                    courseAdapter.onCourseViewClicked(_course)
+                }
+            }
+        }
+    }
 
     class Placeholder(view: View) : RecyclerView.ViewHolder(view)
 
@@ -28,7 +45,7 @@ class CourseAdapter : TableAdapter<RecyclerView.ViewHolder, CourseSchedule>() {
     var viewBlockList: List<ViewBlock>? = null
     var schedule: Schedule? = null
     var courseList: List<Course>? = null
-    var itemEvent: ((Course) -> Unit)? = null
+    var courseTable: CourseTable? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val frameLayout = FrameLayout(parent.context).apply {
@@ -39,12 +56,7 @@ class CourseAdapter : TableAdapter<RecyclerView.ViewHolder, CourseSchedule>() {
         }
 
         return when (viewType) {
-            TYPE_COURSE -> {
-                val binding = CellCourseDescriptionBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false
-                )
-                CourseView(binding, frameLayout.apply { addView(binding.root) })
-            }
+            TYPE_COURSE -> CourseView(frameLayout, this)
             TYPE_PLACEHOLDER -> Placeholder(frameLayout)
             else -> throw Exception()
         }
@@ -57,13 +69,13 @@ class CourseAdapter : TableAdapter<RecyclerView.ViewHolder, CourseSchedule>() {
                     courseList?.let { _courseList ->
                         val index = _viewBlockList[position].courseIndex
                         val c = _courseList[index]
+                        course = c
                         val courseInfoText = StringBuilder()
                             .append(c.title)
                             .append("\n@")
                             .append(c.classroom)
                             .toString()
                         binding.courseInfo.text = courseInfoText
-                        view.setOnClickListener { itemEvent?.invoke(c) }
                     }
                 }
             }
@@ -79,6 +91,10 @@ class CourseAdapter : TableAdapter<RecyclerView.ViewHolder, CourseSchedule>() {
 
     override fun onSubmitTableData(data: CourseSchedule) {
         notifyDataSetChanged()
+    }
+
+    fun onCourseViewClicked(course: Course) {
+        courseTable?.onCourseViewClicked(course)
     }
 }
 

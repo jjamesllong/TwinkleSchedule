@@ -1,7 +1,5 @@
 package com.keycome.twinkleschedule.share
 
-import android.util.Log
-
 class ShareSpace<K> {
 
     private var _isInitialized: Boolean = false
@@ -18,13 +16,11 @@ class ShareSpace<K> {
         }
 
     fun releaseReference(key: K): Int? {
-        return shareTarget[key]?.let {
-            val afterReference = it.second - 1
+        return shareTarget[key]?.let { pair ->
+            val afterReference = pair.second - 1
             if (afterReference == 0) shareTarget.remove(key)
-            else it.copy(second = afterReference).apply { shareTarget[key] = this }
+            else pair.copy(second = afterReference).also { shareTarget[key] = it }
             afterReference
-        }.also {
-            Log.d("ShareSpace", "remainReference of $key: $it")
         }
     }
 
@@ -45,7 +41,7 @@ class ShareSpace<K> {
         }
     }
 
-    operator fun <T> set(key: K, variable: T): T {
+    fun <T> set(key: K, variable: T): T {
         val t = object : Target<T> {
             override val target: T
                 get() = variable
