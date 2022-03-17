@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.ScheduleCreateWayFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/fragment_schedule_create_way_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+        app:subtitleCentered="true"
+        app:title="添加课表"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:titleTextColor="@color/md_theme_light_onBackground" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fragment_schedule_create_way_manual"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
+                app:cardCornerRadius="16dp"
+                app:cardForegroundColor="@null"
+                app:contentPadding="16dp"
+                app:strokeWidth="0dp">
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="16dp"
+                    android:gravity="center_vertical"
+                    android:text="手动添加"
+                    android:textColor="@color/md_theme_light_onSurface"
+                    android:textSize="16sp"
+                    app:drawableStartCompat="@drawable/ic_baseline_settings_24" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fragment_schedule_create_way_file_import"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
+                app:cardCornerRadius="16dp"
+                app:cardForegroundColor="@null"
+                app:contentPadding="16dp"
+                app:strokeWidth="0dp">
+
+                <TextView
+                    android:id="@+id/textView27"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="16dp"
+                    android:gravity="center_vertical"
+                    android:text="文件导入添加"
+                    android:textColor="@color/md_theme_light_onSurface"
+                    android:textSize="16sp"
+                    app:drawableStartCompat="@drawable/ic_baseline_settings_24" />
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fragment_schedule_create_way_network_import"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
+                app:cardCornerRadius="16dp"
+                app:cardForegroundColor="@null"
+                app:contentPadding="16dp"
+                app:strokeWidth="0dp">
+
+
+                <TextView
+                    android:id="@+id/textView28"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="16dp"
+                    android:gravity="center_vertical"
+                    android:text="网络导入添加"
+                    android:textColor="@color/md_theme_light_onSurface"
+                    android:textSize="16sp"
+                    app:drawableStartCompat="@drawable/ic_baseline_settings_24" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,18 +1,20 @@
 package com.keycome.twinkleschedule.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentSettingsBinding
-import com.keycome.twinkleschedule.presentation.configuration.ConfigurationActivity
 
 class SettingsFragment : BaseFragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
+
+    private val navController by lazy { findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,7 +32,7 @@ class SettingsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.addScheduleSettingItem.setOnClickListener {
-            startActivity(Intent(context, ConfigurationActivity::class.java))
+            navController.navigate(R.id.action_settingsFragment_to_scheduleCreateWayFragment)
         }
     }
 

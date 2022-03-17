@@ -31,7 +31,7 @@ class CourseAdapter : TableAdapter<RecyclerView.ViewHolder, CourseSchedule>() {
 
         init {
             frameLayout.addView(binding.root)
-            binding.root.setOnClickListener {
+            binding.cardView.setOnClickListener {
                 course?.let { _course ->
                     courseAdapter.onCourseViewClicked(_course)
                 }
@@ -49,7 +49,7 @@ class CourseAdapter : TableAdapter<RecyclerView.ViewHolder, CourseSchedule>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val frameLayout = FrameLayout(parent.context).apply {
-            layoutParams = FrameLayout.LayoutParams(
+            layoutParams = ViewGroup.LayoutParams(
                 parent.width / daySpan,
                 FrameLayout.LayoutParams.MATCH_PARENT
             )

@@ -5,14 +5,9 @@
     android:id="@+id/second_nav_graph"
     app:startDestination="@id/displayCoursesFragment">
     <fragment
-        android:id="@+id/blankFragment"
-        android:name="com.keycome.twinkleschedule.fragment.BlankFragment"
-        android:label="fragment_blank"
-        tools:layout="@layout/fragment_blank" />
-    <fragment
         android:id="@+id/displayCoursesFragment"
         android:name="com.keycome.twinkleschedule.fragment.DisplayCoursesFragment"
-        android:label="DisplayCoursesFragment" >
+        android:label="DisplayCoursesFragment">
         <action
             android:id="@+id/action_displayCoursesFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
@@ -24,9 +19,91 @@
         android:id="@+id/settingsFragment"
         android:name="com.keycome.twinkleschedule.fragment.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_scheduleCreateWayFragment"
+            app:destination="@id/scheduleCreateWayFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_from_right" />
+    </fragment>
     <dialog
         android:id="@+id/courseDetailsDialog"
         android:name="com.keycome.twinkleschedule.dialog.CourseDetailsDialog"
         android:label="CourseDetailsDialog" />
+    <fragment
+        android:id="@+id/scheduleCreateWayFragment"
+        android:name="com.keycome.twinkleschedule.fragment.ScheduleCreateWayFragment"
+        android:label="fragment_schedule_create_way"
+        tools:layout="@layout/fragment_schedule_create_way">
+        <action
+            android:id="@+id/action_scheduleCreateWayFragment_to_editScheduleFragment2"
+            app:destination="@id/editScheduleFragment2"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_from_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/editScheduleFragment2"
+        android:name="com.keycome.twinkleschedule.fragment.EditScheduleFragment"
+        android:label="EditScheduleFragment">
+        <action
+            android:id="@+id/action_editScheduleFragment_to_scheduleNameDialog"
+            app:destination="@id/scheduleNameDialog" />
+        <action
+            android:id="@+id/action_editScheduleFragment_to_dailyCoursesDialog"
+            app:destination="@id/dailyCoursesDialog" />
+        <action
+            android:id="@+id/action_editScheduleFragment_to_endDayDialog"
+            app:destination="@id/endDayDialog" />
+        <action
+            android:id="@+id/action_editScheduleFragment_to_courseDurationDialog"
+            app:destination="@id/courseDurationDialog" />
+        <action
+            android:id="@+id/action_editScheduleFragment_to_editTimeLineFragment"
+            app:destination="@id/editTimeLineFragment2"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_from_right" />
+        <action
+            android:id="@+id/action_editScheduleFragment_to_displayCoursesFragment"
+            app:destination="@id/displayCoursesFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_in_from_right"
+            app:popUpTo="@id/displayCoursesFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <dialog
+        android:id="@+id/scheduleNameDialog"
+        android:name="com.keycome.twinkleschedule.dialog.ScheduleNameDialog"
+        android:label="ScheduleNameDialog" />
+    <dialog
+        android:id="@+id/dailyCoursesDialog"
+        android:name="com.keycome.twinkleschedule.dialog.DailyCoursesDialog"
+        android:label="DailyCoursesDialog" />
+    <dialog
+        android:id="@+id/endDayDialog"
+        android:name="com.keycome.twinkleschedule.dialog.EndDayDialog"
+        android:label="EndDayDialog" />
+    <dialog
+        android:id="@+id/courseDurationDialog"
+        android:name="com.keycome.twinkleschedule.dialog.CourseDurationDialog"
+        android:label="CourseDurationDialog" />
+    <fragment
+        android:id="@+id/editTimeLineFragment2"
+        android:name="com.keycome.twinkleschedule.fragment.EditTimeLineFragment"
+        android:label="EditTimeLineFragment" >
+        <action
+            android:id="@+id/action_editTimeLineFragment2_to_timeLineNameDialog"
+            app:destination="@id/timeLineNameDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/timeLineNameDialog"
+        android:name="com.keycome.twinkleschedule.dialog.TimeLineNameDialog"
+        android:label="TimeLineNameDialog" />
 </navigation>

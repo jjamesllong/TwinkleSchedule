@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.keycome.twinkleschedule.record.span.Date
 import com.keycome.twinkleschedule.record.span.Day
-import com.keycome.twinkleschedule.record.span.Time
 
 @Entity(tableName = "schedule")
 data class Schedule(
@@ -29,11 +28,4 @@ data class Schedule(
 
     @ColumnInfo(name = "time_line")
     val timeLine: Set<TimeLine>
-)
-
-data class TimeLine(
-    val id: Int,
-    val name: String,
-    val startDate: Date,
-    val lineList: List<Time>
 )

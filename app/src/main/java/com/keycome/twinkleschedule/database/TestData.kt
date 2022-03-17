@@ -14,9 +14,9 @@ class TestData {
         )
 
         fun getTimeList(): List<Time> {
-            val l = mutableListOf<Time>()
+            val list = mutableListOf<Time>()
             for (t in timeLineList) {
-                l.add(
+                list.add(
                     Time(
                         t.substring(0..1).toInt(),
                         t.substring(3..4).toInt(),
@@ -24,11 +24,11 @@ class TestData {
                     )
                 )
             }
-            return l.toList()
+            return list.toList()
         }
 
         val timeLine = TimeLine(
-            0,
+            0L,
             "test",
             Date(2021, 3, 1),
             getTimeList()

@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cell_add_time_line_root"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:background="@drawable/bg_ripple"
-    android:padding="16dp">
+    android:layout_height="70dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="16dp"
+    android:padding="16dp"
+    app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
+    app:cardCornerRadius="16dp"
+    app:contentPadding="16dp"
+    app:strokeWidth="0dp">
 
     <TextView
         android:id="@+id/cell_add_time_line_title_text"
@@ -28,4 +34,4 @@
         android:text="删除"
         android:textSize="12sp" />
 
-</FrameLayout>
+</com.google.android.material.card.MaterialCardView>

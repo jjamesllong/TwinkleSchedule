@@ -1,34 +1,10 @@
 package com.keycome.twinkleschedule.extension
 
-import android.view.View
 import androidx.viewbinding.ViewBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
-inline fun <VB : ViewBinding> VB.init(
-    coroutineScope: CoroutineScope,
-    crossinline block: (suspend VB.() -> Unit)
-): VB {
-    coroutineScope.launch {
-        block()
-    }
-    return this
+inline fun <reified VB : ViewBinding> VB?.acquire(): VB {
+    return this ?: throw IllegalStateException(
+        "Hold an instance of ${VB::class.qualifiedName} " +
+                "outside the lifecycle of onCreateView() and onDestroyView()"
+    )
 }
-
-fun <VB : ViewBinding> viewBindings(
-    coroutineScope: CoroutineScope,
-    initializer: () -> VB,
-    block: suspend VB.() -> Unit
-): Lazy<View> = ViewBindingImpl(coroutineScope, initializer, block)
-
-private class ViewBindingImpl<VB : ViewBinding>(
-    coroutineScope: CoroutineScope,
-    initializer: () -> VB,
-    block: suspend VB.() -> Unit
-) : Lazy<View> by lazy(
-    mode = LazyThreadSafetyMode.NONE,
-    initializer = {
-        val binding = initializer().init(coroutineScope, block)
-        return@lazy binding.root
-    }
-)

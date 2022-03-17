@@ -1,10 +1,13 @@
 package com.keycome.twinkleschedule.record.span
 
+import android.os.Parcel
+import android.os.Parcelable
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class Date(val year: Int, val month: Int, val dayOfMonth: Int) {
+data class Date(val year: Int, val month: Int, val dayOfMonth: Int) : Parcelable {
+
     init {
         if (year !in 1970..9999)
             throw IllegalArgumentException("the format of parameter year is incorrect")
@@ -12,6 +15,22 @@ data class Date(val year: Int, val month: Int, val dayOfMonth: Int) {
             throw IllegalArgumentException("parameter month should between [1, 12]")
         if (dayOfMonth !in 1..31)
             throw IllegalArgumentException("parameter dayOfYear should between [1, 31]")
+    }
+
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt()
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(year)
+        parcel.writeInt(month)
+        parcel.writeInt(dayOfMonth)
+    }
+
+    override fun describeContents(): Int {
+        return 0
     }
 
     fun toHyphenDateString(): String {
@@ -37,14 +56,29 @@ data class Date(val year: Int, val month: Int, val dayOfMonth: Int) {
     }
 
     fun toMillis(): Long {
-        val format = SimpleDateFormat(HYPHEN_DATE_STRING, Locale.CHINA)
+        val format = SimpleDateFormat(HYPHEN_DATE_STRING, Locale.getDefault())
         val jdkDate = format.parse(toHyphenDateString())
         return jdkDate?.time ?: throw ParseException("failed to parse date $this", 0)
     }
 
-    companion object {
+    companion object CREATOR : Parcelable.Creator<Date> {
 
         private const val HYPHEN_DATE_STRING = "yyyy-MM-dd"
 
+        override fun createFromParcel(source: Parcel): Date {
+            return Date(source)
+        }
+
+        override fun newArray(size: Int): Array<Date?> {
+            return arrayOfNulls(size)
+        }
+
+        fun currentDate(): Date {
+            val calender = Calendar.getInstance()
+            val year = calender.get(Calendar.YEAR)
+            val month = calender.get(Calendar.MONTH) + 1
+            val dayOfMonth = calender.get(Calendar.DAY_OF_MONTH)
+            return Date(year, month, dayOfMonth)
+        }
     }
 }

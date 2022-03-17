@@ -1,6 +1,7 @@
 package com.keycome.twinkleschedule.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -53,6 +54,16 @@ class SecondActivity : BaseActivity2() {
             R.id.displayCoursesFragment.let {
                 if (navDestination.id == it && binding.secondNavigationBar.selectedItemId != it)
                     binding.secondNavigationBar.selectedItemId = it
+            }
+            navDestination.id.let {
+                when (it) {
+                    R.id.displayCoursesFragment, R.id.settingsFragment -> {
+                        binding.secondNavigationBar.visibility = View.VISIBLE
+                    }
+                    else -> {
+                        binding.secondNavigationBar.visibility = View.INVISIBLE
+                    }
+                }
             }
         }
     }

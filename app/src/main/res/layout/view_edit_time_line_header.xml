@@ -1,114 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_margin="16dp"
+    android:background="@drawable/bg_shape_rectangle_16_0"
+    android:backgroundTint="@color/md_theme_light_surfaceVariant"
+    android:orientation="vertical"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/header_current_time_line"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/bg_ripple"
-        android:padding="16dp">
+        android:layout_height="60dp"
+        android:background="@drawable/bg_selector_rectangle_0_0"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
         <TextView
             android:id="@+id/textView13"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="当前编辑的时间表"
+            android:layout_gravity="start|center_vertical"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="名称"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/header_current_time_line_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="测试1" />
+            android:layout_gravity="center_vertical|end"
+            android:gravity="center_vertical"
+            tools:text="占位符" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintStart_toStartOf="@+id/textView13"
-            app:layout_constraintTop_toBottomOf="@+id/textView13" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/header_course_duration"
+    <View
+        android:id="@+id/divider3"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/bg_ripple"
-        android:padding="16dp">
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="?android:attr/listDivider" />
 
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="课程时长"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/header_course_duration_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="45 minutes" />
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintStart_toStartOf="@+id/textView15"
-            app:layout_constraintTop_toBottomOf="@+id/textView15" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/header_start_date"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/bg_ripple"
-        android:padding="16dp">
+        android:layout_height="60dp"
+        android:background="@drawable/bg_selector_rectangle_0_0"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
         <TextView
             android:id="@+id/textView17"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="时间表开始日期"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="开始日期"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/header_start_date_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="2021. 3. 1" />
+            android:layout_gravity="center_vertical"
+            tools:text="占位符" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/header_node_count"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_selector_rectangle_0_0"
+        android:padding="16dp"
+        android:visibility="visible">
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/textView15"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="时间节点数"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/header_node_count_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintStart_toStartOf="@+id/textView17"
-            app:layout_constraintTop_toBottomOf="@+id/textView17" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_gravity="center_vertical|end"
+            tools:text="占位符" />
+
+    </LinearLayout>
 </LinearLayout>

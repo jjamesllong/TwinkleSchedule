@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 
 class DisplayCoursesViewModel : BaseViewModel2() {
 
-    val sharedCourse: MutableLiveData<Course> by SharePostVariable(sharePool, SHARED_COURSE) {
+    val sharedCourse: MutableLiveData<Course> by SharePostVariable(shareSpace, SHARED_COURSE) {
         MutableLiveData()
     }
 
@@ -130,7 +130,7 @@ class DisplayCoursesViewModel : BaseViewModel2() {
 
     override fun onCleared() {
         super.onCleared()
-        sharePool.releaseReference(SHARED_COURSE)
+        shareSpace.releaseReference(SHARED_COURSE)
     }
 
     companion object {

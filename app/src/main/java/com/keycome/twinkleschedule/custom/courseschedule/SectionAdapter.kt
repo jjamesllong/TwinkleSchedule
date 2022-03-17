@@ -43,12 +43,12 @@ class SectionAdapter : TableAdapter<SectionAdapter.SectionView, Schedule>() {
     }
 
     override fun onBindViewHolder(holder: SectionView, position: Int) {
-        val t: TimeLine? = schedule?.timeLine?.find { it.id == 0 }
+        val t: TimeLine? = schedule?.timeLine?.find { it.id == 0L }
         t?.let {
             val text = StringBuilder()
                 .append(position + 1)
                 .append("\n")
-                .append(it.lineList[position].to24StyleString())
+                .append(it.timeList[position].to24StyleString())
             holder.textView.text = text
         }
     }

@@ -64,18 +64,18 @@ class LiveSchedule(
 
     fun removeTimeLineListElement(timeLineId: Int, index: Int) {
         value = actionToTimeLine(value, timeLineId) {
-            val list = it.lineList.toMutableList()
+            val list = it.timeList.toMutableList()
             list.removeAt(index)
-            it.copy(lineList = list)
+            it.copy(timeList = list)
         }
     }
 
     fun addOrUpdateTimeLineListElement(timeLineId: Int, time: Time, index: Int = -1): Boolean {
         var result = false
         value = actionToTimeLine(value, timeLineId) {
-            val list = it.lineList.toMutableList()
+            val list = it.timeList.toMutableList()
             result = insertTime(time, list, index)
-            it.copy(lineList = list)
+            it.copy(timeList = list)
         }
         return result
     }
@@ -85,7 +85,7 @@ class LiveSchedule(
         timeLineId: Int,
         action: (TimeLine) -> TimeLine
     ): Schedule {
-        return schedule.timeLine.find { it.id == timeLineId }?.let {
+        return schedule.timeLine.find { it.id == timeLineId.toLong() }?.let {
             val timeLine = action(it)
             val set = schedule.timeLine.toMutableSet()
             set.remove(it)
@@ -137,7 +137,7 @@ class LiveSchedule(
         val id = requireTimeLineId()
         set.add(
             TimeLine(
-                id, "test", Date(2021, 7, 17), TestData.getTimeList()
+                id.toLong(), "test", Date(2021, 7, 17), TestData.getTimeList()
             )
         )
         value = value.copy(timeLine = set)
@@ -146,13 +146,13 @@ class LiveSchedule(
 
     fun removeTimeLine(id: Int) {
         val set = value.timeLine.toMutableSet()
-        set.find { it.id == id }?.let { set.remove(it) }
+        set.find { it.id == id.toLong() }?.let { set.remove(it) }
         value = value.copy(timeLine = set)
     }
 
     private fun requireTimeLineId(): Int {
         var id = 0
-        value.timeLine.forEach { if (it.id > id) id = it.id }
+        value.timeLine.forEach { if (it.id > id) id = it.id.toInt() }
         return ++id
     }
 

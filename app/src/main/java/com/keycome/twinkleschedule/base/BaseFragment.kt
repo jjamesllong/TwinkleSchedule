@@ -3,6 +3,7 @@ package com.keycome.twinkleschedule.base
 import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.keycome.twinkleschedule.utils.TextColor
 
 abstract class BaseFragment : Fragment() {
@@ -14,5 +15,12 @@ abstract class BaseFragment : Fragment() {
             TextColor.Light -> false
             TextColor.Dark -> true
         }
+    }
+
+    inline fun <reified VB : ViewBinding> VB?.acquire(): VB {
+        return this ?: throw IllegalStateException(
+            "Hold an instance of ${VB::class.qualifiedName} " +
+                    "outside the lifecycle of onCreateView() and onDestroyView()"
+        )
     }
 }

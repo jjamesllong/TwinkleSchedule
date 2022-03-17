@@ -8,20 +8,6 @@
     tools:context=".fragment.DisplayCoursesFragment">
 
 
-    <ImageButton
-        android:id="@+id/menuButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/bg_circle_selector_white"
-        android:contentDescription="menu"
-        android:src="@drawable/ic_fi_rr_menu_burger"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/fragment_display_courses_toolbar"
         android:layout_width="0dp"

@@ -1,5 +1,5 @@
 package com.keycome.twinkleschedule.base
 
-import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AppCompatDialogFragment
 
-abstract class BaseDialogFragment : DialogFragment()
+abstract class BaseDialogFragment : AppCompatDialogFragment()

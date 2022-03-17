@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="54dp"
+    android:paddingTop="64dp"
     android:paddingBottom="80dp"
     tools:context=".fragment.SettingsFragment">
 
@@ -23,7 +23,8 @@
             app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
             app:cardCornerRadius="16dp"
             app:cardForegroundColor="@null"
-            app:contentPadding="16dp"
+            app:contentPaddingBottom="16dp"
+            app:contentPaddingTop="16dp"
             app:strokeWidth="0dp">
 
             <LinearLayout
@@ -35,9 +36,10 @@
                     android:id="@+id/textView20"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:gravity="start"
                     android:text="课表"
                     android:textColor="@color/md_theme_light_onSurfaceVariant"
                     android:textSize="14sp" />
@@ -46,7 +48,9 @@
                     android:id="@+id/add_schedule_setting_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:background="@drawable/bg_selector_rectangle_0_0"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp">
 
                     <ImageView
                         android:id="@+id/imageView5"
@@ -74,14 +78,17 @@
                     android:id="@+id/divider"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginEnd="56dp"
                     android:background="?android:attr/listDivider" />
 
                 <LinearLayout
                     android:id="@+id/manage_schedules_setting_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:background="@drawable/bg_selector_rectangle_0_0"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp">
 
                     <ImageView
                         android:id="@+id/imageView6"
@@ -115,7 +122,8 @@
             app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
             app:cardCornerRadius="16dp"
             app:cardForegroundColor="@null"
-            app:contentPadding="16dp"
+            app:contentPaddingBottom="16dp"
+            app:contentPaddingTop="16dp"
             app:strokeWidth="0dp">
 
             <LinearLayout
@@ -127,9 +135,10 @@
                     android:id="@+id/textView23"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:gravity="start"
                     android:text="课程"
                     android:textColor="@color/md_theme_light_onSurfaceVariant"
                     android:textSize="14sp" />
@@ -138,11 +147,12 @@
                     android:id="@+id/record_course_setting_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp">
 
                     <ImageView
                         android:id="@+id/imageView7"
-                        android:layout_width="24dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginTop="16dp"
@@ -166,14 +176,16 @@
                     android:id="@+id/divider2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginEnd="56dp"
                     android:background="?android:attr/listDivider" />
 
                 <LinearLayout
                     android:id="@+id/manage_courses_setting_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp">
 
                     <ImageView
                         android:id="@+id/imageView8"

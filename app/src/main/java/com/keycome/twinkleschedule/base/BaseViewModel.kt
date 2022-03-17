@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
-import com.keycome.twinkleschedule.share.ShareSpace
+import com.keycome.twinkleschedule.share.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -48,7 +48,20 @@ abstract class BaseViewModel : ViewModel(), DefaultLifecycleObserver {
 
 abstract class BaseViewModel2 : ViewModel() {
     companion object {
-        val sharePool = ShareSpace<String>()
+        val shareSpace = ShareSpace<String>()
+
+        fun <T> sharePostVariable(key: String, generator: () -> T): SharePostDelegate<String, T> {
+            return SharePostVariable(shareSpace, key, generator)
+        }
+
+        fun <T> shareOnlyVariable(key: String): ShareOnlyDelegate<String, T> {
+            return ShareOnlyVariable(shareSpace, key)
+        }
+
+        fun release(vararg key: String) {
+            for (k in key)
+                shareSpace.releaseReference(k)
+        }
     }
 }
 

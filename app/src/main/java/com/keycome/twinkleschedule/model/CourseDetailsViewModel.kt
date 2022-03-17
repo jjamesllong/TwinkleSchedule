@@ -8,12 +8,12 @@ import com.keycome.twinkleschedule.share.ShareOnlyVariable
 class CourseDetailsViewModel : BaseViewModel2() {
 
     val sharedCourse: LiveData<Course>? by ShareOnlyVariable(
-        sharePool,
+        shareSpace,
         DisplayCoursesViewModel.SHARED_COURSE
     )
 
     override fun onCleared() {
         super.onCleared()
-        sharePool.releaseReference(DisplayCoursesViewModel.SHARED_COURSE)
+        shareSpace.releaseReference(DisplayCoursesViewModel.SHARED_COURSE)
     }
 }
