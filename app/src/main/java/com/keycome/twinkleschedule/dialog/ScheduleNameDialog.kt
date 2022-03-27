@@ -4,7 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
-import com.keycome.twinkleschedule.base.BaseViewModel2
+import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.base.EditTextDialog
 import com.keycome.twinkleschedule.model.EditScheduleViewModel
 
@@ -43,13 +43,13 @@ class ScheduleNameDialog : EditTextDialog() {
         })
     }
 
-    class ScheduleNameViewModel : BaseViewModel2() {
+    class ScheduleNameViewModel : BaseViewModel() {
         val liveEditText by shareOnlyVariable<MutableLiveData<String>>(
             EditScheduleViewModel.sharedScheduleName
         )
 
-        override fun onCleared() {
-            super.onCleared()
+        override fun onRemove() {
+            super.onRemove()
             release(EditScheduleViewModel.sharedScheduleName)
         }
     }

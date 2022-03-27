@@ -32,7 +32,7 @@ class DisplayCoursesFragment : BaseFragment() {
         _binding = FragmentDisplayCoursesBinding.inflate(
             inflater,
             container,
-            attachToParentFalseToo
+            false
         )
         return binding.root
     }

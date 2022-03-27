@@ -145,6 +145,14 @@ class EditScheduleFragment : BaseFragment() {
         viewModel.liveTimeLine.observe(viewLifecycleOwner) {
             timeLineAdapter.submitList(it.toList())
         }
+        retrieveOnce("edit_schedule_fragment") {
+            val id = getLong("schedule_id", 0L)
+            if (id != 0L) {
+                viewModel.isModify = true
+                viewModel.modifyingScheduleId = id
+                viewModel.querySchedule(id)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -163,8 +171,8 @@ class EditScheduleFragment : BaseFragment() {
             viewModel.refreshSchoolBeginDate(Date(year, month, day))
         }
         val observer = object : DefaultLifecycleObserver {
-            override fun onDestroy(owner: LifecycleOwner) {
-                super.onDestroy(owner)
+            override fun onStop(owner: LifecycleOwner) {
+                super.onStop(owner)
                 if (datePicker.isShowing) {
                     datePicker.dismiss()
                 }

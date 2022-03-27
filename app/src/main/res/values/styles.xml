@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="TemplateDialog" parent="android:style/Theme.Dialog">
         <!--背景颜色及和透明程度-->
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -15,21 +16,35 @@
 
     <style name="PopupMenu" parent="android:style/Theme.Dialog">
         <!--背景颜色及和透明程度-->
-<!--        <item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--        <item name="android:windowBackground">@android:color/transparent</item>-->
         <!--是否去除标题 -->
-<!--        <item name="android:windowNoTitle">true</item>-->
+        <!--        <item name="android:windowNoTitle">true</item>-->
         <!--是否去除边框-->
-<!--        <item name="android:windowFrame">@null</item>-->
+        <!--        <item name="android:windowFrame">@null</item>-->
         <!--是否浮现在activity之上-->
-<!--        <item name="android:windowIsFloating">true</item>-->
+        <!--        <item name="android:windowIsFloating">true</item>-->
         <!--是否产生遮罩-->
-<!--        <item name="android:backgroundDimEnabled">true</item>-->
+        <!--        <item name="android:backgroundDimEnabled">true</item>-->
     </style>
 
     <style name="DefaultTransitionAnim">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_from_right</item>
-        <item name="android:activityCloseExitAnimation">@anim/slide_out_from_right</item>
-        <item name="android:activityOpenExitAnimation">@anim/slide_out_from_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_to_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_to_left</item>
         <item name="android:activityCloseEnterAnimation">@anim/slide_in_from_left</item>
+    </style>
+
+    <style name="Toolbar">
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="navigationIcon">"@drawable/ic_baseline_arrow_back_24"</item>
+        <item name="subtitleCentered">true</item>
+        <item name="titleCentered">true</item>
+        <item name="titleTextAppearance">"@style/TextAppearance.AppCompat.Medium"</item>
+    </style>
+
+    <style name="BottomFullDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_to_bottom</item>
     </style>
 </resources>

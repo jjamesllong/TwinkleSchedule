@@ -32,13 +32,17 @@ data class TimeLine(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<TimeLine> {
-        override fun createFromParcel(parcel: Parcel): TimeLine {
-            return TimeLine(parcel)
-        }
+    companion object {
 
-        override fun newArray(size: Int): Array<TimeLine?> {
-            return arrayOfNulls(size)
+        @JvmField
+        val CREATOR = object : Parcelable.Creator<TimeLine> {
+            override fun createFromParcel(parcel: Parcel): TimeLine {
+                return TimeLine(parcel)
+            }
+
+            override fun newArray(size: Int): Array<TimeLine?> {
+                return arrayOfNulls(size)
+            }
         }
     }
 }

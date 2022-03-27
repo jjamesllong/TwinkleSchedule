@@ -21,6 +21,7 @@ class CourseDetailsDialog : BaseDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = DialogCourseDetailsBinding.inflate(
             inflater,
             container,

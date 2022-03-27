@@ -14,10 +14,10 @@
             android:id="@+id/action_scheduleListFragment_to_addCourseFragment"
             app:destination="@id/addCourseFragment"
             app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_from_left"
+            app:exitAnim="@anim/slide_out_to_left"
             app:launchSingleTop="false"
             app:popEnterAnim="@anim/slide_in_from_left"
-            app:popExitAnim="@anim/slide_out_from_right" >
+            app:popExitAnim="@anim/slide_out_to_right" >
             <argument
                 android:name="scheduleId"
                 android:defaultValue="-1L" />

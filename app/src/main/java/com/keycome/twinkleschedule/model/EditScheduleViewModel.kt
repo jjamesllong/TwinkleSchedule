@@ -2,7 +2,8 @@ package com.keycome.twinkleschedule.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.keycome.twinkleschedule.base.BaseViewModel2
+import androidx.lifecycle.viewModelScope
+import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.database.TestData
 import com.keycome.twinkleschedule.preference.GlobalPreference
 import com.keycome.twinkleschedule.record.sketch.Schedule
@@ -10,11 +11,13 @@ import com.keycome.twinkleschedule.record.sketch.TimeLine
 import com.keycome.twinkleschedule.record.span.Date
 import com.keycome.twinkleschedule.record.span.Day
 import com.keycome.twinkleschedule.repository.CourseScheduleRepository
+import com.keycome.twinkleschedule.repository.ScheduleRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class EditScheduleViewModel : BaseViewModel2() {
+class EditScheduleViewModel : BaseViewModel() {
 
     private val _liveScheduleName by sharePostVariable(sharedScheduleName) {
         MutableLiveData("新课表")
@@ -55,8 +58,12 @@ class EditScheduleViewModel : BaseViewModel2() {
     }
     val liveTimeLine: LiveData<MutableSet<TimeLine>> get() = _liveTimeLine
 
-    override fun onCleared() {
-        super.onCleared()
+    var isModify = false
+
+    var modifyingScheduleId = 0L
+
+    override fun onRemove() {
+        super.onRemove()
         release(
             sharedScheduleName,
             sharedSchoolBeginDate,
@@ -65,6 +72,18 @@ class EditScheduleViewModel : BaseViewModel2() {
             sharedCourseDuration,
             sharedTimeLine,
         )
+    }
+
+    fun querySchedule(id: Long) {
+        viewModelScope.launch {
+            val schedule = ScheduleRepository.querySchedule(id)
+            _liveScheduleName.value = schedule.name
+            _liveSchoolBeginDate.value = schedule.schoolBeginDate
+            _liveDailyCourses.value = schedule.dailyCourses
+            _liveEndDay.value = schedule.weeklyEndDay
+            _liveCourseDuration.value = schedule.courseDuration
+            _liveTimeLine.value = schedule.timeLine.toMutableSet()
+        }
     }
 
     fun refreshSchoolBeginDate(date: Date) {
@@ -87,8 +106,9 @@ class EditScheduleViewModel : BaseViewModel2() {
     }
 
     suspend fun insertSchedule(display: Boolean) {
+        val id = if (modifyingScheduleId != 0L) modifyingScheduleId else System.currentTimeMillis()
         val schedule = Schedule(
-            scheduleId = System.currentTimeMillis(),
+            scheduleId = id,
             name = _liveScheduleName.value!!,
             schoolBeginDate = _liveSchoolBeginDate.value!!,
             dailyCourses = _liveDailyCourses.value!!,
@@ -97,7 +117,11 @@ class EditScheduleViewModel : BaseViewModel2() {
             timeLine = _liveTimeLine.value!!
         )
         withContext(NonCancellable) {
-            CourseScheduleRepository.insertSchedule(schedule)
+            if (isModify) {
+                ScheduleRepository.updateSchedule(schedule)
+            } else {
+                ScheduleRepository.insertSchedule(schedule)
+            }
             if (display) {
                 withContext(Dispatchers.Main) {
                     GlobalPreference.displayScheduleId.value = schedule.scheduleId

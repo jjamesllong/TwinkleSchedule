@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.share
+package com.keycome.twinkleschedule.delivery
 
 interface Target<out T> {
     val target: T

@@ -17,6 +17,7 @@ class DatePickerDialog : BaseDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = DialogDatePickerBinding.inflate(
             inflater,
             container,

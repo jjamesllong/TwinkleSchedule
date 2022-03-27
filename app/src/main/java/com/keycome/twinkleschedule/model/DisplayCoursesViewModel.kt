@@ -3,19 +3,19 @@ package com.keycome.twinkleschedule.model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.keycome.twinkleschedule.base.BaseViewModel2
+import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.preference.GlobalPreference
 import com.keycome.twinkleschedule.record.sketch.Course
 import com.keycome.twinkleschedule.record.sketch.CourseSchedule
 import com.keycome.twinkleschedule.record.sketch.Schedule
 import com.keycome.twinkleschedule.record.span.SpanDifference
 import com.keycome.twinkleschedule.repository.CourseScheduleRepository
-import com.keycome.twinkleschedule.share.SharePostVariable
+import com.keycome.twinkleschedule.delivery.SharePostVariable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class DisplayCoursesViewModel : BaseViewModel2() {
+class DisplayCoursesViewModel : BaseViewModel() {
 
     val sharedCourse: MutableLiveData<Course> by SharePostVariable(shareSpace, SHARED_COURSE) {
         MutableLiveData()
@@ -128,8 +128,8 @@ class DisplayCoursesViewModel : BaseViewModel2() {
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
+    override fun onRemove() {
+        super.onRemove()
         shareSpace.releaseReference(SHARED_COURSE)
     }
 

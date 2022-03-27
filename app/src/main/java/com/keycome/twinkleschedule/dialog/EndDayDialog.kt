@@ -1,17 +1,15 @@
 package com.keycome.twinkleschedule.dialog
 
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import com.keycome.twinkleschedule.base.BaseDialogFragment
-import com.keycome.twinkleschedule.base.BaseViewModel2
+import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.databinding.DialogEndDayBinding
 import com.keycome.twinkleschedule.model.EditScheduleViewModel
 import com.keycome.twinkleschedule.record.span.Day
@@ -37,8 +35,7 @@ class EndDayDialog : BaseDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = DialogEndDayBinding.inflate(
             inflater,
             container,
@@ -111,7 +108,7 @@ class EndDayDialog : BaseDialogFragment() {
         }
     }
 
-    class EndDayDialogViewModel : BaseViewModel2() {
+    class EndDayDialogViewModel : BaseViewModel() {
 
         val liveEndDay by shareOnlyVariable<MutableLiveData<Day>>(EditScheduleViewModel.sharedEndDay)
 
@@ -119,8 +116,8 @@ class EndDayDialog : BaseDialogFragment() {
 
         val livePreviousDay = MutableLiveData<Day>()
 
-        override fun onCleared() {
-            super.onCleared()
+        override fun onRemove() {
+            super.onRemove()
             release(EditScheduleViewModel.sharedEndDay)
         }
     }

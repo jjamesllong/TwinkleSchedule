@@ -43,8 +43,7 @@ abstract class EditTextDialog : BaseDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = DialogEditTextBinding.inflate(
             inflater,
             container,

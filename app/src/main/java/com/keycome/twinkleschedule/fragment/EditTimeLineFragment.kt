@@ -143,8 +143,8 @@ class EditTimeLineFragment : BaseFragment() {
             viewModel.refreshDate(Date(year, month, day))
         }
         val observer = object : DefaultLifecycleObserver {
-            override fun onDestroy(owner: LifecycleOwner) {
-                super.onDestroy(owner)
+            override fun onStop(owner: LifecycleOwner) {
+                super.onStop(owner)
                 if (datePicker.isShowing) {
                     datePicker.dismiss()
                 }
@@ -168,8 +168,8 @@ class EditTimeLineFragment : BaseFragment() {
             }
         }
         val observer = object : DefaultLifecycleObserver {
-            override fun onDestroy(owner: LifecycleOwner) {
-                super.onDestroy(owner)
+            override fun onStop(owner: LifecycleOwner) {
+                super.onStop(owner)
                 if (timePicker.isShowing) {
                     timePicker.dismiss()
                 }

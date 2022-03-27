@@ -2,12 +2,12 @@ package com.keycome.twinkleschedule.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.keycome.twinkleschedule.base.BaseViewModel2
+import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.record.sketch.TimeLine
 import com.keycome.twinkleschedule.record.span.Date
 import com.keycome.twinkleschedule.record.span.Time
 
-class EditTimeLineViewModel : BaseViewModel2() {
+class EditTimeLineViewModel : BaseViewModel() {
 
     var firstIn = true
 
@@ -33,8 +33,8 @@ class EditTimeLineViewModel : BaseViewModel2() {
     private val _liveEditingTimeList = MutableLiveData<MutableList<Time>>()
     val liveEditingTimeList: LiveData<MutableList<Time>> get() = _liveEditingTimeList
 
-    override fun onCleared() {
-        super.onCleared()
+    override fun onRemove() {
+        super.onRemove()
         release(timeLineName, EditScheduleViewModel.sharedTimeLine)
     }
 

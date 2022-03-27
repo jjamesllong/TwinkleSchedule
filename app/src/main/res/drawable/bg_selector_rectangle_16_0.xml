@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:enterFadeDuration="50" android:exitFadeDuration="250">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle" android:tint="#A6ACAF">
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+</selector>

@@ -1,18 +1,15 @@
 package com.keycome.twinkleschedule
 
 import android.content.Intent
+import android.os.Bundle
 import com.keycome.twinkleschedule.activity.SecondActivity
-import com.keycome.twinkleschedule.base.BBaseActivity
-import kotlinx.coroutines.awaitCancellation
+import com.keycome.twinkleschedule.base.BaseActivity
 
-class MainActivity : BBaseActivity() {
+class MainActivity : BaseActivity() {
 
-    override fun onInit() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         startActivity(Intent(this, SecondActivity::class.java))
         finish()
-    }
-
-    override suspend fun onAsync() {
-        awaitCancellation()
     }
 }

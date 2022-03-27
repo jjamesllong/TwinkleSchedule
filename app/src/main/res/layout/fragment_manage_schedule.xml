@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/fragment_manage_schedule_toolbar"
-        layout="@layout/view_toolbar_layout" />
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+        app:subtitleCentered="true"
+        app:title="管理课表"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_manage_schedule_recycler_view"
@@ -14,9 +21,4 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <ViewStub
-        android:id="@+id/stub_manage_schedule_options"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout="@layout/view_manage_schedule_options" />
 </LinearLayout>

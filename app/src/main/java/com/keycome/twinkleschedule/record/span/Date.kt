@@ -61,16 +61,19 @@ data class Date(val year: Int, val month: Int, val dayOfMonth: Int) : Parcelable
         return jdkDate?.time ?: throw ParseException("failed to parse date $this", 0)
     }
 
-    companion object CREATOR : Parcelable.Creator<Date> {
+    companion object {
 
         private const val HYPHEN_DATE_STRING = "yyyy-MM-dd"
 
-        override fun createFromParcel(source: Parcel): Date {
-            return Date(source)
-        }
+        @JvmField
+        val CREATOR = object : Parcelable.Creator<Date> {
+            override fun createFromParcel(source: Parcel): Date {
+                return Date(source)
+            }
 
-        override fun newArray(size: Int): Array<Date?> {
-            return arrayOfNulls(size)
+            override fun newArray(size: Int): Array<Date?> {
+                return arrayOfNulls(size)
+            }
         }
 
         fun currentDate(): Date {

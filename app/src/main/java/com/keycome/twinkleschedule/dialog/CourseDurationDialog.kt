@@ -1,17 +1,14 @@
 package com.keycome.twinkleschedule.dialog
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.SeekBar
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import com.keycome.twinkleschedule.base.BaseDialogFragment
-import com.keycome.twinkleschedule.base.BaseViewModel2
+import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.databinding.DialogCourseDurationBinding
 import com.keycome.twinkleschedule.model.EditScheduleViewModel
 
@@ -27,8 +24,7 @@ class CourseDurationDialog : BaseDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = DialogCourseDurationBinding.inflate(
             inflater,
             container,
@@ -76,7 +72,7 @@ class CourseDurationDialog : BaseDialogFragment() {
         _binding = null
     }
 
-    class CourseDurationViewModel : BaseViewModel2() {
+    class CourseDurationViewModel : BaseViewModel() {
 
         val liveCourseDuration by shareOnlyVariable<MutableLiveData<Int>>(
             EditScheduleViewModel.sharedCourseDuration
@@ -84,8 +80,8 @@ class CourseDurationDialog : BaseDialogFragment() {
 
         val liveSelectedDuration = MutableLiveData<Int>()
 
-        override fun onCleared() {
-            super.onCleared()
+        override fun onRemove() {
+            super.onRemove()
             release(EditScheduleViewModel.sharedCourseDuration)
         }
     }

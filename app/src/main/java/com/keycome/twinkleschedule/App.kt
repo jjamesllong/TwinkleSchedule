@@ -9,6 +9,13 @@ import kotlinx.coroutines.SupervisorJob
 
 @Suppress("StaticFieldLeak")
 class App : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        myContext = applicationContext
+        MMKV.initialize(this)
+    }
+
     companion object {
 
         private var myContext: Context? = null
@@ -17,11 +24,5 @@ class App : Application() {
         val applicationScope: CoroutineScope =
             CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        myContext = applicationContext
-        MMKV.initialize(this)
     }
 }

@@ -42,7 +42,6 @@
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text="添加时段"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

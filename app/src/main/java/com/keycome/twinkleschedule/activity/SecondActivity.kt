@@ -7,12 +7,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.keycome.twinkleschedule.R
-import com.keycome.twinkleschedule.base.BaseActivity2
+import com.keycome.twinkleschedule.base.BaseActivity
 import com.keycome.twinkleschedule.databinding.ActivitySecondBinding
 import com.keycome.twinkleschedule.model.SecondViewModel
 import com.keycome.twinkleschedule.utils.TextColor
 
-class SecondActivity : BaseActivity2() {
+class SecondActivity : BaseActivity() {
 
     private val viewModel: SecondViewModel by viewModels()
 

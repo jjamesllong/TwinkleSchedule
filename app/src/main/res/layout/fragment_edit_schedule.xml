@@ -237,8 +237,7 @@
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:text="提交"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
 
         </LinearLayout>
     </ScrollView>

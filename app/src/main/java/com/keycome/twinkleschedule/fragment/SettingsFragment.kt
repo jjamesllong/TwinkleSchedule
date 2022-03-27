@@ -24,7 +24,7 @@ class SettingsFragment : BaseFragment() {
         _binding = FragmentSettingsBinding.inflate(
             inflater,
             container,
-            attachToParentFalseToo
+            false
         )
         return binding.root
     }
@@ -33,6 +33,9 @@ class SettingsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.addScheduleSettingItem.setOnClickListener {
             navController.navigate(R.id.action_settingsFragment_to_scheduleCreateWayFragment)
+        }
+        binding.manageSchedulesSettingItem.setOnClickListener {
+            navController.navigate(R.id.action_settingsFragment_to_manageScheduleFragment)
         }
     }
 

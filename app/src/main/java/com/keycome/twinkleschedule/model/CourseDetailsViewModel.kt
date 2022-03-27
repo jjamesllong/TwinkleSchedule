@@ -1,19 +1,19 @@
 package com.keycome.twinkleschedule.model
 
 import androidx.lifecycle.LiveData
-import com.keycome.twinkleschedule.base.BaseViewModel2
+import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.record.sketch.Course
-import com.keycome.twinkleschedule.share.ShareOnlyVariable
+import com.keycome.twinkleschedule.delivery.ShareOnlyVariable
 
-class CourseDetailsViewModel : BaseViewModel2() {
+class CourseDetailsViewModel : BaseViewModel() {
 
     val sharedCourse: LiveData<Course>? by ShareOnlyVariable(
         shareSpace,
         DisplayCoursesViewModel.SHARED_COURSE
     )
 
-    override fun onCleared() {
-        super.onCleared()
+    override fun onRemove() {
+        super.onRemove()
         shareSpace.releaseReference(DisplayCoursesViewModel.SHARED_COURSE)
     }
 }
