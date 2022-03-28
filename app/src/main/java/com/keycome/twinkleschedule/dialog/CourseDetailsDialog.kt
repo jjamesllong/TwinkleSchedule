@@ -22,6 +22,7 @@ class CourseDetailsDialog : BaseDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
+        requestFullScreenBottomDialog()
         _binding = DialogCourseDetailsBinding.inflate(
             inflater,
             container,
@@ -32,8 +33,14 @@ class CourseDetailsDialog : BaseDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.courseDetailsDialogCancel.setOnClickListener { dismiss() }
         viewModel.sharedCourse?.observe(viewLifecycleOwner) {
-            binding.courseDetailClassroomText.text = it.classroom
+            binding.courseDetailsDialogTitle.text = it.title
+            binding.courseDetailsDialogDayText.text = it.day.name
+            binding.courseDetailsDialogSectionText.text = it.section.toString()
+            binding.courseDetailsDialogClassroomText.text = it.classroom
+            binding.courseDetailsDialogTeacherText.text = it.teacher
+            binding.courseDetailsDialogWeekText.text = it.week.toString()
         }
     }
 

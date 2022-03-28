@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 abstract class BaseDialogFragment : AppCompatDialogFragment() {
 
-    val companionViewModel by viewModels<BaseFragment.CompanionViewModel>()
+    val companionViewModel by viewModels<CompanionViewModel>()
 
     @StyleRes
     private var animationResId: Int = nullStyleRes
@@ -37,9 +37,9 @@ abstract class BaseDialogFragment : AppCompatDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        savedInstanceState?.let {
+        if (savedInstanceState != null) {
             animationRemoved = true
-        } ?: run {
+        } else {
             if (hasAnimation) {
                 @StyleRes val id = considerAnimationResId(gravity)
                 if (id != nullStyleRes) {
@@ -81,7 +81,7 @@ abstract class BaseDialogFragment : AppCompatDialogFragment() {
         }
     }
 
-    fun requestBottomFullDialog() {
+    fun requestFullScreenBottomDialog() {
         hasAnimation = true
         gravity = Bottom
         fullWidth = true
@@ -91,19 +91,19 @@ abstract class BaseDialogFragment : AppCompatDialogFragment() {
     fun considerAnimationResId(gravity: Int = NoGravity): Int {
         return when (gravity) {
             Center -> nullStyleRes
-            Bottom -> R.style.BottomFullDialogAnimation
+            Bottom -> R.style.FullScreenBottomDialogAnimation
             else -> nullStyleRes
         }
     }
 
-    inline fun emit(direction: String, action: PutBoundScope.() -> Unit) {
+    inline fun emitBound(direction: String, action: PutBoundScope.() -> Unit) {
         if (direction.isBlank()) {
             throw Exception()
         }
         action(PutBoundScopeImpl(direction))
     }
 
-    inline fun retrieve(direction: String, action: GetBoundScope.() -> Unit) {
+    inline fun retrieveBound(direction: String, action: GetBoundScope.() -> Unit) {
         if (direction.isBlank()) {
             throw Exception()
         }
@@ -111,7 +111,7 @@ abstract class BaseDialogFragment : AppCompatDialogFragment() {
         action(GetBoundScopeImpl(direction))
     }
 
-    inline fun retrieveOnce(direction: String, action: GetBoundScope.() -> Unit) {
+    inline fun retrieveBoundOnce(direction: String, action: GetBoundScope.() -> Unit) {
         if (direction.isBlank()) {
             throw Exception()
         }

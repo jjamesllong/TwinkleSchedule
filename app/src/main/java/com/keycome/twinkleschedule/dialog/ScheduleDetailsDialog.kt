@@ -39,7 +39,7 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        requestBottomFullDialog()
+        requestFullScreenBottomDialog()
         _binding = DialogScheduleDetailsBinding.inflate(
             inflater,
             container,
@@ -85,7 +85,7 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
         binding.dialogScheduleDetailsModify.setOnClickListener {
             val id = viewModel.queryScheduleId()
             if (id != 0L) {
-                emit("edit_schedule_fragment") {
+                emitBound("edit_schedule_fragment") {
                     putLong("schedule_id", id)
                 }
                 navController.navigate(
