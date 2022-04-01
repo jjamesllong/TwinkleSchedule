@@ -2,7 +2,7 @@ package com.keycome.twinkleschedule.model
 
 import androidx.lifecycle.LiveData
 import com.keycome.twinkleschedule.base.BaseViewModel
-import com.keycome.twinkleschedule.record.sketch.Course
+import com.keycome.twinkleschedule.record.timetable.Course
 
 class CourseDetailsViewModel : BaseViewModel() {
 

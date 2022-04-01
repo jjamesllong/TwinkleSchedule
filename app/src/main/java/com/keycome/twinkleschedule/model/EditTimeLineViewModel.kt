@@ -3,9 +3,9 @@ package com.keycome.twinkleschedule.model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.keycome.twinkleschedule.base.BaseViewModel
-import com.keycome.twinkleschedule.record.sketch.TimeLine
-import com.keycome.twinkleschedule.record.span.Date
-import com.keycome.twinkleschedule.record.span.Time
+import com.keycome.twinkleschedule.record.timetable.TimeLine
+import com.keycome.twinkleschedule.record.interval.Date
+import com.keycome.twinkleschedule.record.interval.Time
 
 class EditTimeLineViewModel : BaseViewModel() {
 

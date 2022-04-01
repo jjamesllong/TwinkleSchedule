@@ -5,23 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseFragment
-import com.keycome.twinkleschedule.databinding.FragmentSettingsBinding
+import com.keycome.twinkleschedule.databinding.FragmentEditCourseBinding
 
-class SettingsFragment : BaseFragment() {
+class EditCourseFragment : BaseFragment() {
 
-    private var _binding: FragmentSettingsBinding? = null
-    private val binding get() = _binding!!
+    private var _binding: FragmentEditCourseBinding? = null
+    val binding get() = _binding.acquire()
 
     private val navController by lazy { findNavController() }
+
+    private val parentScheduleId by lazy { arguments?.getLong(scheduleIdKey) ?: 0L }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSettingsBinding.inflate(
+        _binding = FragmentEditCourseBinding.inflate(
             inflater,
             container,
             false
@@ -31,21 +32,19 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.addScheduleSettingItem.setOnClickListener {
-            navController.navigate(R.id.action_settingsFragment_to_scheduleCreateWayFragment)
-        }
-        binding.manageSchedulesSettingItem.setOnClickListener {
-            navController.navigate(
-                R.id.action_settingsFragment_to_selectToManageScheduleFragment
-            )
-        }
-        binding.recordCourseSettingItem.setOnClickListener {
-            navController.navigate(R.id.action_settingsFragment_to_selectToAddCourseFragment)
+        binding.fragmentEditCourseToolbar.setNavigationOnClickListener {
+            navController.navigateUp()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+
+        const val TAG = "EditCourseFragment"
+        const val scheduleIdKey = "edit_course_fragment_schedule_id"
     }
 }

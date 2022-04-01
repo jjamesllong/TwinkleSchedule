@@ -20,9 +20,10 @@ import com.keycome.twinkleschedule.adapter.CheckTimeLineAdapter
 import com.keycome.twinkleschedule.adapter.CheckTimeLineFooterAdapter
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentEditScheduleBinding
+import com.keycome.twinkleschedule.extension.removeObservers
 import com.keycome.twinkleschedule.model.EditScheduleViewModel
-import com.keycome.twinkleschedule.record.sketch.TimeLine
-import com.keycome.twinkleschedule.record.span.Date
+import com.keycome.twinkleschedule.record.timetable.TimeLine
+import com.keycome.twinkleschedule.record.interval.Date
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -157,6 +158,11 @@ class EditScheduleFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        lifecycleScope.launch(Dispatchers.Default) {
+            timeLineAdapter.removeObservers()
+            timeLineFooterAdapter.removeObservers()
+            concatAdapter.removeObservers()
+        }
         _binding = null
     }
 

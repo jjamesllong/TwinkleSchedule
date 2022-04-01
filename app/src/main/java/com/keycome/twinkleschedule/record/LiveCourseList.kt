@@ -1,9 +1,9 @@
 package com.keycome.twinkleschedule.record
 
 import androidx.lifecycle.LiveData
-import com.keycome.twinkleschedule.record.span.Day
-import com.keycome.twinkleschedule.record.sketch.Course
-import com.keycome.twinkleschedule.record.sketch.CourseField
+import com.keycome.twinkleschedule.record.interval.Day
+import com.keycome.twinkleschedule.record.timetable.Course
+import com.keycome.twinkleschedule.record.timetable.CourseField
 
 class LiveCourseList(
     private val parentScheduleId: CourseField.ParentScheduleId,

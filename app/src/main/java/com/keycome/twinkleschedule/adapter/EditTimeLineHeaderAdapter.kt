@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.databinding.ViewEditTimeLineHeaderBinding
-import com.keycome.twinkleschedule.record.span.Date
+import com.keycome.twinkleschedule.record.interval.Date
 
 class EditTimeLineHeaderAdapter(
     private val event: (View) -> Unit

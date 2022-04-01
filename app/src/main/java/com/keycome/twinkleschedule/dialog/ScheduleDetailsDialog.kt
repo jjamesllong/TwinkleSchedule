@@ -17,7 +17,7 @@ import com.keycome.twinkleschedule.delivery.Pipette
 import com.keycome.twinkleschedule.extension.acquire
 import com.keycome.twinkleschedule.model.ScheduleDetailsViewModel
 import com.keycome.twinkleschedule.preference.GlobalPreference
-import com.keycome.twinkleschedule.record.sketch.TimeLine
+import com.keycome.twinkleschedule.record.timetable.TimeLine
 import kotlinx.coroutines.launch
 
 class ScheduleDetailsDialog : BaseDialogFragment() {

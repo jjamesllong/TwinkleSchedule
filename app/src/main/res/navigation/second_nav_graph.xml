@@ -28,8 +28,15 @@
             app:popEnterAnim="@anim/slide_in_from_left"
             app:popExitAnim="@anim/slide_out_to_right" />
         <action
-            android:id="@+id/action_settingsFragment_to_manageScheduleFragment"
+            android:id="@+id/action_settingsFragment_to_selectToManageScheduleFragment"
             app:destination="@id/manageScheduleFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_selectToAddCourseFragment"
+            app:destination="@id/selectToAddCourseFragment"
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_from_left"
@@ -45,15 +52,15 @@
         android:label="fragment_schedule_create_way"
         tools:layout="@layout/fragment_schedule_create_way">
         <action
-            android:id="@+id/action_scheduleCreateWayFragment_to_editScheduleFragment2"
-            app:destination="@id/editScheduleFragment2"
+            android:id="@+id/action_scheduleCreateWayFragment_to_editScheduleFragment"
+            app:destination="@id/editScheduleFragment"
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_from_left"
             app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
     <fragment
-        android:id="@+id/editScheduleFragment2"
+        android:id="@+id/editScheduleFragment"
         android:name="com.keycome.twinkleschedule.fragment.EditScheduleFragment"
         android:label="EditScheduleFragment">
         <action
@@ -70,7 +77,7 @@
             app:destination="@id/courseDurationDialog" />
         <action
             android:id="@+id/action_editScheduleFragment_to_editTimeLineFragment"
-            app:destination="@id/editTimeLineFragment2"
+            app:destination="@id/editTimeLineFragment"
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_from_left"
@@ -102,7 +109,7 @@
         android:name="com.keycome.twinkleschedule.dialog.CourseDurationDialog"
         android:label="CourseDurationDialog" />
     <fragment
-        android:id="@+id/editTimeLineFragment2"
+        android:id="@+id/editTimeLineFragment"
         android:name="com.keycome.twinkleschedule.fragment.EditTimeLineFragment"
         android:label="EditTimeLineFragment" >
         <action
@@ -115,11 +122,18 @@
         android:label="TimeLineNameDialog" />
     <fragment
         android:id="@+id/manageScheduleFragment"
-        android:name="com.keycome.twinkleschedule.fragment.ManageScheduleFragment"
+        android:name="com.keycome.twinkleschedule.fragment.SelectToManageScheduleFragment"
         android:label="ManageScheduleFragment" >
         <action
             android:id="@+id/action_manageScheduleFragment_to_scheduleDetailsDialog"
             app:destination="@id/scheduleDetailsDialog" />
+        <action
+            android:id="@+id/action_manageScheduleFragment_to_editCourseFragment"
+            app:destination="@id/editCourseFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
     <dialog
         android:id="@+id/scheduleDetailsDialog"
@@ -127,6 +141,22 @@
         android:label="ScheduleDetailsDialog" >
         <action
             android:id="@+id/action_scheduleDetailsDialog_to_editScheduleFragment2"
-            app:destination="@id/editScheduleFragment2" />
+            app:destination="@id/editScheduleFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/editCourseFragment"
+        android:name="com.keycome.twinkleschedule.fragment.EditCourseFragment"
+        android:label="EditCourseFragment" />
+    <fragment
+        android:id="@+id/selectToAddCourseFragment"
+        android:name="com.keycome.twinkleschedule.fragment.SelectToAddCourseFragment"
+        android:label="SelectToAddCourseFragment" >
+        <action
+            android:id="@+id/action_selectToAddCourseFragment_to_editCourseFragment"
+            app:destination="@id/editCourseFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+    </fragment>
 </navigation>

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.databinding.CellScheduleManagerBinding
-import com.keycome.twinkleschedule.record.sketch.Schedule
+import com.keycome.twinkleschedule.record.timetable.Schedule
 
 class ScheduleListAdapter(
     private val event: (Int) -> Unit

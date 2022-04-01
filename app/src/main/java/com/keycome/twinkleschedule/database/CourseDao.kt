@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.keycome.twinkleschedule.record.sketch.Course
+import com.keycome.twinkleschedule.record.timetable.Course
 
 @Dao
 interface CourseDao {

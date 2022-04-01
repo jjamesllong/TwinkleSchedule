@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewbinding.ViewBinding
 import com.keycome.twinkleschedule.delivery.*
-import com.keycome.twinkleschedule.utils.TextColor
+import com.keycome.twinkleschedule.util.TextColor
 
 abstract class BaseFragment : Fragment() {
 

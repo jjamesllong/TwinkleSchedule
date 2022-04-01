@@ -2,7 +2,7 @@ package com.keycome.twinkleschedule.repository
 
 import com.keycome.twinkleschedule.database.ScheduleDao
 import com.keycome.twinkleschedule.database.ScheduleDatabase
-import com.keycome.twinkleschedule.record.sketch.Schedule
+import com.keycome.twinkleschedule.record.timetable.Schedule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch

@@ -1,10 +1,10 @@
-package com.keycome.twinkleschedule.record.sketch
+package com.keycome.twinkleschedule.record.timetable
 
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.keycome.twinkleschedule.record.span.Date
-import com.keycome.twinkleschedule.record.span.Time
+import com.keycome.twinkleschedule.record.interval.Date
+import com.keycome.twinkleschedule.record.interval.Time
 
 data class TimeLine(
     val id: Long,

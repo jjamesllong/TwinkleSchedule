@@ -26,9 +26,9 @@ class ScheduleListFragment : BaseFragment<FragmentScheduleListBinding>() {
         return FragmentScheduleListBinding.inflate(inflater, container, false)
     }
 
-    override fun supportToolbar(title: Array<Int>): ViewToolbarLayoutBinding {
+    override fun supportToolbar(title: Array<Int>): ViewToolbarLayoutBinding? {
         title[0] = R.string.scheduleListFragmentLabel
-        return binding.fragmentScheduleListToolbar
+        return null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

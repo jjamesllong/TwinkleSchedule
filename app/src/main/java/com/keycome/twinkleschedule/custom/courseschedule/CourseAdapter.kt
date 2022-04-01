@@ -7,9 +7,9 @@ import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.databinding.CellCourseDescriptionBinding
 import com.keycome.twinkleschedule.record.ViewBlock
-import com.keycome.twinkleschedule.record.sketch.Course
-import com.keycome.twinkleschedule.record.sketch.CourseSchedule
-import com.keycome.twinkleschedule.record.sketch.Schedule
+import com.keycome.twinkleschedule.record.timetable.Course
+import com.keycome.twinkleschedule.record.timetable.CourseSchedule
+import com.keycome.twinkleschedule.record.timetable.Schedule
 
 class CourseAdapter : TableAdapter<RecyclerView.ViewHolder, CourseSchedule>() {
 

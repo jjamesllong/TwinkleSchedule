@@ -11,19 +11,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.adapter.ScheduleListAdapter
 import com.keycome.twinkleschedule.base.BaseFragment
-import com.keycome.twinkleschedule.databinding.FragmentManageScheduleBinding
+import com.keycome.twinkleschedule.databinding.FragmentScheduleListBinding
 import com.keycome.twinkleschedule.delivery.Pipette
 import com.keycome.twinkleschedule.dialog.ScheduleDetailsDialog
-import com.keycome.twinkleschedule.model.ManageScheduleViewModel
+import com.keycome.twinkleschedule.extension.removeObservers
+import com.keycome.twinkleschedule.model.ScheduleListViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.launch
 
-class ManageScheduleFragment : BaseFragment() {
+class SelectToManageScheduleFragment : BaseFragment() {
 
-    private var _binding: FragmentManageScheduleBinding? = null
+    private var _binding: FragmentScheduleListBinding? = null
     val binding get() = _binding.acquire()
 
-    val viewModel by viewModels<ManageScheduleViewModel>()
+    val viewModel by viewModels<ScheduleListViewModel>()
 
     private val navController by lazy { findNavController() }
 
@@ -43,7 +45,7 @@ class ManageScheduleFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentManageScheduleBinding.inflate(
+        _binding = FragmentScheduleListBinding.inflate(
             inflater,
             container,
             false
@@ -53,12 +55,12 @@ class ManageScheduleFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.fragmentManageScheduleRecyclerView.adapter = scheduleListAdapter
-        binding.fragmentManageScheduleRecyclerView.layoutManager =
+        binding.fragmentScheduleListRecyclerView.adapter = scheduleListAdapter
+        binding.fragmentScheduleListRecyclerView.layoutManager =
             LinearLayoutManager(context).apply {
                 orientation = LinearLayoutManager.VERTICAL
             }
-        binding.fragmentManageScheduleToolbar.setNavigationOnClickListener {
+        binding.fragmentScheduleListToolbar.setNavigationOnClickListener {
             navController.navigateUp()
         }
         viewModel.liveScheduleList.observe(viewLifecycleOwner) {
@@ -77,6 +79,9 @@ class ManageScheduleFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        lifecycleScope.launch {
+            scheduleListAdapter.removeObservers()
+        }
         _binding = null
     }
 }

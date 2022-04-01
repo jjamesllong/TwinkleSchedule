@@ -3,7 +3,7 @@ package com.keycome.twinkleschedule.base
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
-import com.keycome.twinkleschedule.utils.TextColor
+import com.keycome.twinkleschedule.util.TextColor
 
 abstract class BaseActivity : AppCompatActivity() {
     fun setStatusBarAppearance(view: View, color: TextColor) {

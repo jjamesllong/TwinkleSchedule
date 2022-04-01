@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.record.span
+package com.keycome.twinkleschedule.record.interval
 
 import android.os.Parcel
 import android.os.Parcelable

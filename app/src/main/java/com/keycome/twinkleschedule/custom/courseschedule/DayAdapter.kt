@@ -9,8 +9,8 @@ import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.extension.toCharacter
-import com.keycome.twinkleschedule.record.span.Day
-import com.keycome.twinkleschedule.record.sketch.Schedule
+import com.keycome.twinkleschedule.record.interval.Day
+import com.keycome.twinkleschedule.record.timetable.Schedule
 
 class DayAdapter : TableAdapter<DayAdapter.DayView, Schedule>() {
 

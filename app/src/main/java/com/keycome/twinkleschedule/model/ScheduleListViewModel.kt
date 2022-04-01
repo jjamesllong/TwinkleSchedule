@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.keycome.twinkleschedule.base.BaseViewModel
-import com.keycome.twinkleschedule.record.sketch.Schedule
+import com.keycome.twinkleschedule.record.timetable.Schedule
 import com.keycome.twinkleschedule.repository.ScheduleRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ManageScheduleViewModel : BaseViewModel() {
+class ScheduleListViewModel : BaseViewModel() {
 
     private val _liveScheduleList = MutableLiveData<List<Schedule>>()
     val liveScheduleList: LiveData<List<Schedule>> get() = _liveScheduleList

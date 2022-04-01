@@ -12,7 +12,7 @@ import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.databinding.DialogEndDayBinding
 import com.keycome.twinkleschedule.model.EditScheduleViewModel
-import com.keycome.twinkleschedule.record.span.Day
+import com.keycome.twinkleschedule.record.interval.Day
 
 class EndDayDialog : BaseDialogFragment() {
 

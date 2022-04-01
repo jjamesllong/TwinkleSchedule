@@ -11,9 +11,9 @@ import com.keycome.twinkleschedule.custom.EditTextDialog
 import com.keycome.twinkleschedule.custom.listdialog.ListDialog
 import com.keycome.twinkleschedule.databinding.CellCourseEditingInfoBinding
 import com.keycome.twinkleschedule.record.LayoutSpec
-import com.keycome.twinkleschedule.record.span.Day
-import com.keycome.twinkleschedule.record.sketch.Course
-import com.keycome.twinkleschedule.record.sketch.CourseField
+import com.keycome.twinkleschedule.record.interval.Day
+import com.keycome.twinkleschedule.record.timetable.Course
+import com.keycome.twinkleschedule.record.timetable.CourseField
 
 class EditCourseAdapter(private val viewModel: RecordViewModel) :
     ListAdapter<Course, EditCourseAdapter.EditingInfoHolder>(EditingInfoDiff) {

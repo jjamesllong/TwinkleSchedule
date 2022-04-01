@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.record.span
+package com.keycome.twinkleschedule.record.interval
 
 object SpanDifference {
 

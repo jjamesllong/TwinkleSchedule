@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.R
-import com.keycome.twinkleschedule.record.sketch.Schedule
-import com.keycome.twinkleschedule.record.sketch.TimeLine
+import com.keycome.twinkleschedule.record.timetable.Schedule
+import com.keycome.twinkleschedule.record.timetable.TimeLine
 
 class SectionAdapter : TableAdapter<SectionAdapter.SectionView, Schedule>() {
 

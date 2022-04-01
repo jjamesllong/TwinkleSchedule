@@ -147,6 +147,7 @@
                     android:id="@+id/record_course_setting_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_selector_rectangle_0_0"
                     android:orientation="horizontal"
                     android:paddingStart="16dp">
 
@@ -184,6 +185,7 @@
                     android:id="@+id/manage_courses_setting_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_selector_rectangle_0_0"
                     android:orientation="horizontal"
                     android:paddingStart="16dp">
 

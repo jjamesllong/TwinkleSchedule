@@ -35,7 +35,7 @@ class ScheduleCreateWayFragment : BaseFragment() {
             navController.navigateUp()
         }
         binding.fragmentScheduleCreateWayManual.setOnClickListener {
-            navController.navigate(R.id.action_scheduleCreateWayFragment_to_editScheduleFragment2)
+            navController.navigate(R.id.action_scheduleCreateWayFragment_to_editScheduleFragment)
         }
     }
 

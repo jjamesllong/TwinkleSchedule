@@ -21,9 +21,9 @@ import com.keycome.twinkleschedule.adapter.EditTimeLineHeaderAdapter
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentEditTimeLineBinding
 import com.keycome.twinkleschedule.model.EditTimeLineViewModel
-import com.keycome.twinkleschedule.record.sketch.TimeLine
-import com.keycome.twinkleschedule.record.span.Date
-import com.keycome.twinkleschedule.record.span.Time
+import com.keycome.twinkleschedule.record.timetable.TimeLine
+import com.keycome.twinkleschedule.record.interval.Date
+import com.keycome.twinkleschedule.record.interval.Time
 
 class EditTimeLineFragment : BaseFragment() {
 

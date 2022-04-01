@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.preference.GlobalPreference
-import com.keycome.twinkleschedule.record.sketch.Course
-import com.keycome.twinkleschedule.record.sketch.CourseSchedule
-import com.keycome.twinkleschedule.record.sketch.Schedule
-import com.keycome.twinkleschedule.record.span.SpanDifference
+import com.keycome.twinkleschedule.record.timetable.Course
+import com.keycome.twinkleschedule.record.timetable.CourseSchedule
+import com.keycome.twinkleschedule.record.timetable.Schedule
+import com.keycome.twinkleschedule.record.interval.SpanDifference
 import com.keycome.twinkleschedule.repository.CourseScheduleRepository
 import com.keycome.twinkleschedule.delivery.SharePostVariable
 import kotlinx.coroutines.Dispatchers

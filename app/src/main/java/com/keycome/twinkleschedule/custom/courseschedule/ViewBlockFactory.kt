@@ -1,9 +1,9 @@
 package com.keycome.twinkleschedule.custom.courseschedule
 
 import com.keycome.twinkleschedule.record.ViewBlock
-import com.keycome.twinkleschedule.record.span.Day
-import com.keycome.twinkleschedule.record.sketch.Course
-import com.keycome.twinkleschedule.record.sketch.Schedule
+import com.keycome.twinkleschedule.record.interval.Day
+import com.keycome.twinkleschedule.record.timetable.Course
+import com.keycome.twinkleschedule.record.timetable.Schedule
 
 object ViewBlockFactory {
 

@@ -2,8 +2,8 @@ package com.keycome.twinkleschedule.custom.courseschedule
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.keycome.twinkleschedule.record.sketch.Course
-import com.keycome.twinkleschedule.record.sketch.CourseSchedule
+import com.keycome.twinkleschedule.record.timetable.Course
+import com.keycome.twinkleschedule.record.timetable.CourseSchedule
 
 class CourseTable(recyclerView: RecyclerView) : RecyclerTable<CourseSchedule>() {
 

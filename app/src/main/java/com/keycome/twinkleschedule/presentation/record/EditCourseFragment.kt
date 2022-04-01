@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.BaseFragment
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.databinding.FragmentEditCourseBinding
 import com.keycome.twinkleschedule.databinding.ViewToolbarLayoutBinding
-import com.keycome.twinkleschedule.record.sketch.CourseField
+import com.keycome.twinkleschedule.record.timetable.CourseField
 
 class EditCourseFragment : BaseFragment<FragmentEditCourseBinding>() {
 
@@ -26,9 +25,9 @@ class EditCourseFragment : BaseFragment<FragmentEditCourseBinding>() {
         return FragmentEditCourseBinding.inflate(inflater, container, false)
     }
 
-    override fun supportToolbar(title: Array<Int>): ViewToolbarLayoutBinding {
+    override fun supportToolbar(title: Array<Int>): ViewToolbarLayoutBinding? {
         title[0] = R.string.addCourseFragmentLabel
-        return binding.fragmentAddCourseToolbar
+        return null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,20 +37,9 @@ class EditCourseFragment : BaseFragment<FragmentEditCourseBinding>() {
         val addCourseAdapter = EditCourseAdapter(viewModel)
         val addCourseHeaderAdapter = EditCourseHeaderAdapter(viewModel)
         val concatAdapter = ConcatAdapter(addCourseHeaderAdapter, addCourseAdapter)
-        binding.editingCourseRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = concatAdapter
-        }
         viewModel.liveEditingCourse.observe(viewLifecycleOwner) {
             addCourseHeaderAdapter.updateList(it)
             addCourseAdapter.submitList(it)
-        }
-        binding.editingCourseAddButton.setOnClickListener {
-            val resultSize = viewModel.liveEditingCourse.addCourse()
-            binding.editingCourseRecyclerView.smoothScrollToPosition(resultSize)
-        }
-        binding.editingCourseSaveButton.setOnClickListener {
-            viewModel.insertEditingCourse()
         }
     }
 

@@ -10,7 +10,7 @@ import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseActivity
 import com.keycome.twinkleschedule.databinding.ActivitySecondBinding
 import com.keycome.twinkleschedule.model.SecondViewModel
-import com.keycome.twinkleschedule.utils.TextColor
+import com.keycome.twinkleschedule.util.TextColor
 
 class SecondActivity : BaseActivity() {
 

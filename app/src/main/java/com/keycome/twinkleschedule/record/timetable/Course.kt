@@ -1,9 +1,9 @@
-package com.keycome.twinkleschedule.record.sketch
+package com.keycome.twinkleschedule.record.timetable
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.keycome.twinkleschedule.record.span.Day
+import com.keycome.twinkleschedule.record.interval.Day
 
 @Entity(tableName = "course")
 data class Course(

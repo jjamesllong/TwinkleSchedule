@@ -2,8 +2,8 @@ package com.keycome.twinkleschedule.database
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.keycome.twinkleschedule.record.sketch.Course
-import com.keycome.twinkleschedule.record.sketch.Schedule
+import com.keycome.twinkleschedule.record.timetable.Course
+import com.keycome.twinkleschedule.record.timetable.Schedule
 
 data class CourseWithSchedule(
     @Embedded
