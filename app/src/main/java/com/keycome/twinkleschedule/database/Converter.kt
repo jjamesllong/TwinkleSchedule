@@ -8,6 +8,7 @@ import com.keycome.twinkleschedule.record.interval.Date
 import com.keycome.twinkleschedule.record.interval.Day
 
 class Converter {
+
     private val gSon = Gson()
 
     @TypeConverter

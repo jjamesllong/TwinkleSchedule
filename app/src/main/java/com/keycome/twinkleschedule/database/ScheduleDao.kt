@@ -6,6 +6,7 @@ import com.keycome.twinkleschedule.record.timetable.Schedule
 
 @Dao
 interface ScheduleDao {
+
     @Insert
     suspend fun insertSchedule(schedule: Schedule)
 

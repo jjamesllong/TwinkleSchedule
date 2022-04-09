@@ -15,10 +15,12 @@ import com.keycome.twinkleschedule.record.timetable.Schedule
 )
 @TypeConverters(Converter::class)
 abstract class ScheduleDatabase : RoomDatabase() {
+
     abstract fun scheduleDao(): ScheduleDao
     abstract fun courseDao(): CourseDao
 
     companion object {
+
         private const val databaseName = "schedule_database"
         private var INSTANCE: ScheduleDatabase? = null
 
