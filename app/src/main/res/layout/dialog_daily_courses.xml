@@ -180,7 +180,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textView40"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView40"
-                app:srcCompat="@drawable/ic_cross" />
+                app:srcCompat="@drawable/ic_baseline_cross_24" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/dialog_daily_courses_confirm"

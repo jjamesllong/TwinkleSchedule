@@ -85,11 +85,9 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
         binding.dialogScheduleDetailsModify.setOnClickListener {
             val id = viewModel.queryScheduleId()
             if (id != 0L) {
-                emitBound("edit_schedule_fragment") {
-                    putLong("schedule_id", id)
-                }
                 navController.navigate(
-                    R.id.action_scheduleDetailsDialog_to_editScheduleFragment2
+                    R.id.action_scheduleDetailsDialog_to_editScheduleFragment,
+                    Bundle().apply { putLong("editing_schedule_id", id) }
                 )
             }
         }

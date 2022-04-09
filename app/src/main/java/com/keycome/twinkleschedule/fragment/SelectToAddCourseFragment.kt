@@ -5,16 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.adapter.ScheduleListAdapter
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentScheduleListBinding
-import com.keycome.twinkleschedule.extension.removeObservers
 import com.keycome.twinkleschedule.model.ScheduleListViewModel
-import kotlinx.coroutines.launch
 
 class SelectToAddCourseFragment : BaseFragment() {
 
@@ -31,12 +28,11 @@ class SelectToAddCourseFragment : BaseFragment() {
                 R.id.action_selectToAddCourseFragment_to_editCourseFragment,
                 Bundle().apply {
                     putLong(EditCourseFragment.scheduleIdKey, id)
+                    putBoolean(EditCourseFragment.isUpdateKey, false)
                 }
             )
         }
     }
-
-    private val adapter by lazy { ScheduleListAdapter(event) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +52,7 @@ class SelectToAddCourseFragment : BaseFragment() {
         binding.fragmentScheduleListToolbar.setNavigationOnClickListener {
             navController.navigateUp()
         }
+        val adapter = ScheduleListAdapter(event)
         binding.fragmentScheduleListRecyclerView.adapter = adapter
         binding.fragmentScheduleListRecyclerView.layoutManager =
             LinearLayoutManager(context).apply {
@@ -68,9 +65,6 @@ class SelectToAddCourseFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        lifecycleScope.launch {
-            adapter.removeObservers()
-        }
         _binding = null
     }
 

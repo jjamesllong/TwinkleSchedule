@@ -33,7 +33,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/dialog_schedule_details_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/dialog_schedule_details_title"
-            app:srcCompat="@drawable/ic_cross" />
+            app:srcCompat="@drawable/ic_baseline_cross_24" />
 
         <LinearLayout
             android:id="@+id/linearLayout"

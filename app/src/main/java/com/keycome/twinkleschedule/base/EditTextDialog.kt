@@ -1,42 +1,42 @@
 package com.keycome.twinkleschedule.base
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import com.keycome.twinkleschedule.databinding.DialogEditTextBinding
 import com.keycome.twinkleschedule.extension.acquire
+import com.keycome.twinkleschedule.util.TextWatcherScope
+import com.keycome.twinkleschedule.util.TextWatcherScopeImpl
 
 abstract class EditTextDialog : BaseDialogFragment() {
 
     private var _binding: DialogEditTextBinding? = null
     val binding get() = _binding.acquire()
 
+    var editText: Editable
+        get() = binding.editTextDialogField.text
+        set(param) {
+            binding.editTextDialogField.text = param
+        }
+
     var inputType = INPUT_TYPE_SHORT_TEXT
 
-    var inputErrorPredicate: ((Editable?) -> Boolean)? = null
-
-    var inputErrorAction: ((Editable?) -> Unit)? = null
-
-    var inputErrorHint: String = ""
-
-    var title = ""
+    var title = "title"
         set(param) {
             field = param
             binding.editTextDialogTitle.text = param
         }
 
-    var confirmHint = ""
+    var confirm = "OK"
         set(param) {
             field = param
-            binding.editTextDialogConfirmButton.text = param
+            binding.editTextDialogConfirm.text = param
         }
+
+    abstract fun configure()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,7 +54,7 @@ abstract class EditTextDialog : BaseDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onConfigure()
+        configure()
         when (inputType) {
             INPUT_TYPE_NUMBER -> {
                 binding.editTextDialogField.inputType = InputType.TYPE_NUMBER_FLAG_SIGNED
@@ -70,56 +70,23 @@ abstract class EditTextDialog : BaseDialogFragment() {
         _binding = null
     }
 
-    abstract fun onConfigure()
 
     fun onConfirm(action: (View) -> Unit) {
-        binding.editTextDialogConfirmButton.setOnClickListener(action)
+        binding.editTextDialogConfirm.setOnClickListener(action)
     }
 
     fun onCancel(action: (View) -> Unit) {
         binding.editTextDialogCancel.setOnClickListener(action)
     }
 
-    fun onTextChange(textWatcher: TextWatcher) {
-        binding.editTextDialogField.addTextChangedListener(textWatcher)
-    }
-
-    inline fun afterTextChanged(crossinline action: (editable: Editable?) -> Unit) {
-        binding.editTextDialogField.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                inputErrorPredicate?.invoke(s)?.let { condition ->
-                    if (condition) {
-                        inputErrorAction?.invoke(s)
-                    } else {
-                        action(s)
-                    }
-                } ?: action(s)
-            }
-        })
-    }
-
-    fun considerInputError(predicate: (Editable?) -> Boolean) {
-        inputErrorPredicate = predicate
-    }
-
-    fun onInputError(action: (Editable?) -> Unit) {
-        inputErrorAction = action
-    }
-
-    fun hintInputError() {
-
+    fun textWatcher(action: TextWatcherScope.() -> Unit) {
+        val scopeImpl = TextWatcherScopeImpl(binding.editTextDialogField)
+        scopeImpl.action()
     }
 
     companion object {
 
-        const val Title = "Title"
-        const val Confirm = "Confirm"
+        const val TAG = "EditTextDialog"
 
         const val INPUT_TYPE_NUMBER = 1
         const val INPUT_TYPE_SHORT_TEXT = 2

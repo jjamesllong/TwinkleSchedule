@@ -140,13 +140,32 @@
         android:name="com.keycome.twinkleschedule.dialog.ScheduleDetailsDialog"
         android:label="ScheduleDetailsDialog" >
         <action
-            android:id="@+id/action_scheduleDetailsDialog_to_editScheduleFragment2"
+            android:id="@+id/action_scheduleDetailsDialog_to_editScheduleFragment"
             app:destination="@id/editScheduleFragment" />
     </dialog>
     <fragment
         android:id="@+id/editCourseFragment"
         android:name="com.keycome.twinkleschedule.fragment.EditCourseFragment"
-        android:label="EditCourseFragment" />
+        android:label="EditCourseFragment" >
+        <action
+            android:id="@+id/action_editCourseFragment_to_courseNameDialog"
+            app:destination="@id/courseNameDialog" />
+        <action
+            android:id="@+id/action_editCourseFragment_to_courseDayDialog"
+            app:destination="@id/courseDayDialog" />
+        <action
+            android:id="@+id/action_editCourseFragment_to_courseSectionDialog"
+            app:destination="@id/courseSectionDialog" />
+        <action
+            android:id="@+id/action_editCourseFragment_to_courseWeekDialog"
+            app:destination="@id/courseWeekDialog" />
+        <action
+            android:id="@+id/action_editCourseFragment_to_teacherNameDialog"
+            app:destination="@id/teacherNameDialog" />
+        <action
+            android:id="@+id/action_editCourseFragment_to_classroomDialog"
+            app:destination="@id/classroomDialog" />
+    </fragment>
     <fragment
         android:id="@+id/selectToAddCourseFragment"
         android:name="com.keycome.twinkleschedule.fragment.SelectToAddCourseFragment"
@@ -159,4 +178,28 @@
             app:popEnterAnim="@anim/slide_in_from_left"
             app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
+    <dialog
+        android:id="@+id/courseNameDialog"
+        android:name="com.keycome.twinkleschedule.dialog.CourseNameDialog"
+        android:label="CourseNameDialog" />
+    <dialog
+        android:id="@+id/courseDayDialog"
+        android:name="com.keycome.twinkleschedule.dialog.CourseDayDialog"
+        android:label="CourseDayDialog" />
+    <dialog
+        android:id="@+id/courseSectionDialog"
+        android:name="com.keycome.twinkleschedule.dialog.CourseSectionDialog"
+        android:label="CourseSectionDialog" />
+    <dialog
+        android:id="@+id/courseWeekDialog"
+        android:name="com.keycome.twinkleschedule.dialog.CourseWeekDialog"
+        android:label="CourseWeekDialog" />
+    <dialog
+        android:id="@+id/teacherNameDialog"
+        android:name="com.keycome.twinkleschedule.dialog.TeacherNameDialog"
+        android:label="TeacherNameDialog" />
+    <dialog
+        android:id="@+id/classroomDialog"
+        android:name="com.keycome.twinkleschedule.dialog.ClassroomDialog"
+        android:label="ClassroomDialog" />
 </navigation>

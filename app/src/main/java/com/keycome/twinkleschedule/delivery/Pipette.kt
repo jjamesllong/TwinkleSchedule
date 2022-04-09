@@ -2,6 +2,8 @@ package com.keycome.twinkleschedule.delivery
 
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filter
 
 object Pipette {
 
@@ -16,4 +18,13 @@ object Pipette {
         extraBufferCapacity = 0,
         onBufferOverflow = BufferOverflow.SUSPEND
     )
+
+    val pipetteForInt = MutableSharedFlow<Drop<Int>>()
+
+    suspend inline fun <T> MutableSharedFlow<Drop<T>>.subscribe(
+        title: String,
+        crossinline action: suspend (T) -> Unit
+    ) {
+        filter { it.first == title }.collect { action(it.second) }
+    }
 }

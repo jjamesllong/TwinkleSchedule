@@ -10,18 +10,18 @@ class TimeLineNameDialog : EditTextDialog() {
 
     val viewModel by viewModels<TimeLineNameViewModel>()
 
-    override fun onConfigure() {
+    override fun configure() {
 
         title = "作息表名称"
 
-        confirmHint = "确定"
+        confirm = "确定"
 
         onCancel { dismiss() }
 
         onConfirm {
-            val text = binding.editTextDialogField.text.toString()
+            val text = editText
             if (text.isNotBlank()) {
-                viewModel.liveEditingName?.value = text
+                viewModel.liveEditingName?.value = text.toString()
             }
             dismiss()
         }

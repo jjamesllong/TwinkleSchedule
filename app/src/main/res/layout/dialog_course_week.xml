@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_shape_rectangle_16_0"
+    android:backgroundTint="?android:attr/colorBackground">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dialog_course_week_container"
+        android:layout_width="@dimen/floating_center_dialog_width"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/dialog_course_week_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="选择周次"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/dialog_course_week_cancel"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_course_week_title"
+            app:layout_constraintEnd_toEndOf="@+id/week_4"
+            app:layout_constraintStart_toStartOf="@+id/week_4"
+            app:layout_constraintTop_toTopOf="@+id/dialog_course_week_title"
+            app:srcCompat="@drawable/ic_baseline_cross_24" />
+
+
+        <TextView
+            android:id="@+id/week_1"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="1"
+            app:layout_constraintEnd_toStartOf="@+id/week_2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_course_week_title" />
+
+        <TextView
+            android:id="@+id/week_2"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="2"
+            app:layout_constraintBottom_toBottomOf="@+id/week_1"
+            app:layout_constraintEnd_toStartOf="@+id/week_3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_1"
+            app:layout_constraintTop_toTopOf="@+id/week_1" />
+
+        <TextView
+            android:id="@+id/week_3"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="3"
+            app:layout_constraintBottom_toBottomOf="@+id/week_2"
+            app:layout_constraintEnd_toStartOf="@+id/week_4"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_2"
+            app:layout_constraintTop_toTopOf="@+id/week_2" />
+
+        <TextView
+            android:id="@+id/week_4"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="4"
+            app:layout_constraintBottom_toBottomOf="@+id/week_3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_3"
+            app:layout_constraintTop_toTopOf="@+id/week_3" />
+
+        <TextView
+            android:id="@+id/week_5"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="5"
+            app:layout_constraintEnd_toStartOf="@+id/week_6"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@+id/week_1"
+            app:layout_constraintTop_toBottomOf="@+id/week_1" />
+
+        <TextView
+            android:id="@+id/week_6"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="6"
+            app:layout_constraintBottom_toBottomOf="@+id/week_5"
+            app:layout_constraintEnd_toStartOf="@+id/week_7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_5"
+            app:layout_constraintTop_toTopOf="@+id/week_5" />
+
+        <TextView
+            android:id="@+id/week_7"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="7"
+            app:layout_constraintBottom_toBottomOf="@+id/week_6"
+            app:layout_constraintEnd_toStartOf="@+id/week_8"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_6"
+            app:layout_constraintTop_toTopOf="@+id/week_6" />
+
+        <TextView
+            android:id="@+id/week_8"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="8"
+            app:layout_constraintBottom_toBottomOf="@+id/week_7"
+            app:layout_constraintEnd_toEndOf="@+id/week_4"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_7"
+            app:layout_constraintTop_toTopOf="@+id/week_7" />
+
+        <TextView
+            android:id="@+id/week_9"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="9"
+            app:layout_constraintEnd_toStartOf="@+id/week_10"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@+id/week_5"
+            app:layout_constraintTop_toBottomOf="@+id/week_5" />
+
+        <TextView
+            android:id="@+id/week_10"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="10"
+            app:layout_constraintBottom_toBottomOf="@+id/week_9"
+            app:layout_constraintEnd_toStartOf="@+id/week_11"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_9"
+            app:layout_constraintTop_toTopOf="@+id/week_9" />
+
+        <TextView
+            android:id="@+id/week_11"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="11"
+            app:layout_constraintBottom_toBottomOf="@+id/week_10"
+            app:layout_constraintEnd_toStartOf="@+id/week_12"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_10"
+            app:layout_constraintTop_toTopOf="@+id/week_10" />
+
+        <TextView
+            android:id="@+id/week_12"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="12"
+            app:layout_constraintBottom_toBottomOf="@+id/week_11"
+            app:layout_constraintEnd_toEndOf="@+id/week_8"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_11"
+            app:layout_constraintTop_toTopOf="@+id/week_11" />
+
+        <TextView
+            android:id="@+id/week_13"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="13"
+            app:layout_constraintEnd_toStartOf="@+id/week_14"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@+id/week_9"
+            app:layout_constraintTop_toBottomOf="@+id/week_9" />
+
+        <TextView
+            android:id="@+id/week_14"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="14"
+            app:layout_constraintBottom_toBottomOf="@+id/week_13"
+            app:layout_constraintEnd_toStartOf="@+id/week_15"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_13"
+            app:layout_constraintTop_toTopOf="@+id/week_13" />
+
+        <TextView
+            android:id="@+id/week_15"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="15"
+            app:layout_constraintBottom_toBottomOf="@+id/week_14"
+            app:layout_constraintEnd_toStartOf="@+id/week_16"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_14"
+            app:layout_constraintTop_toTopOf="@+id/week_14" />
+
+        <TextView
+            android:id="@+id/week_16"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="16"
+            app:layout_constraintBottom_toBottomOf="@+id/week_15"
+            app:layout_constraintEnd_toEndOf="@+id/week_12"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_15"
+            app:layout_constraintTop_toTopOf="@+id/week_15" />
+
+        <TextView
+            android:id="@+id/week_17"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="17"
+            app:layout_constraintEnd_toStartOf="@+id/week_18"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@+id/week_13"
+            app:layout_constraintTop_toBottomOf="@+id/week_13" />
+
+        <TextView
+            android:id="@+id/week_18"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="18"
+            app:layout_constraintBottom_toBottomOf="@+id/week_17"
+            app:layout_constraintEnd_toStartOf="@+id/week_19"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_17"
+            app:layout_constraintTop_toTopOf="@+id/week_17" />
+
+        <TextView
+            android:id="@+id/week_19"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="19"
+            app:layout_constraintBottom_toBottomOf="@+id/week_18"
+            app:layout_constraintEnd_toStartOf="@+id/week_20"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_18"
+            app:layout_constraintTop_toTopOf="@+id/week_18" />
+
+        <TextView
+            android:id="@+id/week_20"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="20"
+            app:layout_constraintBottom_toBottomOf="@+id/week_19"
+            app:layout_constraintEnd_toEndOf="@+id/week_16"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_19"
+            app:layout_constraintTop_toTopOf="@+id/week_19" />
+
+        <TextView
+            android:id="@+id/week_21"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="21"
+            app:layout_constraintEnd_toStartOf="@+id/week_22"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@+id/week_17"
+            app:layout_constraintTop_toBottomOf="@+id/week_17" />
+
+        <TextView
+            android:id="@+id/week_22"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="22"
+            app:layout_constraintBottom_toBottomOf="@+id/week_21"
+            app:layout_constraintEnd_toStartOf="@+id/week_23"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_21"
+            app:layout_constraintTop_toTopOf="@+id/week_21" />
+
+        <TextView
+            android:id="@+id/week_23"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="23"
+            app:layout_constraintBottom_toBottomOf="@+id/week_22"
+            app:layout_constraintEnd_toStartOf="@+id/week_24"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_22"
+            app:layout_constraintTop_toTopOf="@+id/week_22" />
+
+        <TextView
+            android:id="@+id/week_24"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="24"
+            app:layout_constraintBottom_toBottomOf="@+id/week_23"
+            app:layout_constraintEnd_toEndOf="@+id/week_20"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/week_23"
+            app:layout_constraintTop_toTopOf="@+id/week_23" />
+
+        <TextView
+            android:id="@+id/dialog_course_week_all"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="全选"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/week_21"
+            app:layout_constraintTop_toBottomOf="@+id/week_21" />
+
+        <TextView
+            android:id="@+id/dialog_course_week_even"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="双周"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_course_week_all"
+            app:layout_constraintEnd_toEndOf="@+id/week_22"
+            app:layout_constraintStart_toStartOf="@+id/week_22"
+            app:layout_constraintTop_toTopOf="@+id/dialog_course_week_all" />
+
+        <TextView
+            android:id="@+id/dialog_course_week_odd"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_selector_icon_selectable"
+            android:gravity="center"
+            android:text="单周"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_course_week_even"
+            app:layout_constraintEnd_toEndOf="@+id/week_23"
+            app:layout_constraintStart_toStartOf="@+id/week_23"
+            app:layout_constraintTop_toTopOf="@+id/dialog_course_week_even" />
+
+        <TextView
+            android:id="@+id/dialog_course_week_confirm"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_selector_rectangle_8_0"
+            android:gravity="center"
+            android:text="确认"
+            android:textColor="?android:attr/textColorLink"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/week_24"
+            app:layout_constraintStart_toStartOf="@+id/week_21"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_course_week_odd" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

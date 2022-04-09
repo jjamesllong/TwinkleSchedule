@@ -24,7 +24,10 @@ enum class Day {
     }
 
     companion object {
-        fun toPosition(day: Day) = day.toNumber()
+
+        fun toNumber(day: Day) = day.toNumber()
+
+        fun fromNumber(number: Int): Day = fromIndex(number - 1)
 
         fun toIndex(day: Day) = day.toIndex()
 

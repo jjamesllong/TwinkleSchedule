@@ -6,10 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.database.TestData
 import com.keycome.twinkleschedule.preference.GlobalPreference
-import com.keycome.twinkleschedule.record.timetable.Schedule
-import com.keycome.twinkleschedule.record.timetable.TimeLine
 import com.keycome.twinkleschedule.record.interval.Date
 import com.keycome.twinkleschedule.record.interval.Day
+import com.keycome.twinkleschedule.record.timetable.Schedule
+import com.keycome.twinkleschedule.record.timetable.TimeLine
 import com.keycome.twinkleschedule.repository.ScheduleRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable

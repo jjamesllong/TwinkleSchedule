@@ -1,7 +1,6 @@
 package com.keycome.twinkleschedule.dialog
 
 import android.text.Editable
-import android.text.TextWatcher
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import com.keycome.twinkleschedule.base.BaseViewModel
@@ -14,11 +13,11 @@ class ScheduleNameDialog : EditTextDialog() {
 
     private var editingText: Editable? = null
 
-    override fun onConfigure() {
+    override fun configure() {
 
         title = "课表名称"
 
-        confirmHint = "确定"
+        confirm = "确定"
 
         onCancel { dismiss() }
 
@@ -29,18 +28,11 @@ class ScheduleNameDialog : EditTextDialog() {
             dismiss()
         }
 
-        onTextChange(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        textWatcher {
+            afterTextChanged {
+                editingText = it
             }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                editingText = s
-            }
-
-        })
+        }
     }
 
     class ScheduleNameViewModel : BaseViewModel() {

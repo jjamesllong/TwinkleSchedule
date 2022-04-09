@@ -14,11 +14,9 @@ import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentScheduleListBinding
 import com.keycome.twinkleschedule.delivery.Pipette
 import com.keycome.twinkleschedule.dialog.ScheduleDetailsDialog
-import com.keycome.twinkleschedule.extension.removeObservers
 import com.keycome.twinkleschedule.model.ScheduleListViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.launch
 
 class SelectToManageScheduleFragment : BaseFragment() {
 
@@ -28,8 +26,6 @@ class SelectToManageScheduleFragment : BaseFragment() {
     val viewModel by viewModels<ScheduleListViewModel>()
 
     private val navController by lazy { findNavController() }
-
-    private val scheduleListAdapter by lazy { ScheduleListAdapter(adapterEvent) }
 
     private val adapterEvent: (Int) -> Unit = { position ->
         viewModel.getScheduleIdByIndex(position)?.let { id ->
@@ -55,6 +51,7 @@ class SelectToManageScheduleFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val scheduleListAdapter = ScheduleListAdapter(adapterEvent)
         binding.fragmentScheduleListRecyclerView.adapter = scheduleListAdapter
         binding.fragmentScheduleListRecyclerView.layoutManager =
             LinearLayoutManager(context).apply {
@@ -79,9 +76,6 @@ class SelectToManageScheduleFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        lifecycleScope.launch {
-            scheduleListAdapter.removeObservers()
-        }
         _binding = null
     }
 }

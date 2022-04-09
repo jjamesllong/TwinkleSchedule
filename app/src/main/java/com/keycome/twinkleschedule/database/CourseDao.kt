@@ -1,16 +1,16 @@
 package com.keycome.twinkleschedule.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.keycome.twinkleschedule.record.timetable.Course
 
 @Dao
 interface CourseDao {
     @Insert
     suspend fun insertCourse(course: Course)
+
+    @Update
+    suspend fun updateCourse(course: Course)
 
     @Query(
         """

@@ -32,7 +32,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/course_details_dialog_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/course_details_dialog_title"
-            app:srcCompat="@drawable/ic_cross" />
+            app:srcCompat="@drawable/ic_baseline_cross_24" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"

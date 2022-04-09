@@ -20,10 +20,9 @@ import com.keycome.twinkleschedule.adapter.CheckTimeLineAdapter
 import com.keycome.twinkleschedule.adapter.CheckTimeLineFooterAdapter
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentEditScheduleBinding
-import com.keycome.twinkleschedule.extension.removeObservers
 import com.keycome.twinkleschedule.model.EditScheduleViewModel
-import com.keycome.twinkleschedule.record.timetable.TimeLine
 import com.keycome.twinkleschedule.record.interval.Date
+import com.keycome.twinkleschedule.record.timetable.TimeLine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,6 +35,8 @@ class EditScheduleFragment : BaseFragment() {
     private val navController: NavController by lazy { findNavController() }
 
     val viewModel by viewModels<EditScheduleViewModel>()
+
+    private val editingScheduleId by lazy { arguments?.getLong("editing_schedule_id") ?: 0L }
 
     private val timeLineEvent: (TimeLine) -> Unit by lazy {
         return@lazy { timeLine: TimeLine ->
@@ -73,10 +74,6 @@ class EditScheduleFragment : BaseFragment() {
             )
         }
     }
-
-    private val timeLineAdapter by lazy { CheckTimeLineAdapter(timeLineEvent) }
-    private val timeLineFooterAdapter by lazy { CheckTimeLineFooterAdapter(timeLineFooterEvent) }
-    private val concatAdapter by lazy { ConcatAdapter(timeLineAdapter, timeLineFooterAdapter) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -127,7 +124,13 @@ class EditScheduleFragment : BaseFragment() {
                 Toast.makeText(context, "错误", Toast.LENGTH_SHORT).show()
             }
         }
-        configureRecyclerView()
+        val timeLineAdapter = CheckTimeLineAdapter(timeLineEvent)
+        val timeLineFooterAdapter = CheckTimeLineFooterAdapter(timeLineFooterEvent)
+        val concatAdapter = ConcatAdapter(timeLineAdapter, timeLineFooterAdapter)
+        binding.timeLineRecyclerView.layoutManager = LinearLayoutManager(context).apply {
+            orientation = LinearLayoutManager.HORIZONTAL
+        }
+        binding.timeLineRecyclerView.adapter = concatAdapter
         viewModel.liveScheduleName.observe(viewLifecycleOwner) {
             binding.scheduleNameText.text = it
         }
@@ -146,23 +149,16 @@ class EditScheduleFragment : BaseFragment() {
         viewModel.liveTimeLine.observe(viewLifecycleOwner) {
             timeLineAdapter.submitList(it.toList())
         }
-        retrieveOnce("edit_schedule_fragment") {
-            val id = getLong("schedule_id", 0L)
-            if (id != 0L) {
-                viewModel.isModify = true
-                viewModel.modifyingScheduleId = id
-                viewModel.querySchedule(id)
-            }
+        if (viewModel.firstPresent && editingScheduleId != 0L) {
+            viewModel.firstPresent = false
+            viewModel.isModify = true
+            viewModel.modifyingScheduleId = editingScheduleId
+            viewModel.querySchedule(editingScheduleId)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        lifecycleScope.launch(Dispatchers.Default) {
-            timeLineAdapter.removeObservers()
-            timeLineFooterAdapter.removeObservers()
-            concatAdapter.removeObservers()
-        }
         _binding = null
     }
 
@@ -187,12 +183,5 @@ class EditScheduleFragment : BaseFragment() {
         }
         viewLifecycleOwner.lifecycle.addObserver(observer)
         datePicker.show()
-    }
-
-    private fun configureRecyclerView() {
-        binding.timeLineRecyclerView.layoutManager = LinearLayoutManager(context).apply {
-            orientation = LinearLayoutManager.HORIZONTAL
-        }
-        binding.timeLineRecyclerView.adapter = concatAdapter
     }
 }

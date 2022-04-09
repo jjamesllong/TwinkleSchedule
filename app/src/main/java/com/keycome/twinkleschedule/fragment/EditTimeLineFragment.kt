@@ -21,9 +21,9 @@ import com.keycome.twinkleschedule.adapter.EditTimeLineHeaderAdapter
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentEditTimeLineBinding
 import com.keycome.twinkleschedule.model.EditTimeLineViewModel
-import com.keycome.twinkleschedule.record.timetable.TimeLine
 import com.keycome.twinkleschedule.record.interval.Date
 import com.keycome.twinkleschedule.record.interval.Time
+import com.keycome.twinkleschedule.record.timetable.TimeLine
 
 class EditTimeLineFragment : BaseFragment() {
 
@@ -55,10 +55,6 @@ class EditTimeLineFragment : BaseFragment() {
             }
         }
     }
-
-    private val headerAdapter = EditTimeLineHeaderAdapter(headerEvent)
-    private val bodyAdapter = EditTimeLineAdapter(bodyEvent)
-    private val concatAdapter = ConcatAdapter(headerAdapter, bodyAdapter)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -106,6 +102,9 @@ class EditTimeLineFragment : BaseFragment() {
         binding.fragmentAddTimeLineToolbar.setNavigationOnClickListener {
             navController.navigateUp()
         }
+        val headerAdapter = EditTimeLineHeaderAdapter(headerEvent)
+        val bodyAdapter = EditTimeLineAdapter(bodyEvent)
+        val concatAdapter = ConcatAdapter(headerAdapter, bodyAdapter)
         binding.fragmentAddTimeLineRecyclerView.adapter = concatAdapter
         binding.fragmentAddTimeLineRecyclerView.layoutManager = LinearLayoutManager(context).apply {
             orientation = LinearLayoutManager.VERTICAL

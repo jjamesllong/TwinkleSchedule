@@ -1,26 +1,19 @@
 package com.keycome.twinkleschedule.base
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.keycome.twinkleschedule.R
-import com.keycome.twinkleschedule.delivery.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 abstract class BaseDialogFragment : AppCompatDialogFragment() {
-
-    val companionViewModel by viewModels<CompanionViewModel>()
 
     @StyleRes
     private var animationResId: Int = nullStyleRes
@@ -33,10 +26,13 @@ abstract class BaseDialogFragment : AppCompatDialogFragment() {
 
     private var animationRemoved: Boolean = false
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_TITLE, R.style.BaseDialogFragment)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         if (savedInstanceState != null) {
             animationRemoved = true
         } else {
@@ -88,37 +84,11 @@ abstract class BaseDialogFragment : AppCompatDialogFragment() {
     }
 
     @StyleRes
-    fun considerAnimationResId(gravity: Int = NoGravity): Int {
+    fun considerAnimationResId(gravity: Int): Int {
         return when (gravity) {
-            Center -> nullStyleRes
+            Center -> R.style.FloatingCenterDialogAnimation
             Bottom -> R.style.FullScreenBottomDialogAnimation
             else -> nullStyleRes
-        }
-    }
-
-    inline fun emitBound(direction: String, action: PutBoundScope.() -> Unit) {
-        if (direction.isBlank()) {
-            throw Exception()
-        }
-        action(PutBoundScopeImpl(direction))
-    }
-
-    inline fun retrieveBound(direction: String, action: GetBoundScope.() -> Unit) {
-        if (direction.isBlank()) {
-            throw Exception()
-        }
-        companionViewModel.addDirection(direction)
-        action(GetBoundScopeImpl(direction))
-    }
-
-    inline fun retrieveBoundOnce(direction: String, action: GetBoundScope.() -> Unit) {
-        if (direction.isBlank()) {
-            throw Exception()
-        }
-        if (companionViewModel.firstPresent) {
-            companionViewModel.addDirection(direction)
-            action(GetBoundScopeImpl(direction))
-            companionViewModel.firstPresent = false
         }
     }
 
@@ -130,20 +100,6 @@ abstract class BaseDialogFragment : AppCompatDialogFragment() {
         const val NoGravity = -1
         const val Center = 0
         const val Bottom = 1
-    }
-
-    class CompanionViewModel : BaseViewModel() {
-
-        private val directions = mutableSetOf<String>()
-
-        override fun onRemove() {
-            super.onRemove()
-            directions.forEach { PostOffice.clearBounds(it) }
-        }
-
-        fun addDirection(direction: String) {
-            directions.add(direction)
-        }
     }
 
 }
