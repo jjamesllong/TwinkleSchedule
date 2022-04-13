@@ -4,25 +4,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.keycome.twinkleschedule.base.BaseViewModel
+import com.keycome.twinkleschedule.delivery.SharePostVariable
 import com.keycome.twinkleschedule.preference.GlobalPreference
+import com.keycome.twinkleschedule.record.interval.SpanDifference
 import com.keycome.twinkleschedule.record.timetable.Course
 import com.keycome.twinkleschedule.record.timetable.CourseSchedule
 import com.keycome.twinkleschedule.record.timetable.Schedule
-import com.keycome.twinkleschedule.record.interval.SpanDifference
 import com.keycome.twinkleschedule.repository.CourseScheduleRepository
-import com.keycome.twinkleschedule.delivery.SharePostVariable
+import com.keycome.twinkleschedule.repository.ScheduleRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DisplayCoursesViewModel : BaseViewModel() {
 
-    val sharedCourse: MutableLiveData<Course> by SharePostVariable(shareSpace, SHARED_COURSE) {
+    private val sharedCourse: MutableLiveData<Course> by SharePostVariable(
+        shareSpace,
+        SHARED_COURSE
+    ) {
         MutableLiveData()
     }
 
     private val _displayScheduleId = GlobalPreference.displayScheduleId
-    val liveDisplayScheduleId get() = _displayScheduleId
+    val liveDisplayScheduleId: LiveData<Long> get() = _displayScheduleId
 
     private val _liveParentSchedule = MutableLiveData<Schedule>()
     val liveParentSchedule: LiveData<Schedule> get() = _liveParentSchedule
@@ -63,7 +67,7 @@ class DisplayCoursesViewModel : BaseViewModel() {
             val parentSchedule = withContext(Dispatchers.IO) {
                 CourseScheduleRepository.queryScheduleByIdQuietly(id)
             }
-            _liveParentSchedule.value = parentSchedule
+            parentSchedule?.let { _liveParentSchedule.value = it }
         }
     }
 
@@ -107,10 +111,13 @@ class DisplayCoursesViewModel : BaseViewModel() {
 
     fun refreshCourseScheduleList(schedule: Schedule) {
         val condition = liveCourseScheduleList.value?.let {
-            it[0].schedule.scheduleId == schedule.scheduleId
+            if (it.isEmpty()) true else
+                it[0].schedule.scheduleId == schedule.scheduleId
         } ?: false
         if (condition) return
         viewModelScope.launch {
+            val isEmptySchedule = ScheduleRepository.isEmptySchedule(schedule.scheduleId)
+            if (isEmptySchedule) return@launch
             val lastWeek = withContext(Dispatchers.IO) {
                 CourseScheduleRepository.queryLastWeek(schedule.scheduleId)
             }

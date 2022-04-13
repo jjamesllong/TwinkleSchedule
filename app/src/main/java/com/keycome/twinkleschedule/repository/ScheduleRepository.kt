@@ -17,7 +17,7 @@ object ScheduleRepository {
         return withContext(Dispatchers.IO) { scheduleDao.querySchedules() }
     }
 
-    suspend fun querySchedule(id: Long): Schedule {
+    suspend fun querySchedule(id: Long): Schedule? {
         return withContext(Dispatchers.IO) {
             scheduleDao.queryScheduleByIdQuietly(id)
         }
@@ -49,5 +49,9 @@ object ScheduleRepository {
         withContext(Dispatchers.IO) {
             scheduleDao.insertSchedule(schedule)
         }
+    }
+
+    suspend fun isEmptySchedule(id: Long): Boolean {
+        return scheduleDao.courseCount(id) == 0
     }
 }

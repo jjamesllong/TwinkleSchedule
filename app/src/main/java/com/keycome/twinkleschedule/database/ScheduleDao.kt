@@ -26,7 +26,7 @@ interface ScheduleDao {
     fun queryScheduleById(scheduleId: Long): LiveData<Schedule>
 
     @Query("SELECT * FROM schedule WHERE schedule_id = :scheduleId")
-    suspend fun queryScheduleByIdQuietly(scheduleId: Long): Schedule
+    suspend fun queryScheduleByIdQuietly(scheduleId: Long): Schedule?
 
     @Query("DELETE FROM schedule WHERE schedule_id = :scheduleId")
     suspend fun deleteScheduleById(scheduleId: Long)
@@ -39,4 +39,7 @@ interface ScheduleDao {
 
     @Update
     suspend fun updateSchedule(schedule: Schedule)
+
+    @Query("select COUNT(course_id) from course where parent_schedule_id = :scheduleId")
+    suspend fun courseCount(scheduleId: Long): Int
 }

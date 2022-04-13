@@ -14,9 +14,6 @@
             android:name=".activity.SecondActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.record.RecordActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

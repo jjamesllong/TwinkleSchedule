@@ -76,12 +76,12 @@ class EditScheduleViewModel : BaseViewModel() {
     fun querySchedule(id: Long) {
         viewModelScope.launch {
             val schedule = ScheduleRepository.querySchedule(id)
-            _liveScheduleName.value = schedule.name
-            _liveSchoolBeginDate.value = schedule.schoolBeginDate
-            _liveDailyCourses.value = schedule.dailyCourses
-            _liveEndDay.value = schedule.weeklyEndDay
-            _liveCourseDuration.value = schedule.courseDuration
-            _liveTimeLine.value = schedule.timeLine.toMutableSet()
+            _liveScheduleName.value = schedule?.name
+            _liveSchoolBeginDate.value = schedule?.schoolBeginDate
+            _liveDailyCourses.value = schedule?.dailyCourses
+            _liveEndDay.value = schedule?.weeklyEndDay
+            _liveCourseDuration.value = schedule?.courseDuration
+            _liveTimeLine.value = schedule?.timeLine?.toMutableSet()
         }
     }
 
