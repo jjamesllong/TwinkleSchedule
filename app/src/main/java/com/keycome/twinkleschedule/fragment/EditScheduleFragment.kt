@@ -5,24 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.gzuliyujiang.wheelpicker.DatePicker
 import com.github.gzuliyujiang.wheelpicker.entity.DateEntity
 import com.keycome.twinkleschedule.R
-import com.keycome.twinkleschedule.adapter.CheckTimeLineAdapter
-import com.keycome.twinkleschedule.adapter.CheckTimeLineFooterAdapter
+import com.keycome.twinkleschedule.adapter.CheckDailyRoutineAdapter
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentEditScheduleBinding
 import com.keycome.twinkleschedule.model.EditScheduleViewModel
 import com.keycome.twinkleschedule.record.interval.Date
-import com.keycome.twinkleschedule.record.timetable.TimeLine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,44 +32,7 @@ class EditScheduleFragment : BaseFragment() {
 
     val viewModel by viewModels<EditScheduleViewModel>()
 
-    private val editingScheduleId by lazy { arguments?.getLong("editing_schedule_id") ?: 0L }
-
-    private val timeLineEvent: (TimeLine) -> Unit by lazy {
-        return@lazy { timeLine: TimeLine ->
-            navController.navigate(
-                R.id.action_editScheduleFragment_to_editTimeLineFragment,
-                Bundle().apply {
-                    putParcelable(EditTimeLineFragment.bundleTimeLine, timeLine)
-                    viewModel.liveDailyCourses.value?.let { dailyCourses ->
-                        putInt(
-                            EditTimeLineFragment.bundleDailyCourses,
-                            dailyCourses
-                        )
-                    }
-                }
-            )
-        }
-    }
-
-    private val timeLineFooterEvent: (View) -> Unit by lazy {
-        return@lazy {
-            navController.navigate(
-                R.id.action_editScheduleFragment_to_editTimeLineFragment,
-                Bundle().apply {
-                    putParcelable(
-                        EditTimeLineFragment.bundleTimeLine,
-                        viewModel.requestNewTimeLine()
-                    )
-                    viewModel.liveDailyCourses.value?.let { dailyCourses ->
-                        putInt(
-                            EditTimeLineFragment.bundleDailyCourses,
-                            dailyCourses
-                        )
-                    }
-                }
-            )
-        }
-    }
+    private val editScheduleId by lazy { arguments?.getLong(KEY_EDIT_SCHEDULE_ID) ?: 0L }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -96,7 +55,7 @@ class EditScheduleFragment : BaseFragment() {
         binding.editScheduleNameItem.setOnClickListener {
             navController.navigate(R.id.action_editScheduleFragment_to_scheduleNameDialog)
         }
-        binding.editSchoolBeginDateItem.setOnClickListener {
+        binding.editSchoolOpeningDateItem.setOnClickListener {
             configureDatePicker()
         }
         binding.editDailyCoursesItem.setOnClickListener {
@@ -105,8 +64,23 @@ class EditScheduleFragment : BaseFragment() {
         binding.editEndDayItem.setOnClickListener {
             navController.navigate(R.id.action_editScheduleFragment_to_endDayDialog)
         }
-        binding.editCourseDurationItem.setOnClickListener {
-            navController.navigate(R.id.action_editScheduleFragment_to_courseDurationDialog)
+        binding.editWeeksItem.setOnClickListener {
+            navController.navigate(R.id.action_editScheduleFragment_to_endWeekDialog)
+        }
+        binding.addNewDailyRoutineText.setOnClickListener {
+            navController.navigate(
+                R.id.action_editScheduleFragment_to_editDailyRoutineFragment,
+                Bundle().apply {
+                    putInt(
+                        EditDailyRoutineFragment.KEY_DAILY_COURSE_COUNT,
+                        viewModel.liveDailyCourses.value ?: 0
+                    )
+                    putParcelable(
+                        EditDailyRoutineFragment.KEY_DAILY_ROUTINE,
+                        viewModel.requestDailyRoutine()
+                    )
+                }
+            )
         }
         binding.editScheduleSubmitButton.setOnClickListener {
             it.isEnabled = false
@@ -121,21 +95,43 @@ class EditScheduleFragment : BaseFragment() {
                 }
             } else {
                 it.isEnabled = true
-                Toast.makeText(context, "错误", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
             }
         }
-        val timeLineAdapter = CheckTimeLineAdapter(timeLineEvent)
-        val timeLineFooterAdapter = CheckTimeLineFooterAdapter(timeLineFooterEvent)
-        val concatAdapter = ConcatAdapter(timeLineAdapter, timeLineFooterAdapter)
-        binding.timeLineRecyclerView.layoutManager = LinearLayoutManager(context).apply {
+        val dailyRoutineAdapter = CheckDailyRoutineAdapter { v, dailyRoutine ->
+            when (v.id) {
+                R.id.daily_routine_root -> {
+                    navController.navigate(
+                        R.id.action_editScheduleFragment_to_editDailyRoutineFragment,
+                        Bundle().apply {
+                            putInt(
+                                EditDailyRoutineFragment.KEY_DAILY_COURSE_COUNT,
+                                viewModel.liveDailyCourses.value ?: 0
+                            )
+                            putParcelable(EditDailyRoutineFragment.KEY_DAILY_ROUTINE, dailyRoutine)
+                        }
+                    )
+                }
+                R.id.daily_routine_delete -> {
+                    if (!viewModel.deleteDailyRoutine(dailyRoutine.dailyRoutineId)) {
+                        Toast.makeText(
+                            context,
+                            getString(R.string.error),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+        binding.dailyRoutinesRecyclerView.layoutManager = LinearLayoutManager(context).apply {
             orientation = LinearLayoutManager.HORIZONTAL
         }
-        binding.timeLineRecyclerView.adapter = concatAdapter
+        binding.dailyRoutinesRecyclerView.adapter = dailyRoutineAdapter
         viewModel.liveScheduleName.observe(viewLifecycleOwner) {
             binding.scheduleNameText.text = it
         }
-        viewModel.liveSchoolBeginDate.observe(viewLifecycleOwner) {
-            binding.schoolBeginDateText.text = it.toDotDateString()
+        viewModel.liveSchoolOpeningDate.observe(viewLifecycleOwner) {
+            binding.schoolOpeningDateText.text = it.toDotDateString()
         }
         viewModel.liveDailyCourses.observe(viewLifecycleOwner) {
             binding.dailyCoursesText.text = it.toString()
@@ -143,17 +139,16 @@ class EditScheduleFragment : BaseFragment() {
         viewModel.liveEndDay.observe(viewLifecycleOwner) {
             binding.editEndDayText.text = it.name
         }
-        viewModel.liveCourseDuration.observe(viewLifecycleOwner) {
-            binding.courseDurationText.text = it.toString()
+        viewModel.liveWeeks.observe(viewLifecycleOwner) {
+            binding.weeksText.text = it.toString()
         }
-        viewModel.liveTimeLine.observe(viewLifecycleOwner) {
-            timeLineAdapter.submitList(it.toList())
+        viewModel.liveDailyRoutines.observe(viewLifecycleOwner) {
+            dailyRoutineAdapter.submitList(it)
         }
-        if (viewModel.firstPresent && editingScheduleId != 0L) {
-            viewModel.firstPresent = false
-            viewModel.isModify = true
-            viewModel.modifyingScheduleId = editingScheduleId
-            viewModel.querySchedule(editingScheduleId)
+        viewModel.onFirstPresent {
+            if (editScheduleId != 0L) {
+                viewModel.requestModifiedDataById(editScheduleId)
+            }
         }
     }
 
@@ -170,7 +165,7 @@ class EditScheduleFragment : BaseFragment() {
             DateEntity.today()
         )
         datePicker.setOnDatePickedListener { year, month, day ->
-            viewModel.refreshSchoolBeginDate(Date(year, month, day))
+            viewModel.refreshSchoolOpeningDate(Date(year, month, day))
         }
         val observer = object : DefaultLifecycleObserver {
             override fun onStop(owner: LifecycleOwner) {
@@ -183,5 +178,10 @@ class EditScheduleFragment : BaseFragment() {
         }
         viewLifecycleOwner.lifecycle.addObserver(observer)
         datePicker.show()
+    }
+
+    companion object {
+
+        const val KEY_EDIT_SCHEDULE_ID = "EDIT_SCHEDULE_ID"
     }
 }

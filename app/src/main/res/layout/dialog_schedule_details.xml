@@ -152,18 +152,18 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="课程时长"
+                    android:text="学期周数"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/dialog_schedule_details_duration"
+                    android:id="@+id/dialog_schedule_details_weeks"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="?android:attr/textColorSecondary"
                     android:textSize="14sp"
-                    tools:text="45" />
+                    tools:text="20" />
             </LinearLayout>
 
             <View
@@ -253,7 +253,6 @@
             android:textSize="12sp"
             app:drawableTopCompat="@drawable/ic_baseline_home_24"
             app:layout_constraintBottom_toBottomOf="@+id/dialog_schedule_details_modify"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/dialog_schedule_details_modify"
             app:layout_constraintTop_toTopOf="@+id/dialog_schedule_details_modify" />
 

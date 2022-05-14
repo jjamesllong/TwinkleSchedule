@@ -55,7 +55,7 @@ data class Date(val year: Int, val month: Int, val dayOfMonth: Int) : Parcelable
         return builder.toString()
     }
 
-    fun toMillis(): Long {
+    fun toMilliSeconds(): Long {
         val format = SimpleDateFormat(HYPHEN_DATE_STRING, Locale.getDefault())
         val jdkDate = format.parse(toHyphenDateString())
         return jdkDate?.time ?: throw ParseException("failed to parse date $this", 0)

@@ -2,15 +2,15 @@ package com.keycome.twinkleschedule.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.keycome.twinkleschedule.base.BaseViewModel
-import com.keycome.twinkleschedule.delivery.SharePostVariable
 import com.keycome.twinkleschedule.preference.GlobalPreference
-import com.keycome.twinkleschedule.record.interval.SpanDifference
 import com.keycome.twinkleschedule.record.timetable.Course
-import com.keycome.twinkleschedule.record.timetable.CourseSchedule
 import com.keycome.twinkleschedule.record.timetable.Schedule
-import com.keycome.twinkleschedule.repository.CourseScheduleRepository
+import com.keycome.twinkleschedule.record.timetable.Section
+import com.keycome.twinkleschedule.repository.CourseRepository
+import com.keycome.twinkleschedule.repository.DailyRoutineRepository
 import com.keycome.twinkleschedule.repository.ScheduleRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,10 +18,7 @@ import kotlinx.coroutines.withContext
 
 class DisplayCoursesViewModel : BaseViewModel() {
 
-    private val sharedCourse: MutableLiveData<Course> by SharePostVariable(
-        shareSpace,
-        SHARED_COURSE
-    ) {
+    private val sharedCourse: MutableLiveData<Course> by sharePostVariable(SHARED_COURSE) {
         MutableLiveData()
     }
 
@@ -31,9 +28,8 @@ class DisplayCoursesViewModel : BaseViewModel() {
     private val _liveParentSchedule = MutableLiveData<Schedule>()
     val liveParentSchedule: LiveData<Schedule> get() = _liveParentSchedule
 
-
-    private val _liveCourseScheduleList = MutableLiveData<List<CourseSchedule>>()
-    val liveCourseScheduleList: LiveData<List<CourseSchedule>> get() = _liveCourseScheduleList
+    private val _liveSectionList = MutableLiveData<List<Section>>()
+    val liveSectionList: LiveData<List<Section>> get() = _liveSectionList
 
     private val _liveWeekNow = MutableLiveData<Int>()
     val liveWeekNow: LiveData<Int> get() = _liveWeekNow
@@ -41,20 +37,55 @@ class DisplayCoursesViewModel : BaseViewModel() {
     private val _liveWeekSelected = MutableLiveData<Int>()
     val liveWeekSelected: LiveData<Int> get() = _liveWeekSelected
 
-    private val _liveCourseList = MutableLiveData<List<Course>>()
-    val liveCourseList: LiveData<List<Course>> get() = _liveCourseList
+    private val _livePagingCourseList = MutableLiveData<List<List<Course>?>>()
+    val livePagingCourseList: LiveData<List<List<Course>?>> get() = _livePagingCourseList
 
-    private val _liveCourseSchedule = MutableLiveData<CourseSchedule>()
-    val liveCourseSchedule: LiveData<CourseSchedule> get() = _liveCourseSchedule
+    private val scheduleIdObserver = Observer<Long> {
+        refreshParentSchedule(it)
+    }
+
+    private val parentScheduleObserver = Observer<Schedule> {
+        refreshSectionList(it)
+        refreshWeekNow(it)
+    }
+
+    private val weekNowObserver = Observer<Int> {
+        refreshWeekSelected(it)
+    }
+
+    private val weekSelectedObserver = Observer<Int> { weekSelected ->
+        liveParentSchedule.value?.let { schedule ->
+            refreshWeeklyCourseList(schedule, weekSelected)
+        }
+    }
+
+    override suspend fun onPlace() {
+        super.onPlace()
+        liveDisplayScheduleId.observeForever(scheduleIdObserver)
+        liveParentSchedule.observeForever(parentScheduleObserver)
+        liveWeekNow.observeForever(weekNowObserver)
+        liveWeekSelected.observeForever(weekSelectedObserver)
+    }
+
+    override fun onRemove() {
+        super.onRemove()
+        liveDisplayScheduleId.removeObserver(scheduleIdObserver)
+        liveParentSchedule.removeObserver(parentScheduleObserver)
+        liveWeekNow.removeObserver(weekNowObserver)
+        liveWeekSelected.removeObserver(weekSelectedObserver)
+        shareSpace.releaseReference(SHARED_COURSE)
+    }
 
     fun refreshDialogCourse(courseId: Long) {
         viewModelScope.launch(Dispatchers.Default) {
-            liveCourseScheduleList.value?.let { courseScheduleList ->
+            livePagingCourseList.value?.let { pagingList ->
                 liveWeekSelected.value?.let { weekSelected ->
-                    val course = courseScheduleList[weekSelected - 1].courseList.find {
-                        it.courseId == courseId
+                    val course = pagingList[weekSelected - 1]?.find { it.courseId == courseId }
+                    course?.let {
+                        withContext(Dispatchers.Main) {
+                            sharedCourse.value = course
+                        }
                     }
-                    sharedCourse.postValue(course)
                 }
             }
         }
@@ -65,17 +96,23 @@ class DisplayCoursesViewModel : BaseViewModel() {
             return
         viewModelScope.launch {
             val parentSchedule = withContext(Dispatchers.IO) {
-                CourseScheduleRepository.queryScheduleByIdQuietly(id)
+                ScheduleRepository.querySchedule(id)
             }
             parentSchedule?.let { _liveParentSchedule.value = it }
         }
     }
 
+    fun refreshSectionList(schedule: Schedule) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val sectionList = DailyRoutineRepository.querySectionList(schedule)
+            sectionList?.let {
+                _liveSectionList.value = it
+            }
+        }
+    }
+
     fun refreshWeekNow(schedule: Schedule) {
-        val weekNow = SpanDifference.weeklyDiff(
-            schedule.schoolBeginDate.toMillis(),
-            System.currentTimeMillis()
-        ) + 1
+        val weekNow = schedule.inferWeekNow()
         if (liveWeekNow.value == weekNow)
             return
         _liveWeekNow.value = weekNow
@@ -87,60 +124,33 @@ class DisplayCoursesViewModel : BaseViewModel() {
         _liveWeekSelected.value = week
     }
 
-    fun refreshCourseList(week: Int) {
-        _liveParentSchedule.value?.let { schedule ->
-            viewModelScope.launch {
-                val courseList = withContext(Dispatchers.IO) {
-                    CourseScheduleRepository.queryCourseByParentQuietly(
-                        schedule.scheduleId,
-                        week
-                    )
+    fun refreshWeeklyCourseList(schedule: Schedule, selectedWeek: Int) {
+        if (livePagingCourseList.value != null) return
+        val pagingCourseList = ArrayList<List<Course>?>(schedule.endWeek)
+        viewModelScope.launch(Dispatchers.IO) {
+            val currentCourseList =
+                CourseRepository.queryCoursesOfWeek(schedule.scheduleId, selectedWeek)
+            pagingCourseList[selectedWeek - 1] = currentCourseList
+            withContext(Dispatchers.Main) {
+                _livePagingCourseList.value = pagingCourseList
+            }
+            val newPagingCourseLise = ArrayList<List<Course>?>(schedule.endWeek)
+            for (i in 1..schedule.endWeek) {
+                if (i != selectedWeek) {
+                    newPagingCourseLise[i - 1] =
+                        CourseRepository.queryCoursesOfWeek(schedule.scheduleId, i)
+                } else {
+                    newPagingCourseLise[i - 1] = currentCourseList
                 }
-                _liveCourseList.value = courseList
+            }
+            withContext(Dispatchers.Main) {
+                _livePagingCourseList.value = newPagingCourseLise
             }
         }
-    }
-
-    fun refreshCourseSchedule() {
-        _liveParentSchedule.value?.let { schedule ->
-            _liveCourseList.value?.let { courseList ->
-                _liveCourseSchedule.value = CourseSchedule(schedule, courseList)
-            }
-        }
-    }
-
-    fun refreshCourseScheduleList(schedule: Schedule) {
-        val condition = liveCourseScheduleList.value?.let {
-            if (it.isEmpty()) true else
-                it[0].schedule.scheduleId == schedule.scheduleId
-        } ?: false
-        if (condition) return
-        viewModelScope.launch {
-            val isEmptySchedule = ScheduleRepository.isEmptySchedule(schedule.scheduleId)
-            if (isEmptySchedule) return@launch
-            val lastWeek = withContext(Dispatchers.IO) {
-                CourseScheduleRepository.queryLastWeek(schedule.scheduleId)
-            }
-            val scheduleCourseList = ArrayList<CourseSchedule>()
-            for (i in 1..lastWeek) {
-                val courseList = withContext(Dispatchers.IO) {
-                    CourseScheduleRepository.queryCourseByParentQuietly(
-                        schedule.scheduleId,
-                        i
-                    )
-                }
-                scheduleCourseList.add(CourseSchedule(schedule, courseList))
-            }
-            _liveCourseScheduleList.value = scheduleCourseList
-        }
-    }
-
-    override fun onRemove() {
-        super.onRemove()
-        shareSpace.releaseReference(SHARED_COURSE)
     }
 
     companion object {
+
         const val SHARED_COURSE = "sharedCourse"
     }
 }

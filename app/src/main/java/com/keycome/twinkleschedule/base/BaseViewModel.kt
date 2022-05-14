@@ -4,11 +4,18 @@ import com.keycome.twinkleschedule.delivery.*
 
 abstract class BaseViewModel : LifecycleViewModel() {
 
-    var firstPresent: Boolean = true
+    private var firstPresent: Boolean = true
 
     override suspend fun onPlace() {}
 
     override fun onRemove() {}
+
+    fun onFirstPresent(action: () -> Unit) {
+        if (firstPresent) {
+            firstPresent = false
+            action()
+        }
+    }
 
     companion object {
         val shareSpace = ShareSpace<String>()

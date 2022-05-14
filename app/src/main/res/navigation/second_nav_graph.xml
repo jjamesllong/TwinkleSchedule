@@ -73,15 +73,8 @@
             android:id="@+id/action_editScheduleFragment_to_endDayDialog"
             app:destination="@id/endDayDialog" />
         <action
-            android:id="@+id/action_editScheduleFragment_to_courseDurationDialog"
-            app:destination="@id/courseDurationDialog" />
-        <action
-            android:id="@+id/action_editScheduleFragment_to_editTimeLineFragment"
-            app:destination="@id/editTimeLineFragment"
-            app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_to_left"
-            app:popEnterAnim="@anim/slide_in_from_left"
-            app:popExitAnim="@anim/slide_out_to_right" />
+            android:id="@+id/action_editScheduleFragment_to_endWeekDialog"
+            app:destination="@id/endWeekDialog" />
         <action
             android:id="@+id/action_editScheduleFragment_to_displayCoursesFragment"
             app:destination="@id/displayCoursesFragment"
@@ -91,6 +84,13 @@
             app:popExitAnim="@anim/slide_out_to_right"
             app:popUpTo="@id/displayCoursesFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_editScheduleFragment_to_editDailyRoutineFragment"
+            app:destination="@id/editDailyRoutineFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
     <dialog
         android:id="@+id/scheduleNameDialog"
@@ -105,25 +105,32 @@
         android:name="com.keycome.twinkleschedule.dialog.EndDayDialog"
         android:label="EndDayDialog" />
     <dialog
+        android:id="@+id/endWeekDialog"
+        android:name="com.keycome.twinkleschedule.dialog.EndWeekDialog"
+        android:label="EndWeekDialog" />
+    <fragment
+        android:id="@+id/editDailyRoutineFragment"
+        android:name="com.keycome.twinkleschedule.fragment.EditDailyRoutineFragment"
+        android:label="EditDailyRoutineFragment">
+        <action
+            android:id="@+id/action_editDailyRoutineFragment_to_dailyRoutineNameDialog"
+            app:destination="@id/dailyRoutineNameDialog" />
+        <action
+            android:id="@+id/action_editDailyRoutineFragment_to_courseDurationDialog"
+            app:destination="@id/courseDurationDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/dailyRoutineNameDialog"
+        android:name="com.keycome.twinkleschedule.dialog.DailyRoutineNameDialog"
+        android:label="DailyRoutineNameDialog" />
+    <dialog
         android:id="@+id/courseDurationDialog"
         android:name="com.keycome.twinkleschedule.dialog.CourseDurationDialog"
         android:label="CourseDurationDialog" />
     <fragment
-        android:id="@+id/editTimeLineFragment"
-        android:name="com.keycome.twinkleschedule.fragment.EditTimeLineFragment"
-        android:label="EditTimeLineFragment" >
-        <action
-            android:id="@+id/action_editTimeLineFragment2_to_timeLineNameDialog"
-            app:destination="@id/timeLineNameDialog" />
-    </fragment>
-    <dialog
-        android:id="@+id/timeLineNameDialog"
-        android:name="com.keycome.twinkleschedule.dialog.TimeLineNameDialog"
-        android:label="TimeLineNameDialog" />
-    <fragment
         android:id="@+id/manageScheduleFragment"
         android:name="com.keycome.twinkleschedule.fragment.SelectToManageScheduleFragment"
-        android:label="ManageScheduleFragment" >
+        android:label="ManageScheduleFragment">
         <action
             android:id="@+id/action_manageScheduleFragment_to_scheduleDetailsDialog"
             app:destination="@id/scheduleDetailsDialog" />
@@ -138,7 +145,7 @@
     <dialog
         android:id="@+id/scheduleDetailsDialog"
         android:name="com.keycome.twinkleschedule.dialog.ScheduleDetailsDialog"
-        android:label="ScheduleDetailsDialog" >
+        android:label="ScheduleDetailsDialog">
         <action
             android:id="@+id/action_scheduleDetailsDialog_to_editScheduleFragment"
             app:destination="@id/editScheduleFragment" />
@@ -146,7 +153,7 @@
     <fragment
         android:id="@+id/editCourseFragment"
         android:name="com.keycome.twinkleschedule.fragment.EditCourseFragment"
-        android:label="EditCourseFragment" >
+        android:label="EditCourseFragment">
         <action
             android:id="@+id/action_editCourseFragment_to_courseNameDialog"
             app:destination="@id/courseNameDialog" />
@@ -169,7 +176,7 @@
     <fragment
         android:id="@+id/selectToAddCourseFragment"
         android:name="com.keycome.twinkleschedule.fragment.SelectToAddCourseFragment"
-        android:label="SelectToAddCourseFragment" >
+        android:label="SelectToAddCourseFragment">
         <action
             android:id="@+id/action_selectToAddCourseFragment_to_editCourseFragment"
             app:destination="@id/editCourseFragment"

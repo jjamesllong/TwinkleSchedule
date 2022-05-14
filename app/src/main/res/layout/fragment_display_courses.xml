@@ -22,7 +22,7 @@
         app:titleCentered="true" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/table_view_pager_2"
+        android:id="@+id/table_view_pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"

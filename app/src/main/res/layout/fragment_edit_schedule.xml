@@ -63,7 +63,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/edit_school_begin_date_item"
+                android:id="@+id/edit_school_opening_date_item"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="16dp"
@@ -83,7 +83,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/school_begin_date_text"
+                    android:id="@+id/school_opening_date_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end"
@@ -147,7 +147,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/edit_course_duration_item"
+                android:id="@+id/edit_weeks_item"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="16dp"
@@ -162,59 +162,69 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|center_vertical"
-                    android:text="课程时长"
+                    android:text="总教学周数"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/course_duration_text"
+                    android:id="@+id/weeks_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end"
                     android:textSize="14sp" />
             </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/edit_course_time_line_item"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout7"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
-                app:cardCornerRadius="16dp"
-                app:cardForegroundColor="@null"
-                app:strokeWidth="0dp">
+                android:background="@drawable/bg_shape_rectangle_16_0"
+                android:backgroundTint="@color/md_theme_light_surfaceVariant">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="作息表"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/daily_routines_recycler_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="347dp" />
 
-                    <TextView
-                        android:id="@+id/textView11"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:text="作息表"
-                        android:textColor="?android:attr/textColorSecondary"
-                        android:textSize="14sp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/daily_routines_recycler_view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView11"
+                    tools:layout_conversion_absoluteHeight="133dp"
+                    tools:layout_conversion_absoluteWidth="347dp" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/time_line_recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal" />
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:id="@+id/add_new_daily_routine_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:text="添加新作息"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/daily_routines_recycler_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <CheckBox
                 android:id="@+id/to_display_check_box"

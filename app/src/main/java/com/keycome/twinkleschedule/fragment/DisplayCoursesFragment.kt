@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseFragment
-import com.keycome.twinkleschedule.custom.courseschedule.PagerAdapter
+import com.keycome.twinkleschedule.custom.pagingtimetable.PagingAdapter
 import com.keycome.twinkleschedule.databinding.FragmentDisplayCoursesBinding
 import com.keycome.twinkleschedule.model.DisplayCoursesViewModel
 
@@ -39,48 +38,42 @@ class DisplayCoursesFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val pagerAdapter = PagerAdapter()
-        binding.tableViewPager2.adapter = pagerAdapter
-        binding.tableViewPager2.registerOnPageChangeCallback(
+        val pagingAdapter = PagingAdapter {
+            viewModel.refreshDialogCourse(it.courseId)
+            navController.navigate(R.id.action_displayCoursesFragment_to_courseDetailsDialog)
+        }
+        binding.tableViewPager.adapter = pagingAdapter
+        binding.tableViewPager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     viewModel.refreshWeekSelected(position + 1)
                 }
             }
         )
-        viewModel.liveDisplayScheduleId.observe(viewLifecycleOwner) {
-            viewModel.refreshParentSchedule(it)
-        }
         viewModel.liveParentSchedule.observe(viewLifecycleOwner) {
-            viewModel.refreshWeekNow(it)
+            pagingAdapter.submitSchedule(it)
         }
-        viewModel.liveWeekNow.observe(viewLifecycleOwner) {
-            viewModel.refreshWeekSelected(it)
+        viewModel.liveSectionList.observe(viewLifecycleOwner) {
+            pagingAdapter.submitSectionList(it)
         }
         viewModel.liveWeekSelected.observe(viewLifecycleOwner) {
-            binding.fragmentDisplayCoursesToolbar.title = StringBuilder()
-                .append("第 ")
-                .append(it)
-                .append(" 周")
-                .toString()
-            if (it != viewModel.liveWeekNow.value) {
-                binding.fragmentDisplayCoursesToolbar.subtitle = "非本周"
+            binding.fragmentDisplayCoursesToolbar.title = getString(
+                R.string.fragment_display_courses_week,
+                it
+            )
+            binding.fragmentDisplayCoursesToolbar.subtitle = if (
+                it != viewModel.liveWeekNow.value
+            ) {
+                getString(R.string.fragment_display_courses_not_this_week)
             } else {
-                binding.fragmentDisplayCoursesToolbar.subtitle = null
-            }
-            viewModel.liveParentSchedule.value?.let { schedule ->
-                viewModel.refreshCourseScheduleList(schedule)
+                null
             }
         }
-        viewModel.liveCourseScheduleList.observe(viewLifecycleOwner) {
-            pagerAdapter.submitList(it)
+        viewModel.livePagingCourseList.observe(viewLifecycleOwner) {
+            pagingAdapter.submitCourseList(it)
             viewModel.liveWeekSelected.value?.let { week ->
-                binding.tableViewPager2.setCurrentItem(week - 1, false)
+                binding.tableViewPager.setCurrentItem(week - 1, false)
             }
-        }
-        pagerAdapter.registerCourseViewClickListener {
-            viewModel.refreshDialogCourse(it.courseId)
-            navController.navigate(R.id.action_displayCoursesFragment_to_courseDetailsDialog)
         }
     }
 

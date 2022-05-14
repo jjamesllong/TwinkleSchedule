@@ -5,12 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
+import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.databinding.DialogCourseDurationBinding
-import com.keycome.twinkleschedule.model.EditScheduleViewModel
+import com.keycome.twinkleschedule.delivery.Drop
+import com.keycome.twinkleschedule.delivery.Pipette
+import com.keycome.twinkleschedule.model.EditDailyRoutineViewModel
+import kotlinx.coroutines.launch
 
 class CourseDurationDialog : BaseDialogFragment() {
 
@@ -42,7 +47,7 @@ class CourseDurationDialog : BaseDialogFragment() {
                     progress: Int,
                     fromUser: Boolean
                 ) {
-                    viewModel.liveSelectedDuration.value = progress
+                    viewModel.setCourseDuration(progress)
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -54,17 +59,21 @@ class CourseDurationDialog : BaseDialogFragment() {
             })
         binding.dialogCourseDurationCancel.setOnClickListener { dismiss() }
         binding.dialogCourseDurationConfirm.setOnClickListener {
-            viewModel.liveCourseDuration?.value = binding.dialogCourseDurationSeekBar.progress
-            dismiss()
-        }
-        viewModel.liveSelectedDuration.observe(viewLifecycleOwner) { duration ->
-            binding.dialogCourseDurationProgressText.text = duration.toString() + " 分钟"
-        }
-        viewModel.liveCourseDuration?.value?.let { duration ->
-            if (viewModel.liveSelectedDuration.value == null) {
-                binding.dialogCourseDurationSeekBar.progress = duration
+            lifecycleScope.launch {
+                val duration = viewModel.getCourseDuration()
+                lifecycleScope.launch {
+                    Pipette.pipetteForInt.emit(
+                        Drop(EditDailyRoutineViewModel.courseDuration, duration)
+                    )
+                    dismiss()
+                }
             }
         }
+        viewModel.liveCourseDuration.observe(viewLifecycleOwner) { duration ->
+            binding.dialogCourseDurationProgressText.text =
+                getString(R.string.dialog_course_duration_progress, duration)
+        }
+        binding.dialogCourseDurationSeekBar.progress = viewModel.getCourseDuration()
     }
 
     override fun onDestroyView() {
@@ -74,15 +83,13 @@ class CourseDurationDialog : BaseDialogFragment() {
 
     class CourseDurationViewModel : BaseViewModel() {
 
-        val liveCourseDuration by shareOnlyVariable<MutableLiveData<Int>>(
-            EditScheduleViewModel.sharedCourseDuration
-        )
+        private val _liveCourseDuration = MutableLiveData(45)
+        val liveCourseDuration: LiveData<Int> get() = _liveCourseDuration
 
-        val liveSelectedDuration = MutableLiveData<Int>()
-
-        override fun onRemove() {
-            super.onRemove()
-            release(EditScheduleViewModel.sharedCourseDuration)
+        fun setCourseDuration(duration: Int) {
+            _liveCourseDuration.value = duration
         }
+
+        fun getCourseDuration() = _liveCourseDuration.value ?: 0
     }
 }

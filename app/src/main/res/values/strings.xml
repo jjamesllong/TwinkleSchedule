@@ -10,4 +10,12 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="confirm">确定</string>
+    <string name="error">错误</string>
+    <string name="fragment_display_courses_week">第 %1$d 周</string>
+    <string name="fragment_display_courses_not_this_week">非本周</string>
+    <string name="dialog_course_duration_progress">%1$d 分钟</string>
+    <string name="adapter_edit_daily_routine_header_node">%1$d / %2$d</string>
+    <string name="adapter_edit_daily_routine_section">第 %1$d 节 %2$s - %3$s</string>
 </resources>

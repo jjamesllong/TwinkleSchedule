@@ -16,7 +16,7 @@ class ScheduleDetailsViewModel : BaseViewModel() {
     fun querySchedule(id: Long) {
         viewModelScope.launch {
             val schedule = ScheduleRepository.querySchedule(id)
-            _liveSchedule.value = schedule
+            schedule?.also { _liveSchedule.value = it }
         }
     }
 

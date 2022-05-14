@@ -23,6 +23,15 @@ abstract class EditTextDialog : BaseDialogFragment() {
         }
 
     var inputType = INPUT_TYPE_SHORT_TEXT
+        set(param) {
+            field = param
+            when (param) {
+                INPUT_TYPE_SHORT_TEXT ->
+                    binding.editTextDialogField.inputType = InputType.TYPE_CLASS_TEXT
+                INPUT_TYPE_NUMBER ->
+                    binding.editTextDialogField.inputType = InputType.TYPE_CLASS_NUMBER
+            }
+        }
 
     var title = "title"
         set(param) {
@@ -55,14 +64,6 @@ abstract class EditTextDialog : BaseDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configure()
-        when (inputType) {
-            INPUT_TYPE_NUMBER -> {
-                binding.editTextDialogField.inputType = InputType.TYPE_NUMBER_FLAG_SIGNED
-            }
-            INPUT_TYPE_SHORT_TEXT -> {
-                binding.editTextDialogField.inputType = InputType.TYPE_CLASS_TEXT
-            }
-        }
     }
 
     override fun onDestroyView() {

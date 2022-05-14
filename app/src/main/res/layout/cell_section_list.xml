@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cell_section_root"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="16dp"
+    app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
+    app:cardCornerRadius="16dp"
+    app:strokeWidth="0dp">
+
+    <TextView
+        android:id="@+id/cell_section_title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/cell_section_delete_button"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="删除"
+        android:textSize="12sp" />
+
+</com.google.android.material.card.MaterialCardView>

@@ -7,14 +7,14 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="11" />
+        <option name="gradleHome" value="$USER_HOME$/.gradle/wrapper/dists/gradle-7.3-all/dfe0rb4hnplvqkibhoc45how8/gradle-7.3" />
+        <option name="gradleJvm" value="Android Studio java home" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

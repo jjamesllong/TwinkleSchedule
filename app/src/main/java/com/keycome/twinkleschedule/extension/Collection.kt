@@ -4,8 +4,7 @@ inline fun <E> MutableCollection<E>.removeWhen(predicate: (E) -> Boolean) {
     val iterator = iterator()
     while (iterator.hasNext()) {
         val element = iterator.next()
-        val bool = predicate(element)
-        if (bool) {
+        if (predicate(element)) {
             iterator.remove()
         }
     }

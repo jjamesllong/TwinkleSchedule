@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.*
 import com.keycome.twinkleschedule.R
+import com.keycome.twinkleschedule.extension.fragment.activityViewModelDelegate
+import com.keycome.twinkleschedule.extension.fragment.viewModelDelegate
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -87,10 +87,19 @@ abstract class BaseDialogFragment : AppCompatDialogFragment() {
     fun considerAnimationResId(gravity: Int): Int {
         return when (gravity) {
             Center -> R.style.FloatingCenterDialogAnimation
-            Bottom -> R.style.FullScreenBottomDialogAnimation
+            Bottom -> R.style.FullBottomDialogAnimation
             else -> nullStyleRes
         }
     }
+
+    protected inline fun <reified VM : BaseViewModel> viewModels(
+        noinline ownerProducer: () -> ViewModelStoreOwner = { this },
+        noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
+    ) = viewModelDelegate<VM>(ownerProducer, factoryProducer)
+
+    protected inline fun <reified VM : BaseViewModel> activityViewModels(
+        noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
+    ) = activityViewModelDelegate<VM>(factoryProducer)
 
     companion object {
 

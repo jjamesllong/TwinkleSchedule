@@ -5,48 +5,50 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/table_horizontal_guideline"
+        android:id="@+id/timetable_horizontal_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="50dp" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/table_vertical_guideline"
+        android:id="@+id/timetable_vertical_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="50dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/dayRecyclerView"
+        android:id="@+id/day_bar"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/table_horizontal_guideline"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/timetable_horizontal_guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/table_vertical_guideline"
+        app:layout_constraintStart_toStartOf="@+id/timetable_vertical_guideline"
         app:layout_constraintTop_toTopOf="parent">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/sectionRecyclerView"
+        android:id="@+id/section_bar"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/table_vertical_guideline"
+        app:layout_constraintEnd_toStartOf="@+id/timetable_vertical_guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/table_horizontal_guideline" />
+        app:layout_constraintTop_toTopOf="@+id/timetable_horizontal_guideline" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/courseRecyclerView"
+        android:id="@+id/timetable_body"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/table_vertical_guideline"
-        app:layout_constraintTop_toTopOf="@+id/table_horizontal_guideline"
+        app:layout_constraintStart_toStartOf="@+id/timetable_vertical_guideline"
+        app:layout_constraintTop_toTopOf="@+id/timetable_horizontal_guideline"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

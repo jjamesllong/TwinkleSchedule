@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,10 +12,9 @@ import com.keycome.twinkleschedule.adapter.ScheduleListAdapter
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentScheduleListBinding
 import com.keycome.twinkleschedule.delivery.Pipette
+import com.keycome.twinkleschedule.delivery.Pipette.subscribe
 import com.keycome.twinkleschedule.dialog.ScheduleDetailsDialog
 import com.keycome.twinkleschedule.model.ScheduleListViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filter
 
 class SelectToManageScheduleFragment : BaseFragment() {
 
@@ -31,7 +29,7 @@ class SelectToManageScheduleFragment : BaseFragment() {
         viewModel.getScheduleIdByIndex(position)?.let { id ->
             navController.navigate(
                 R.id.action_manageScheduleFragment_to_scheduleDetailsDialog,
-                Bundle().apply { putLong(ScheduleDetailsDialog.scheduleIdKey, id) }
+                Bundle().apply { putLong(ScheduleDetailsDialog.KEY_SCHEDULE, id) }
             )
         }
     }
@@ -64,10 +62,8 @@ class SelectToManageScheduleFragment : BaseFragment() {
             scheduleListAdapter.submitList(it)
         }
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            Pipette.pipetteForString.filter {
-                it.first == "schedule_operation"
-            }.collect {
-                if (it.second == "delete") {
+            Pipette.pipetteForString.subscribe(ScheduleDetailsDialog.KEY_SCHEDULE_OPERATION) {
+                if (it == ScheduleDetailsDialog.DELETE) {
                     viewModel.queryScheduleList()
                 }
             }

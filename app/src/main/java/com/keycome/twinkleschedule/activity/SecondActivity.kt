@@ -2,7 +2,6 @@ package com.keycome.twinkleschedule.activity
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment

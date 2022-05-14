@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 object GlobalPreference {
     val displayScheduleId: MutableLiveData<Long> by lazy {
-        MutableLiveData<Long>().also {
+        MutableLiveData(DISPLAY_SCHEDULE_ID_DEFAULT_VALUE).also {
             App.applicationScope.launch {
                 val kv = MMKV.defaultMMKV()
                 val id = kv.decodeLong(DISPLAY_SCHEDULE_ID, DISPLAY_SCHEDULE_ID_DEFAULT_VALUE)

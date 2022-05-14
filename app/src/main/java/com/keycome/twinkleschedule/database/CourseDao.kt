@@ -50,7 +50,10 @@ interface CourseDao {
         end
         """
     )
-    suspend fun queryCourseByParentQuietly(scheduleId: Long, week: Int): List<Course>
+    suspend fun queryCoursesOfWeek(scheduleId: Long, week: Int): List<Course>
+
+    @Query("SELECT * FROM course WHERE parent_schedule_id = :scheduleId")
+    suspend fun queryCoursesOfSchedule(scheduleId: Long): List<Course>
 
     @Query("select * from course where parent_schedule_id == :scheduleId")
     fun queryCourseOfParent(scheduleId: Long): LiveData<List<Course>>

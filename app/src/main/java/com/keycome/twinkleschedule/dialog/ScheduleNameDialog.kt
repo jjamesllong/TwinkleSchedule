@@ -1,7 +1,6 @@
 package com.keycome.twinkleschedule.dialog
 
 import android.text.Editable
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.base.EditTextDialog
