@@ -26,6 +26,9 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.DayView>() {
             parent,
             false
         ) as TextView
+        if (endDayNumber != 0) {
+            textView.layoutParams.width = parent.measuredWidth / endDayNumber
+        }
         return DayView(textView)
     }
 

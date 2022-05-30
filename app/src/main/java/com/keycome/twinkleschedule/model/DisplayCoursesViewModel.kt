@@ -50,7 +50,9 @@ class DisplayCoursesViewModel : BaseViewModel() {
     }
 
     private val weekNowObserver = Observer<Int> {
-        refreshWeekSelected(it)
+        if (it >= 1) {
+            refreshWeekSelected(it)
+        }
     }
 
     private val weekSelectedObserver = Observer<Int> { weekSelected ->
@@ -106,7 +108,9 @@ class DisplayCoursesViewModel : BaseViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val sectionList = DailyRoutineRepository.querySectionList(schedule)
             sectionList?.let {
-                _liveSectionList.value = it
+                withContext(Dispatchers.Main) {
+                    _liveSectionList.value = it
+                }
             }
         }
     }
@@ -126,7 +130,10 @@ class DisplayCoursesViewModel : BaseViewModel() {
 
     fun refreshWeeklyCourseList(schedule: Schedule, selectedWeek: Int) {
         if (livePagingCourseList.value != null) return
-        val pagingCourseList = ArrayList<List<Course>?>(schedule.endWeek)
+        val pagingCourseList = ArrayList<List<Course>?>()
+        for (i in 0 until schedule.endWeek) {
+            pagingCourseList.add(null)
+        }
         viewModelScope.launch(Dispatchers.IO) {
             val currentCourseList =
                 CourseRepository.queryCoursesOfWeek(schedule.scheduleId, selectedWeek)
@@ -134,13 +141,13 @@ class DisplayCoursesViewModel : BaseViewModel() {
             withContext(Dispatchers.Main) {
                 _livePagingCourseList.value = pagingCourseList
             }
-            val newPagingCourseLise = ArrayList<List<Course>?>(schedule.endWeek)
+            val newPagingCourseLise = ArrayList<List<Course>?>()
             for (i in 1..schedule.endWeek) {
                 if (i != selectedWeek) {
-                    newPagingCourseLise[i - 1] =
-                        CourseRepository.queryCoursesOfWeek(schedule.scheduleId, i)
+                    val l = CourseRepository.queryCoursesOfWeek(schedule.scheduleId, i)
+                    newPagingCourseLise.add(l)
                 } else {
-                    newPagingCourseLise[i - 1] = currentCourseList
+                    newPagingCourseLise.add(currentCourseList)
                 }
             }
             withContext(Dispatchers.Main) {

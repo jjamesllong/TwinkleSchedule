@@ -45,6 +45,13 @@ class EditDailyRoutineViewModel : BaseViewModel() {
                     }
                 }
             }
+            launch {
+                Pipette.pipetteForString.subscribe(dailyRoutineName) {
+                    withContext(Dispatchers.Main) {
+                        refreshName(it)
+                    }
+                }
+            }
         }
     }
 
@@ -58,7 +65,7 @@ class EditDailyRoutineViewModel : BaseViewModel() {
 
     fun refreshDuration(duration: Int) {
         val old = _liveEditDuration.value ?: 0
-        if (duration == old || duration == 0)
+        if (duration == 0 || duration == old)
             return
         val sectionList = _liveEditSectionList.value?.map {
             Section(it.from, it.from + duration * 60)

@@ -30,6 +30,9 @@ class SectionAdapter : RecyclerView.Adapter<SectionAdapter.SectionView>() {
             parent,
             false
         ) as TextView
+        if (sectionList.isNotEmpty()) {
+            textView.layoutParams.height = parent.measuredHeight / sectionList.size
+        }
         return SectionView(textView)
     }
 

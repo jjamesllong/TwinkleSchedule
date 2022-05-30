@@ -46,7 +46,16 @@ class DisplayCoursesFragment : BaseFragment() {
         binding.tableViewPager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
-                    viewModel.refreshWeekSelected(position + 1)
+                    if (position == 0) {
+                        val week = viewModel.liveWeekSelected.value ?: 0
+                        if (week == 2) {
+                            viewModel.refreshWeekSelected(1)
+                        } else {
+                            binding.tableViewPager.setCurrentItem(week - 1, false)
+                        }
+                    } else {
+                        viewModel.refreshWeekSelected(position + 1)
+                    }
                 }
             }
         )
@@ -71,9 +80,6 @@ class DisplayCoursesFragment : BaseFragment() {
         }
         viewModel.livePagingCourseList.observe(viewLifecycleOwner) {
             pagingAdapter.submitCourseList(it)
-            viewModel.liveWeekSelected.value?.let { week ->
-                binding.tableViewPager.setCurrentItem(week - 1, false)
-            }
         }
     }
 

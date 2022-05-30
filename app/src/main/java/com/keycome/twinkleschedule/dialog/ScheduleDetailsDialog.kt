@@ -17,8 +17,10 @@ import com.keycome.twinkleschedule.extension.acquire
 import com.keycome.twinkleschedule.fragment.EditScheduleFragment
 import com.keycome.twinkleschedule.model.ScheduleDetailsViewModel
 import com.keycome.twinkleschedule.preference.GlobalPreference
+import com.keycome.twinkleschedule.record.DISPLAY_SCHEDULE_ID
 import com.keycome.twinkleschedule.record.interval.Day
 import com.keycome.twinkleschedule.record.timetable.DailyRoutine
+import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.launch
 
 class ScheduleDetailsDialog : BaseDialogFragment() {
@@ -94,7 +96,9 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
         binding.dialogScheduleDetailsUse.setOnClickListener {
             val id = viewModel.queryScheduleId()
             if (id != 0L) {
+                MMKV.defaultMMKV().encode(DISPLAY_SCHEDULE_ID, id)
                 GlobalPreference.displayScheduleId.value = id
+                navController.navigateUp()
             }
         }
     }

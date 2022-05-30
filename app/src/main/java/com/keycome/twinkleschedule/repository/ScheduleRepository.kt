@@ -24,18 +24,18 @@ object ScheduleRepository {
     }
 
     suspend fun deleteSchedule(id: Long) {
-        withContext(Dispatchers.IO) {
-            launch {
-                withContext(NonCancellable) {
-                    scheduleDao.deleteScheduleById(id)
-                }
-            }
-            launch {
-                withContext(NonCancellable) {
-                    scheduleDao.deleteCoursesBelongSchedule(id)
-                }
-            }
+        withContext(Dispatchers.IO + NonCancellable) {
+            launch { scheduleDao.deleteScheduleById(id) }
+            launch { scheduleDao.deleteCoursesBelongSchedule(id) }
+            launch { scheduleDao.deleteDailyRoutinesBelongSchedule(id) }
             Unit
+        }
+    }
+
+    suspend fun deleteSchedules() {
+        withContext(Dispatchers.IO + NonCancellable) {
+            val ids = scheduleDao.queryScheduleIds()
+            ids.forEach { deleteSchedule(it) }
         }
     }
 

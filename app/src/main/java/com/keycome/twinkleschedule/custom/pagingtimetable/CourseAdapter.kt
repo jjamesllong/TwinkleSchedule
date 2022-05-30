@@ -3,7 +3,6 @@ package com.keycome.twinkleschedule.custom.pagingtimetable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Space
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.R
@@ -40,6 +39,7 @@ class CourseAdapter(
 
     var courseList: List<Course>? = null
     var viewBlockList: List<ViewBlock>? = null
+    var horizontalSpanCount = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -48,7 +48,10 @@ class CourseAdapter(
                     R.layout.cell_timetable_course_placeholder,
                     parent,
                     false
-                ) as Space
+                )
+                if (horizontalSpanCount != 0) {
+                    view.layoutParams.width = parent.measuredWidth / horizontalSpanCount
+                }
                 Placeholder(view)
             }
             TYPE_COURSE -> {
@@ -57,6 +60,9 @@ class CourseAdapter(
                     parent,
                     false
                 ) as TextView
+                if (horizontalSpanCount != 0) {
+                    view.layoutParams.width = parent.measuredWidth / horizontalSpanCount
+                }
                 CourseView(view, courseSelectedListener)
             }
             else -> throw Exception()

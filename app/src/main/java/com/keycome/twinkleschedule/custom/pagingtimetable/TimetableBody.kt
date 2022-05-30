@@ -36,6 +36,7 @@ class TimetableBody(val recyclerView: RecyclerView, courseSelectedListener: (Cou
         verticalSpanCount = schedule.endSection
         adapter.courseList = courseList
         adapter.viewBlockList = viewBlockList
+        adapter.horizontalSpanCount = schedule.endDay
         adapter.notifyDataSetChanged()
     }
 }

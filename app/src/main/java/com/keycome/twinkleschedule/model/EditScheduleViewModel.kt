@@ -78,10 +78,16 @@ class EditScheduleViewModel : BaseViewModel() {
                 Pipette.pipetteForString.subscribe(sharedDailyRoutines) { jsonString ->
                     val dailyRoutine = Pipette.gson.fromJson(jsonString, DailyRoutine::class.java)
                     val list = buildList<DailyRoutine> {
-                        _liveDailyRoutines.value?.forEach { add(it) }
+                        _liveDailyRoutines.value?.forEach {
+                            if (it.dailyRoutineId != dailyRoutine.dailyRoutineId) {
+                                add(it)
+                            }
+                        }
                         add(dailyRoutine)
                     }
-                    _liveDailyRoutines.value = list
+                    withContext(Dispatchers.Main) {
+                        _liveDailyRoutines.value = list
+                    }
                 }
             }
         }
@@ -128,8 +134,16 @@ class EditScheduleViewModel : BaseViewModel() {
         if ((_liveDailyRoutines.value?.size ?: 0) == 0) {
             return false
         }
-        if ((_liveDailyRoutines.value?.size ?: 0) != (_liveDailyCourses.value ?: -1)) {
-            return false
+        _liveDailyRoutines.value?.also {
+            it.indices - 1
+            val indices = 0..(it.size - 2)
+            val last = it.lastIndex
+            for (i in indices) {
+                for (j in (i + 1)..last) {
+                    if (it[i].startDate == it[j].startDate)
+                        return false
+                }
+            }
         }
         return true
     }
@@ -143,11 +157,14 @@ class EditScheduleViewModel : BaseViewModel() {
             endDay = _liveEndDay.value!!.toNumber(),
             endWeek = _liveWeeks.value!!
         )
+        val dailyRoutine = _liveDailyRoutines.value!!
         withContext(NonCancellable) {
             if (isModify) {
                 ScheduleRepository.updateSchedule(schedule)
+                dailyRoutine.forEach { DailyRoutineRepository.updateDailyRoutine(it) }
             } else {
                 ScheduleRepository.insertSchedule(schedule)
+                dailyRoutine.forEach { DailyRoutineRepository.insertDailyRoutine(it) }
             }
             if (display) {
                 MMKV.defaultMMKV().encode(DISPLAY_SCHEDULE_ID, scheduleId)
@@ -176,9 +193,9 @@ class EditScheduleViewModel : BaseViewModel() {
     }
 
     fun deleteDailyRoutine(id: Long): Boolean {
-        return if (_liveDailyRoutines.value?.size ?: 0 <= 1) false else {
-            val list = _liveDailyRoutines.value?.dropWhile {
-                it.dailyRoutineId == id
+        return if ((_liveDailyRoutines.value?.size ?: 0) <= 1) false else {
+            val list = _liveDailyRoutines.value?.filterTo(ArrayList()) {
+                it.dailyRoutineId != id
             }
             list?.also { _liveDailyRoutines.value = it }
             true

@@ -38,4 +38,12 @@ object DailyRoutineRepository {
             dailyRoutineDao.queryDailyRoutineList(parentScheduleId)
         }
     }
+
+    suspend fun insertDailyRoutine(dailyRoutine: DailyRoutine) {
+        dailyRoutineDao.insertDailyRoutine(dailyRoutine)
+    }
+
+    suspend fun updateDailyRoutine(dailyRoutine: DailyRoutine) {
+        dailyRoutineDao.updateDailyRoutine(dailyRoutine)
+    }
 }

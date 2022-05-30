@@ -31,12 +31,18 @@ interface ScheduleDao {
     @Query("DELETE FROM course WHERE parent_schedule_id = :scheduleId")
     suspend fun deleteCoursesBelongSchedule(scheduleId: Long)
 
+    @Query("DELETE FROM daily_routine WHERE parent_schedule_id = :scheduleId")
+    suspend fun deleteDailyRoutinesBelongSchedule(scheduleId: Long)
+
     @Delete
     suspend fun deleteSchedule(schedule: Schedule)
 
     @Update
     suspend fun updateSchedule(schedule: Schedule)
 
-    @Query("select COUNT(course_id) from course where parent_schedule_id = :scheduleId")
+    @Query("SELECT COUNT(course_id) FROM course WHERE parent_schedule_id = :scheduleId")
     suspend fun courseCount(scheduleId: Long): Int
+
+    @Query("SELECT schedule_id FROM schedule")
+    suspend fun queryScheduleIds(): List<Long>
 }

@@ -30,11 +30,11 @@ class EditDailyRoutineAdapter(
 
     object SectionDiff : DiffUtil.ItemCallback<Section>() {
         override fun areItemsTheSame(oldItem: Section, newItem: Section): Boolean {
-            return oldItem.from.toSeconds() == newItem.from.toSeconds()
+            return false
         }
 
         override fun areContentsTheSame(oldItem: Section, newItem: Section): Boolean {
-            return oldItem.from.toSeconds() == newItem.from.toSeconds()
+            return false
         }
 
     }
