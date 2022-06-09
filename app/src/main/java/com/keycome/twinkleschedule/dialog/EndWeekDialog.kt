@@ -20,7 +20,7 @@ class EndWeekDialog : EditTextDialog() {
         onConfirm {
             lifecycleScope.launch {
                 if (editText.isNotBlank()) {
-                    Pipette.pipetteForInt.emit(
+                    Pipette.forInt.emit(
                         Drop(
                             EditScheduleViewModel.sharedWeeks,
                             editText.toString().toInt()

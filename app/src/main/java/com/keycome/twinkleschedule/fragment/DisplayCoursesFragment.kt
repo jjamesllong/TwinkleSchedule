@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseFragment
-import com.keycome.twinkleschedule.custom.pagingtimetable.PagingAdapter
+import com.keycome.twinkleschedule.widget.pagingtimetable.PagingAdapter
 import com.keycome.twinkleschedule.databinding.FragmentDisplayCoursesBinding
 import com.keycome.twinkleschedule.model.DisplayCoursesViewModel
 

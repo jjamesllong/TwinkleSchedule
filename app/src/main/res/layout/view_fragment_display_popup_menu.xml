@@ -78,11 +78,11 @@
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView6"
+            app:layout_constraintStart_toEndOf="@+id/settings_hint_image_manage_schedule"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/settings_hint_image_manage_schedule"
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:layout_marginStart="16dp"

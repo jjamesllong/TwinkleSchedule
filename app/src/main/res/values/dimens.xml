@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="toolbar_height">64dp</dimen>
+    <dimen name="route_bar_height">80dp</dimen>
     <dimen name="clickable_icon_width">48dp</dimen>
     <dimen name="clickable_icon_height">48dp</dimen>
     <dimen name="floating_center_dialog_width">312dp</dimen>

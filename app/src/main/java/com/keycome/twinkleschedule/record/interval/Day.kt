@@ -41,5 +41,18 @@ enum class Day {
             6 -> Sunday
             else -> throw Exception()
         }
+
+        fun fromString(s: String): Day = when (s.trim().uppercase()) {
+            "MONDAY" -> Monday
+            "TUESDAY" -> Tuesday
+            "WEDNESDAY" -> Wednesday
+            "THURSDAY" -> Thursday
+            "FRIDAY" -> Friday
+            "SATURDAY" -> Saturday
+            "SUNDAY" -> Sunday
+            else -> throw Exception()
+        }
+
+        fun String.toDay() = fromString(this)
     }
 }

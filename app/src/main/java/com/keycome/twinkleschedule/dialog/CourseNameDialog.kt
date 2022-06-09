@@ -18,7 +18,7 @@ class CourseNameDialog : EditTextDialog() {
 
         onConfirm {
             lifecycleScope.launch {
-                Pipette.pipetteForString.emit(Drop("edit_course_name", editText.toString()))
+                Pipette.forString.emit(Drop("edit_course_name", editText.toString()))
                 dismiss()
             }
         }

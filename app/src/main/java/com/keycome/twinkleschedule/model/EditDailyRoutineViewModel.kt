@@ -39,14 +39,14 @@ class EditDailyRoutineViewModel : BaseViewModel() {
         super.onPlace()
         viewModelScope.launch(Dispatchers.Default) {
             launch {
-                Pipette.pipetteForInt.subscribe(courseDuration) {
+                Pipette.forInt.subscribe(courseDuration) {
                     withContext(Dispatchers.Main) {
                         refreshDuration(it)
                     }
                 }
             }
             launch {
-                Pipette.pipetteForString.subscribe(dailyRoutineName) {
+                Pipette.forString.subscribe(dailyRoutineName) {
                     withContext(Dispatchers.Main) {
                         refreshName(it)
                     }
@@ -165,7 +165,7 @@ class EditDailyRoutineViewModel : BaseViewModel() {
                 routines = liveEditSectionList.value!!
             )
             val jsonString = Pipette.gson.toJson(dailyRoutine)
-            Pipette.pipetteForString.emit(
+            Pipette.forString.emit(
                 Drop(
                     EditScheduleViewModel.sharedDailyRoutines,
                     jsonString

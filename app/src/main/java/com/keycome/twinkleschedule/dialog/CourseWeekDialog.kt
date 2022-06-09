@@ -118,13 +118,13 @@ class CourseWeekDialog : BaseDialogFragment() {
         )
         binding.dialogCourseWeekConfirm.setOnClickListener {
             lifecycleScope.launch {
-                Pipette.pipetteForInt.emit(Drop(Start_EMITING_TAG, 0))
+                Pipette.forInt.emit(Drop(Start_EMITING_TAG, 0))
                 childrenList.forEachIndexed { index, textView ->
                     if (textView.isSelected) {
-                        Pipette.pipetteForInt.emit(Drop(COURSE_WEEK_TAG, index + 1))
+                        Pipette.forInt.emit(Drop(COURSE_WEEK_TAG, index + 1))
                     }
                 }
-                Pipette.pipetteForInt.emit(Drop(END_EMITTING_TAG, 0))
+                Pipette.forInt.emit(Drop(END_EMITTING_TAG, 0))
                 dismiss()
             }
         }

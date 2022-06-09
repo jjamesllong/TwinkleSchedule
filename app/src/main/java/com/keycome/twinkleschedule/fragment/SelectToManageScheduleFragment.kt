@@ -62,7 +62,7 @@ class SelectToManageScheduleFragment : BaseFragment() {
             scheduleListAdapter.submitList(it)
         }
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            Pipette.pipetteForString.subscribe(ScheduleDetailsDialog.KEY_SCHEDULE_OPERATION) {
+            Pipette.forString.subscribe(ScheduleDetailsDialog.KEY_SCHEDULE_OPERATION) {
                 if (it == ScheduleDetailsDialog.DELETE) {
                     viewModel.queryScheduleList()
                 }

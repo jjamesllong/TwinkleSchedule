@@ -21,7 +21,7 @@ class DailyRoutineNameDialog : EditTextDialog() {
             val text = editText.toString()
             if (text.isNotBlank()) {
                 lifecycleScope.launch {
-                    Pipette.pipetteForString.emit(
+                    Pipette.forString.emit(
                         Drop(EditDailyRoutineViewModel.dailyRoutineName, text)
                     )
                     dismiss()

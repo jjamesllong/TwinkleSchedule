@@ -41,6 +41,13 @@
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_from_left"
             app:popExitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_selectToManageCourseFragment"
+            app:destination="@id/selectToManageCourseFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
     <dialog
         android:id="@+id/courseDetailsDialog"
@@ -62,7 +69,8 @@
     <fragment
         android:id="@+id/editScheduleFragment"
         android:name="com.keycome.twinkleschedule.fragment.EditScheduleFragment"
-        android:label="EditScheduleFragment">
+        android:label="EditScheduleFragment"
+        tools:layout="@layout/fragment_edit_schedule">
         <action
             android:id="@+id/action_editScheduleFragment_to_scheduleNameDialog"
             app:destination="@id/scheduleNameDialog" />
@@ -111,7 +119,8 @@
     <fragment
         android:id="@+id/editDailyRoutineFragment"
         android:name="com.keycome.twinkleschedule.fragment.EditDailyRoutineFragment"
-        android:label="EditDailyRoutineFragment">
+        android:label="EditDailyRoutineFragment"
+        tools:layout="@layout/fragment_edit_daily_routine">
         <action
             android:id="@+id/action_editDailyRoutineFragment_to_dailyRoutineNameDialog"
             app:destination="@id/dailyRoutineNameDialog" />
@@ -130,7 +139,8 @@
     <fragment
         android:id="@+id/manageScheduleFragment"
         android:name="com.keycome.twinkleschedule.fragment.SelectToManageScheduleFragment"
-        android:label="ManageScheduleFragment">
+        android:label="ManageScheduleFragment"
+        tools:layout="@layout/fragment_manage_schedule">
         <action
             android:id="@+id/action_manageScheduleFragment_to_scheduleDetailsDialog"
             app:destination="@id/scheduleDetailsDialog" />
@@ -176,7 +186,8 @@
     <fragment
         android:id="@+id/selectToAddCourseFragment"
         android:name="com.keycome.twinkleschedule.fragment.SelectToAddCourseFragment"
-        android:label="SelectToAddCourseFragment">
+        android:label="SelectToAddCourseFragment"
+        tools:layout="@layout/fragment_schedule_list">
         <action
             android:id="@+id/action_selectToAddCourseFragment_to_editCourseFragment"
             app:destination="@id/editCourseFragment"
@@ -209,4 +220,29 @@
         android:id="@+id/classroomDialog"
         android:name="com.keycome.twinkleschedule.dialog.ClassroomDialog"
         android:label="ClassroomDialog" />
+    <fragment
+        android:id="@+id/selectToManageCourseFragment"
+        android:name="com.keycome.twinkleschedule.fragment.SelectToManageCourseFragment"
+        android:label="SelectToManageCourseFragment">
+        <action
+            android:id="@+id/action_selectToManageCourseFragment_to_courseListFragment"
+            app:destination="@id/courseListFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/courseListFragment"
+        android:name="com.keycome.twinkleschedule.fragment.CourseListFragment"
+        android:label="CourseListFragment"
+        tools:layout="@layout/fragment_course_list">
+        <action
+            android:id="@+id/action_courseListFragment_to_editCourseFragment"
+            app:destination="@id/editCourseFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+    </fragment>
 </navigation>

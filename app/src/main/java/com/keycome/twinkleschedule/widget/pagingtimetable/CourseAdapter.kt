@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.custom.pagingtimetable
+package com.keycome.twinkleschedule.widget.pagingtimetable
 
 import android.view.LayoutInflater
 import android.view.View

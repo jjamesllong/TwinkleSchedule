@@ -62,7 +62,7 @@ class CourseDurationDialog : BaseDialogFragment() {
             lifecycleScope.launch {
                 val duration = viewModel.getCourseDuration()
                 lifecycleScope.launch {
-                    Pipette.pipetteForInt.emit(
+                    Pipette.forInt.emit(
                         Drop(EditDailyRoutineViewModel.courseDuration, duration)
                     )
                     dismiss()

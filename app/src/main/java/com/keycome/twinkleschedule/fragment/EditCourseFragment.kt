@@ -10,9 +10,13 @@ import androidx.navigation.fragment.findNavController
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentEditCourseBinding
+import com.keycome.twinkleschedule.delivery.Pipette
+import com.keycome.twinkleschedule.delivery.Pipette.distribute
 import com.keycome.twinkleschedule.dialog.CourseDayDialog
 import com.keycome.twinkleschedule.dialog.CourseSectionDialog
 import com.keycome.twinkleschedule.model.EditCourseViewModel
+import com.keycome.twinkleschedule.record.interval.Day.Companion.toDay
+import com.keycome.twinkleschedule.util.const.*
 import kotlinx.coroutines.launch
 
 class EditCourseFragment : BaseFragment() {
@@ -24,8 +28,7 @@ class EditCourseFragment : BaseFragment() {
 
     private val navController by lazy { findNavController() }
 
-    private val parentScheduleId by lazy { arguments?.getLong(scheduleIdKey) ?: 0L }
-    private val isUpdate by lazy { arguments?.getBoolean(isUpdateKey) ?: false }
+    private val isUpdate by lazy { arguments?.getBoolean(KEY_IS_UPDATE) ?: false }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +45,32 @@ class EditCourseFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.onFirstPresent {
+            arguments?.also { bundle ->
+                val parentScheduleId = bundle.getLong(KEY_SCHEDULE_ID)
+                if (isUpdate) {
+                    val courseId = bundle.getLong(KEY_COURSE_ID)
+                    val title = bundle.getString(KEY_COURSE_TITLE) ?: ""
+                    val day = bundle.getString(KEY_COURSE_DAY)!!.toDay()
+                    val section = bundle.getIntArray(KEY_COURSE_SECTION)!!.toList()
+                    val week = bundle.getIntArray(KEY_COURSE_WEEK)!!.toList()
+                    val teacher = bundle.getString(KEY_COURSE_TEACHER) ?: ""
+                    val classroom = bundle.getString(KEY_COURSE_CLASSROOM) ?: ""
+                    viewModel.setCourseInfo(
+                        courseId,
+                        parentScheduleId,
+                        title,
+                        day,
+                        section,
+                        week,
+                        teacher,
+                        classroom
+                    )
+                } else {
+                    viewModel.setParentScheduleId(parentScheduleId)
+                }
+            }
+        }
         binding.fragmentEditCourseToolbar.setNavigationOnClickListener {
             navController.navigateUp()
         }
@@ -82,19 +111,18 @@ class EditCourseFragment : BaseFragment() {
         }
         binding.editCourseFragmentSubmitButton.setOnClickListener {
             it.isEnabled = false
-            if (parentScheduleId != 0L) {
-                lifecycleScope.launch {
-                    val success = if (isUpdate) {
-                        viewModel.updateCourse(parentScheduleId)
-                    } else {
-                        viewModel.insertCourse(parentScheduleId)
-                    }
-                    if (success) {
-                        navController.navigateUp()
-                    } else {
-                        it.isEnabled = true
-                        Toast.makeText(context, "错误", Toast.LENGTH_SHORT).show()
-                    }
+            lifecycleScope.launch {
+                val success = if (isUpdate) {
+                    viewModel.updateCourse()
+                } else {
+                    viewModel.insertCourse()
+                }
+                if (success) {
+                    Pipette.forEvent.distribute { KEY_COURSE_TABLE_CHANGE }
+                    navController.navigateUp()
+                } else {
+                    it.isEnabled = true
+                    Toast.makeText(context, "错误", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -131,7 +159,6 @@ class EditCourseFragment : BaseFragment() {
     companion object {
 
         const val TAG = "EditCourseFragment"
-        const val scheduleIdKey = "edit_course_fragment_schedule_id"
-        const val isUpdateKey = "is_update_key"
+        const val KEY_IS_UPDATE = "is_update_key"
     }
 }

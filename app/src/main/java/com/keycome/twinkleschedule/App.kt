@@ -12,14 +12,14 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        myContext = applicationContext
+        nullableContext = applicationContext
         MMKV.initialize(this)
     }
 
     companion object {
 
-        private var myContext: Context? = null
-        val context get() = myContext!!
+        private var nullableContext: Context? = null
+        val context get() = nullableContext!!
 
         val applicationScope: CoroutineScope =
             CoroutineScope(SupervisorJob() + Dispatchers.Default)

@@ -79,7 +79,7 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
                 val id = viewModel.queryScheduleId()
                 if (id != 0L) {
                     viewModel.deleteSchedule(id)
-                    Pipette.pipetteForString.emit(Drop(KEY_SCHEDULE_OPERATION, DELETE))
+                    Pipette.forString.emit(Drop(KEY_SCHEDULE_OPERATION, DELETE))
                     navController.navigateUp()
                 }
             }

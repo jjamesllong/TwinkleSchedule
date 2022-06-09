@@ -68,14 +68,14 @@ class EditScheduleViewModel : BaseViewModel() {
         super.onPlace()
         viewModelScope.launch(Dispatchers.Default) {
             launch {
-                Pipette.pipetteForInt.subscribe(sharedWeeks) {
+                Pipette.forInt.subscribe(sharedWeeks) {
                     withContext(Dispatchers.Main) {
                         _liveWeeks.value = it
                     }
                 }
             }
             launch {
-                Pipette.pipetteForString.subscribe(sharedDailyRoutines) { jsonString ->
+                Pipette.forString.subscribe(sharedDailyRoutines) { jsonString ->
                     val dailyRoutine = Pipette.gson.fromJson(jsonString, DailyRoutine::class.java)
                     val list = buildList<DailyRoutine> {
                         _liveDailyRoutines.value?.forEach {

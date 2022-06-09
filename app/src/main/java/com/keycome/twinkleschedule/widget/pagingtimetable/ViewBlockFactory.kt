@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.custom.pagingtimetable
+package com.keycome.twinkleschedule.widget.pagingtimetable
 
 import com.keycome.twinkleschedule.record.ViewBlock
 import com.keycome.twinkleschedule.record.interval.Day

@@ -13,32 +13,21 @@ import com.keycome.twinkleschedule.databinding.FragmentScheduleListBinding
 import com.keycome.twinkleschedule.model.ScheduleListViewModel
 import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_ID
 
-class SelectToAddCourseFragment : BaseFragment() {
+class SelectToManageCourseFragment : BaseFragment() {
 
     private var _binding: FragmentScheduleListBinding? = null
-    val binding get() = _binding.acquire()
-
-    private val viewModel by viewModels<ScheduleListViewModel>()
+    private val binding get() = _binding.acquire()
 
     private val navController by lazy { findNavController() }
 
-    private val event: (Int) -> Unit = { position: Int ->
-        viewModel.getScheduleIdByIndex(position)?.let { id ->
-            navController.navigate(
-                R.id.action_selectToAddCourseFragment_to_editCourseFragment,
-                Bundle().apply {
-                    putLong(KEY_SCHEDULE_ID, id)
-                    putBoolean(EditCourseFragment.KEY_IS_UPDATE, false)
-                }
-            )
-        }
-    }
+    private val viewModel by viewModels<ScheduleListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentScheduleListBinding.inflate(
             inflater,
             container,
@@ -49,17 +38,25 @@ class SelectToAddCourseFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.fragmentScheduleListToolbar.setNavigationOnClickListener {
-            navController.navigateUp()
+        val scheduleListAdapter = ScheduleListAdapter {
+            val id = viewModel.getScheduleIdByIndex(it) ?: 0L
+            if (id != 0L) {
+                navController.navigate(
+                    R.id.action_selectToManageCourseFragment_to_courseListFragment,
+                    Bundle().apply { putLong(KEY_SCHEDULE_ID, id) }
+                )
+            }
         }
-        val adapter = ScheduleListAdapter(event)
-        binding.fragmentScheduleListRecyclerView.adapter = adapter
+        binding.fragmentScheduleListRecyclerView.adapter = scheduleListAdapter
         binding.fragmentScheduleListRecyclerView.layoutManager =
             LinearLayoutManager(context).apply {
                 orientation = LinearLayoutManager.VERTICAL
             }
+        binding.fragmentScheduleListToolbar.setNavigationOnClickListener {
+            navController.navigateUp()
+        }
         viewModel.liveScheduleList.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            scheduleListAdapter.submitList(it)
         }
     }
 
@@ -67,5 +64,4 @@ class SelectToAddCourseFragment : BaseFragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

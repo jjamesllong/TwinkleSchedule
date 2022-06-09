@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/fragment_course_list_scene"
+    tools:context=".fragment.CourseListFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_course_list_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/fragment_course_list_toolbar"
+        style="@style/Toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="课程" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/course_list_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_course_list_toolbar" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/fragment_course_list_option_bar"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:visibility="invisible"
+        app:cardBackgroundColor="@color/md_theme_light_tertiaryContainer"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="16dp"
+        app:cardMaxElevation="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.8"
+        app:strokeWidth="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/fragment_course_list_text_delete"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_selector_rectangle_8_0"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingTop="4dp"
+                android:text="删除"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="12sp"
+                app:drawableTopCompat="@drawable/ic_baseline_crash_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_course_list_text_modify"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/fragment_course_list_text_modify"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_selector_rectangle_8_0"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingTop="4dp"
+                android:text="修改"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="12sp"
+                app:drawableTopCompat="@drawable/ic_baseline_eco_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_course_list_text_delete"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.custom.pagingtimetable
+package com.keycome.twinkleschedule.widget.pagingtimetable
 
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.record.timetable.Course

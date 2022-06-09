@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cell_schedule_manager_title"
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="16dp"
-    android:background="@drawable/bg_selector_rectangle_16_0"
-    android:backgroundTint="@color/md_theme_light_surfaceVariant">
-
-    <TextView
-        android:id="@+id/cell_schedule_manager_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|center_vertical"
-        android:layout_marginStart="16dp"
-        android:text="TextView"
-        android:textColor="?android:attr/textColorPrimary" />
-
-</FrameLayout>
+    android:background="@drawable/bg_selector_rectangle_16_0_tinted"
+    android:gravity="start|center_vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:textColor="?android:attr/textColorPrimary"
+    tools:text="大三(下)" />

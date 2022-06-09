@@ -68,7 +68,7 @@ class CourseDayDialog : BaseDialogFragment() {
         binding.dialogCourseDayConfirm.setOnClickListener {
             if (previousSelectedDay != 0) {
                 lifecycleScope.launch {
-                    Pipette.pipetteForInt.emit(Drop(DayInItem, previousSelectedDay))
+                    Pipette.forInt.emit(Drop(DayInItem, previousSelectedDay))
                     dismiss()
                 }
             }

@@ -31,16 +31,19 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.addScheduleSettingItem.setOnClickListener {
+        binding.settingsItemAddSchedule.setOnClickListener {
             navController.navigate(R.id.action_settingsFragment_to_scheduleCreateWayFragment)
         }
-        binding.manageSchedulesSettingItem.setOnClickListener {
+        binding.settingsItemManageSchedule.setOnClickListener {
             navController.navigate(
                 R.id.action_settingsFragment_to_selectToManageScheduleFragment
             )
         }
-        binding.recordCourseSettingItem.setOnClickListener {
+        binding.settingsItemAddCourse.setOnClickListener {
             navController.navigate(R.id.action_settingsFragment_to_selectToAddCourseFragment)
+        }
+        binding.settingsItemManageCourse.setOnClickListener {
+            navController.navigate(R.id.action_settingsFragment_to_selectToManageCourseFragment)
         }
     }
 

@@ -8,9 +8,10 @@ import androidx.lifecycle.lifecycleScope
 import com.keycome.twinkleschedule.adapter.SectionWheelAdapter
 import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.databinding.DialogCourseSectionBinding
-import com.keycome.twinkleschedule.delivery.Drop
 import com.keycome.twinkleschedule.delivery.Pipette
+import com.keycome.twinkleschedule.delivery.Pipette.distribute
 import com.keycome.twinkleschedule.extension.acquire
+import com.keycome.twinkleschedule.util.const.KEY_COURSE_SECTION
 import kotlinx.coroutines.launch
 
 class CourseSectionDialog : BaseDialogFragment() {
@@ -77,8 +78,12 @@ class CourseSectionDialog : BaseDialogFragment() {
                 val startSection = startAdapter.getItem(binding.startSectionWheel.currentItem)
                 val endSection = endAdapter.getItem(binding.endSectionWheel.currentItem)
                 if (endSection >= startSection) {
-                    Pipette.pipetteForInt.emit(Drop(StartSection, startSection))
-                    Pipette.pipetteForInt.emit(Drop(EndSection, endSection))
+                    Pipette.forString.distribute(KEY_COURSE_SECTION) {
+                        StringBuilder()
+                            .append(startSection).append(SEPARATOR)
+                            .append(endSection)
+                            .toString()
+                    }
                 }
                 dismiss()
             }
@@ -98,6 +103,7 @@ class CourseSectionDialog : BaseDialogFragment() {
 
     companion object {
 
+        const val SEPARATOR = '~'
         const val StartSection = "course_start_section"
         const val EndSection = "course_end_section"
         const val StartSectionInItem = "course_start_section_in_item"

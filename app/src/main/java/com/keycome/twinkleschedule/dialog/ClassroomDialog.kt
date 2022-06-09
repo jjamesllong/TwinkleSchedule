@@ -14,7 +14,7 @@ class ClassroomDialog : EditTextDialog() {
         onCancel { dismiss() }
         onConfirm {
             lifecycleScope.launch {
-                Pipette.pipetteForString.emit(Drop(CLASSROOM_TAG, editText.toString()))
+                Pipette.forString.emit(Drop(CLASSROOM_TAG, editText.toString()))
                 dismiss()
             }
         }

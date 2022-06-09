@@ -29,7 +29,7 @@ class ScheduleListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener { event(bindingAdapterPosition) }
+            binding.cellScheduleManagerTitle.setOnClickListener { event(bindingAdapterPosition) }
         }
 
         fun onBind(schedule: Schedule) {
