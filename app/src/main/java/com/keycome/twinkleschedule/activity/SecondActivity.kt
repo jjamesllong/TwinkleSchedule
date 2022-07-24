@@ -28,12 +28,12 @@ class SecondActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStatusBarAppearance(binding.root, TextColor.Dark)
         setContentView(binding.root)
+        setStatusBarAppearance(binding.root, TextColor.Dark)
         binding.secondNavigationBar.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.displayCoursesFragment -> {
-                    if (navController.currentDestination?.id == R.id.displayCoursesFragment)
+                R.id.displayFragment -> {
+                    if (navController.currentDestination?.id == R.id.displayFragment)
                         return@setOnItemSelectedListener true
                     navController.navigateUp()
                     true
@@ -50,13 +50,13 @@ class SecondActivity : BaseActivity() {
             }
         }
         navController.addOnDestinationChangedListener { _, navDestination: NavDestination, _ ->
-            R.id.displayCoursesFragment.let {
+            R.id.displayFragment.let {
                 if (navDestination.id == it && binding.secondNavigationBar.selectedItemId != it)
                     binding.secondNavigationBar.selectedItemId = it
             }
             navDestination.id.let {
                 when (it) {
-                    R.id.displayCoursesFragment, R.id.settingsFragment -> {
+                    R.id.displayFragment, R.id.settingsFragment -> {
                         binding.secondNavigationBar.visibility = View.VISIBLE
                     }
                     else -> {

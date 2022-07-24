@@ -13,7 +13,7 @@ enum class Day {
         Sunday -> 7
     }
 
-    fun toIndex() = when (this) {
+    fun toOrdinal() = when (this) {
         Monday -> Monday.ordinal
         Tuesday -> Tuesday.ordinal
         Wednesday -> Wednesday.ordinal
@@ -25,13 +25,9 @@ enum class Day {
 
     companion object {
 
-        fun toNumber(day: Day) = day.toNumber()
+        fun fromNumber(number: Int): Day = fromOrdinal(number - 1)
 
-        fun fromNumber(number: Int): Day = fromIndex(number - 1)
-
-        fun toIndex(day: Day) = day.toIndex()
-
-        fun fromIndex(index: Int): Day = when (index) {
+        fun fromOrdinal(ordinal: Int): Day = when (ordinal) {
             0 -> Monday
             1 -> Tuesday
             2 -> Wednesday

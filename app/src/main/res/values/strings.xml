@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">Twinkle Schedule</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_second">SecondActivity</string>
+    <string name="app_name">闪课表</string>
+
+    <!--  Strings used for second route bar  -->
+    <string name="title_display_fragment">主页</string>
+    <string name="title_settings_fragment">设置</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -13,8 +16,21 @@
 
     <string name="confirm">确定</string>
     <string name="error">错误</string>
+
+    <!--  Strings used for FragmentDisplay  -->
     <string name="fragment_display_courses_week">第 %1$d 周</string>
     <string name="fragment_display_courses_not_this_week">非本周</string>
+    <string name="fragment_display_courses_noting">无课表</string>
+    <string name="fragment_display_courses_upcoming">未开始</string>
+    <string name="fragment_display_courses_ended">已结束</string>
+
+    <!--  Strings use for FragmentCourseDetails  -->
+    <string name="fragment_course_details_tint_day">星期</string>
+    <string name="fragment_course_details_tint_section">节次</string>
+    <string name="fragment_course_details_tint_classroom">教室</string>
+    <string name="fragment_course_details_tint_teacher">教师</string>
+    <string name="fragment_course_details_tint_week">周次</string>
+
     <string name="dialog_course_duration_progress">%1$d 分钟</string>
     <string name="adapter_edit_daily_routine_header_node">%1$d / %2$d</string>
     <string name="adapter_edit_daily_routine_section">第 %1$d 节 %2$s - %3$s</string>

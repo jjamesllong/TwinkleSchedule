@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/second_nav_graph"
-    app:startDestination="@id/displayCoursesFragment">
+    app:startDestination="@id/displayFragment">
     <fragment
-        android:id="@+id/displayCoursesFragment"
-        android:name="com.keycome.twinkleschedule.fragment.DisplayCoursesFragment"
-        android:label="DisplayCoursesFragment">
+        android:id="@+id/displayFragment"
+        android:name="com.keycome.twinkleschedule.fragment.DisplayFragment"
+        android:label="DisplayFragment">
         <action
-            android:id="@+id/action_displayCoursesFragment_to_settingsFragment"
+            android:id="@+id/action_displayFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
         <action
-            android:id="@+id/action_displayCoursesFragment_to_courseDetailsDialog"
+            android:id="@+id/action_displayFragment_to_courseDetailsDialog"
             app:destination="@id/courseDetailsDialog" />
     </fragment>
     <fragment
@@ -85,12 +85,12 @@
             app:destination="@id/endWeekDialog" />
         <action
             android:id="@+id/action_editScheduleFragment_to_displayCoursesFragment"
-            app:destination="@id/displayCoursesFragment"
+            app:destination="@id/displayFragment"
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_from_left"
             app:popExitAnim="@anim/slide_out_to_right"
-            app:popUpTo="@id/displayCoursesFragment"
+            app:popUpTo="@id/displayFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_editScheduleFragment_to_editDailyRoutineFragment"

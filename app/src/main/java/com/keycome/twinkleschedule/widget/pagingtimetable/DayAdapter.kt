@@ -33,7 +33,7 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.DayView>() {
     }
 
     override fun onBindViewHolder(holder: DayView, position: Int) {
-        holder.textView.text = Day.fromIndex(position).toCharacter()
+        holder.textView.text = Day.fromOrdinal(position).toCharacter()
     }
 
     override fun getItemCount() = endDayNumber

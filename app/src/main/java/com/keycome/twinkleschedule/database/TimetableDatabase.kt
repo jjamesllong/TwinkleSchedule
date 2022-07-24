@@ -23,8 +23,9 @@ abstract class TimetableDatabase : RoomDatabase() {
 
     companion object {
 
-        private const val databaseName = "timetable_database"
         private var INSTANCE: TimetableDatabase? = null
+
+        private const val databaseName = "timetable_database"
 
         fun getInstance(): TimetableDatabase {
             return INSTANCE ?: synchronized(TimetableDatabase::class) {

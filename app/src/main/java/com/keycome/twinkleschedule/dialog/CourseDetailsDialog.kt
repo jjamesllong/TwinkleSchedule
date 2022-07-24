@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.databinding.DialogCourseDetailsBinding
 import com.keycome.twinkleschedule.model.CourseDetailsViewModel
+import com.keycome.twinkleschedule.record.timetable.Course
+import com.keycome.twinkleschedule.util.const.KEY_COURSE
 
 class CourseDetailsDialog : BaseDialogFragment() {
 
@@ -14,6 +16,8 @@ class CourseDetailsDialog : BaseDialogFragment() {
 
     private var _binding: DialogCourseDetailsBinding? = null
     val binding get() = _binding!!
+
+    private val course by lazy { arguments?.getParcelable<Course>(KEY_COURSE) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +37,7 @@ class CourseDetailsDialog : BaseDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.courseDetailsDialogCancel.setOnClickListener { dismiss() }
-        viewModel.sharedCourse?.observe(viewLifecycleOwner) {
+        course?.also {
             binding.courseDetailsDialogTitle.text = it.title
             binding.courseDetailsDialogDayText.text = it.day.name
             binding.courseDetailsDialogSectionText.text = it.section.toString()

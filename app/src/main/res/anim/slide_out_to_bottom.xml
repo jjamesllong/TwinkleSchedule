@@ -5,7 +5,7 @@
         android:duration="175"
         android:fromYDelta="0%p"
         android:interpolator="@android:interpolator/decelerate_quad"
-        android:toYDelta="10%p" />
+        android:toYDelta="30%p" />
     <alpha
         android:duration="175"
         android:fromAlpha="1"

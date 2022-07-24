@@ -2,6 +2,7 @@ package com.keycome.twinkleschedule.util.const
 
 const val KEY_SCHEDULE_ID = "schedule_id"
 
+const val KEY_COURSE = "course"
 const val KEY_COURSE_ID = "course_id"
 const val KEY_COURSE_TITLE = "course_title"
 const val KEY_COURSE_DAY = "course_day"

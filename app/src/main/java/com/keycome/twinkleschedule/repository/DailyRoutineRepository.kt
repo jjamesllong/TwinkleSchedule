@@ -1,5 +1,6 @@
 package com.keycome.twinkleschedule.repository
 
+import com.keycome.twinkleschedule.database.DailyRoutineDao
 import com.keycome.twinkleschedule.database.TimetableDatabase
 import com.keycome.twinkleschedule.record.timetable.DailyRoutine
 import com.keycome.twinkleschedule.record.timetable.Schedule
@@ -9,8 +10,8 @@ import kotlinx.coroutines.withContext
 
 object DailyRoutineRepository {
 
-    private val database = TimetableDatabase.getInstance()
-    private val dailyRoutineDao = database.dailyRoutineDao()
+    private val database: TimetableDatabase = TimetableDatabase.getInstance()
+    private val dailyRoutineDao: DailyRoutineDao = database.dailyRoutineDao()
 
     suspend fun querySectionList(schedule: Schedule): List<Section>? {
         return withContext(Dispatchers.IO) {

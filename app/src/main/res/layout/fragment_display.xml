@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="80dp"
-    tools:context=".fragment.DisplayCoursesFragment">
+    tools:context=".fragment.DisplayFragment">
 
 
     <com.google.android.material.appbar.MaterialToolbar
