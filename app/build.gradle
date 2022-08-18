@@ -20,7 +20,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -72,9 +72,13 @@ dependencies {
     def lifecycle_version = "2.4.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
+    // https://github.com/gzu-liyujiang/AndroidPicker
     implementation "com.github.gzu-liyujiang.AndroidPicker:WheelPicker:4.1.7"
 
-    implementation 'com.contrarywind:wheelview:4.1.0'
+    // https://github.com/gzu-liyujiang/AndroidPicker
+    implementation 'com.github.gzu-liyujiang.AndroidPicker:WheelView:4.1.7'
 
     implementation "androidx.gridlayout:gridlayout:1.0.0"
+
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
 }

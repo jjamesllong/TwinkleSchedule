@@ -2,22 +2,33 @@ package com.keycome.twinkleschedule.dialog
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
+import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.databinding.DialogCourseWeekBinding
-import com.keycome.twinkleschedule.delivery.Drop
 import com.keycome.twinkleschedule.delivery.Pipette
+import com.keycome.twinkleschedule.delivery.Pipette.distribute
 import com.keycome.twinkleschedule.extension.acquire
-import com.keycome.twinkleschedule.util.SlidingTriggerListener
+import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_END_WEEK
+import com.keycome.twinkleschedule.util.slidingtrigger.CellState
+import com.keycome.twinkleschedule.util.slidingtrigger.toCellStateWithSize
+import com.keycome.twinkleschedule.util.slidingtrigger.toSlidingTrigger
 import kotlinx.coroutines.launch
 
+@SuppressLint("ClickableViewAccessibility")
 class CourseWeekDialog : BaseDialogFragment() {
 
     private var _binding: DialogCourseWeekBinding? = null
     val binding get() = _binding.acquire()
+
+    private var scheduleEndWeek = 0
+    private var selectedWeeks = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,105 +40,119 @@ class CourseWeekDialog : BaseDialogFragment() {
         return binding.root
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val childrenList = listOf(
-            binding.week1, binding.week2, binding.week3, binding.week4,
-            binding.week5, binding.week6, binding.week7, binding.week8,
-            binding.week9, binding.week10, binding.week11, binding.week12,
-            binding.week13, binding.week14, binding.week15, binding.week16,
-            binding.week17, binding.week18, binding.week19, binding.week20,
-            binding.week21, binding.week22, binding.week23, binding.week24
-        )
-        binding.dialogCourseWeekCancel.setOnClickListener { dismiss() }
+        scheduleEndWeek = savedInstanceState?.getInt(
+            KEY_SCHEDULE_END_WEEK
+        ) ?: arguments?.getInt(
+            KEY_SCHEDULE_END_WEEK
+        ) ?: 0
+
+        selectedWeeks = savedInstanceState?.getInt(
+            KEY_SELECTED_COURSE_WEEKS
+        ) ?: arguments?.getInt(
+            KEY_SELECTED_COURSE_WEEKS
+        ) ?: 0
+
+        val iconSize = 38.dp
+
+        val childrenList = (1..scheduleEndWeek).map { i ->
+            TextView(context).apply {
+                id = View.generateViewId()
+                layoutParams = ConstraintLayout.LayoutParams(iconSize, iconSize)
+                setBackgroundResource(R.drawable.bg_selector_icon_selectable)
+                gravity = Gravity.CENTER
+                text = i.toString()
+            }.also { binding.dialogCourseWeekContainer.addView(it) }
+        }
+
+        binding.dialogCourseWeekFlow.referencedIds = childrenList.map { it.id }.toIntArray()
+
+        val slidingTrigger = binding.dialogCourseWeekContainer.toSlidingTrigger(
+            childrenList
+        ) { size, state ->
+            selectedWeeks = state
+            when (state.toCellStateWithSize(size)) {
+                CellState.None -> {
+                    binding.dialogCourseWeekAll.isSelected = false
+                    binding.dialogCourseWeekEven.isSelected = false
+                    binding.dialogCourseWeekOdd.isSelected = false
+                    binding.dialogCourseWeekAll.text = getString(
+                        R.string.dialog_course_week_select_all
+                    )
+                }
+                CellState.All -> {
+                    binding.dialogCourseWeekAll.isSelected = true
+                    binding.dialogCourseWeekEven.isSelected = false
+                    binding.dialogCourseWeekOdd.isSelected = false
+                    binding.dialogCourseWeekAll.text = getString(
+                        R.string.dialog_course_week_select_none
+                    )
+                }
+                CellState.Even -> {
+                    binding.dialogCourseWeekAll.isSelected = false
+                    binding.dialogCourseWeekEven.isSelected = true
+                    binding.dialogCourseWeekOdd.isSelected = false
+                    binding.dialogCourseWeekAll.text = getString(
+                        R.string.dialog_course_week_select_all
+                    )
+                }
+                CellState.Odd -> {
+                    binding.dialogCourseWeekAll.isSelected = false
+                    binding.dialogCourseWeekEven.isSelected = false
+                    binding.dialogCourseWeekOdd.isSelected = true
+                    binding.dialogCourseWeekAll.text = getString(
+                        R.string.dialog_course_week_select_all
+                    )
+                }
+                CellState.Other -> {
+                    binding.dialogCourseWeekAll.isSelected = false
+                    binding.dialogCourseWeekEven.isSelected = false
+                    binding.dialogCourseWeekOdd.isSelected = false
+                    binding.dialogCourseWeekAll.text = getString(
+                        R.string.dialog_course_week_select_all
+                    )
+                }
+            }
+        }
+
+        slidingTrigger.setCellState(selectedWeeks)
+
         binding.dialogCourseWeekAll.setOnClickListener {
             if (it.isSelected) {
-                childrenList.forEach { v -> v.isSelected = false }
-                binding.dialogCourseWeekAll.text = "全选"
+                slidingTrigger.setCellStateNon()
             } else {
-                childrenList.forEach { v -> v.isSelected = true }
-                binding.dialogCourseWeekAll.text = "全不选"
+                slidingTrigger.setCellStateAll()
             }
-            it.isSelected = !it.isSelected
-            binding.dialogCourseWeekEven.isSelected = false
-            binding.dialogCourseWeekOdd.isSelected = false
         }
         binding.dialogCourseWeekEven.setOnClickListener {
             if (it.isSelected) {
-                childrenList.forEach { v -> v.isSelected = false }
+                slidingTrigger.setCellStateNon()
             } else {
-                childrenList.forEachIndexed { index, textView ->
-                    textView.isSelected = index % 2 != 0
-                }
+                slidingTrigger.setCellStateEven()
             }
-            it.isSelected = !it.isSelected
-            binding.dialogCourseWeekAll.isSelected = false
-            binding.dialogCourseWeekAll.text = "全选"
-            binding.dialogCourseWeekOdd.isSelected = false
         }
         binding.dialogCourseWeekOdd.setOnClickListener {
             if (it.isSelected) {
-                childrenList.forEach { v -> v.isSelected = false }
+                slidingTrigger.setCellStateNon()
             } else {
-                childrenList.forEachIndexed { index, textView ->
-                    textView.isSelected = index % 2 == 0
-                }
+                slidingTrigger.setCellSateOdd()
             }
-            it.isSelected = !it.isSelected
-            binding.dialogCourseWeekAll.isSelected = false
-            binding.dialogCourseWeekAll.text = "全选"
-            binding.dialogCourseWeekEven.isSelected = false
         }
-        binding.dialogCourseWeekContainer.setOnTouchListener(
-            SlidingTriggerListener(childrenList) { code ->
-                when (code) {
-                    0 -> {
-                        binding.dialogCourseWeekAll.isSelected = false
-                        binding.dialogCourseWeekAll.text = "全选"
-                        binding.dialogCourseWeekEven.isSelected = false
-                        binding.dialogCourseWeekOdd.isSelected = false
-                    }
-                    1 -> {
-                        binding.dialogCourseWeekAll.isSelected = true
-                        binding.dialogCourseWeekAll.text = "全不选"
-                        binding.dialogCourseWeekEven.isSelected = false
-                        binding.dialogCourseWeekOdd.isSelected = false
-                    }
-                    2 -> {
-                        binding.dialogCourseWeekAll.isSelected = false
-                        binding.dialogCourseWeekAll.text = "全选"
-                        binding.dialogCourseWeekEven.isSelected = true
-                        binding.dialogCourseWeekOdd.isSelected = false
-                    }
-                    3 -> {
-                        binding.dialogCourseWeekAll.isSelected = false
-                        binding.dialogCourseWeekAll.text = "全选"
-                        binding.dialogCourseWeekEven.isSelected = false
-                        binding.dialogCourseWeekOdd.isSelected = true
-                    }
-                    4 -> {
-                        binding.dialogCourseWeekAll.isSelected = false
-                        binding.dialogCourseWeekAll.text = "全选"
-                        binding.dialogCourseWeekEven.isSelected = false
-                        binding.dialogCourseWeekOdd.isSelected = false
-                    }
-                }
-            }
-        )
+        binding.dialogCourseWeekCancel.setOnClickListener { dismiss() }
         binding.dialogCourseWeekConfirm.setOnClickListener {
             lifecycleScope.launch {
-                Pipette.forInt.emit(Drop(Start_EMITING_TAG, 0))
-                childrenList.forEachIndexed { index, textView ->
-                    if (textView.isSelected) {
-                        Pipette.forInt.emit(Drop(COURSE_WEEK_TAG, index + 1))
-                    }
-                }
-                Pipette.forInt.emit(Drop(END_EMITTING_TAG, 0))
+                Pipette.forInt.distribute(KEY_SELECTED_COURSE_WEEKS) { selectedWeeks }
                 dismiss()
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_SCHEDULE_END_WEEK, scheduleEndWeek)
+        outState.putInt(KEY_SELECTED_COURSE_WEEKS, selectedWeeks)
     }
 
     override fun onDestroyView() {
@@ -135,10 +160,11 @@ class CourseWeekDialog : BaseDialogFragment() {
         _binding = null
     }
 
+    private val Int.dp: Int
+        get() = (this * resources.displayMetrics.density + 0.5f).toInt()
+
     companion object {
 
-        const val Start_EMITING_TAG = "start_emitting_tag"
-        const val COURSE_WEEK_TAG = "course_week_tag"
-        const val END_EMITTING_TAG = "end_emitting_tag"
+        const val KEY_SELECTED_COURSE_WEEKS = "selected_course_weeks"
     }
 }

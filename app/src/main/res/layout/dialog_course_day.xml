@@ -2,28 +2,29 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_shape_rectangle_16_0"
     android:backgroundTint="?android:attr/colorBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dialog_course_day_wrapper"
         android:layout_width="@dimen/floating_center_dialog_width"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/dialog_course_day_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:gravity="center"
-            android:text="选择星期"
+            android:text="@string/title_course_day_dialog"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/flow"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,26 +32,41 @@
             android:id="@+id/dialog_course_day_cancel"
             android:layout_width="@dimen/clickable_icon_width"
             android:layout_height="@dimen/clickable_icon_height"
-            android:layout_marginEnd="17dp"
+            android:layout_marginEnd="-16dp"
             android:padding="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView14"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView14"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_course_day_title"
+            app:layout_constraintEnd_toEndOf="@+id/flow"
+            app:layout_constraintTop_toTopOf="@+id/dialog_course_day_title"
             app:srcCompat="@drawable/ic_baseline_cross_24" />
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            app:constraint_referenced_ids="dialog_text_monday,dialog_text_tuesday,dialog_text_wednesday,dialog_text_thursday,dialog_text_friday,dialog_text_saturday,dialog_text_sunday"
+            app:flow_horizontalGap="8dp"
+            app:flow_maxElementsWrap="4"
+            app:flow_verticalGap="24dp"
+            app:flow_wrapMode="aligned"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_course_day_confirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_course_day_title" />
 
         <TextView
             android:id="@+id/dialog_text_monday"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:layout_marginTop="32dp"
             android:background="@drawable/bg_selector_icon_selectable"
             android:gravity="center"
-            android:text="星期一"
+            android:text="@string/monday"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/dialog_text_tuesday"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+            tools:layout_editor_absoluteX="24dp"
+            tools:layout_editor_absoluteY="70dp" />
 
         <TextView
             android:id="@+id/dialog_text_tuesday"
@@ -58,13 +74,11 @@
             android:layout_height="40dp"
             android:background="@drawable/bg_selector_icon_selectable"
             android:gravity="center"
-            android:text="星期二"
+            android:text="@string/tuesday"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/dialog_text_monday"
-            app:layout_constraintEnd_toStartOf="@id/dialog_text_wednesday"
-            app:layout_constraintStart_toEndOf="@id/dialog_text_monday"
-            app:layout_constraintTop_toTopOf="@+id/dialog_text_monday" />
+            tools:layout_editor_absoluteX="6dp"
+            tools:layout_editor_absoluteY="70dp" />
 
         <TextView
             android:id="@+id/dialog_text_wednesday"
@@ -72,27 +86,23 @@
             android:layout_height="40dp"
             android:background="@drawable/bg_selector_icon_selectable"
             android:gravity="center"
-            android:text="星期三"
+            android:text="@string/wednesday"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/dialog_text_tuesday"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/dialog_text_tuesday"
-            app:layout_constraintTop_toTopOf="@+id/dialog_text_tuesday" />
+            tools:layout_editor_absoluteX="66dp"
+            tools:layout_editor_absoluteY="70dp" />
 
         <TextView
             android:id="@+id/dialog_text_thursday"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:layout_marginTop="16dp"
             android:background="@drawable/bg_selector_icon_selectable"
             android:gravity="center"
-            android:text="星期四"
+            android:text="@string/thursday"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/dialog_text_friday"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dialog_text_monday" />
+            tools:layout_editor_absoluteX="126dp"
+            tools:layout_editor_absoluteY="126dp" />
 
         <TextView
             android:id="@+id/dialog_text_friday"
@@ -100,13 +110,11 @@
             android:layout_height="40dp"
             android:background="@drawable/bg_selector_icon_selectable"
             android:gravity="center"
-            android:text="星期五"
+            android:text="@string/friday"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/dialog_text_thursday"
-            app:layout_constraintEnd_toStartOf="@id/dialog_text_saturday"
-            app:layout_constraintStart_toEndOf="@id/dialog_text_thursday"
-            app:layout_constraintTop_toTopOf="@+id/dialog_text_thursday" />
+            tools:layout_editor_absoluteX="186dp"
+            tools:layout_editor_absoluteY="126dp" />
 
         <TextView
             android:id="@+id/dialog_text_saturday"
@@ -114,44 +122,38 @@
             android:layout_height="40dp"
             android:background="@drawable/bg_selector_icon_selectable"
             android:gravity="center"
-            android:text="星期六"
+            android:text="@string/saturday"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/dialog_text_friday"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/dialog_text_friday"
-            app:layout_constraintTop_toTopOf="@+id/dialog_text_friday" />
+            tools:layout_editor_absoluteX="246dp"
+            tools:layout_editor_absoluteY="126dp" />
 
         <TextView
             android:id="@+id/dialog_text_sunday"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:layout_marginTop="16dp"
             android:background="@drawable/bg_selector_icon_selectable"
             android:gravity="center"
-            android:text="星期日"
+            android:text="@string/sunday"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@+id/dialog_text_thursday"
-            app:layout_constraintStart_toStartOf="@+id/dialog_text_thursday"
-            app:layout_constraintTop_toBottomOf="@id/dialog_text_thursday" />
+            tools:layout_editor_absoluteX="306dp"
+            tools:layout_editor_absoluteY="182dp" />
 
         <TextView
             android:id="@+id/dialog_course_day_confirm"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_marginStart="33dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="33dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/bg_selector_rectangle_8_0"
             android:gravity="center"
-            android:text="确认"
+            android:text="@string/confirm"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dialog_text_sunday" />
+            app:layout_constraintEnd_toEndOf="@+id/flow"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/flow"
+            app:layout_constraintTop_toBottomOf="@+id/flow" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

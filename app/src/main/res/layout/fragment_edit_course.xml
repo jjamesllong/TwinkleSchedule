@@ -1,285 +1,459 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
+    android:orientation="vertical"
     tools:context=".fragment.EditCourseFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/fragment_edit_course_toolbar"
         style="@style/Toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="编辑课程" />
+        app:title="@string/title_edit_course_fragment" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
-        app:cardCornerRadius="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_edit_course_toolbar"
-        app:strokeWidth="0dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/materialCardView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
+            <androidx.constraintlayout.helper.widget.Layer
+                android:id="@+id/linearLayout2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_shape_rectangle_16_0"
+                android:backgroundTint="@color/md_theme_light_primaryContainer"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                app:constraint_referenced_ids="edit_course_title_image,edit_course_title,edit_course_classroom_image,edit_course_classroom"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <androidx.constraintlayout.helper.widget.Layer
                 android:id="@+id/edit_course_fragment_title_item"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/bg_selector_rectangle_0_0"
-                android:gravity="center_vertical|end"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_ripple_rectangle_top_16_0"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                app:constraint_referenced_ids="edit_course_title_image,textView8,edit_course_title"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="24dp"
+                tools:layout_editor_absoluteY="32dp" />
 
-                <ImageView
-                    android:id="@+id/imageView10"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:padding="10dp"
-                    tools:src="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/edit_course_title_image"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:padding="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_settings_24"
+                tools:src="@tools:sample/avatars" />
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="名称"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/course_title"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_course_title_image"
+                app:layout_constraintStart_toEndOf="@+id/edit_course_title_image"
+                app:layout_constraintTop_toTopOf="@+id/edit_course_title_image" />
 
-                <TextView
-                    android:id="@+id/edit_course_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:textSize="14sp"
-                    tools:text="高等数学A（一）" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/edit_course_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:maxEms="10"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_course_title_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edit_course_title_image"
+                tools:text="高等数学A（一）" />
 
             <View
-                android:layout_width="match_parent"
+                android:id="@+id/view"
+                android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginStart="48dp"
-                android:layout_marginEnd="16dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_marginTop="8dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@+id/edit_course_title"
+                app:layout_constraintStart_toStartOf="@+id/textView8"
+                app:layout_constraintTop_toBottomOf="@+id/edit_course_title_image" />
 
-            <LinearLayout
+            <androidx.constraintlayout.helper.widget.Layer
                 android:id="@+id/edit_course_fragment_day_item"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/bg_selector_rectangle_0_0"
-                android:gravity="center_vertical|end"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_ripple_rectangle_0_0"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                app:constraint_referenced_ids="imageView13,textView15,edit_course_day"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="24dp"
+                tools:layout_editor_absoluteY="90dp" />
 
-                <ImageView
-                    android:id="@+id/imageView13"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:padding="10dp"
-                    tools:src="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="9dp"
+                android:padding="8dp"
+                app:layout_constraintStart_toStartOf="@+id/edit_course_title_image"
+                app:layout_constraintTop_toBottomOf="@+id/view"
+                app:srcCompat="@drawable/ic_sun"
+                tools:src="@tools:sample/avatars" />
 
-                <TextView
-                    android:id="@+id/textView15"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="星期"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/course_day"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+                app:layout_constraintStart_toStartOf="@+id/textView8"
+                app:layout_constraintTop_toTopOf="@+id/imageView13" />
 
-                <TextView
-                    android:id="@+id/edit_course_day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:textSize="14sp"
-                    tools:text="星期一" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/edit_course_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxEms="10"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+                app:layout_constraintEnd_toEndOf="@+id/edit_course_title"
+                app:layout_constraintTop_toTopOf="@+id/imageView13"
+                tools:text="星期一" />
 
             <View
-                android:layout_width="match_parent"
+                android:id="@+id/view2"
+                android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginStart="48dp"
-                android:layout_marginEnd="16dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_marginTop="8dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@+id/view"
+                app:layout_constraintStart_toStartOf="@+id/view"
+                app:layout_constraintTop_toBottomOf="@+id/imageView13" />
 
-            <LinearLayout
+            <androidx.constraintlayout.helper.widget.Layer
                 android:id="@+id/edit_course_fragment_section_item"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/bg_selector_rectangle_0_0"
-                android:gravity="center_vertical|end"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_ripple_rectangle_0_0"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                app:constraint_referenced_ids="imageView14,textView17,edit_course_section"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="24dp"
+                tools:layout_editor_absoluteY="148dp" />
 
-                <ImageView
-                    android:id="@+id/imageView14"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:padding="10dp"
-                    tools:src="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/imageView14"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="9dp"
+                android:padding="8dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView13"
+                app:layout_constraintTop_toBottomOf="@+id/view2"
+                app:srcCompat="@drawable/ic_chronometer"
+                tools:src="@tools:sample/avatars" />
 
-                <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="节次"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/course_section"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView14"
+                app:layout_constraintStart_toStartOf="@+id/textView15"
+                app:layout_constraintTop_toTopOf="@+id/imageView14" />
 
-                <TextView
-                    android:id="@+id/edit_course_section"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:textSize="14sp"
-                    tools:text="3 - 4 节" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/edit_course_section"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxEms="10"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView14"
+                app:layout_constraintEnd_toEndOf="@+id/edit_course_day"
+                app:layout_constraintTop_toTopOf="@+id/imageView14"
+                tools:text="3 - 4 节" />
 
             <View
-                android:layout_width="match_parent"
+                android:id="@+id/view3"
+                android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginStart="48dp"
-                android:layout_marginEnd="16dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_marginTop="8dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@+id/view2"
+                app:layout_constraintStart_toStartOf="@+id/view2"
+                app:layout_constraintTop_toBottomOf="@+id/imageView14" />
 
-            <LinearLayout
+            <androidx.constraintlayout.helper.widget.Layer
                 android:id="@+id/edit_course_fragment_week_item"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/bg_selector_rectangle_0_0"
-                android:gravity="center_vertical|end"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_ripple_rectangle_0_0"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                app:constraint_referenced_ids="imageView15,textView19,edit_course_week"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="24dp"
+                tools:layout_editor_absoluteY="206dp" />
 
-                <ImageView
-                    android:id="@+id/imageView15"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:padding="10dp"
-                    tools:src="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/imageView15"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="9dp"
+                android:padding="8dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView14"
+                app:layout_constraintTop_toBottomOf="@+id/view3"
+                app:srcCompat="@drawable/ic_calendar"
+                tools:src="@tools:sample/avatars" />
 
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="周次"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/course_week"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView15"
+                app:layout_constraintStart_toStartOf="@+id/textView17"
+                app:layout_constraintTop_toTopOf="@+id/imageView15" />
 
-                <TextView
-                    android:id="@+id/edit_course_week"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:textSize="14sp"
-                    tools:text="[1, 2, 3, 4, 5]" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/edit_course_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxEms="10"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView15"
+                app:layout_constraintEnd_toEndOf="@+id/edit_course_section"
+                app:layout_constraintTop_toTopOf="@+id/imageView15"
+                tools:text="[1, 2, 3, 4, 5]" />
 
             <View
-                android:layout_width="match_parent"
+                android:id="@+id/view4"
+                android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginStart="48dp"
-                android:layout_marginEnd="16dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_marginTop="8dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@+id/view3"
+                app:layout_constraintStart_toStartOf="@+id/view3"
+                app:layout_constraintTop_toBottomOf="@+id/imageView15" />
 
-            <LinearLayout
+            <androidx.constraintlayout.helper.widget.Layer
                 android:id="@+id/edit_course_fragment_teacher_item"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/bg_selector_rectangle_0_0"
-                android:gravity="center_vertical|end"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_ripple_rectangle_0_0"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                app:constraint_referenced_ids="imageView16,fragment_edit_course_teacher,edit_course_teacher"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="24dp"
+                tools:layout_editor_absoluteY="264dp" />
 
-                <ImageView
-                    android:id="@+id/imageView16"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:padding="10dp"
-                    tools:src="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/imageView16"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="9dp"
+                android:padding="8dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView15"
+                app:layout_constraintTop_toBottomOf="@+id/view4"
+                app:srcCompat="@drawable/ic_teacher"
+                tools:src="@tools:sample/avatars" />
 
-                <TextView
-                    android:id="@+id/fragment_edit_course_teacher"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="教师"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/fragment_edit_course_teacher"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/course_teacher"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView16"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toTopOf="@+id/imageView16" />
 
-                <TextView
-                    android:id="@+id/edit_course_teacher"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:textSize="14sp"
-                    tools:text="默认教师" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/edit_course_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxEms="10"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView16"
+                app:layout_constraintEnd_toEndOf="@+id/edit_course_week"
+                app:layout_constraintTop_toTopOf="@+id/imageView16"
+                tools:text="默认教师" />
 
             <View
-                android:layout_width="match_parent"
+                android:id="@+id/view5"
+                android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginStart="48dp"
-                android:layout_marginEnd="16dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_marginTop="8dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@+id/view4"
+                app:layout_constraintStart_toStartOf="@+id/view4"
+                app:layout_constraintTop_toBottomOf="@+id/imageView16" />
 
-            <LinearLayout
+            <androidx.constraintlayout.helper.widget.Layer
                 android:id="@+id/edit_course_fragment_classroom_item"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/bg_selector_rectangle_0_0"
-                android:gravity="center_vertical|end"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_ripple_rectangle_bottom_16_0"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                app:constraint_referenced_ids="edit_course_classroom_image,fragment_edit_course_classroom,edit_course_classroom"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="24dp"
+                tools:layout_editor_absoluteY="318dp" />
 
-                <ImageView
-                    android:id="@+id/imageView17"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:padding="10dp"
-                    tools:src="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/edit_course_classroom_image"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="9dp"
+                android:padding="8dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView16"
+                app:layout_constraintTop_toBottomOf="@+id/view5"
+                app:srcCompat="@drawable/ic_place"
+                tools:src="@tools:sample/avatars" />
 
-                <TextView
-                    android:id="@+id/fragment_edit_course_classroom"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="教室"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/fragment_edit_course_classroom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/course_classroom"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_course_classroom_image"
+                app:layout_constraintStart_toStartOf="@+id/fragment_edit_course_teacher"
+                app:layout_constraintTop_toTopOf="@+id/edit_course_classroom_image" />
 
-                <TextView
-                    android:id="@+id/edit_course_classroom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:textSize="14sp"
-                    tools:text="默认教室" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/edit_course_classroom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxEms="10"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_course_classroom_image"
+                app:layout_constraintEnd_toEndOf="@+id/edit_course_teacher"
+                app:layout_constraintTop_toTopOf="@+id/edit_course_classroom_image"
+                tools:text="默认教室" />
 
-        </LinearLayout>
+            <androidx.constraintlayout.helper.widget.Layer
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_shape_rectangle_16_0"
+                android:backgroundTint="@color/md_theme_light_primaryContainer"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                app:constraint_referenced_ids="edit_course_color_image,edit_course_color"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="24dp"
+                tools:layout_editor_absoluteY="423dp" />
 
-    </com.google.android.material.card.MaterialCardView>
+            <androidx.constraintlayout.helper.widget.Layer
+                android:id="@+id/edit_course_fragment_color_item"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_ripple_rectangle_16_0"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                app:constraint_referenced_ids="edit_course_color_image,textView24,edit_course_color"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="24dp"
+                tools:layout_editor_absoluteY="447dp" />
 
-    <Button
-        android:id="@+id/edit_course_fragment_submit_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="提交"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/edit_course_color_image"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="32dp"
+                android:padding="8dp"
+                app:layout_constraintStart_toStartOf="@+id/edit_course_classroom_image"
+                app:layout_constraintTop_toBottomOf="@+id/edit_course_classroom_image"
+                app:srcCompat="@drawable/ic_baseline_settings_24"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/course_color"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_course_color_image"
+                app:layout_constraintStart_toStartOf="@+id/fragment_edit_course_classroom"
+                app:layout_constraintTop_toTopOf="@+id/edit_course_color_image" />
+
+            <TextView
+                android:id="@+id/edit_course_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxEms="10"
+                app:drawableLeftCompat="@drawable/ic_color_indicator"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_course_color_image"
+                app:layout_constraintEnd_toEndOf="@+id/edit_course_classroom"
+                app:layout_constraintTop_toTopOf="@+id/edit_course_color_image"
+                tools:text="FFAD6453" />
+
+            <Button
+                android:id="@+id/edit_course_fragment_submit_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/submit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_course_color_image" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</LinearLayout>

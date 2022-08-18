@@ -14,17 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TwinkleSchedule"
         tools:targetApi="s">
-        <activity
-            android:name=".activity.SecondActivity"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.SecondActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

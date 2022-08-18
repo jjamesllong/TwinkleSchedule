@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_shape_rectangle_16_0"
     android:backgroundTint="?android:attr/colorBackground">
 
@@ -14,8 +14,8 @@
             android:id="@+id/dialog_course_section_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="选择节次"
+            android:layout_marginTop="16dp"
+            android:text="@string/title_course_section_dialog"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -25,98 +25,90 @@
 
         <ImageView
             android:id="@+id/dialog_course_section_cancel"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/clickable_icon_width"
+            android:layout_height="@dimen/clickable_icon_height"
             android:layout_marginEnd="16dp"
+            android:contentDescription="@string/close"
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/dialog_course_section_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/dialog_course_section_title"
             app:srcCompat="@drawable/ic_baseline_cross_24" />
 
-        <FrameLayout
-            android:id="@+id/start_section_wheel_wrapper"
+        <com.github.gzuliyujiang.wheelview.widget.WheelView
+            android:id="@+id/dialog_course_section_start_section_wheel"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="160dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/bg_shape_rectangle_16_0"
             android:backgroundTint="@color/md_theme_light_surfaceVariant"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/end_section_wheel_wrapper"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_course_name_end_section_wheel"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dialog_course_section_title">
+            app:layout_constraintTop_toBottomOf="@+id/dialog_course_section_title"
+            app:wheel_cyclicEnabled="true"
+            app:wheel_indicatorColor="?attr/colorSecondary"
+            app:wheel_itemTextBoldSelected="true"
+            app:wheel_itemTextColorSelected="?attr/colorPrimary" />
 
-            <com.contrarywind.view.WheelView
-                android:id="@+id/start_section_wheel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/end_section_wheel_wrapper"
+        <com.github.gzuliyujiang.wheelview.widget.WheelView
+            android:id="@+id/dialog_course_name_end_section_wheel"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/bg_shape_rectangle_16_0"
             android:backgroundTint="@color/md_theme_light_surfaceVariant"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/start_section_wheel_wrapper"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_course_section_start_section_wheel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@+id/start_section_wheel_wrapper"
-            app:layout_constraintTop_toTopOf="@+id/start_section_wheel_wrapper">
-
-            <com.contrarywind.view.WheelView
-                android:id="@+id/end_section_wheel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </FrameLayout>
+            app:layout_constraintStart_toEndOf="@+id/dialog_course_section_start_section_wheel"
+            app:layout_constraintTop_toTopOf="@+id/dialog_course_section_start_section_wheel"
+            app:wheel_cyclicEnabled="true"
+            app:wheel_indicatorColor="?attr/colorSecondary"
+            app:wheel_itemTextBoldSelected="true"
+            app:wheel_itemTextColorSelected="?attr/colorPrimary" />
 
         <TextView
-            android:id="@+id/start_section_hint"
+            android:id="@+id/dialog_course_section_start_section_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="开始节"
-            app:layout_constraintEnd_toEndOf="@+id/start_section_wheel_wrapper"
-            app:layout_constraintStart_toStartOf="@+id/start_section_wheel_wrapper"
-            app:layout_constraintTop_toBottomOf="@+id/start_section_wheel_wrapper" />
+            android:text="@string/dialog_course_section_start_section"
+            app:layout_constraintEnd_toEndOf="@+id/dialog_course_section_start_section_wheel"
+            app:layout_constraintStart_toStartOf="@+id/dialog_course_section_start_section_wheel"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_course_section_start_section_wheel" />
 
         <TextView
-            android:id="@+id/end_section_hint"
+            android:id="@+id/dialog_course_section_end_section_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="结束节"
-            app:layout_constraintEnd_toEndOf="@+id/end_section_wheel_wrapper"
-            app:layout_constraintStart_toStartOf="@+id/end_section_wheel_wrapper"
-            app:layout_constraintTop_toBottomOf="@+id/end_section_wheel_wrapper" />
+            android:text="@string/dialog_course_section_end_section"
+            app:layout_constraintEnd_toEndOf="@+id/dialog_course_name_end_section_wheel"
+            app:layout_constraintStart_toStartOf="@+id/dialog_course_name_end_section_wheel"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_course_name_end_section_wheel" />
 
         <TextView
             android:id="@+id/dialog_course_section_confirm"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/bg_selector_rectangle_8_0"
             android:gravity="center"
-            android:text="确认"
+            android:text="@string/confirm"
             android:textColor="?android:attr/textColorLink"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/end_section_hint" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_course_section_end_section_hint" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

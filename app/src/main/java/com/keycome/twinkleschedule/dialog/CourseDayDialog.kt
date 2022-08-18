@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.databinding.DialogCourseDayBinding
-import com.keycome.twinkleschedule.delivery.Drop
 import com.keycome.twinkleschedule.delivery.Pipette
+import com.keycome.twinkleschedule.delivery.Pipette.distribute
 import com.keycome.twinkleschedule.extension.acquire
+import com.keycome.twinkleschedule.util.const.KEY_COURSE_DAY
+import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_END_DAY
 import kotlinx.coroutines.launch
 
 class CourseDayDialog : BaseDialogFragment() {
@@ -17,9 +20,9 @@ class CourseDayDialog : BaseDialogFragment() {
     private var _binding: DialogCourseDayBinding? = null
     val binding get() = _binding.acquire()
 
-    private var previousSelectedDay = 0
+    private var endDay = 0
 
-    private val dayInItem by lazy { arguments?.getInt(DayInItem) ?: 0 }
+    private var selectedDay = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +30,7 @@ class CourseDayDialog : BaseDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        _binding = DialogCourseDayBinding.inflate(layoutInflater, container, false)
+        _binding = DialogCourseDayBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -43,32 +46,31 @@ class CourseDayDialog : BaseDialogFragment() {
             binding.dialogTextSaturday,
             binding.dialogTextSunday
         )
-        if (savedInstanceState == null) {
-            if (dayInItem != 0) {
-                dayList[dayInItem - 1].isSelected = true
-                previousSelectedDay = dayInItem
-            }
-        } else {
-            val day = savedInstanceState.getInt(PreviousSelectedDay)
-            if (day != 0) {
-                dayList[day - 1].isSelected = true
-                previousSelectedDay = day
-            }
-        }
+        endDay = savedInstanceState?.getInt(
+            KEY_SCHEDULE_END_DAY
+        ) ?: arguments?.getInt(
+            KEY_SCHEDULE_END_DAY
+        ) ?: 0
+        val s = savedInstanceState?.getInt(
+            KEY_COURSE_DAY
+        ) ?: arguments?.getInt(
+            KEY_COURSE_DAY
+        ) ?: 0
+        setDaySelected(s, dayList)
         for (i in dayList.indices) {
-            dayList[i].setOnClickListener {
-                it.isSelected = true
-                if (previousSelectedDay != 0) {
-                    dayList[previousSelectedDay - 1].isSelected = false
+            if (i < endDay) {
+                dayList[i].setOnClickListener {
+                    setDaySelected(i + 1, dayList)
                 }
-                previousSelectedDay = i + 1
+            } else {
+                dayList[i].visibility = View.INVISIBLE
             }
         }
         binding.dialogCourseDayCancel.setOnClickListener { dismiss() }
         binding.dialogCourseDayConfirm.setOnClickListener {
-            if (previousSelectedDay != 0) {
+            if (selectedDay != 0) {
                 lifecycleScope.launch {
-                    Pipette.forInt.emit(Drop(DayInItem, previousSelectedDay))
+                    Pipette.forInt.distribute(KEY_COURSE_DAY) { selectedDay }
                     dismiss()
                 }
             }
@@ -77,7 +79,8 @@ class CourseDayDialog : BaseDialogFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(PreviousSelectedDay, previousSelectedDay)
+        outState.putInt(KEY_SCHEDULE_END_DAY, endDay)
+        outState.putInt(KEY_COURSE_DAY, selectedDay)
     }
 
     override fun onDestroyView() {
@@ -85,9 +88,15 @@ class CourseDayDialog : BaseDialogFragment() {
         _binding = null
     }
 
-    companion object {
-
-        const val PreviousSelectedDay = "saved_previous_selected_day"
-        const val DayInItem = "day_in_item"
+    private fun setDaySelected(day: Int, list: List<TextView>) {
+        val s = selectedDay
+        if (s == day) return
+        if (s != 0) {
+            list[s - 1].isSelected = false
+        }
+        if (day != 0) {
+            list[day - 1].isSelected = true
+        }
+        selectedDay = day
     }
 }

@@ -39,11 +39,11 @@ class SelectToManageCourseFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val scheduleListAdapter = ScheduleListAdapter {
-            val id = viewModel.getScheduleIdByIndex(it) ?: 0L
-            if (id != 0L) {
+            val s = viewModel.getScheduleByIndex(it)
+            s?.also {
                 navController.navigate(
                     R.id.action_selectToManageCourseFragment_to_courseListFragment,
-                    Bundle().apply { putLong(KEY_SCHEDULE_ID, id) }
+                    Bundle().apply { putLong(KEY_SCHEDULE_ID, it.scheduleId) }
                 )
             }
         }

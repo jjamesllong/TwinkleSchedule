@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.extension.fragment
+package com.keycome.twinkleschedule.extension.fragments
 
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment

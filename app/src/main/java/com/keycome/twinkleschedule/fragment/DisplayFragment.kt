@@ -59,31 +59,31 @@ class DisplayFragment : BaseFragment() {
             when (status) {
                 DisplayViewModel.NOTHING ->
                     binding.fragmentDisplayCoursesToolbar.title = getString(
-                        R.string.fragment_display_courses_noting
+                        R.string.fragment_display_noting
                     )
                 DisplayViewModel.UPCOMING ->
                     binding.fragmentDisplayCoursesToolbar.subtitle = getString(
-                        R.string.fragment_display_courses_upcoming
+                        R.string.fragment_display_upcoming
                     )
                 DisplayViewModel.ENDED ->
                     binding.fragmentDisplayCoursesToolbar.subtitle = getString(
-                        R.string.fragment_display_courses_ended
+                        R.string.fragment_display_ended
                     )
             }
         }
         viewModel.liveWeekSelected.observe(viewLifecycleOwner) { week ->
             if (week != 0) {
                 binding.fragmentDisplayCoursesToolbar.title = getString(
-                    R.string.fragment_display_courses_week, week
+                    R.string.fragment_display_week, week
                 )
                 val status = viewModel.getDisplayStatus()
                 if (status > 0) {
                     binding.fragmentDisplayCoursesToolbar.subtitle = when {
                         week < status -> getString(
-                            R.string.fragment_display_courses_ended
+                            R.string.fragment_display_ended
                         )
                         week > status -> getString(
-                            R.string.fragment_display_courses_upcoming
+                            R.string.fragment_display_upcoming
                         )
                         else -> null
                     }

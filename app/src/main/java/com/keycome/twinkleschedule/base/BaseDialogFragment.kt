@@ -8,8 +8,8 @@ import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.*
 import com.keycome.twinkleschedule.R
-import com.keycome.twinkleschedule.extension.fragment.activityViewModelDelegate
-import com.keycome.twinkleschedule.extension.fragment.viewModelDelegate
+import com.keycome.twinkleschedule.extension.fragments.activityViewModelDelegate
+import com.keycome.twinkleschedule.extension.fragments.viewModelDelegate
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

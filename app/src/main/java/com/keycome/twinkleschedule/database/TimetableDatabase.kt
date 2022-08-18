@@ -6,12 +6,13 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.keycome.twinkleschedule.App
 import com.keycome.twinkleschedule.record.timetable.Course
+import com.keycome.twinkleschedule.record.timetable.CourseDecoration
 import com.keycome.twinkleschedule.record.timetable.DailyRoutine
 import com.keycome.twinkleschedule.record.timetable.Schedule
 
 @Database(
-    entities = [Schedule::class, Course::class, DailyRoutine::class],
-    version = 1,
+    entities = [Schedule::class, Course::class, DailyRoutine::class, CourseDecoration::class],
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converter::class)
@@ -20,6 +21,7 @@ abstract class TimetableDatabase : RoomDatabase() {
     abstract fun scheduleDao(): ScheduleDao
     abstract fun courseDao(): CourseDao
     abstract fun dailyRoutineDao(): DailyRoutineDao
+    abstract fun courseDecorationDao(): CourseDecorationDao
 
     companion object {
 

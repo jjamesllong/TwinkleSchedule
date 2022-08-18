@@ -9,7 +9,7 @@ import com.keycome.twinkleschedule.preference.GlobalPreference
 import com.keycome.twinkleschedule.record.timetable.Course
 import com.keycome.twinkleschedule.record.timetable.Schedule
 import com.keycome.twinkleschedule.record.timetable.TimetableDescriber
-import com.keycome.twinkleschedule.repository.CourseRepository
+import com.keycome.twinkleschedule.repository.CourseDecorationRepository
 import com.keycome.twinkleschedule.repository.DailyRoutineRepository
 import com.keycome.twinkleschedule.repository.ScheduleRepository
 import kotlinx.coroutines.async
@@ -60,7 +60,9 @@ class DisplayViewModel : BaseViewModel() {
             viewModelScope.launch {
                 val s = liveSchedule.value!!
                 val routines = async { DailyRoutineRepository.queryDailyRoutines(s.scheduleId) }
-                val courses = async { CourseRepository.queryCoursesOfSchedule(s.scheduleId) }
+                val courses = async {
+                    CourseDecorationRepository.queryCoursesAppearance(s.scheduleId)
+                }
                 _liveDescriber.value = TimetableDescriber(s, routines.await(), courses.await())
             }
         } else {
@@ -99,7 +101,18 @@ class DisplayViewModel : BaseViewModel() {
     }
 
     fun getDisplayCourseById(id: Long): Course? {
-        return liveDescriber.value?.courses?.find { it.courseId == id }
+        return liveDescriber.value?.courses?.find { it.courseId == id }?.let {
+            Course(
+                it.courseId,
+                it.parentScheduleId,
+                it.title,
+                it.day,
+                it.section,
+                it.week,
+                it.teacher,
+                it.classroom,
+            )
+        }
     }
 
     companion object {

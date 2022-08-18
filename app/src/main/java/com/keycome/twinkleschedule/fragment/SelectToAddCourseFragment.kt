@@ -11,6 +11,9 @@ import com.keycome.twinkleschedule.adapter.ScheduleListAdapter
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentScheduleListBinding
 import com.keycome.twinkleschedule.model.ScheduleListViewModel
+import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_END_DAY
+import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_END_SECTION
+import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_END_WEEK
 import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_ID
 
 class SelectToAddCourseFragment : BaseFragment() {
@@ -23,12 +26,15 @@ class SelectToAddCourseFragment : BaseFragment() {
     private val navController by lazy { findNavController() }
 
     private val event: (Int) -> Unit = { position: Int ->
-        viewModel.getScheduleIdByIndex(position)?.let { id ->
+        viewModel.getScheduleByIndex(position)?.let { s ->
             navController.navigate(
                 R.id.action_selectToAddCourseFragment_to_editCourseFragment,
                 Bundle().apply {
-                    putLong(KEY_SCHEDULE_ID, id)
                     putBoolean(EditCourseFragment.KEY_IS_UPDATE, false)
+                    putLong(KEY_SCHEDULE_ID, s.scheduleId)
+                    putInt(KEY_SCHEDULE_END_DAY, s.endDay)
+                    putInt(KEY_SCHEDULE_END_SECTION, s.endSection)
+                    putInt(KEY_SCHEDULE_END_WEEK, s.endWeek)
                 }
             )
         }

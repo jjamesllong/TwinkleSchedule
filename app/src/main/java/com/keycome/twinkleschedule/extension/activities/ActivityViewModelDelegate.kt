@@ -1,4 +1,4 @@
-package com.keycome.twinkleschedule.extension.activity
+package com.keycome.twinkleschedule.extension.activities
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.ViewModelProvider

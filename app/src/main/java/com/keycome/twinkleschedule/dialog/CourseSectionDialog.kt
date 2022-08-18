@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import com.keycome.twinkleschedule.adapter.SectionWheelAdapter
+import com.github.gzuliyujiang.wheelview.contract.OnWheelChangedListener
+import com.github.gzuliyujiang.wheelview.widget.WheelView
 import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.databinding.DialogCourseSectionBinding
 import com.keycome.twinkleschedule.delivery.Pipette
 import com.keycome.twinkleschedule.delivery.Pipette.distribute
 import com.keycome.twinkleschedule.extension.acquire
-import com.keycome.twinkleschedule.util.const.KEY_COURSE_SECTION
+import com.keycome.twinkleschedule.extension.ints.storeWith
+import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_END_SECTION
 import kotlinx.coroutines.launch
 
 class CourseSectionDialog : BaseDialogFragment() {
@@ -19,8 +21,11 @@ class CourseSectionDialog : BaseDialogFragment() {
     private var _binding: DialogCourseSectionBinding? = null
     val binding get() = _binding.acquire()
 
-    private val startSectionInItem by lazy { arguments?.getInt(StartSectionInItem) ?: 0 }
-    private val endSectionInItem by lazy { arguments?.getInt(EndSectionInItem) ?: 0 }
+    private var courseSection = 0
+
+    private var startSection = 0
+
+    private var endSection = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,57 +39,86 @@ class CourseSectionDialog : BaseDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (savedInstanceState == null) {
-            if (startSectionInItem != 0) {
-                binding.startSectionWheel.currentItem = startSectionInItem - 1
-            }
-            if (endSectionInItem != 0) {
-                binding.endSectionWheel.currentItem = endSectionInItem - 1
-            }
 
+        val courseSection = savedInstanceState?.getInt(
+            KEY_SCHEDULE_END_SECTION
+        ) ?: arguments?.getInt(
+            KEY_SCHEDULE_END_SECTION
+        ) ?: 0
+        startSection = savedInstanceState?.getInt(
+            KEY_START_SECTION
+        ) ?: arguments?.getInt(
+            KEY_START_SECTION
+        ) ?: 0
+        endSection = savedInstanceState?.getInt(
+            KEY_END_SECTION
+        ) ?: arguments?.getInt(
+            KEY_END_SECTION
+        ) ?: 0
+        val range = if (courseSection == 0) emptyList() else (1..courseSection).toList()
+        binding.dialogCourseSectionStartSectionWheel.data = range
+        binding.dialogCourseNameEndSectionWheel.data = range
+        if (range.isEmpty()) {
+            startSection = 0
+            endSection = 0
         } else {
-            val savedStartIndex = savedInstanceState.getInt(StartSection)
-            val savedEndIndex = savedInstanceState.getInt(EndSection)
-            if (savedStartIndex != 0) {
-                binding.startSectionWheel.currentItem = savedStartIndex
+            if (startSection == 0) {
+                startSection = 1
             }
-            if (savedEndIndex != 0) {
-                binding.endSectionWheel.currentItem = savedEndIndex
+            if (endSection == 0) {
+                endSection = 1
             }
+            binding.dialogCourseSectionStartSectionWheel.scrollTo(startSection - 1)
+            binding.dialogCourseNameEndSectionWheel.scrollTo(endSection - 1)
         }
-        binding.dialogCourseSectionCancel.setOnClickListener { dismiss() }
-        val startAdapter = SectionWheelAdapter()
-        val endAdapter = SectionWheelAdapter()
-        binding.startSectionWheel.apply {
-            setCyclic(true)
-            adapter = startAdapter
-            setOnItemSelectedListener {
-                if (binding.endSectionWheel.currentItem < it) {
-                    binding.endSectionWheel.currentItem = it
+        binding.dialogCourseSectionStartSectionWheel.setOnWheelChangedListener(
+            object : OnWheelChangedListener {
+
+                override fun onWheelScrolled(view: WheelView?, offset: Int) {
                 }
-            }
-        }
-        binding.endSectionWheel.apply {
-            setCyclic(true)
-            adapter = endAdapter
-            setOnItemSelectedListener {
-                if (binding.startSectionWheel.currentItem > it) {
-                    binding.startSectionWheel.currentItem = it
-                }
-            }
-        }
-        binding.dialogCourseSectionConfirm.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launch {
-                val startSection = startAdapter.getItem(binding.startSectionWheel.currentItem)
-                val endSection = endAdapter.getItem(binding.endSectionWheel.currentItem)
-                if (endSection >= startSection) {
-                    Pipette.forString.distribute(KEY_COURSE_SECTION) {
-                        StringBuilder()
-                            .append(startSection).append(SEPARATOR)
-                            .append(endSection)
-                            .toString()
+
+                override fun onWheelSelected(view: WheelView?, position: Int) {
+                    startSection = position + 1
+                    if (startSection > endSection) {
+                        binding.dialogCourseNameEndSectionWheel.smoothScrollTo(position)
+                        endSection = startSection
                     }
                 }
+
+                override fun onWheelScrollStateChanged(view: WheelView?, state: Int) {
+                }
+
+                override fun onWheelLoopFinished(view: WheelView?) {
+                }
+
+            }
+        )
+        binding.dialogCourseNameEndSectionWheel.setOnWheelChangedListener(
+            object : OnWheelChangedListener {
+                override fun onWheelScrolled(view: WheelView?, offset: Int) {
+                }
+
+                override fun onWheelSelected(view: WheelView?, position: Int) {
+                    endSection = position + 1
+                    if (endSection < startSection) {
+                        binding.dialogCourseSectionStartSectionWheel.smoothScrollTo(position)
+                        startSection = endSection
+                    }
+                }
+
+                override fun onWheelScrollStateChanged(view: WheelView?, state: Int) {
+                }
+
+                override fun onWheelLoopFinished(view: WheelView?) {
+                }
+
+            }
+        )
+        binding.dialogCourseSectionCancel.setOnClickListener { dismiss() }
+        binding.dialogCourseSectionConfirm.setOnClickListener {
+            val x = startSection storeWith endSection
+            lifecycleScope.launch {
+                Pipette.forInt.distribute(KEY_SECTION_PAIR) { x }
                 dismiss()
             }
         }
@@ -92,8 +126,11 @@ class CourseSectionDialog : BaseDialogFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(StartSection, binding.startSectionWheel.currentItem)
-        outState.putInt(EndSection, binding.endSectionWheel.currentItem)
+        outState.apply {
+            putInt(KEY_SCHEDULE_END_SECTION, courseSection)
+            putInt(KEY_START_SECTION, startSection)
+            putInt(KEY_END_SECTION, endSection)
+        }
     }
 
     override fun onDestroyView() {
@@ -103,11 +140,9 @@ class CourseSectionDialog : BaseDialogFragment() {
 
     companion object {
 
-        const val SEPARATOR = '~'
-        const val StartSection = "course_start_section"
-        const val EndSection = "course_end_section"
-        const val StartSectionInItem = "course_start_section_in_item"
-        const val EndSectionInItem = "course_end_section_in_item"
+        const val KEY_SECTION_PAIR = "section_pair"
+        const val KEY_START_SECTION = "start_section"
+        const val KEY_END_SECTION = "end_section"
     }
 
 }

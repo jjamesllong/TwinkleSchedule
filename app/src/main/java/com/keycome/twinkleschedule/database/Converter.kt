@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken
 import com.keycome.twinkleschedule.record.interval.Date
 import com.keycome.twinkleschedule.record.interval.Day
 import com.keycome.twinkleschedule.record.timetable.Section
-import com.keycome.twinkleschedule.record.timetable.TimeLine
 
 class Converter {
 
@@ -21,14 +20,6 @@ class Converter {
     fun dateConverter(date: Date): String {
         return gSon.toJson(date)
     }
-
-    @TypeConverter
-    fun timeLineRevert(timeLineString: String): Set<TimeLine> =
-        gSon.fromJson(timeLineString, object : TypeToken<Set<TimeLine>>() {}.type)
-
-    @TypeConverter
-    fun timeLineConvert(timeLine: Set<TimeLine>): String =
-        gSon.toJson(timeLine)
 
     @TypeConverter
     fun dayRevert(dayString: String) = try {
@@ -46,12 +37,6 @@ class Converter {
 
     @TypeConverter
     fun intListConvert(intList: List<Int>): String = gSon.toJson(intList)
-
-    @TypeConverter
-    fun lastWeekRevert(gSonString: String): Int {
-        val weekList: List<Int> = gSon.fromJson(gSonString, object : TypeToken<List<Int>>() {}.type)
-        return weekList.last()
-    }
 
     @TypeConverter
     fun sectionListConvert(sectionList: List<Section>): String = gSon.toJson(sectionList)

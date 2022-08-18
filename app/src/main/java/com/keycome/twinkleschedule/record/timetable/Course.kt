@@ -57,7 +57,13 @@ data class Course(
         return 0
     }
 
-    companion object CREATOR {
+    fun toDesignText(): String = StringBuilder()
+        .append(title)
+        .append("\n@")
+        .append(classroom)
+        .toString()
+
+    companion object {
 
         @JvmField
         val CREATOR = object : Parcelable.Creator<Course> {

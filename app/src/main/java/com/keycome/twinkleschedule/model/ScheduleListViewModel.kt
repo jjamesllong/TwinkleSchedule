@@ -29,7 +29,7 @@ class ScheduleListViewModel : BaseViewModel() {
         }
     }
 
-    fun getScheduleIdByIndex(index: Int): Long? {
-        return _liveScheduleList.value?.get(index)?.scheduleId
+    fun getScheduleByIndex(index: Int): Schedule? {
+        return _liveScheduleList.value?.get(index)
     }
 }

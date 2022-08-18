@@ -26,10 +26,10 @@ class SelectToManageScheduleFragment : BaseFragment() {
     private val navController by lazy { findNavController() }
 
     private val adapterEvent: (Int) -> Unit = { position ->
-        viewModel.getScheduleIdByIndex(position)?.let { id ->
+        viewModel.getScheduleByIndex(position)?.also { s ->
             navController.navigate(
                 R.id.action_manageScheduleFragment_to_scheduleDetailsDialog,
-                Bundle().apply { putLong(ScheduleDetailsDialog.KEY_SCHEDULE, id) }
+                Bundle().apply { putLong(ScheduleDetailsDialog.KEY_SCHEDULE, s.scheduleId) }
             )
         }
     }

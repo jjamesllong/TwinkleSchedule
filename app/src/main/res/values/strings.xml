@@ -1,35 +1,66 @@
 <resources>
     <string name="app_name">闪课表</string>
 
-    <!--  Strings used for second route bar  -->
+    <!--  Strings used for normal description  -->
+    <string name="confirm">确认</string>
+    <string name="determine">确定</string>
+    <string name="cancel">取消</string>
+    <string name="back">返回</string>
+    <string name="close">关闭</string>
+    <string name="error">错误</string>
+    <string name="submit">提交</string>
+    <string name="monday">星期一</string>
+    <string name="tuesday">星期二</string>
+    <string name="wednesday">星期三</string>
+    <string name="thursday">星期四</string>
+    <string name="friday">星期五</string>
+    <string name="saturday">星期六</string>
+    <string name="sunday">星期日</string>
+
+    <!--  Strings used for course elements  -->
+    <string name="course_title">名称</string>
+    <string name="course_day">星期</string>
+    <string name="course_section">节次</string>
+    <string name="course_classroom">教室</string>
+    <string name="course_teacher">教师</string>
+    <string name="course_week">周次</string>
+
+    <!--  Strings used for course decoration elements -->
+    <string name="course_color">颜色</string>
+
+    <!--  Strings used for labels  -->
     <string name="title_display_fragment">主页</string>
     <string name="title_settings_fragment">设置</string>
-
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-
-    <string name="confirm">确定</string>
-    <string name="error">错误</string>
+    <string name="title_edit_course_fragment">编辑课程</string>
+    <string name="title_course_name_dialog">课程名称</string>
+    <string name="title_course_day_dialog">选择星期</string>
+    <string name="title_course_section_dialog">选择节次</string>
+    <string name="title_course_week_dialog">选择周次</string>
+    <string name="title_course_color_fragment">课程颜色</string>
 
     <!--  Strings used for FragmentDisplay  -->
-    <string name="fragment_display_courses_week">第 %1$d 周</string>
-    <string name="fragment_display_courses_not_this_week">非本周</string>
-    <string name="fragment_display_courses_noting">无课表</string>
-    <string name="fragment_display_courses_upcoming">未开始</string>
-    <string name="fragment_display_courses_ended">已结束</string>
+    <string name="fragment_display_week">第 %1$d 周</string>
+    <string name="fragment_display_not_this_week">非本周</string>
+    <string name="fragment_display_noting">无课表</string>
+    <string name="fragment_display_upcoming">未开始</string>
+    <string name="fragment_display_ended">已结束</string>
 
-    <!--  Strings use for FragmentCourseDetails  -->
-    <string name="fragment_course_details_tint_day">星期</string>
-    <string name="fragment_course_details_tint_section">节次</string>
-    <string name="fragment_course_details_tint_classroom">教室</string>
-    <string name="fragment_course_details_tint_teacher">教师</string>
-    <string name="fragment_course_details_tint_week">周次</string>
+    <!--  Strings used for DialogCourseName  -->
+    <string name="dialog_course_name_hint">课程名称</string>
+    <string name="dialog_course_name_text_overflow">文本长度溢出</string>
+
+    <!--  Strings used for DialogCourseSection  -->
+    <string name="dialog_course_section_start_section">开始节</string>
+    <string name="dialog_course_section_end_section">结束节</string>
+
+    <!--  Strings used for DialogCourseWeek  -->
+    <string name="dialog_course_week_select_all">全选</string>
+    <string name="dialog_course_week_select_none">全不选</string>
+    <string name="dialog_course_week_even_week">双周</string>
+    <string name="dialog_course_week_odd_week">单周</string>
+
+    <!--  Strings used for CourseColorFragment  -->
+    <string name="fragment_course_color_selected_color">已选择的颜色：</string>
 
     <string name="dialog_course_duration_progress">%1$d 分钟</string>
     <string name="adapter_edit_daily_routine_header_node">%1$d / %2$d</string>

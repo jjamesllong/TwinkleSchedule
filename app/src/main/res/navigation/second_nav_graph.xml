@@ -7,7 +7,8 @@
     <fragment
         android:id="@+id/displayFragment"
         android:name="com.keycome.twinkleschedule.fragment.DisplayFragment"
-        android:label="DisplayFragment">
+        android:label="DisplayFragment"
+        tools:layout="@layout/fragment_display">
         <action
             android:id="@+id/action_displayFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
@@ -52,7 +53,8 @@
     <dialog
         android:id="@+id/courseDetailsDialog"
         android:name="com.keycome.twinkleschedule.dialog.CourseDetailsDialog"
-        android:label="CourseDetailsDialog" />
+        android:label="CourseDetailsDialog"
+        tools:layout="@layout/dialog_course_details" />
     <fragment
         android:id="@+id/scheduleCreateWayFragment"
         android:name="com.keycome.twinkleschedule.fragment.ScheduleCreateWayFragment"
@@ -103,11 +105,13 @@
     <dialog
         android:id="@+id/scheduleNameDialog"
         android:name="com.keycome.twinkleschedule.dialog.ScheduleNameDialog"
-        android:label="ScheduleNameDialog" />
+        android:label="ScheduleNameDialog"
+        tools:layout="@layout/dialog_edit_text" />
     <dialog
         android:id="@+id/dailyCoursesDialog"
         android:name="com.keycome.twinkleschedule.dialog.DailyCoursesDialog"
-        android:label="DailyCoursesDialog" />
+        android:label="DailyCoursesDialog"
+        tools:layout="@layout/dialog_edit_text" />
     <dialog
         android:id="@+id/endDayDialog"
         android:name="com.keycome.twinkleschedule.dialog.EndDayDialog"
@@ -163,7 +167,8 @@
     <fragment
         android:id="@+id/editCourseFragment"
         android:name="com.keycome.twinkleschedule.fragment.EditCourseFragment"
-        android:label="EditCourseFragment">
+        android:label="EditCourseFragment"
+        tools:layout="@layout/fragment_edit_course">
         <action
             android:id="@+id/action_editCourseFragment_to_courseNameDialog"
             app:destination="@id/courseNameDialog" />
@@ -182,6 +187,13 @@
         <action
             android:id="@+id/action_editCourseFragment_to_classroomDialog"
             app:destination="@id/classroomDialog" />
+        <action
+            android:id="@+id/action_editCourseFragment_to_courseColorFragment"
+            app:destination="@id/courseColorFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
     <fragment
         android:id="@+id/selectToAddCourseFragment"
@@ -221,9 +233,15 @@
         android:name="com.keycome.twinkleschedule.dialog.ClassroomDialog"
         android:label="ClassroomDialog" />
     <fragment
+        android:id="@+id/courseColorFragment"
+        android:name="com.keycome.twinkleschedule.fragment.CourseColorFragment"
+        android:label="CourseColorFragment"
+        tools:layout="@layout/fragment_course_color" />
+    <fragment
         android:id="@+id/selectToManageCourseFragment"
         android:name="com.keycome.twinkleschedule.fragment.SelectToManageCourseFragment"
-        android:label="SelectToManageCourseFragment">
+        android:label="SelectToManageCourseFragment"
+        tools:layout="@layout/fragment_schedule_list">
         <action
             android:id="@+id/action_selectToManageCourseFragment_to_courseListFragment"
             app:destination="@id/courseListFragment"

@@ -17,9 +17,9 @@ abstract class EditTextDialog : BaseDialogFragment() {
     val binding get() = _binding.acquire()
 
     var editText: Editable
-        get() = binding.editTextDialogField.text
+        get() = binding.editTextDialogText.text ?: Editable.Factory.getInstance().newEditable("")
         set(param) {
-            binding.editTextDialogField.text = param
+            binding.editTextDialogText.text = param
         }
 
     var inputType = INPUT_TYPE_SHORT_TEXT
@@ -27,9 +27,9 @@ abstract class EditTextDialog : BaseDialogFragment() {
             field = param
             when (param) {
                 INPUT_TYPE_SHORT_TEXT ->
-                    binding.editTextDialogField.inputType = InputType.TYPE_CLASS_TEXT
+                    binding.editTextDialogText.inputType = InputType.TYPE_CLASS_TEXT
                 INPUT_TYPE_NUMBER ->
-                    binding.editTextDialogField.inputType = InputType.TYPE_CLASS_NUMBER
+                    binding.editTextDialogText.inputType = InputType.TYPE_CLASS_NUMBER
             }
         }
 
@@ -37,6 +37,12 @@ abstract class EditTextDialog : BaseDialogFragment() {
         set(param) {
             field = param
             binding.editTextDialogTitle.text = param
+        }
+
+    var hint = "hint"
+        set(param) {
+            field = param
+            binding.editTextDialogField.hint = param
         }
 
     var confirm = "OK"
@@ -81,13 +87,11 @@ abstract class EditTextDialog : BaseDialogFragment() {
     }
 
     fun textWatcher(action: TextWatcherScope.() -> Unit) {
-        val scopeImpl = TextWatcherScopeImpl(binding.editTextDialogField)
+        val scopeImpl = TextWatcherScopeImpl(binding.editTextDialogText)
         scopeImpl.action()
     }
 
     companion object {
-
-        const val TAG = "EditTextDialog"
 
         const val INPUT_TYPE_NUMBER = 1
         const val INPUT_TYPE_SHORT_TEXT = 2

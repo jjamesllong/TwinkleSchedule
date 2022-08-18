@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.viewbinding.ViewBinding
-import com.keycome.twinkleschedule.extension.fragment.activityViewModelDelegate
-import com.keycome.twinkleschedule.extension.fragment.viewModelDelegate
+import com.keycome.twinkleschedule.extension.fragments.activityViewModelDelegate
+import com.keycome.twinkleschedule.extension.fragments.viewModelDelegate
 import com.keycome.twinkleschedule.util.TextColor
 
 abstract class BaseFragment : Fragment() {

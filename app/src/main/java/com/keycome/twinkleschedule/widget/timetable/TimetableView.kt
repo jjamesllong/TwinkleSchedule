@@ -2,33 +2,36 @@ package com.keycome.twinkleschedule.widget.timetable
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.StateListDrawable
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
-import com.keycome.twinkleschedule.R
 
 class TimetableView : ConstraintLayout {
 
-    var sectionBarWidth = 0
-    var dayBarHeight = 0
+    var topBarMargin = 0
+    var sideBarMargin = 0
 
     var row = 0
         set(value) {
-            if (field != value) {
-                field = value
-                ensureHorizontalGuideline(value)
+            val v = value.coerceAtLeast(0)
+            if (field != v) {
+                field = v
+                ensureHorizontalGuideline(v)
             }
         }
         get() = horizontalGuidelines.size
 
     var column = 0
         set(value) {
-            if (field != value) {
-                field = value
-                ensureVerticalGuideline(value)
+            val v = value.coerceAtLeast(0)
+            if (field != v) {
+                field = v
+                ensureVerticalGuideline(v)
             }
         }
         get() = verticalGuidelines.size
@@ -57,7 +60,7 @@ class TimetableView : ConstraintLayout {
         val height = MeasureSpec.getSize(heightMeasureSpec)
         if (verticalGuidelines.isNotEmpty()) {
             val count = verticalGuidelines.size
-            val offset = sectionBarWidth
+            val offset = topBarMargin
             val gap = (width - offset) / count
             verticalGuidelines.forEachIndexed { index, guideline ->
                 guideline.setGuidelineBegin(offset + index * gap)
@@ -65,17 +68,13 @@ class TimetableView : ConstraintLayout {
         }
         if (horizontalGuidelines.isNotEmpty()) {
             val count = horizontalGuidelines.size
-            val offset = dayBarHeight
+            val offset = sideBarMargin
             val gap = (height - offset) / count
             horizontalGuidelines.forEachIndexed { index, guideline ->
                 guideline.setGuidelineBegin(offset + index * gap)
             }
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-    }
-
-    fun clearAllChildren() {
-        removeViews(ZERO, childCount)
     }
 
     private fun retainBaselineOnly() {
@@ -97,7 +96,7 @@ class TimetableView : ConstraintLayout {
         dayBar.forEachIndexed { index, textView -> textView.text = texts[index] }
     }
 
-    fun bindCourses(courses: List<CourseBlock>) {
+    fun bindCourses(courses: List<CourseDesign>) {
         courseBlocks.forEach { removeView(it) }
         configureCourses(courses)
     }
@@ -180,20 +179,19 @@ class TimetableView : ConstraintLayout {
         }.also { dayBar = it }
     }
 
-    private fun configureCourses(courses: List<CourseBlock>) {
+    private fun configureCourses(courses: List<CourseDesign>) {
         courses.map { c ->
-            val x = c.x - 1
-            val y = c.y - 1
-            val z = x + c.z
+            val h = c.day
+            val t = c.sectionStart
+            val b = c.sectionEnd
             TextView(context).apply {
-                id = View.generateViewId()
                 layoutParams = LayoutParams(0, 0).apply {
-                    startToStart = verticalGuidelines[y].id
-                    endToEnd = if (y == verticalGuidelines.size)
-                        LayoutParams.PARENT_ID else verticalGuidelines[y + 1].id
-                    topToTop = horizontalGuidelines[x].id
-                    bottomToBottom = if (z == horizontalGuidelines.size)
-                        LayoutParams.PARENT_ID else horizontalGuidelines[z].id
+                    startToStart = verticalGuidelines[h - 1].id
+                    endToEnd = if (h == verticalGuidelines.size)
+                        LayoutParams.PARENT_ID else verticalGuidelines[h].id
+                    topToTop = horizontalGuidelines[t - 1].id
+                    bottomToBottom = if (b == horizontalGuidelines.size)
+                        LayoutParams.PARENT_ID else horizontalGuidelines[b].id
                     val margin = 4.dp
                     marginStart = margin
                     marginEnd = margin
@@ -201,10 +199,30 @@ class TimetableView : ConstraintLayout {
                     bottomMargin = margin
                 }
                 setOnClickListener { onCourseClickListener?.onCourseClick(c.id) }
-                setBackgroundResource(R.drawable.bg_selector_rectangle_8_0)
+                background = StateListDrawable().apply {
+                    val radius = 8.dp.toFloat()
+                    setEnterFadeDuration(50)
+                    setExitFadeDuration(400)
+                    addState(
+                        intArrayOf(android.R.attr.state_pressed),
+                        GradientDrawable().apply {
+                            cornerRadius = radius
+                            setColor((0xFFA9A9A9).toInt())
+                        }
+                    )
+                    addState(
+                        intArrayOf(-android.R.attr.state_pressed),
+                        GradientDrawable().apply {
+                            cornerRadius = radius
+                            setColor(c.color)
+                        }
+                    )
+                }
+                val p = 4.dp
+                setPadding(p, p, p, p)
                 gravity = Gravity.CENTER
                 setTextColor(Color.BLACK)
-                text = c.tc
+                text = c.text
             }.also { addView(it) }
         }.also { courseBlocks = it }
     }
@@ -221,7 +239,6 @@ class TimetableView : ConstraintLayout {
 
     companion object {
 
-        const val ZERO = 0
         const val HORIZONTAL = 1
         const val VERTICAL = 2
 
