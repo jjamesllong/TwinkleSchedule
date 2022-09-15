@@ -19,15 +19,15 @@ object ScheduleRepository {
 
     suspend fun querySchedule(id: Long): Schedule? {
         return withContext(Dispatchers.IO) {
-            scheduleDao.acquireScheduleById(id)
+            scheduleDao.queryScheduleById(id)
         }
     }
 
     suspend fun deleteSchedule(id: Long) {
         withContext(Dispatchers.IO + NonCancellable) {
             launch { scheduleDao.deleteScheduleById(id) }
-            launch { scheduleDao.deleteCoursesBelongSchedule(id) }
-            launch { scheduleDao.deleteDailyRoutinesBelongSchedule(id) }
+            launch { scheduleDao.deleteCoursesOfSchedule(id) }
+            launch { scheduleDao.deleteRoutineOfSchedule(id) }
             Unit
         }
     }

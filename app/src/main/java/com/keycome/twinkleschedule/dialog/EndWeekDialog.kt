@@ -1,10 +1,9 @@
 package com.keycome.twinkleschedule.dialog
 
 import androidx.lifecycle.lifecycleScope
-import com.keycome.twinkleschedule.base.EditTextDialog
 import com.keycome.twinkleschedule.delivery.Drop
 import com.keycome.twinkleschedule.delivery.Pipette
-import com.keycome.twinkleschedule.model.EditScheduleViewModel
+import com.keycome.twinkleschedule.util.dialogs.EditTextDialog
 import kotlinx.coroutines.launch
 
 class EndWeekDialog : EditTextDialog() {
@@ -22,7 +21,7 @@ class EndWeekDialog : EditTextDialog() {
                 if (editText.isNotBlank()) {
                     Pipette.forInt.emit(
                         Drop(
-                            EditScheduleViewModel.sharedWeeks,
+                            "",
                             editText.toString().toInt()
                         )
                     )

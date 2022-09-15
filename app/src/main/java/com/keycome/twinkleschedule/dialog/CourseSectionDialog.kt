@@ -11,8 +11,8 @@ import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.databinding.DialogCourseSectionBinding
 import com.keycome.twinkleschedule.delivery.Pipette
 import com.keycome.twinkleschedule.delivery.Pipette.distribute
-import com.keycome.twinkleschedule.extension.acquire
 import com.keycome.twinkleschedule.extension.ints.storeWith
+import com.keycome.twinkleschedule.extension.viewbindings.acquire
 import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_END_SECTION
 import kotlinx.coroutines.launch
 

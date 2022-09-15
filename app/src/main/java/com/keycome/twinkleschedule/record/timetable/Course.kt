@@ -5,20 +5,19 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.keycome.twinkleschedule.record.interval.Day
 
 @Entity(tableName = "course")
 data class Course(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "course_id")
     val courseId: Long,
 
-    @ColumnInfo(name = "parent_schedule_id")
-    val parentScheduleId: Long,
+    @ColumnInfo(name = "master_id")
+    val masterId: Long,
 
     val title: String,
 
-    val day: Day,
+    val day: Int,
 
     val section: List<Int>,
 
@@ -31,9 +30,9 @@ data class Course(
 
     constructor(parcel: Parcel) : this(
         courseId = parcel.readLong(),
-        parentScheduleId = parcel.readLong(),
+        masterId = parcel.readLong(),
         title = parcel.readString() ?: throw Exception(),
-        day = Day.fromOrdinal(parcel.readInt()),
+        day = parcel.readInt(),
         section = IntArray(parcel.readInt()) { parcel.readInt() }.toList(),
         week = IntArray(parcel.readInt()) { parcel.readInt() }.toList(),
         teacher = parcel.readString() ?: throw Exception(),
@@ -42,9 +41,9 @@ data class Course(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeLong(courseId)
-        parcel.writeLong(parentScheduleId)
+        parcel.writeLong(masterId)
         parcel.writeString(title)
-        parcel.writeInt(day.toOrdinal())
+        parcel.writeInt(day)
         parcel.writeInt(section.size)
         section.forEach { parcel.writeInt(it) }
         parcel.writeInt(week.size)

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.extension.strings.toIntFromHex
 import com.keycome.twinkleschedule.extension.toCharacter
+import com.keycome.twinkleschedule.record.interval.Date
 import com.keycome.twinkleschedule.record.interval.Day
 import com.keycome.twinkleschedule.record.timetable.TimetableDescriber
 
@@ -23,21 +24,9 @@ class PagingAdapter(
 
     private val weekToSectionText = mutableMapOf<Int, List<String>>()
 
-    private val sectionText by lazy {
-        timetableDescriber!!.dailyRoutines.map {
-            it.routines.mapIndexed { index, section ->
-                StringBuilder()
-                    .append(index + 1)
-                    .append("\n")
-                    .append(section.from.formatWithoutSecond24())
-                    .toString()
-            }
-        }
-    }
-
     private val dayText: List<String> by lazy {
         List(timetableDescriber!!.schedule.endDay) {
-            Day.fromOrdinal(it).toCharacter()
+            requestDayText(it)
         }
     }
 
@@ -64,7 +53,7 @@ class PagingAdapter(
             val weeklyCourses = timetableDescriber!!.courses.filter { it.week.contains(week) }
             val courseDesign = weeklyCourses.map {
                 val id = it.courseId
-                val day = it.day.toNumber()
+                val day = it.day
                 val sectionStart = it.section.first()
                 val sectionEnd = it.section.last()
                 val text = StringBuilder()
@@ -73,7 +62,8 @@ class PagingAdapter(
                     .append(it.classroom)
                     .toString()
                 val color = it.color.toIntFromHex()
-                CourseDesign(id, day, sectionStart, sectionEnd, text, color)
+                val textColor = it.textColor.toIntFromHex()
+                CourseDesign(id, day, sectionStart, sectionEnd, text, color, textColor)
             }
             weeklyCourseDesign[position] = courseDesign
         }
@@ -101,17 +91,33 @@ class PagingAdapter(
     private fun putSectionText(week: Int): List<String> {
         var i = 0
         val oneWeek = 7 * 24 * 60 * 60 * 1000
-        val startTime = timetableDescriber?.schedule?.schoolOpeningDate?.toMilliSeconds() ?: 0L
+        val startTime = Date.fromString(timetableDescriber!!.schedule.startDate).toMilliSeconds()
         val weekTime = (week - 1) * oneWeek + startTime
         var before = 0L
-        timetableDescriber?.dailyRoutines?.forEachIndexed { index, dailyRoutine ->
-            val routineTime = dailyRoutine.startDate.toMilliSeconds()
+        timetableDescriber!!.routines.forEachIndexed { index, dailyRoutine ->
+            val routineTime = Date.fromString(dailyRoutine.startDate).toMilliSeconds()
             if (routineTime in before..weekTime) {
                 before = routineTime
                 i = index
             }
         }
-        return sectionText[i].also { weekToSectionText[week] = it }
+        val routine = timetableDescriber!!.routines[i]
+        return routine.segmentList.mapIndexed { index, segment ->
+            val number = index + 1
+            requestSectionText(number, segment)
+        }.also { weekToSectionText[i] = it }
+    }
+
+    private fun requestDayText(ordinal: Int): String {
+        return Day.fromOrdinal(ordinal).toCharacter()
+    }
+
+    private fun requestSectionText(number: Int, segment: String): String {
+        return StringBuilder()
+            .append(number)
+            .append("\n")
+            .append(segment)
+            .toString()
     }
 
     class Page(private val timetable: TimetableView) : RecyclerView.ViewHolder(timetable) {

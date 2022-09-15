@@ -10,7 +10,8 @@ import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.adapter.ScheduleListAdapter
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentScheduleListBinding
-import com.keycome.twinkleschedule.model.ScheduleListViewModel
+import com.keycome.twinkleschedule.extension.viewbindings.acquire
+import com.keycome.twinkleschedule.viewmodel.ScheduleListViewModel
 import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_ID
 
 class SelectToManageCourseFragment : BaseFragment() {

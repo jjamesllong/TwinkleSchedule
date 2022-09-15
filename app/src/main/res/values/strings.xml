@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">闪课表</string>
 
-    <!--  Strings used for normal description  -->
+    <!--  normal description  -->
     <string name="confirm">确认</string>
     <string name="determine">确定</string>
     <string name="cancel">取消</string>
@@ -9,6 +9,9 @@
     <string name="close">关闭</string>
     <string name="error">错误</string>
     <string name="submit">提交</string>
+    <string name="save">保存</string>
+
+    <!--  day  -->
     <string name="monday">星期一</string>
     <string name="tuesday">星期二</string>
     <string name="wednesday">星期三</string>
@@ -17,7 +20,7 @@
     <string name="saturday">星期六</string>
     <string name="sunday">星期日</string>
 
-    <!--  Strings used for course elements  -->
+    <!--  course elements  -->
     <string name="course_title">名称</string>
     <string name="course_day">星期</string>
     <string name="course_section">节次</string>
@@ -25,42 +28,64 @@
     <string name="course_teacher">教师</string>
     <string name="course_week">周次</string>
 
-    <!--  Strings used for course decoration elements -->
-    <string name="course_color">颜色</string>
+    <!--  course decoration elements -->
+    <string name="course_color">课程颜色</string>
+    <string name="course_text_color">文字颜色</string>
 
-    <!--  Strings used for labels  -->
+    <!--  labels  -->
     <string name="title_display_fragment">主页</string>
     <string name="title_settings_fragment">设置</string>
+    <string name="title_edit_schedule_fragment">编辑课表</string>
     <string name="title_edit_course_fragment">编辑课程</string>
     <string name="title_course_name_dialog">课程名称</string>
     <string name="title_course_day_dialog">选择星期</string>
     <string name="title_course_section_dialog">选择节次</string>
     <string name="title_course_week_dialog">选择周次</string>
     <string name="title_course_color_fragment">课程颜色</string>
+    <string name="title_text_color_dialog">文字颜色</string>
+    <string name="title_end_section_dialog">每日课程数</string>
+    <string name="title_schedule_name_dialog">课程名称</string>
+    <string name="title_end_day_dialog">课程结束天</string>
 
-    <!--  Strings used for FragmentDisplay  -->
+    <!--  FragmentDisplay  -->
     <string name="fragment_display_week">第 %1$d 周</string>
     <string name="fragment_display_not_this_week">非本周</string>
     <string name="fragment_display_noting">无课表</string>
     <string name="fragment_display_upcoming">未开始</string>
     <string name="fragment_display_ended">已结束</string>
 
-    <!--  Strings used for DialogCourseName  -->
+    <!--  FragmentEditSchedule  -->
+    <string name="fragment_edit_schedule_new">新建课表</string>
+    <string name="fragment_edit_schedule_modify">修改课表</string>
+    <string name="fragment_edit_schedule_schedule_name">课表名称</string>
+    <string name="fragment_edit_schedule_start_date">开学日期</string>
+    <string name="fragment_edit_schedule_end_section">每日课程节数</string>
+    <string name="fragment_edit_schedule_end_day">每星期课程结束日</string>
+    <string name="fragment_edit_schedule_end_week">课表最大周数</string>
+    <string name="fragment_edit_schedule_routines">作息表</string>
+    <string name="fragment_edit_schedule_add_routine">添加新作息</string>
+    <string name="fragment_edit_schedule_to_display">同时设置为主页课表</string>
+
+    <!--  DialogCourseName  -->
     <string name="dialog_course_name_hint">课程名称</string>
     <string name="dialog_course_name_text_overflow">文本长度溢出</string>
 
-    <!--  Strings used for DialogCourseSection  -->
+    <!--  DialogCourseSection  -->
     <string name="dialog_course_section_start_section">开始节</string>
     <string name="dialog_course_section_end_section">结束节</string>
 
-    <!--  Strings used for DialogCourseWeek  -->
+    <!--  DialogCourseWeek  -->
     <string name="dialog_course_week_select_all">全选</string>
     <string name="dialog_course_week_select_none">全不选</string>
     <string name="dialog_course_week_even_week">双周</string>
     <string name="dialog_course_week_odd_week">单周</string>
 
-    <!--  Strings used for CourseColorFragment  -->
+    <!--  FragmentCourseColor  -->
     <string name="fragment_course_color_selected_color">已选择的颜色：</string>
+
+    <!--  DialogTextColor  -->
+    <string name="dialog_text_color_light">浅色</string>
+    <string name="dialog_text_color_dark">深色</string>
 
     <string name="dialog_course_duration_progress">%1$d 分钟</string>
     <string name="adapter_edit_daily_routine_header_node">%1$d / %2$d</string>

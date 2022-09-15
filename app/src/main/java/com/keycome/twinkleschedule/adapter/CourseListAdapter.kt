@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.keycome.twinkleschedule.databinding.CellCourseListBinding
+import com.keycome.twinkleschedule.record.interval.Day
 import com.keycome.twinkleschedule.record.timetable.Course
 
 class CourseListAdapter(
@@ -59,7 +60,7 @@ class CourseListAdapter(
         fun bind(course: Pair<Course, Boolean>) {
             binding.root.isSelected = course.second
             binding.cellCourseListTitle.text = course.first.title
-            binding.cellCourseListDay.text = course.first.day.name
+            binding.cellCourseListDay.text = Day.fromNumber(course.first.day).name
             binding.cellCourseListSection.text = course.first.section.toString()
             binding.cellCourseListClassroom.text = course.first.classroom
             binding.cellCourseListTeacher.text = course.first.teacher

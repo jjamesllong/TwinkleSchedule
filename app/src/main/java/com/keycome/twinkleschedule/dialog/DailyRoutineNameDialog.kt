@@ -1,10 +1,10 @@
 package com.keycome.twinkleschedule.dialog
 
 import androidx.lifecycle.lifecycleScope
-import com.keycome.twinkleschedule.base.EditTextDialog
 import com.keycome.twinkleschedule.delivery.Drop
 import com.keycome.twinkleschedule.delivery.Pipette
-import com.keycome.twinkleschedule.model.EditDailyRoutineViewModel
+import com.keycome.twinkleschedule.util.dialogs.EditTextDialog
+import com.keycome.twinkleschedule.viewmodel.EditRoutineViewModel
 import kotlinx.coroutines.launch
 
 class DailyRoutineNameDialog : EditTextDialog() {
@@ -22,7 +22,7 @@ class DailyRoutineNameDialog : EditTextDialog() {
             if (text.isNotBlank()) {
                 lifecycleScope.launch {
                     Pipette.forString.emit(
-                        Drop(EditDailyRoutineViewModel.dailyRoutineName, text)
+                        Drop(EditRoutineViewModel.dailyRoutineName, text)
                     )
                     dismiss()
                 }

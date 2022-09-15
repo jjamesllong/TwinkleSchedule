@@ -9,5 +9,7 @@ data class CourseDecoration(
     @PrimaryKey
     @ColumnInfo(name = "course_id")
     val courseId: Long,
-    val color: String
+    val color: String,
+    @ColumnInfo(name = "text_color")
+    val textColor: String
 )

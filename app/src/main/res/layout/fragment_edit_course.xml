@@ -61,7 +61,7 @@
                 android:padding="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_settings_24"
+                app:srcCompat="@drawable/notes"
                 tools:src="@tools:sample/avatars" />
 
             <TextView
@@ -387,7 +387,7 @@
                 android:paddingTop="8dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
-                app:constraint_referenced_ids="edit_course_color_image,edit_course_color"
+                app:constraint_referenced_ids="edit_course_color_image,edit_course_color,edit_course_text_color_image,edit_course_text_color"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="24dp"
                 tools:layout_editor_absoluteY="423dp" />
@@ -396,7 +396,7 @@
                 android:id="@+id/edit_course_fragment_color_item"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@drawable/bg_ripple_rectangle_16_0"
+                android:background="@drawable/bg_ripple_rectangle_top_16_0"
                 android:paddingStart="8dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="16dp"
@@ -414,7 +414,7 @@
                 android:padding="8dp"
                 app:layout_constraintStart_toStartOf="@+id/edit_course_classroom_image"
                 app:layout_constraintTop_toBottomOf="@+id/edit_course_classroom_image"
-                app:srcCompat="@drawable/ic_baseline_settings_24"
+                app:srcCompat="@drawable/palette"
                 tools:src="@tools:sample/avatars" />
 
             <TextView
@@ -433,11 +433,64 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxEms="10"
-                app:drawableLeftCompat="@drawable/ic_color_indicator"
                 app:layout_constraintBottom_toBottomOf="@+id/edit_course_color_image"
                 app:layout_constraintEnd_toEndOf="@+id/edit_course_classroom"
                 app:layout_constraintTop_toTopOf="@+id/edit_course_color_image"
                 tools:text="FFAD6453" />
+
+            <View
+                android:id="@+id/view6"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/view5"
+                app:layout_constraintStart_toStartOf="@id/view5"
+                app:layout_constraintTop_toBottomOf="@id/edit_course_color_image" />
+
+            <androidx.constraintlayout.helper.widget.Layer
+                android:id="@+id/edit_course_fragment_text_color_item"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_ripple_rectangle_bottom_16_0"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                app:constraint_referenced_ids="edit_course_text_color_image,edit_course_text_color_hint,edit_course_text_color"
+                tools:ignore="MissingConstraints" />
+
+            <ImageView
+                android:id="@+id/edit_course_text_color_image"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="9dp"
+                android:padding="8dp"
+                app:layout_constraintStart_toStartOf="@+id/edit_course_color_image"
+                app:layout_constraintTop_toBottomOf="@+id/view6"
+                app:srcCompat="@drawable/text"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/edit_course_text_color_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/course_text_color"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/edit_course_text_color_image"
+                app:layout_constraintStart_toStartOf="@id/textView24"
+                app:layout_constraintTop_toTopOf="@id/edit_course_text_color_image" />
+
+            <TextView
+                android:id="@+id/edit_course_text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxEms="10"
+                app:layout_constraintBottom_toBottomOf="@id/edit_course_text_color_image"
+                app:layout_constraintEnd_toEndOf="@id/edit_course_color"
+                app:layout_constraintTop_toTopOf="@id/edit_course_text_color_image"
+                tools:text="00000000" />
 
             <Button
                 android:id="@+id/edit_course_fragment_submit_button"
@@ -451,7 +504,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_course_color_image" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_course_text_color_image" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

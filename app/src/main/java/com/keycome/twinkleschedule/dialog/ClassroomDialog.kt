@@ -2,10 +2,10 @@ package com.keycome.twinkleschedule.dialog
 
 import androidx.lifecycle.lifecycleScope
 import com.keycome.twinkleschedule.R
-import com.keycome.twinkleschedule.base.EditTextDialog
 import com.keycome.twinkleschedule.delivery.Pipette
 import com.keycome.twinkleschedule.delivery.Pipette.distribute
 import com.keycome.twinkleschedule.util.const.KEY_COURSE_CLASSROOM
+import com.keycome.twinkleschedule.util.dialogs.EditTextDialog
 import kotlinx.coroutines.launch
 
 class ClassroomDialog : EditTextDialog() {

@@ -8,18 +8,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.R
-import com.keycome.twinkleschedule.adapter.CheckDailyRoutineAdapter
+import com.keycome.twinkleschedule.adapter.RoutinesNameAdapter
 import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.databinding.DialogScheduleDetailsBinding
 import com.keycome.twinkleschedule.delivery.Drop
 import com.keycome.twinkleschedule.delivery.Pipette
-import com.keycome.twinkleschedule.extension.acquire
+import com.keycome.twinkleschedule.extension.viewbindings.acquire
 import com.keycome.twinkleschedule.fragment.EditScheduleFragment
-import com.keycome.twinkleschedule.model.ScheduleDetailsViewModel
-import com.keycome.twinkleschedule.preference.GlobalPreference
-import com.keycome.twinkleschedule.record.DISPLAY_SCHEDULE_ID
 import com.keycome.twinkleschedule.record.interval.Day
-import com.keycome.twinkleschedule.record.timetable.DailyRoutine
+import com.keycome.twinkleschedule.record.timetable.Routine
+import com.keycome.twinkleschedule.util.const.KEY_DISPLAY_SCHEDULE_ID
+import com.keycome.twinkleschedule.viewmodel.ScheduleDetailsViewModel
 import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.launch
 
@@ -32,9 +31,17 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
 
     private val navController by lazy { findNavController() }
 
-    private val event: (View, DailyRoutine) -> Unit = { _, _ -> }
+    private val event: (View, Routine) -> Unit = { _, _ -> }
 
-    private val adapter = CheckDailyRoutineAdapter(event)
+    private val adapter = RoutinesNameAdapter(event)
+
+    override fun getDialogGravity(): Int {
+        return GRAVITY_BOTTOM
+    }
+
+    override fun getDialogAnimation(): Int {
+        return R.anim.slide_in_from_bottom
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +49,6 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        requestFullScreenBottomDialog()
         _binding = DialogScheduleDetailsBinding.inflate(
             inflater,
             container,
@@ -64,8 +70,8 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
                 orientation = LinearLayoutManager.HORIZONTAL
             }
         viewModel.liveSchedule.observe(viewLifecycleOwner) {
-            binding.dialogScheduleDetailsTitle.text = it.name
-            binding.dialogScheduleDetailsDate.text = it.schoolOpeningDate.toDotDateString()
+            binding.dialogScheduleDetailsTitle.text = it.scheduleName
+            binding.dialogScheduleDetailsDate.text = it.startDate
             binding.dialogScheduleDetailsCount.text = it.endSection.toString()
             binding.dialogScheduleDetailsDay.text = Day.fromNumber(it.endDay).name
             binding.dialogScheduleDetailsWeeks.text = it.endWeek.toString()
@@ -96,8 +102,7 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
         binding.dialogScheduleDetailsUse.setOnClickListener {
             val id = viewModel.queryScheduleId()
             if (id != 0L) {
-                MMKV.defaultMMKV().encode(DISPLAY_SCHEDULE_ID, id)
-                GlobalPreference.displayScheduleId.value = id
+                MMKV.defaultMMKV().encode(KEY_DISPLAY_SCHEDULE_ID, id)
                 navController.navigateUp()
             }
         }

@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.databinding.DialogCourseDetailsBinding
-import com.keycome.twinkleschedule.model.CourseDetailsViewModel
+import com.keycome.twinkleschedule.record.interval.Day
 import com.keycome.twinkleschedule.record.timetable.Course
 import com.keycome.twinkleschedule.util.const.KEY_COURSE
+import com.keycome.twinkleschedule.viewmodel.CourseDetailsViewModel
 
 class CourseDetailsDialog : BaseDialogFragment() {
 
@@ -19,13 +21,20 @@ class CourseDetailsDialog : BaseDialogFragment() {
 
     private val course by lazy { arguments?.getParcelable<Course>(KEY_COURSE) }
 
+    override fun getDialogGravity(): Int {
+        return GRAVITY_BOTTOM
+    }
+
+    override fun getDialogAnimation(): Int {
+        return R.anim.slide_in_from_bottom
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        requestFullScreenBottomDialog()
         _binding = DialogCourseDetailsBinding.inflate(
             inflater,
             container,
@@ -39,7 +48,7 @@ class CourseDetailsDialog : BaseDialogFragment() {
         binding.courseDetailsDialogCancel.setOnClickListener { dismiss() }
         course?.also {
             binding.courseDetailsDialogTitle.text = it.title
-            binding.courseDetailsDialogDayText.text = it.day.name
+            binding.courseDetailsDialogDayText.text = Day.fromNumber(it.day).name
             binding.courseDetailsDialogSectionText.text = it.section.toString()
             binding.courseDetailsDialogClassroomText.text = it.classroom
             binding.courseDetailsDialogTeacherText.text = it.teacher

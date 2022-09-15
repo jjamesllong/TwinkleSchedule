@@ -1,6 +1,5 @@
 package com.keycome.twinkleschedule.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.keycome.twinkleschedule.record.timetable.Course
 
@@ -17,7 +16,7 @@ interface CourseDao {
         """
         select *
         from course
-        where parent_schedule_id = :scheduleId and (week like '%,' || :week || ',%' or week like '[' || :week || ',%' or week like '%,' || :week || ']' or week like '[' || :week || ']')
+        where master_id = :scheduleId and (week like '%,' || :week || ',%' or week like '[' || :week || ',%' or week like '%,' || :week || ']' or week like '[' || :week || ']')
         order by
         case day
         when 'Monday' then 1
@@ -52,15 +51,12 @@ interface CourseDao {
     )
     suspend fun queryCoursesOfWeek(scheduleId: Long, week: Int): List<Course>
 
-    @Query("SELECT * FROM course WHERE parent_schedule_id = :scheduleId")
+    @Query("SELECT * FROM course WHERE master_id = :scheduleId")
     suspend fun queryCoursesOfSchedule(scheduleId: Long): List<Course>
-
-    @Query("select * from course where parent_schedule_id == :scheduleId")
-    fun queryCourseOfParent(scheduleId: Long): LiveData<List<Course>>
 
     @Delete
     suspend fun deleteCourse(course: Course)
 
     @Query("DELETE FROM course")
-    suspend fun deleteAllCourse()
+    suspend fun deleteAllCourses()
 }

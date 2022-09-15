@@ -3,7 +3,7 @@
     <item
         android:id="@id/displayFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_android_24"
+        android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/title_display_fragment" />
     <item
         android:id="@id/settingsFragment"

@@ -6,5 +6,6 @@ data class CourseDesign(
     val sectionStart: Int,
     val sectionEnd: Int,
     val text: String,
-    val color: Int
+    val color: Int,
+    val textColor: Int
 )

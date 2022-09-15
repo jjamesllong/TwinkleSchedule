@@ -13,8 +13,10 @@ import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentCourseListBinding
 import com.keycome.twinkleschedule.delivery.Pipette
 import com.keycome.twinkleschedule.delivery.Pipette.distribute
-import com.keycome.twinkleschedule.model.CourseListViewModel
+import com.keycome.twinkleschedule.extension.viewbindings.acquire
+import com.keycome.twinkleschedule.record.interval.Day
 import com.keycome.twinkleschedule.util.const.*
+import com.keycome.twinkleschedule.viewmodel.CourseListViewModel
 import kotlinx.coroutines.launch
 
 class CourseListFragment : BaseFragment() {
@@ -72,7 +74,7 @@ class CourseListFragment : BaseFragment() {
                 viewModel.requestCourse()?.also { course ->
                     viewModel.deleteCourse(course)
                     binding.root.transitionToStart()
-                    Pipette.forEvent.distribute { KEY_COURSE_TABLE_CHANGE }
+                    Pipette.forEvent.distribute { "" }
                 }
             }
         }
@@ -82,10 +84,10 @@ class CourseListFragment : BaseFragment() {
                     R.id.action_courseListFragment_to_editCourseFragment,
                     Bundle().apply {
                         putBoolean(EditCourseFragment.KEY_IS_UPDATE, true)
-                        putLong(KEY_SCHEDULE_ID, course.parentScheduleId)
+                        putLong(KEY_SCHEDULE_ID, course.masterId)
                         putLong(KEY_COURSE_ID, course.courseId)
                         putString(KEY_COURSE_TITLE, course.title)
-                        putString(KEY_COURSE_DAY, course.day.name)
+                        putString(KEY_COURSE_DAY, Day.fromNumber(course.day).name)
                         putIntArray(KEY_COURSE_SECTION, course.section.toIntArray())
                         putIntArray(KEY_COURSE_WEEK, course.week.toIntArray())
                         putString(KEY_COURSE_TEACHER, course.teacher)

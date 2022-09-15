@@ -10,7 +10,7 @@ import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.databinding.DialogCourseDayBinding
 import com.keycome.twinkleschedule.delivery.Pipette
 import com.keycome.twinkleschedule.delivery.Pipette.distribute
-import com.keycome.twinkleschedule.extension.acquire
+import com.keycome.twinkleschedule.extension.viewbindings.acquire
 import com.keycome.twinkleschedule.util.const.KEY_COURSE_DAY
 import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_END_DAY
 import kotlinx.coroutines.launch

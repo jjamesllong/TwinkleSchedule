@@ -14,7 +14,7 @@ import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.databinding.DialogCourseDurationBinding
 import com.keycome.twinkleschedule.delivery.Drop
 import com.keycome.twinkleschedule.delivery.Pipette
-import com.keycome.twinkleschedule.model.EditDailyRoutineViewModel
+import com.keycome.twinkleschedule.viewmodel.EditRoutineViewModel
 import kotlinx.coroutines.launch
 
 class CourseDurationDialog : BaseDialogFragment() {
@@ -63,7 +63,7 @@ class CourseDurationDialog : BaseDialogFragment() {
                 val duration = viewModel.getCourseDuration()
                 lifecycleScope.launch {
                     Pipette.forInt.emit(
-                        Drop(EditDailyRoutineViewModel.courseDuration, duration)
+                        Drop(EditRoutineViewModel.courseDuration, duration)
                     )
                     dismiss()
                 }

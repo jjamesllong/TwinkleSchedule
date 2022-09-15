@@ -2,26 +2,22 @@ package com.keycome.twinkleschedule.extension.fragments
 
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.ViewModelLazy
 import com.keycome.twinkleschedule.base.BaseViewModel
-import com.keycome.twinkleschedule.extension.ViewModelDelegate
+import com.keycome.twinkleschedule.extension.viewmodels.OnPlaceFactory
 
 @MainThread
-inline fun <reified VM : BaseViewModel> Fragment.viewModelDelegate(
-    noinline ownerProducer: () -> ViewModelStoreOwner = { this },
-    noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
-) = ViewModelDelegate.createViewModelDelegate(
-    VM::class,
-    { ownerProducer().viewModelStore },
-    factoryProducer ?: { defaultViewModelProviderFactory }
-)
+inline fun <reified VM : BaseViewModel> Fragment.viewModelDelegate(): Lazy<VM> {
+    val clazz = VM::class
+    val storeProducer = { viewModelStore }
+    val factoryProducer = { OnPlaceFactory }
+    return ViewModelLazy(clazz, storeProducer, factoryProducer)
+}
 
 @MainThread
-inline fun <reified VM : BaseViewModel> Fragment.activityViewModelDelegate(
-    noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
-) = ViewModelDelegate.createViewModelDelegate(
-    VM::class,
-    { requireActivity().viewModelStore },
-    factoryProducer ?: { requireActivity().defaultViewModelProviderFactory }
-)
+inline fun <reified VM : BaseViewModel> Fragment.activityViewModelDelegate(): Lazy<VM> {
+    val clazz = VM::class
+    val storeProducer = { requireActivity().viewModelStore }
+    val factoryProducer = { OnPlaceFactory }
+    return ViewModelLazy(clazz, storeProducer, factoryProducer)
+}

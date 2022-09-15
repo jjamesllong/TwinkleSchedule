@@ -1,33 +1,24 @@
 package com.keycome.twinkleschedule.dialog
 
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
+import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseDialogFragment
-import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.databinding.DialogEndDayBinding
-import com.keycome.twinkleschedule.model.EditScheduleViewModel
-import com.keycome.twinkleschedule.record.interval.Day
+import com.keycome.twinkleschedule.delivery.Pipette
+import com.keycome.twinkleschedule.delivery.Pipette.distribute
+import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_END_DAY
+import kotlinx.coroutines.launch
 
 class EndDayDialog : BaseDialogFragment() {
 
     private var _binding: DialogEndDayBinding? = null
     val binding get() = _binding!!
 
-    val viewModel by viewModels<EndDayDialogViewModel>()
-
-    private val gradientDrawable by lazy {
-        GradientDrawable().apply {
-            shape = GradientDrawable.RECTANGLE
-            cornerRadius = resources.displayMetrics.density * 8
-            setColor(Color.BLACK)
-            alpha = 40
-        }
-    }
+    private var selectedDay = -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,79 +36,49 @@ class EndDayDialog : BaseDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.dialogEndDayCancel.setOnClickListener { dismiss() }
+
+        selectedDay = savedInstanceState?.getInt(
+            KEY_SCHEDULE_END_DAY
+        ) ?: arguments?.getInt(
+            KEY_SCHEDULE_END_DAY
+        ) ?: -1
+
+        val checkId = when (selectedDay) {
+            5 -> R.id.dialog_end_day_friday
+            6 -> R.id.dialog_end_day_saturday
+            7 -> R.id.dialog_end_day_sunday
+            else -> selectedDay
+        }
+        binding.dialogEndDayRadioGroup.check(checkId)
+
+        binding.dialogEndDayRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+            selectedDay = when (checkedId) {
+                R.id.dialog_end_day_friday -> 5
+                R.id.dialog_end_day_saturday -> 6
+                R.id.dialog_end_day_sunday -> 7
+                else -> -1
+            }
+        }
+
+        binding.dialogEndDayClose.setOnClickListener { dismiss() }
+
         binding.dialogEndDayConfirm.setOnClickListener {
-            viewModel.liveSelectedDay.value?.let { selectedDay ->
-                val otherDay = viewModel.liveEndDay?.value
-                if (selectedDay != otherDay) {
-                    viewModel.liveEndDay?.value = selectedDay
+            if (selectedDay != -1) {
+                lifecycleScope.launch {
+                    Pipette.forInt.distribute(KEY_SCHEDULE_END_DAY) { selectedDay }
+                    dismiss()
                 }
             }
-            dismiss()
         }
-        viewModel.livePreviousDay.observe(viewLifecycleOwner) { day ->
-            setBackground(day, null)
-        }
-        viewModel.liveSelectedDay.observe(viewLifecycleOwner) { day ->
-            setBackground(day, gradientDrawable)
-        }
-        binding.dialogEndDayFriday.setOnClickListener {
-            if (viewModel.liveSelectedDay.value == Day.Friday) {
-                return@setOnClickListener
-            }
-            viewModel.livePreviousDay.value = viewModel.liveSelectedDay.value
-            viewModel.liveSelectedDay.value = Day.Friday
-        }
-        binding.dialogEndDaySaturday.setOnClickListener {
-            if (viewModel.liveSelectedDay.value == Day.Saturday) {
-                return@setOnClickListener
-            }
-            viewModel.livePreviousDay.value = viewModel.liveSelectedDay.value
-            viewModel.liveSelectedDay.value = Day.Saturday
-        }
-        binding.dialogEndDaySunday.setOnClickListener {
-            if (viewModel.liveSelectedDay.value == Day.Sunday) {
-                return@setOnClickListener
-            }
-            viewModel.livePreviousDay.value = viewModel.liveSelectedDay.value
-            viewModel.liveSelectedDay.value = Day.Sunday
-        }
-        if (viewModel.liveSelectedDay.value == null) {
-            viewModel.liveSelectedDay.value = viewModel.liveEndDay?.value
-        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_SCHEDULE_END_DAY, selectedDay)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun setBackground(day: Day, background: GradientDrawable?) {
-        when (day) {
-            Day.Friday -> {
-                binding.dialogEndDayFriday.background = background
-            }
-            Day.Saturday -> {
-                binding.dialogEndDaySaturday.background = background
-            }
-            Day.Sunday -> {
-                binding.dialogEndDaySunday.background = background
-            }
-            else -> {}
-        }
-    }
-
-    class EndDayDialogViewModel : BaseViewModel() {
-
-        val liveEndDay by shareOnlyVariable<MutableLiveData<Day>>(EditScheduleViewModel.sharedEndDay)
-
-        val liveSelectedDay = MutableLiveData<Day>()
-
-        val livePreviousDay = MutableLiveData<Day>()
-
-        override fun onRemove() {
-            super.onRemove()
-            release(EditScheduleViewModel.sharedEndDay)
-        }
     }
 }

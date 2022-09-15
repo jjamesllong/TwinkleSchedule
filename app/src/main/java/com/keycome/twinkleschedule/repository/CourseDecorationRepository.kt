@@ -23,4 +23,10 @@ object CourseDecorationRepository {
             courseDecorationDao.insertCourseDecoration(courseDecoration)
         }
     }
+
+    suspend fun updateCourseDecoration(courseDecoration: CourseDecoration) {
+        withContext(Dispatchers.IO) {
+            courseDecorationDao.updateCourseDecoration(courseDecoration)
+        }
+    }
 }

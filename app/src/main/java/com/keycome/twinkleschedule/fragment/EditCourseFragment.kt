@@ -10,14 +10,13 @@ import androidx.navigation.fragment.findNavController
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentEditCourseBinding
-import com.keycome.twinkleschedule.delivery.Pipette
-import com.keycome.twinkleschedule.delivery.Pipette.distribute
 import com.keycome.twinkleschedule.dialog.CourseSectionDialog
 import com.keycome.twinkleschedule.dialog.CourseWeekDialog
 import com.keycome.twinkleschedule.extension.ints.toStringHex
-import com.keycome.twinkleschedule.model.EditCourseViewModel
-import com.keycome.twinkleschedule.record.interval.Day.Companion.toDay
+import com.keycome.twinkleschedule.extension.viewbindings.acquire
+import com.keycome.twinkleschedule.record.interval.Day
 import com.keycome.twinkleschedule.util.const.*
+import com.keycome.twinkleschedule.viewmodel.EditCourseViewModel
 import kotlinx.coroutines.launch
 
 class EditCourseFragment : BaseFragment() {
@@ -53,11 +52,13 @@ class EditCourseFragment : BaseFragment() {
                 if (isUpdate) {
                     val courseId = bundle.getLong(KEY_COURSE_ID)
                     val title = bundle.getString(KEY_COURSE_TITLE) ?: ""
-                    val day = bundle.getString(KEY_COURSE_DAY)!!.toDay()
-                    val section = bundle.getIntArray(KEY_COURSE_SECTION)!!.toList()
-                    val week = bundle.getIntArray(KEY_COURSE_WEEK)!!.toList()
+                    val day = Day.fromOrdinal(bundle.getInt(KEY_COURSE_DAY))
+                    val section = bundle.getIntArray(KEY_COURSE_SECTION)?.toList() ?: emptyList()
+                    val week = bundle.getIntArray(KEY_COURSE_WEEK)?.toList() ?: emptyList()
                     val teacher = bundle.getString(KEY_COURSE_TEACHER) ?: ""
                     val classroom = bundle.getString(KEY_COURSE_CLASSROOM) ?: ""
+                    val color = bundle.getInt(KEY_COURSE_COLOR)
+                    val textColor = bundle.getInt(KEY_COURSE_TEXT_COLOR)
                     viewModel.setCourseInfo(
                         courseId,
                         title,
@@ -65,7 +66,9 @@ class EditCourseFragment : BaseFragment() {
                         section,
                         week,
                         teacher,
-                        classroom
+                        classroom,
+                        color,
+                        textColor
                     )
                 }
             }
@@ -125,13 +128,8 @@ class EditCourseFragment : BaseFragment() {
         binding.editCourseFragmentSubmitButton.setOnClickListener {
             it.isEnabled = false
             lifecycleScope.launch {
-                val success = if (isUpdate) {
-                    viewModel.updateCourse()
-                } else {
-                    viewModel.insertCourse()
-                }
+                val success = viewModel.writeCourse(isUpdate)
                 if (success) {
-                    Pipette.forEvent.distribute { KEY_COURSE_TABLE_CHANGE }
                     navController.navigateUp()
                 } else {
                     it.isEnabled = true
@@ -142,6 +140,17 @@ class EditCourseFragment : BaseFragment() {
                     ).show()
                 }
             }
+        }
+        binding.editCourseFragmentTextColorItem.setOnClickListener {
+            navController.navigate(
+                R.id.action_editCourseFragment_to_textColorDialog,
+                Bundle().apply {
+                    putInt(
+                        KEY_COURSE_TEXT_COLOR,
+                        viewModel.liveTextColor.value ?: 0
+                    )
+                }
+            )
         }
 
         viewModel.liveTitle.observe(viewLifecycleOwner) {
@@ -170,6 +179,9 @@ class EditCourseFragment : BaseFragment() {
         viewModel.liveColor.observe(viewLifecycleOwner) {
             binding.editCourseColor.text = it.toStringHex()
         }
+        viewModel.liveTextColor.observe(viewLifecycleOwner) {
+            binding.editCourseTextColor.text = it.toStringHex()
+        }
     }
 
     override fun onDestroyView() {
@@ -179,6 +191,6 @@ class EditCourseFragment : BaseFragment() {
 
     companion object {
 
-        const val KEY_IS_UPDATE = "is_update_key"
+        const val KEY_IS_UPDATE = "is_update"
     }
 }

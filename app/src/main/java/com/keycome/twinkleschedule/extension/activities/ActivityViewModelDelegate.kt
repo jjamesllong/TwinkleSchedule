@@ -1,16 +1,15 @@
 package com.keycome.twinkleschedule.extension.activities
 
 import androidx.annotation.MainThread
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelLazy
 import com.keycome.twinkleschedule.base.BaseActivity
 import com.keycome.twinkleschedule.base.BaseViewModel
-import com.keycome.twinkleschedule.extension.ViewModelDelegate
+import com.keycome.twinkleschedule.extension.viewmodels.OnPlaceFactory
 
 @MainThread
-inline fun <reified VM : BaseViewModel> BaseActivity.viewModelDelegate(
-    noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
-) = ViewModelDelegate.createViewModelDelegate(
-    VM::class,
-    { viewModelStore },
-    factoryProducer ?: { defaultViewModelProviderFactory }
-)
+inline fun <reified VM : BaseViewModel> BaseActivity.viewModelDelegate(): Lazy<VM> {
+    val clazz = VM::class
+    val storeProducer = { viewModelStore }
+    val factoryProducer = { OnPlaceFactory }
+    return ViewModelLazy(clazz, storeProducer, factoryProducer)
+}

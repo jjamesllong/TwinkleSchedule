@@ -14,6 +14,7 @@ import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentCourseColorBinding
 import com.keycome.twinkleschedule.delivery.Pipette
 import com.keycome.twinkleschedule.delivery.Pipette.distribute
+import com.keycome.twinkleschedule.extension.viewbindings.acquire
 import com.keycome.twinkleschedule.extension.strings.toIntFromHex
 import com.keycome.twinkleschedule.util.const.KEY_COURSE_COLOR
 import kotlinx.coroutines.launch
@@ -43,13 +44,18 @@ class CourseColorFragment : BaseFragment() {
             "FFD44848",
         ),
         listOf(
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
+            "FFFFFF99",
+            "FFCCFFFF",
+            "FFFFCCCC",
+            "FFFF9966",
+            "FFCCCCFF",
+            "FFFF6666",
+            "FFCCCCCC",
+            "FFCCFFCC",
+            "FFFFCC99",
+            "FF99CC99",
+            "FF99CCCC",
+            "FF99CCFF"
         )
     )
 

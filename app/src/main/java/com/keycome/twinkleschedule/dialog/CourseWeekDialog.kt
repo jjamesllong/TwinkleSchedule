@@ -14,7 +14,7 @@ import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.databinding.DialogCourseWeekBinding
 import com.keycome.twinkleschedule.delivery.Pipette
 import com.keycome.twinkleschedule.delivery.Pipette.distribute
-import com.keycome.twinkleschedule.extension.acquire
+import com.keycome.twinkleschedule.extension.viewbindings.acquire
 import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_END_WEEK
 import com.keycome.twinkleschedule.util.slidingtrigger.CellState
 import com.keycome.twinkleschedule.util.slidingtrigger.toCellStateWithSize

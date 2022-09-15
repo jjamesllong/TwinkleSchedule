@@ -1,47 +1,31 @@
 package com.keycome.twinkleschedule.dialog
 
-import android.text.Editable
-import androidx.lifecycle.MutableLiveData
-import com.keycome.twinkleschedule.base.BaseViewModel
-import com.keycome.twinkleschedule.base.EditTextDialog
-import com.keycome.twinkleschedule.model.EditScheduleViewModel
+import androidx.lifecycle.lifecycleScope
+import com.keycome.twinkleschedule.R
+import com.keycome.twinkleschedule.delivery.Pipette
+import com.keycome.twinkleschedule.delivery.Pipette.distribute
+import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_NAME
+import com.keycome.twinkleschedule.util.dialogs.EditTextDialog
+import kotlinx.coroutines.launch
 
 class ScheduleNameDialog : EditTextDialog() {
 
-    val viewModel by viewModels<ScheduleNameViewModel>()
-
-    private var editingText: Editable? = null
-
     override fun configure() {
 
-        title = "课表名称"
-
-        confirm = "确定"
+        title = getString(R.string.title_schedule_name_dialog)
 
         onCancel { dismiss() }
 
         onConfirm {
-            if (!editingText.isNullOrBlank()) {
-                viewModel.liveEditText?.value = editingText.toString()
+            val name = editText.toString()
+            if (name.isNotBlank()) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    Pipette.forString.distribute(KEY_SCHEDULE_NAME) { name }
+                    dismiss()
+                }
+            } else {
+                dismiss()
             }
-            dismiss()
-        }
-
-        textWatcher {
-            afterTextChanged {
-                editingText = it
-            }
-        }
-    }
-
-    class ScheduleNameViewModel : BaseViewModel() {
-        val liveEditText by shareOnlyVariable<MutableLiveData<String>>(
-            EditScheduleViewModel.sharedScheduleName
-        )
-
-        override fun onRemove() {
-            super.onRemove()
-            release(EditScheduleViewModel.sharedScheduleName)
         }
     }
 }

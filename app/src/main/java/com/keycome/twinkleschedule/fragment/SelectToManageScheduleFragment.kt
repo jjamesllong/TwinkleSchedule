@@ -14,7 +14,8 @@ import com.keycome.twinkleschedule.databinding.FragmentScheduleListBinding
 import com.keycome.twinkleschedule.delivery.Pipette
 import com.keycome.twinkleschedule.delivery.Pipette.subscribe
 import com.keycome.twinkleschedule.dialog.ScheduleDetailsDialog
-import com.keycome.twinkleschedule.model.ScheduleListViewModel
+import com.keycome.twinkleschedule.extension.viewbindings.acquire
+import com.keycome.twinkleschedule.viewmodel.ScheduleListViewModel
 
 class SelectToManageScheduleFragment : BaseFragment() {
 

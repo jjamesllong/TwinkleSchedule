@@ -49,6 +49,5 @@ enum class Day {
             else -> throw Exception()
         }
 
-        fun String.toDay() = fromString(this)
     }
 }

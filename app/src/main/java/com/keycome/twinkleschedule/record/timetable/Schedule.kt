@@ -8,15 +8,15 @@ import com.keycome.twinkleschedule.record.interval.Interval
 
 @Entity(tableName = "schedule")
 data class Schedule(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "schedule_id")
     val scheduleId: Long,
 
-    @ColumnInfo(name = "name")
-    val name: String,
+    @ColumnInfo(name = "schedule_name")
+    val scheduleName: String,
 
-    @ColumnInfo(name = "school_opening_date")
-    val schoolOpeningDate: Date,
+    @ColumnInfo(name = "start_date")
+    val startDate: String,
 
     @ColumnInfo(name = "end_section")
     val endSection: Int,
@@ -28,7 +28,8 @@ data class Schedule(
     val endWeek: Int
 ) {
     fun inferWeekNow(): Int {
-        val startTimeMillis = schoolOpeningDate.toMilliSeconds()
+        val date = Date.fromString(startDate)
+        val startTimeMillis = date.toMilliSeconds()
         val currentTimeMillis = System.currentTimeMillis()
         return when {
             startTimeMillis > currentTimeMillis -> -1

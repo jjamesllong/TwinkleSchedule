@@ -33,7 +33,7 @@ class ScheduleListAdapter(
         }
 
         fun onBind(schedule: Schedule) {
-            binding.cellScheduleManagerTitle.text = schedule.name
+            binding.cellScheduleManagerTitle.text = schedule.scheduleName
         }
     }
 

@@ -39,9 +39,10 @@ class TimetableView : ConstraintLayout {
     private var horizontalGuidelines: List<Guideline> = emptyList()
     private var verticalGuidelines: List<Guideline> = emptyList()
 
-    var sectionBar: List<TextView> = emptyList()
-    var dayBar: List<TextView> = emptyList()
-    var courseBlocks: List<TextView> = emptyList()
+    private var sectionBar: List<TextView> = emptyList()
+    private var dayBar: List<TextView> = emptyList()
+    private val courseBlockList: MutableList<TextView> = mutableListOf()
+    private val courseBlockDeque: ArrayDeque<TextView> = ArrayDeque()
 
     private var onCourseClickListener: OnCourseClickListener? = null
 
@@ -80,24 +81,32 @@ class TimetableView : ConstraintLayout {
     private fun retainBaselineOnly() {
         sectionBar.forEach { removeView(it) }
         dayBar.forEach { removeView(it) }
-        courseBlocks.forEach { removeView(it) }
+        courseBlockList.forEach { removeView(it) }
         sectionBar = emptyList()
         dayBar = emptyList()
-        courseBlocks = emptyList()
+        courseBlockList.clear()
     }
 
     fun bindSectionBar(texts: List<String>) {
         ensureSectionBar(row)
+        if (row != texts.size) return
         sectionBar.forEachIndexed { index, textView -> textView.text = texts[index] }
     }
 
     fun bindDayBar(texts: List<String>) {
         ensureDayBar(column)
+        if (column != texts.size) return
         dayBar.forEachIndexed { index, textView -> textView.text = texts[index] }
     }
 
     fun bindCourses(courses: List<CourseDesign>) {
-        courseBlocks.forEach { removeView(it) }
+        val iterator = courseBlockList.iterator()
+        while (iterator.hasNext()) {
+            val textView = iterator.next()
+            courseBlockDeque.addLast(textView)
+            removeView(textView)
+            iterator.remove()
+        }
         configureCourses(courses)
     }
 
@@ -180,51 +189,57 @@ class TimetableView : ConstraintLayout {
     }
 
     private fun configureCourses(courses: List<CourseDesign>) {
-        courses.map { c ->
-            val h = c.day
-            val t = c.sectionStart
-            val b = c.sectionEnd
-            TextView(context).apply {
-                layoutParams = LayoutParams(0, 0).apply {
-                    startToStart = verticalGuidelines[h - 1].id
-                    endToEnd = if (h == verticalGuidelines.size)
-                        LayoutParams.PARENT_ID else verticalGuidelines[h].id
-                    topToTop = horizontalGuidelines[t - 1].id
-                    bottomToBottom = if (b == horizontalGuidelines.size)
-                        LayoutParams.PARENT_ID else horizontalGuidelines[b].id
-                    val margin = 4.dp
-                    marginStart = margin
-                    marginEnd = margin
-                    topMargin = margin
-                    bottomMargin = margin
+        courses.map { requireTextView(it) }
+    }
+
+    private fun requireTextView(design: CourseDesign) {
+        val h = design.day
+        val t = design.sectionStart
+        val b = design.sectionEnd
+        val tv = courseBlockDeque.removeFirstOrNull() ?: TextView(context).apply {
+            val p = 4.dp
+            setPadding(p, p, p, p)
+            gravity = Gravity.CENTER
+        }
+        val lp = LayoutParams(0, 0).apply {
+            val margin = 4.dp
+            marginStart = margin
+            marginEnd = margin
+            topMargin = margin
+            bottomMargin = margin
+            startToStart = verticalGuidelines[h - 1].id
+            endToEnd = if (h == verticalGuidelines.size)
+                LayoutParams.PARENT_ID else verticalGuidelines[h].id
+            topToTop = horizontalGuidelines[t - 1].id
+            bottomToBottom = if (b == horizontalGuidelines.size)
+                LayoutParams.PARENT_ID else horizontalGuidelines[b].id
+        }
+        val bg = StateListDrawable().apply {
+            val radius = 8.dp.toFloat()
+            setEnterFadeDuration(50)
+            setExitFadeDuration(400)
+            addState(
+                intArrayOf(android.R.attr.state_pressed),
+                GradientDrawable().apply {
+                    cornerRadius = radius
+                    setColor((0x88A9A9A9).toInt())
                 }
-                setOnClickListener { onCourseClickListener?.onCourseClick(c.id) }
-                background = StateListDrawable().apply {
-                    val radius = 8.dp.toFloat()
-                    setEnterFadeDuration(50)
-                    setExitFadeDuration(400)
-                    addState(
-                        intArrayOf(android.R.attr.state_pressed),
-                        GradientDrawable().apply {
-                            cornerRadius = radius
-                            setColor((0xFFA9A9A9).toInt())
-                        }
-                    )
-                    addState(
-                        intArrayOf(-android.R.attr.state_pressed),
-                        GradientDrawable().apply {
-                            cornerRadius = radius
-                            setColor(c.color)
-                        }
-                    )
+            )
+            addState(
+                intArrayOf(-android.R.attr.state_pressed),
+                GradientDrawable().apply {
+                    cornerRadius = radius
+                    setColor(design.color)
                 }
-                val p = 4.dp
-                setPadding(p, p, p, p)
-                gravity = Gravity.CENTER
-                setTextColor(Color.BLACK)
-                text = c.text
-            }.also { addView(it) }
-        }.also { courseBlocks = it }
+            )
+        }
+        tv.layoutParams = lp
+        tv.background = bg
+        tv.setOnClickListener { onCourseClickListener?.onCourseClick(design.id) }
+        tv.text = design.text
+        tv.setTextColor(design.textColor)
+        addView(tv)
+        courseBlockList.add(tv)
     }
 
     fun setOnCourseClickListener(l: OnCourseClickListener) {
