@@ -77,14 +77,14 @@
             android:id="@+id/action_editScheduleFragment_to_scheduleNameDialog"
             app:destination="@id/scheduleNameDialog" />
         <action
-            android:id="@+id/action_editScheduleFragment_to_endSectionDialog"
-            app:destination="@id/endSectionDialog" />
+            android:id="@+id/action_editScheduleFragment_to_scheduleEndSectionDialog"
+            app:destination="@id/scheduleEndSectionDialog" />
         <action
-            android:id="@+id/action_editScheduleFragment_to_endDayDialog"
-            app:destination="@id/endDayDialog" />
+            android:id="@+id/action_editScheduleFragment_to_scheduleEndDayDialog"
+            app:destination="@id/scheduleEndDayDialog" />
         <action
-            android:id="@+id/action_editScheduleFragment_to_endWeekDialog"
-            app:destination="@id/endWeekDialog" />
+            android:id="@+id/action_editScheduleFragment_to_scheduleEndWeekDialog"
+            app:destination="@id/scheduleEndWeekDialog" />
         <action
             android:id="@+id/action_editScheduleFragment_to_displayCoursesFragment"
             app:destination="@id/displayFragment"
@@ -101,6 +101,9 @@
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_from_left"
             app:popExitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_editScheduleFragment_to_scheduleStartDateDialog"
+            app:destination="@id/scheduleStartDateDialog" />
     </fragment>
     <dialog
         android:id="@+id/scheduleNameDialog"
@@ -108,18 +111,22 @@
         android:label="ScheduleNameDialog"
         tools:layout="@layout/dialog_edit_text" />
     <dialog
-        android:id="@+id/endSectionDialog"
-        android:name="com.keycome.twinkleschedule.dialog.EndSectionDialog"
-        android:label="DailyCoursesDialog"
+        android:id="@+id/scheduleStartDateDialog"
+        android:name="com.keycome.twinkleschedule.dialog.ScheduleStartDateDialog"
+        android:label="ScheduleStartDateDialog" />
+    <dialog
+        android:id="@+id/scheduleEndSectionDialog"
+        android:name="com.keycome.twinkleschedule.dialog.ScheduleEndSectionDialog"
+        android:label="scheduleEndSectionDialog"
         tools:layout="@layout/dialog_edit_text" />
     <dialog
-        android:id="@+id/endDayDialog"
-        android:name="com.keycome.twinkleschedule.dialog.EndDayDialog"
-        android:label="EndDayDialog" />
+        android:id="@+id/scheduleEndDayDialog"
+        android:name="com.keycome.twinkleschedule.dialog.ScheduleEndDayDialog"
+        android:label="scheduleEndDayDialog" />
     <dialog
-        android:id="@+id/endWeekDialog"
-        android:name="com.keycome.twinkleschedule.dialog.EndWeekDialog"
-        android:label="EndWeekDialog" />
+        android:id="@+id/scheduleEndWeekDialog"
+        android:name="com.keycome.twinkleschedule.dialog.ScheduleEndWeek"
+        android:label="scheduleEndWeekDialog" />
     <fragment
         android:id="@+id/editRoutineFragment"
         android:name="com.keycome.twinkleschedule.fragment.EditRoutineFragment"

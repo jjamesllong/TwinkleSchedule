@@ -274,25 +274,27 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <FrameLayout
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/edit_schedule_to_display_item"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_shape_rectangle_16_0"
-                android:backgroundTint="@color/md_theme_light_primaryContainer"
-                android:padding="16dp"
+                app:cardBackgroundColor="@color/md_theme_light_primaryContainer"
+                app:cardCornerRadius="16dp"
+                app:cardForegroundColor="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/edit_schedule_routines_item"
                 app:layout_constraintStart_toStartOf="@id/edit_schedule_routines_item"
-                app:layout_constraintTop_toBottomOf="@id/edit_schedule_routines_item">
+                app:layout_constraintTop_toBottomOf="@id/edit_schedule_routines_item"
+                app:strokeWidth="0dp">
 
                 <TextView
                     android:id="@+id/edit_schedule_to_display_hint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|start"
+                    android:layout_margin="16dp"
                     android:text="@string/fragment_edit_schedule_to_display"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="16sp" />
@@ -301,9 +303,13 @@
                     android:id="@+id/edit_schedule_to_display_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|end" />
+                    android:layout_gravity="center_vertical|end"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp" />
 
-            </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

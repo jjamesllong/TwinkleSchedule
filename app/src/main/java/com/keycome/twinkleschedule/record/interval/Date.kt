@@ -83,7 +83,7 @@ data class Date(val year: Int, val month: Int, val dayOfMonth: Int) : Parcelable
             return Date(y, m, d)
         }
 
-        fun currentDate(): Date {
+        fun today(): Date {
             val calender = Calendar.getInstance()
             val year = calender.get(Calendar.YEAR)
             val month = calender.get(Calendar.MONTH) + 1

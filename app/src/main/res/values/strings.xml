@@ -43,9 +43,11 @@
     <string name="title_course_week_dialog">选择周次</string>
     <string name="title_course_color_fragment">课程颜色</string>
     <string name="title_text_color_dialog">文字颜色</string>
-    <string name="title_end_section_dialog">每日课程数</string>
+    <string name="title_schedule_end_section_dialog">每日课程数</string>
     <string name="title_schedule_name_dialog">课程名称</string>
-    <string name="title_end_day_dialog">课程结束天</string>
+    <string name="title_schedule_end_day_dialog">课程结束日</string>
+    <string name="title_schedule_start_date_dialog">开学日期</string>
+    <string name="title_schedule_end_week_dialog">学期总周数</string>
 
     <!--  FragmentDisplay  -->
     <string name="fragment_display_week">第 %1$d 周</string>
@@ -61,7 +63,7 @@
     <string name="fragment_edit_schedule_start_date">开学日期</string>
     <string name="fragment_edit_schedule_end_section">每日课程节数</string>
     <string name="fragment_edit_schedule_end_day">每星期课程结束日</string>
-    <string name="fragment_edit_schedule_end_week">课表最大周数</string>
+    <string name="fragment_edit_schedule_end_week">学期总周数</string>
     <string name="fragment_edit_schedule_routines">作息表</string>
     <string name="fragment_edit_schedule_add_routine">添加新作息</string>
     <string name="fragment_edit_schedule_to_display">同时设置为主页课表</string>

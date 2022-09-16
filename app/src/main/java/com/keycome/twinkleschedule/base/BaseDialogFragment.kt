@@ -1,12 +1,13 @@
 package com.keycome.twinkleschedule.base
 
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.view.animation.AnimationSet
-import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.keycome.twinkleschedule.R
@@ -15,34 +16,44 @@ import com.keycome.twinkleschedule.extension.fragments.viewModelDelegate
 
 abstract class BaseDialogFragment : AppCompatDialogFragment() {
 
-    private var firstPresent = true
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = AppCompatDialog(context)
-        dialog.window?.also {
-            it.setBackgroundDrawable(null)
-            it.requestFeature(Window.FEATURE_NO_TITLE)
-            it.setWindowAnimations(0)
+        dialog.window?.apply {
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            requestFeature(Window.FEATURE_NO_TITLE)
+
             when (getDialogGravity()) {
-                GRAVITY_CENTER -> it.setGravity(Gravity.CENTER)
-                GRAVITY_BOTTOM -> it.setGravity(Gravity.BOTTOM)
-                else -> {}
+                GRAVITY_CENTER -> setGravity(Gravity.CENTER)
+                GRAVITY_BOTTOM -> setGravity(Gravity.BOTTOM)
+                else -> setGravity(Gravity.CENTER)
             }
+
+            setWindowAnimations(getDialogAnimations())
         }
         return dialog
     }
 
-    override fun onStart() {
-        super.onStart()
-        when (getDialogMode()) {
-            MODE_WRAP -> {}
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        configDialogSize(getDialogMode())
+    }
+
+    private fun configDialogSize(mode: Int) {
+        when (mode) {
+            MODE_WRAP -> dialog?.window?.setLayout(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
             MODE_FILL -> dialog?.window?.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
-            else -> {}
+            else -> dialog?.window?.setLayout(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
         }
-        considerPlayAnimation()
+
     }
 
     protected inline fun <reified VM : BaseViewModel> viewModels(): Lazy<VM> {
@@ -53,22 +64,6 @@ abstract class BaseDialogFragment : AppCompatDialogFragment() {
         return activityViewModelDelegate()
     }
 
-    private fun considerPlayAnimation() {
-        if (firstPresent) {
-            firstPresent = false
-            dialog?.window?.decorView?.also {
-                val animationId = getDialogAnimation().let { id ->
-                    if (id == 0) R.anim.scale_expand_with_alpha else id
-                }
-                val animation = AnimationUtils.loadAnimation(
-                    context,
-                    animationId
-                ) as AnimationSet
-                it.startAnimation(animation)
-            }
-        }
-    }
-
     open fun getDialogGravity(): Int {
         return GRAVITY_CENTER
     }
@@ -77,8 +72,8 @@ abstract class BaseDialogFragment : AppCompatDialogFragment() {
         return MODE_WRAP
     }
 
-    open fun getDialogAnimation(): Int {
-        return 0
+    open fun getDialogAnimations(): Int {
+        return R.style.FloatingCenterDialogAnimation
     }
 
 

@@ -25,7 +25,7 @@ class CourseDetailsDialog : BaseDialogFragment() {
         return GRAVITY_BOTTOM
     }
 
-    override fun getDialogAnimation(): Int {
+    override fun getDialogAnimations(): Int {
         return R.anim.slide_in_from_bottom
     }
 

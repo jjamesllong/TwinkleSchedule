@@ -62,15 +62,16 @@ class EditScheduleFragment : BaseFragment() {
             navController.navigate(R.id.action_editScheduleFragment_to_scheduleNameDialog)
         }
         binding.editScheduleStartDateItem.setOnClickListener {
+            navController.navigate(R.id.action_editScheduleFragment_to_scheduleStartDateDialog)
         }
         binding.editScheduleEndSectionItem.setOnClickListener {
-            navController.navigate(R.id.action_editScheduleFragment_to_endSectionDialog)
+            navController.navigate(R.id.action_editScheduleFragment_to_scheduleEndSectionDialog)
         }
         binding.editScheduleEndDayItem.setOnClickListener {
-            navController.navigate(R.id.action_editScheduleFragment_to_endDayDialog)
+            navController.navigate(R.id.action_editScheduleFragment_to_scheduleEndDayDialog)
         }
         binding.editScheduleEndWeekItem.setOnClickListener {
-            navController.navigate(R.id.action_editScheduleFragment_to_endWeekDialog)
+            navController.navigate(R.id.action_editScheduleFragment_to_scheduleEndWeekDialog)
         }
         binding.editScheduleNewRoutine.setOnClickListener {
         }
@@ -78,6 +79,9 @@ class EditScheduleFragment : BaseFragment() {
             orientation = LinearLayoutManager.HORIZONTAL
         }
         binding.editScheduleRecyclerView.adapter = adapter
+        binding.editScheduleToDisplayItem.setOnClickListener {
+            binding.editScheduleToDisplaySwitch.toggle()
+        }
 
         viewModel.liveScheduleName.observe(viewLifecycleOwner) {
             binding.editScheduleNameText.text = it

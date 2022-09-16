@@ -8,20 +8,26 @@ import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_END_SECTION
 import com.keycome.twinkleschedule.util.dialogs.EditTextDialog
 import kotlinx.coroutines.launch
 
-class EndSectionDialog : EditTextDialog() {
+class ScheduleEndSectionDialog : EditTextDialog() {
 
     override fun configure() {
 
-        title = getString(R.string.title_end_section_dialog)
+        title = getString(R.string.title_schedule_end_section_dialog)
 
         inputType = INPUT_TYPE_NUMBER
 
         onCancel { dismiss() }
 
         onConfirm {
-            val dailyCourses = editText.toString().toInt()
-            viewLifecycleOwner.lifecycleScope.launch {
-                Pipette.forInt.distribute(KEY_SCHEDULE_END_SECTION) { dailyCourses }
+            val endSection = editText.toString()
+            if (endSection.isNotBlank()) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    Pipette.forInt.distribute(KEY_SCHEDULE_END_SECTION) {
+                        endSection.toInt()
+                    }
+                    dismiss()
+                }
+            } else {
                 dismiss()
             }
         }

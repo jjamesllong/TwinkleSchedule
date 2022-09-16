@@ -63,8 +63,6 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    implementation 'com.github.limxing:DatePickerView:1.1.0'
-
     implementation "androidx.recyclerview:recyclerview:1.2.1"
 
     implementation 'com.tencent:mmkv-static:1.2.13'

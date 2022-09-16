@@ -13,7 +13,7 @@ import com.keycome.twinkleschedule.delivery.Pipette.distribute
 import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_END_DAY
 import kotlinx.coroutines.launch
 
-class EndDayDialog : BaseDialogFragment() {
+class ScheduleEndDayDialog : BaseDialogFragment() {
 
     private var _binding: DialogEndDayBinding? = null
     val binding get() = _binding!!
@@ -43,13 +43,13 @@ class EndDayDialog : BaseDialogFragment() {
             KEY_SCHEDULE_END_DAY
         ) ?: -1
 
-        val checkId = when (selectedDay) {
+        val checkingId = when (selectedDay) {
             5 -> R.id.dialog_end_day_friday
             6 -> R.id.dialog_end_day_saturday
             7 -> R.id.dialog_end_day_sunday
             else -> selectedDay
         }
-        binding.dialogEndDayRadioGroup.check(checkId)
+        binding.dialogEndDayRadioGroup.check(checkingId)
 
         binding.dialogEndDayRadioGroup.setOnCheckedChangeListener { group, checkedId ->
             selectedDay = when (checkedId) {
