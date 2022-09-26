@@ -18,38 +18,41 @@ abstract class EditTextDialog : BaseDialogFragment() {
     val binding get() = _binding.acquire()
 
     var editText: Editable
-        get() = binding.editTextDialogText.text ?: Editable.Factory.getInstance().newEditable("")
+        get() = binding.dialogEditTextText.text ?: Editable.Factory.getInstance().newEditable("")
         set(param) {
-            binding.editTextDialogText.text = param
+            binding.dialogEditTextText.text = param
         }
 
     var inputType = INPUT_TYPE_SHORT_TEXT
         set(param) {
             field = param
             when (param) {
-                INPUT_TYPE_SHORT_TEXT ->
-                    binding.editTextDialogText.inputType = InputType.TYPE_CLASS_TEXT
-                INPUT_TYPE_NUMBER ->
-                    binding.editTextDialogText.inputType = InputType.TYPE_CLASS_NUMBER
+                INPUT_TYPE_SHORT_TEXT -> {
+                    binding.dialogEditTextText.inputType = InputType.TYPE_CLASS_TEXT
+                }
+                INPUT_TYPE_NUMBER -> {
+                    binding.dialogEditTextText.inputType = InputType.TYPE_CLASS_NUMBER
+                }
+                else -> {}
             }
         }
 
     var title = "title"
         set(param) {
             field = param
-            binding.editTextDialogTitle.text = param
+            binding.dialogEditTextTitle.text = param
         }
 
     var hint = "hint"
         set(param) {
             field = param
-            binding.editTextDialogField.hint = param
+            binding.dialogEditTextField.hint = param
         }
 
     var confirm = "OK"
         set(param) {
             field = param
-            binding.editTextDialogConfirm.text = param
+            binding.dialogEditTextConfirm.text = param
         }
 
     abstract fun configure()
@@ -70,7 +73,19 @@ abstract class EditTextDialog : BaseDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val text = savedInstanceState?.getString(
+            KEY_TEXT
+        ) ?: arguments?.getString(
+            KEY_TEXT
+        ) ?: ""
+        editText.clear()
+        editText.append(text)
         configure()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_TEXT, editText.toString())
     }
 
     override fun onDestroyView() {
@@ -80,19 +95,21 @@ abstract class EditTextDialog : BaseDialogFragment() {
 
 
     fun onConfirm(action: (View) -> Unit) {
-        binding.editTextDialogConfirm.setOnClickListener(action)
+        binding.dialogEditTextConfirm.setOnClickListener(action)
     }
 
     fun onCancel(action: (View) -> Unit) {
-        binding.editTextDialogCancel.setOnClickListener(action)
+        binding.dialogEditTextClose.setOnClickListener(action)
     }
 
     fun textWatcher(action: TextWatcherScope.() -> Unit) {
-        val scopeImpl = TextWatcherScopeImpl(binding.editTextDialogText)
+        val scopeImpl = TextWatcherScopeImpl(binding.dialogEditTextText)
         scopeImpl.action()
     }
 
     companion object {
+
+        const val KEY_TEXT = "edit_text_dialog_text"
 
         const val INPUT_TYPE_NUMBER = 1
         const val INPUT_TYPE_SHORT_TEXT = 2

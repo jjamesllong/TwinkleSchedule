@@ -10,6 +10,7 @@
     <string name="error">错误</string>
     <string name="submit">提交</string>
     <string name="save">保存</string>
+    <string name="check">检查</string>
 
     <!--  day  -->
     <string name="monday">星期一</string>
@@ -48,6 +49,7 @@
     <string name="title_schedule_end_day_dialog">课程结束日</string>
     <string name="title_schedule_start_date_dialog">开学日期</string>
     <string name="title_schedule_end_week_dialog">学期总周数</string>
+    <string name="title_edit_routine_fragment">编辑作息表</string>
 
     <!--  FragmentDisplay  -->
     <string name="fragment_display_week">第 %1$d 周</string>
@@ -67,6 +69,12 @@
     <string name="fragment_edit_schedule_routines">作息表</string>
     <string name="fragment_edit_schedule_add_routine">添加新作息</string>
     <string name="fragment_edit_schedule_to_display">同时设置为主页课表</string>
+
+    <!--  FragmentEditRoutine  -->
+    <string name="fragment_edit_routine_new_segment">添加时段</string>
+    <string name="fragment_edit_routine_name">作息表名称</string>
+    <string name="fragment_edit_routine_start_date">作息表开始日期</string>
+    <string name="fragment_edit_routine_section_duration">课程时长</string>
 
     <!--  DialogCourseName  -->
     <string name="dialog_course_name_hint">课程名称</string>
@@ -89,7 +97,15 @@
     <string name="dialog_text_color_light">浅色</string>
     <string name="dialog_text_color_dark">深色</string>
 
-    <string name="dialog_course_duration_progress">%1$d 分钟</string>
+    <!--  DialogRoutineDuration  -->
+    <string name="dialog_routine_duration_progress">%1$d 分钟</string>
+
+    <!--  DialogDatePicker  -->
+    <string name="dialog_date_picker_title">选择日期</string>
+
+    <!--  DialogTimePicker  -->
+    <string name="dialog_time_picker_title">选择时间</string>
+
     <string name="adapter_edit_daily_routine_header_node">%1$d / %2$d</string>
     <string name="adapter_edit_daily_routine_section">第 %1$d 节 %2$s - %3$s</string>
 </resources>

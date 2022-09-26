@@ -102,7 +102,7 @@ class PagingAdapter(
             }
         }
         val routine = timetableDescriber!!.routines[i]
-        return routine.segmentList.mapIndexed { index, segment ->
+        return routine.sectionList.mapIndexed { index, segment ->
             val number = index + 1
             requestSectionText(number, segment)
         }.also { weekToSectionText[i] = it }

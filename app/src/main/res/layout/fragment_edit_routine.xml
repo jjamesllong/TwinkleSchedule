@@ -7,7 +7,7 @@
     tools:context=".fragment.EditRoutineFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/fragment_edit_daily_routine_toolbar"
+        android:id="@+id/fragment_edit_routine_toolbar"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,34 +16,34 @@
         app:menu="@menu/edit_daily_routine_toolbar"
         app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
         app:subtitleCentered="true"
-        app:title="编辑作息表"
+        app:title="@string/title_edit_routine_fragment"
         app:titleCentered="true"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_edit_daily_routine_recycler_view"
+        android:id="@+id/fragment_edit_routine_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:overScrollMode="never"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_edit_daily_routine_bottom_button"
+        android:overScrollMode="ifContentScrolls"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_edit_routine_new_section"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_edit_daily_routine_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_edit_routine_toolbar" />
 
     <Button
-        android:id="@+id/fragment_edit_daily_routine_bottom_button"
+        android:id="@+id/fragment_edit_routine_new_section"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="添加时段"
+        android:text="@string/fragment_edit_routine_new_segment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_edit_daily_routine_recycler_view" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_edit_routine_recycler_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

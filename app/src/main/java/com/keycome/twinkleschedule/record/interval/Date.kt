@@ -23,6 +23,18 @@ data class Date(val year: Int, val month: Int, val dayOfMonth: Int) : Parcelable
         parcel.readInt()
     )
 
+    override fun toString(): String {
+        val builder = StringBuilder().apply {
+            val separator = "-"
+            append(year)
+            append(separator)
+            align(month)
+            append(separator)
+            align(dayOfMonth)
+        }
+        return builder.toString()
+    }
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(year)
         parcel.writeInt(month)
@@ -64,6 +76,13 @@ data class Date(val year: Int, val month: Int, val dayOfMonth: Int) : Parcelable
     companion object {
 
         private const val HYPHEN_DATE_STRING = "yyyy-MM-dd"
+
+        private fun StringBuilder.align(number: Int) {
+            if (number < 10) {
+                append(0)
+            }
+            append(number)
+        }
 
         @JvmField
         val CREATOR = object : Parcelable.Creator<Date> {

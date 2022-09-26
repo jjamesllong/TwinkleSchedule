@@ -1,62 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_shape_rectangle_16_0"
-    android:backgroundTint="@color/md_theme_light_background">
-
-    <View
-        android:id="@+id/dialog_date_picker_placeholder"
-        android:layout_width="@dimen/floating_center_dialog_width"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:backgroundTint="?android:attr/colorBackground">
 
     <TextView
-        android:id="@+id/dialog_date_picker_title"
-        android:layout_width="wrap_content"
+        android:id="@+id/dialog_routine_duration_title"
+        android:layout_width="@dimen/floating_center_dialog_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/dialog_date_picker_title"
+        android:gravity="center"
+        android:text="@string/fragment_edit_routine_section_duration"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/dialog_date_picker_cancel"
+        android:id="@+id/dialog_routine_duration_cancel"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
         android:contentDescription="@string/close"
         android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="@id/dialog_date_picker_title"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_routine_duration_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/dialog_date_picker_title"
+        app:layout_constraintTop_toTopOf="@+id/dialog_routine_duration_title"
         app:srcCompat="@drawable/ic_baseline_cross_24" />
 
-    <com.github.gzuliyujiang.wheelpicker.widget.DateWheelLayout
-        android:id="@+id/dialog_date_picker_picker"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/dialog_routine_duration_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_routine_duration_title"
+        tools:text="45" />
+
+    <SeekBar
+        android:id="@+id/dialog_routine_duration_progress"
+        android:layout_width="0dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dialog_date_picker_title"
-        app:wheel_cyclicEnabled="true"
-        app:wheel_indicatorColor="?attr/colorSecondary"
-        app:wheel_itemTextBoldSelected="true"
-        app:wheel_itemTextColorSelected="?attr/colorPrimary"
-        app:wheel_visibleItemCount="3" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_routine_duration_text" />
 
     <TextView
-        android:id="@+id/dialog_date_picker_confirm"
+        android:id="@+id/dialog_routine_duration_confirm"
         android:layout_width="80dp"
         android:layout_height="36dp"
         android:layout_marginTop="16dp"
@@ -65,12 +64,11 @@
         android:gravity="center"
         android:text="@string/confirm"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_date_picker_picker" />
-
+        app:layout_constraintTop_toBottomOf="@+id/dialog_routine_duration_progress" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

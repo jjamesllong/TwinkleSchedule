@@ -21,8 +21,8 @@ data class Routine(
     @ColumnInfo(name = "start_date")
     val startDate: String,
 
-    @ColumnInfo(name = "segment_list")
-    val segmentList: List<String>
+    @ColumnInfo(name = "section_list")
+    val sectionList: List<String>
 ) : Parcelable {
 
     constructor(parcel: Parcel) : this(
@@ -30,7 +30,7 @@ data class Routine(
         masterId = parcel.readLong(),
         routineName = parcel.readString() ?: "",
         startDate = parcel.readString() ?: "",
-        segmentList = arrayOfNulls<String>(parcel.readInt()).also {
+        sectionList = arrayOfNulls<String>(parcel.readInt()).also {
             for (i in it.indices) {
                 it[i] = parcel.readString()
             }
@@ -42,8 +42,8 @@ data class Routine(
         parcel.writeLong(masterId)
         parcel.writeString(routineName)
         parcel.writeString(startDate)
-        parcel.writeInt(segmentList.size)
-        segmentList.forEach { parcel.writeString(it) }
+        parcel.writeInt(sectionList.size)
+        sectionList.forEach { parcel.writeString(it) }
     }
 
     override fun describeContents(): Int = 0

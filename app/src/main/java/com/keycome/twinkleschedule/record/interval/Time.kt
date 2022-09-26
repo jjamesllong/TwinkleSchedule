@@ -2,6 +2,7 @@ package com.keycome.twinkleschedule.record.interval
 
 import android.os.Parcel
 import android.os.Parcelable
+import java.util.*
 
 data class Time(val hour: Int, val minute: Int, val second: Int) : Parcelable {
 
@@ -26,6 +27,19 @@ data class Time(val hour: Int, val minute: Int, val second: Int) : Parcelable {
     override fun describeContents(): Int {
         return 0
     }
+
+    override fun toString(): String {
+        val builder = StringBuilder().apply {
+            val separator = ":"
+            align(hour)
+            append(separator)
+            align(minute)
+            append(separator)
+            align(second)
+        }
+        return builder.toString()
+    }
+
 
     fun formatWithoutSecond24(): String {
         val builder = StringBuilder().apply {
@@ -56,8 +70,10 @@ data class Time(val hour: Int, val minute: Int, val second: Int) : Parcelable {
     operator fun plus(seconds: Int): Time {
         val totalSeconds = toSeconds() + seconds
         return if (totalSeconds >= DAILY_SECONDS) {
-            (totalSeconds % DAILY_SECONDS).fromSeconds()
-        } else totalSeconds.fromSeconds()
+            from((totalSeconds % DAILY_SECONDS))
+        } else {
+            from(totalSeconds)
+        }
     }
 
     operator fun minus(time: Time): Int {
@@ -72,6 +88,15 @@ data class Time(val hour: Int, val minute: Int, val second: Int) : Parcelable {
         const val HOUR_SECONDS = 60 * 60
         const val MINUTE_SECONDS = 60
 
+
+        private fun StringBuilder.align(number: Int) {
+            if (number < 10) {
+                append(0)
+            }
+            append(number)
+        }
+
+        @Suppress("unused")
         @JvmField
         val CREATOR = object : Parcelable.Creator<Time> {
             override fun createFromParcel(parcel: Parcel): Time {
@@ -83,8 +108,20 @@ data class Time(val hour: Int, val minute: Int, val second: Int) : Parcelable {
             }
         }
 
-        fun Int.fromSeconds(): Time {
-            val seconds = this
+        fun from(hour: Int, minute: Int, seconds: Int): Time {
+            return Time(hour, minute, seconds)
+        }
+
+        fun from(string: String): Time {
+            val s = string.split(delimiters = arrayOf(":"), ignoreCase = false, limit = 0)
+            return when (s.size) {
+                2 -> Time(hour = s[0].toInt(), minute = s[1].toInt(), second = 0)
+                3 -> Time(hour = s[0].toInt(), minute = s[1].toInt(), second = s[2].toInt())
+                else -> throw Exception()
+            }
+        }
+
+        fun from(seconds: Int): Time {
             if (seconds < 0) {
                 throw IllegalArgumentException("seconds should not be negative")
             }
@@ -92,6 +129,14 @@ data class Time(val hour: Int, val minute: Int, val second: Int) : Parcelable {
             val m = seconds % HOUR_SECONDS / MINUTE_SECONDS
             val s = seconds % HOUR_SECONDS % MINUTE_SECONDS
             return Time(h, m, s)
+        }
+
+        fun now(): Time {
+            val calendar = Calendar.getInstance()
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
+            val second = calendar.get(Calendar.SECOND)
+            return Time(hour, minute, second)
         }
     }
 }

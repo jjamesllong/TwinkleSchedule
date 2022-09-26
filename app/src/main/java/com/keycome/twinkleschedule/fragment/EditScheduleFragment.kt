@@ -13,6 +13,8 @@ import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentEditScheduleBinding
 import com.keycome.twinkleschedule.extension.days.toLocalWord
 import com.keycome.twinkleschedule.record.interval.Day
+import com.keycome.twinkleschedule.util.const.KEY_ROUTINE
+import com.keycome.twinkleschedule.util.const.KEY_ROUTINE_SECTION_SIZE
 import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_ID
 import com.keycome.twinkleschedule.viewmodel.EditScheduleViewModel
 
@@ -44,7 +46,20 @@ class EditScheduleFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = RoutinesNameAdapter { v, r ->
-
+            when (v.id) {
+                R.id.cell_routines_name_name -> {
+                    navController.navigate(
+                        R.id.action_editScheduleFragment_to_editRoutineFragment,
+                        Bundle().apply {
+                            putInt(KEY_ROUTINE_SECTION_SIZE, viewModel.liveEndSection.value ?: 0)
+                            putParcelable(KEY_ROUTINE, r)
+                        }
+                    )
+                }
+                R.id.cell_routines_name_delete -> {
+                }
+                else -> {}
+            }
         }
 
         binding.editScheduleTitle.text = if (scheduleId == 0L) getString(
@@ -74,6 +89,13 @@ class EditScheduleFragment : BaseFragment() {
             navController.navigate(R.id.action_editScheduleFragment_to_scheduleEndWeekDialog)
         }
         binding.editScheduleNewRoutine.setOnClickListener {
+            navController.navigate(
+                R.id.action_editScheduleFragment_to_editRoutineFragment,
+                Bundle().apply {
+                    putInt(KEY_ROUTINE_SECTION_SIZE, viewModel.liveEndSection.value ?: 0)
+                    putParcelable(KEY_ROUTINE, viewModel.newRoutine())
+                }
+            )
         }
         binding.editScheduleRecyclerView.layoutManager = LinearLayoutManager(context).apply {
             orientation = LinearLayoutManager.HORIZONTAL
@@ -101,6 +123,7 @@ class EditScheduleFragment : BaseFragment() {
             binding.editScheduleEndWeekText.text = it.toString()
         }
         viewModel.liveRoutines.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
 
         viewModel.onFirstPresent {

@@ -7,25 +7,15 @@
     android:background="@drawable/bg_shape_rectangle_16_0"
     android:backgroundTint="?android:attr/colorBackground">
 
-    <View
-        android:id="@+id/edit_text_dialog_placeholder"
-        android:layout_width="@dimen/floating_center_dialog_width"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
-        android:id="@+id/edit_text_dialog_title"
-        android:layout_width="wrap_content"
+        android:id="@+id/dialog_edit_text_title"
+        android:layout_width="@dimen/floating_center_dialog_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/edit_text_dialog_field"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +23,7 @@
         tools:text="标题" />
 
     <ImageView
-        android:id="@+id/edit_text_dialog_cancel"
+        android:id="@+id/dialog_edit_text_close"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="20dp"
@@ -41,50 +31,50 @@
         android:contentDescription="@string/close"
         android:focusable="true"
         android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_text_dialog_title"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_edit_text_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edit_text_dialog_title"
+        app:layout_constraintTop_toTopOf="@+id/dialog_edit_text_title"
         app:layout_constraintVertical_bias="0.5"
         app:srcCompat="@drawable/ic_baseline_cross_24" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edit_text_dialog_field"
+        android:id="@+id/dialog_edit_text_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="36dp"
-        android:layout_marginBottom="16dp"
         app:counterEnabled="true"
         app:counterMaxLength="20"
         app:errorEnabled="true"
         app:hintAnimationEnabled="true"
         app:hintEnabled="true"
-        app:layout_constraintBottom_toTopOf="@+id/edit_text_dialog_confirm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_dialog_title">
+        app:layout_constraintTop_toBottomOf="@id/dialog_edit_text_title">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_dialog_text"
+            android:id="@+id/dialog_edit_text_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/edit_text_dialog_confirm"
-        android:layout_width="60dp"
+        android:id="@+id/dialog_edit_text_confirm"
+        android:layout_width="80dp"
         android:layout_height="36dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_selector_rectangle_8_1"
+        android:background="@drawable/bg_selector_icon_selectable"
         android:gravity="center"
         android:text="@string/confirm"
-        android:textColor="?attr/colorOnSurface"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="14sp"
+        android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_dialog_field" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_edit_text_field" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

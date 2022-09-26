@@ -12,7 +12,7 @@ import com.keycome.twinkleschedule.record.timetable.Schedule
 
 @Database(
     entities = [Schedule::class, Course::class, Routine::class, CourseDecoration::class],
-    version = 2,
+    version = 1,
     exportSchema = false
 )
 @TypeConverters(Converter::class)

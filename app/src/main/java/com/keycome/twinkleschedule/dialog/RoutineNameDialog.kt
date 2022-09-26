@@ -1,19 +1,20 @@
 package com.keycome.twinkleschedule.dialog
 
 import androidx.lifecycle.lifecycleScope
-import com.keycome.twinkleschedule.delivery.Drop
+import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.delivery.Pipette
+import com.keycome.twinkleschedule.delivery.Pipette.distribute
+import com.keycome.twinkleschedule.util.const.KEY_ROUTINE_NAME
 import com.keycome.twinkleschedule.util.dialogs.EditTextDialog
-import com.keycome.twinkleschedule.viewmodel.EditRoutineViewModel
 import kotlinx.coroutines.launch
 
-class DailyRoutineNameDialog : EditTextDialog() {
+class RoutineNameDialog : EditTextDialog() {
 
     override fun configure() {
 
-        title = "作息表名称"
+        title = getString(R.string.fragment_edit_routine_name)
 
-        confirm = "确定"
+        confirm = getString(R.string.confirm)
 
         onCancel { dismiss() }
 
@@ -21,9 +22,7 @@ class DailyRoutineNameDialog : EditTextDialog() {
             val text = editText.toString()
             if (text.isNotBlank()) {
                 lifecycleScope.launch {
-                    Pipette.forString.emit(
-                        Drop(EditRoutineViewModel.dailyRoutineName, text)
-                    )
+                    Pipette.forString.distribute(KEY_ROUTINE_NAME) { text }
                     dismiss()
                 }
             } else {

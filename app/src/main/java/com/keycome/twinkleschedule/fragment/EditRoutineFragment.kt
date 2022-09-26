@@ -5,25 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.gzuliyujiang.wheelpicker.DatePicker
-import com.github.gzuliyujiang.wheelpicker.TimePicker
-import com.github.gzuliyujiang.wheelpicker.annotation.TimeMode
-import com.github.gzuliyujiang.wheelpicker.entity.DateEntity
 import com.keycome.twinkleschedule.R
-import com.keycome.twinkleschedule.adapter.EditDailyRoutineAdapter
-import com.keycome.twinkleschedule.adapter.EditDailyRoutineHeaderAdapter
+import com.keycome.twinkleschedule.adapter.EditRoutineAdapter
+import com.keycome.twinkleschedule.adapter.EditRoutineHeaderAdapter
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentEditRoutineBinding
 import com.keycome.twinkleschedule.extension.viewbindings.acquire
 import com.keycome.twinkleschedule.record.interval.Date
-import com.keycome.twinkleschedule.record.interval.Time
 import com.keycome.twinkleschedule.record.timetable.Routine
+import com.keycome.twinkleschedule.util.const.KEY_ROUTINE
+import com.keycome.twinkleschedule.util.const.KEY_ROUTINE_SECTION_DURATION
+import com.keycome.twinkleschedule.util.const.KEY_ROUTINE_SECTION_INDEX
+import com.keycome.twinkleschedule.util.const.KEY_ROUTINE_SECTION_SIZE
+import com.keycome.twinkleschedule.util.dialogs.DatePickerDialog
+import com.keycome.twinkleschedule.util.dialogs.EditTextDialog
+import com.keycome.twinkleschedule.util.dialogs.TimePickerDialog
 import com.keycome.twinkleschedule.viewmodel.EditRoutineViewModel
 import kotlinx.coroutines.launch
 
@@ -36,30 +36,55 @@ class EditRoutineFragment : BaseFragment() {
 
     val viewModel by viewModels<EditRoutineViewModel>()
 
-    private val headerEvent: (View) -> Unit = {
+    private val headerClickAction: (View) -> Unit = {
         when (it.id) {
-            R.id.header_daily_routine_name -> {
+            R.id.view_edit_routine_name_item -> {
                 navController.navigate(
-                    R.id.action_editDailyRoutineFragment_to_dailyRoutineNameDialog
+                    R.id.action_editRoutineFragment_to_routineNameDialog,
+                    Bundle().apply {
+                        viewModel.liveRoutineName.value?.also { name ->
+                            putString(EditTextDialog.KEY_TEXT, name)
+                        }
+                    }
                 )
             }
-            R.id.header_start_date -> {
-                configureDatePicker()
-            }
-            R.id.header_course_duration -> {
+            R.id.view_edit_routine_start_date_item -> {
                 navController.navigate(
-                    R.id.action_editDailyRoutineFragment_to_courseDurationDialog
+                    R.id.action_editRoutineFragment_to_routineStartDateDialog,
+                    Bundle().apply {
+                        viewModel.liveStartDate.value?.also { date ->
+                            putString(DatePickerDialog.KEY_DATE_SELECTED, date.toString())
+                        }
+                    }
+                )
+            }
+            R.id.view_edit_routine_duration_item -> {
+                navController.navigate(
+                    R.id.action_editRoutineFragment_to_routineDurationDialog,
+                    Bundle().apply {
+                        viewModel.liveSectionDuration.value?.also { duration ->
+                            putInt(KEY_ROUTINE_SECTION_DURATION, duration)
+                        }
+                    }
                 )
             }
         }
     }
 
-    private val bodyEvent: (View, Int) -> Unit = { view, index ->
+    private val bodyClickAction: (View, Int) -> Unit = { view, index ->
         when (view.id) {
-            R.id.cell_section_root -> {
-                configureTimePicker(true, index)
+            R.id.cell_section_list_root -> {
+                navController.navigate(
+                    R.id.action_editRoutineFragment_to_routineSectionTimeDialog,
+                    Bundle().apply {
+                        putInt(KEY_ROUTINE_SECTION_INDEX, index)
+                        viewModel.liveSectionList.value?.get(index)?.also { section ->
+                            putString(TimePickerDialog.KEY_TIME_SELECTED, section.from.toString())
+                        }
+                    }
+                )
             }
-            R.id.cell_section_delete_button -> {
+            R.id.cell_section_list_delete -> {
                 viewModel.deleteSectionByIndex(index)
             }
         }
@@ -80,22 +105,24 @@ class EditRoutineFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.onFirstPresent {
             arguments?.also { bundle ->
-                viewModel.dailyCourses = bundle.getInt(KEY_DAILY_COURSE_COUNT)
-                bundle.getParcelable<Routine>(KEY_DAILY_ROUTINE)?.also { dailyRoutine ->
-                    viewModel.dailyRoutineId = dailyRoutine.routineId
-                    viewModel.parentScheduleId = dailyRoutine.masterId
-                    viewModel.refreshName(dailyRoutine.routineName)
-                    viewModel.refreshDate(Date.fromString(dailyRoutine.startDate))
+                viewModel.sectionSize = bundle.getInt(KEY_ROUTINE_SECTION_SIZE)
+                bundle.getParcelable<Routine>(KEY_ROUTINE)?.also { routine ->
+                    viewModel.routineId = routine.routineId
+                    viewModel.masterId = routine.masterId
+                    viewModel.refreshRoutineName(routine.routineName)
+                    viewModel.refreshStartDate(Date.fromString(routine.startDate))
+                    viewModel.refreshSectionListByString(routine.sectionList)
                 }
             }
         }
-        binding.fragmentEditDailyRoutineToolbar.setOnMenuItemClickListener { menuItem ->
+        binding.fragmentEditRoutineToolbar.setOnMenuItemClickListener { menuItem ->
             return@setOnMenuItemClickListener when (menuItem.itemId) {
-                R.id.edit_daily_routine_toolbar_check -> {
+                R.id.edit_routine_toolbar_check -> {
                     lifecycleScope.launch {
-                        val condition = viewModel.submitDailyRoutine()
+                        val condition = viewModel.submitRoutine()
                         if (condition) {
                             navController.navigateUp()
                         } else {
@@ -107,92 +134,37 @@ class EditRoutineFragment : BaseFragment() {
                 else -> false
             }
         }
-        binding.fragmentEditDailyRoutineToolbar.setNavigationOnClickListener {
+        binding.fragmentEditRoutineToolbar.setNavigationOnClickListener {
             navController.navigateUp()
         }
-        val headerAdapter = EditDailyRoutineHeaderAdapter(headerEvent)
-        val bodyAdapter = EditDailyRoutineAdapter(bodyEvent)
+        val headerAdapter = EditRoutineHeaderAdapter(headerClickAction)
+        val bodyAdapter = EditRoutineAdapter(bodyClickAction)
         val concatAdapter = ConcatAdapter(headerAdapter, bodyAdapter)
-        binding.fragmentEditDailyRoutineRecyclerView.adapter = concatAdapter
-        binding.fragmentEditDailyRoutineRecyclerView.layoutManager = LinearLayoutManager(
-            context
-        ).apply {
-            orientation = LinearLayoutManager.VERTICAL
+        binding.fragmentEditRoutineRecyclerView.adapter = concatAdapter
+        binding.fragmentEditRoutineRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.fragmentEditRoutineNewSection.setOnClickListener {
+            navController.navigate(
+                R.id.action_editRoutineFragment_to_routineSectionTimeDialog,
+                Bundle().apply { putInt(KEY_ROUTINE_SECTION_INDEX, -1) }
+            )
         }
-        binding.fragmentEditDailyRoutineBottomButton.setOnClickListener {
-            configureTimePicker(false)
-        }
-        viewModel.liveEditSectionList.observe(viewLifecycleOwner) {
-            headerAdapter.refreshNode(it.size, viewModel.dailyCourses)
-            bodyAdapter.submitList(it)
-        }
-        viewModel.liveEditName.observe(viewLifecycleOwner) {
+
+        viewModel.liveRoutineName.observe(viewLifecycleOwner) {
             headerAdapter.refreshName(it)
         }
-        viewModel.liveEditDate.observe(viewLifecycleOwner) {
+        viewModel.liveStartDate.observe(viewLifecycleOwner) {
             headerAdapter.refreshDate(it)
         }
-        viewModel.liveEditDuration.observe(viewLifecycleOwner) {
+        viewModel.liveSectionDuration.observe(viewLifecycleOwner) {
             headerAdapter.refreshDuration(it)
+        }
+        viewModel.liveSectionList.observe(viewLifecycleOwner) {
+            bodyAdapter.submitList(it)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun configureDatePicker() {
-        val datePicker = DatePicker(requireActivity())
-        datePicker.wheelLayout.setRange(
-            DateEntity.target(1970, 1, 1),
-            DateEntity.target(3000, 12, 31),
-            DateEntity.today()
-        )
-        datePicker.setOnDatePickedListener { year, month, day ->
-            viewModel.refreshDate(Date(year, month, day))
-        }
-        val observer = object : DefaultLifecycleObserver {
-            override fun onStop(owner: LifecycleOwner) {
-                super.onStop(owner)
-                if (datePicker.isShowing) {
-                    datePicker.dismiss()
-                }
-                owner.lifecycle.removeObserver(this)
-            }
-        }
-        viewLifecycleOwner.lifecycle.addObserver(observer)
-        datePicker.show()
-    }
-
-    private fun configureTimePicker(isModify: Boolean, index: Int = -1) {
-        val timePicker = TimePicker(requireActivity())
-        timePicker.wheelLayout.setTimeMode(TimeMode.HOUR_24_NO_SECOND)
-        if (isModify) {
-            timePicker.setOnTimePickedListener { hour, minute, second ->
-                viewModel.updateSectionByIndex(index, Time(hour, minute, second))
-            }
-        } else {
-            timePicker.setOnTimePickedListener { hour, minute, second ->
-                viewModel.insertSectionByTime(Time(hour, minute, second))
-            }
-        }
-        val observer = object : DefaultLifecycleObserver {
-            override fun onStop(owner: LifecycleOwner) {
-                super.onStop(owner)
-                if (timePicker.isShowing) {
-                    timePicker.dismiss()
-                }
-                owner.lifecycle.removeObserver(this)
-            }
-        }
-        viewLifecycleOwner.lifecycle.addObserver(observer)
-        timePicker.show()
-    }
-
-    companion object {
-
-        const val KEY_DAILY_ROUTINE = "DAILY_ROUTINE"
-        const val KEY_DAILY_COURSE_COUNT = "DAILY_COURSE_COUNT"
     }
 }

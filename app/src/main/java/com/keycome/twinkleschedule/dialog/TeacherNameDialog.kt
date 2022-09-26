@@ -19,7 +19,7 @@ class TeacherNameDialog : EditTextDialog() {
         onCancel { dismiss() }
 
         onConfirm {
-            if (editText.length > binding.editTextDialogField.counterMaxLength) {
+            if (editText.length > binding.dialogEditTextField.counterMaxLength) {
                 return@onConfirm
             }
             lifecycleScope.launch {
@@ -31,12 +31,12 @@ class TeacherNameDialog : EditTextDialog() {
         textWatcher {
             afterTextChanged {
                 val l = it?.length ?: 0
-                if (l > binding.editTextDialogField.counterMaxLength) {
-                    binding.editTextDialogField.error = getString(
+                if (l > binding.dialogEditTextField.counterMaxLength) {
+                    binding.dialogEditTextField.error = getString(
                         R.string.dialog_course_name_text_overflow
                     )
                 } else {
-                    binding.editTextDialogField.error = null
+                    binding.dialogEditTextField.error = null
                 }
             }
         }

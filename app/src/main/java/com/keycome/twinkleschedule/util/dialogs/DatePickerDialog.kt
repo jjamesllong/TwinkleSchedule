@@ -53,7 +53,18 @@ abstract class DatePickerDialog : BaseDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val date = savedInstanceState?.getString(
+            KEY_DATE_SELECTED
+        ) ?: arguments?.getString(
+            KEY_DATE_SELECTED
+        )
+        date?.also { defaultDate = Date.fromString(it) }
         configure()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_DATE_SELECTED, defaultDate.toString())
     }
 
     override fun onDestroyView() {
@@ -85,5 +96,10 @@ abstract class DatePickerDialog : BaseDialogFragment() {
             defaultDate.year, defaultDate.month, defaultDate.dayOfMonth
         )
         binding.dialogDatePickerPicker.setRange(s, e, d)
+    }
+
+    companion object {
+
+        const val KEY_DATE_SELECTED = "date_picker_dialog_date_selected"
     }
 }

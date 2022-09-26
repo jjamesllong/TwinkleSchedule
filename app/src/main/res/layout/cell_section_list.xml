@@ -1,36 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cell_section_root"
+    android:id="@+id/cell_section_list_root"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="16dp"
-    app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
-    app:cardCornerRadius="16dp"
-    app:strokeWidth="0dp">
+    android:background="@drawable/bg_shape_rectangle_16_0"
+    android:backgroundTint="@color/md_theme_light_primaryContainer"
+    android:foreground="@drawable/bg_ripple_rectangle_16_0">
 
     <TextView
-        android:id="@+id/cell_section_title_text"
+        android:id="@+id/cell_section_list_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start|center_vertical"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="16sp" />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="5" />
 
-    <Button
-        android:id="@+id/cell_section_delete_button"
-        style="@style/Widget.Material3.Button.ElevatedButton"
+    <TextView
+        android:id="@+id/cell_section_list_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|end"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="删除"
-        android:textSize="12sp" />
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cell_section_list_number"
+        app:layout_constraintStart_toEndOf="@+id/cell_section_list_number"
+        app:layout_constraintTop_toTopOf="@+id/cell_section_list_number"
+        tools:text="08:00~08:45" />
 
-</com.google.android.material.card.MaterialCardView>
+    <ImageView
+        android:id="@+id/cell_section_list_delete"
+        android:layout_width="@dimen/clickable_icon_width"
+        android:layout_height="@dimen/clickable_icon_height"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:padding="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_cross_24" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

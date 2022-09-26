@@ -5,80 +5,134 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.keycome.twinkleschedule.base.BaseViewModel
 import com.keycome.twinkleschedule.delivery.Pipette
+import com.keycome.twinkleschedule.delivery.Pipette.distribute
 import com.keycome.twinkleschedule.delivery.Pipette.subscribe
+import com.keycome.twinkleschedule.extension.asLiveData
 import com.keycome.twinkleschedule.record.interval.Date
 import com.keycome.twinkleschedule.record.interval.Time
+import com.keycome.twinkleschedule.record.timetable.Routine
 import com.keycome.twinkleschedule.record.timetable.Section
+import com.keycome.twinkleschedule.util.const.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class EditRoutineViewModel : BaseViewModel() {
 
-    var dailyRoutineId = System.currentTimeMillis()
+    var sectionSize = 0
 
-    var parentScheduleId = 0L
+    var routineId = 0L
 
-    private val _liveEditName = MutableLiveData<String>()
-    val liveEditName: LiveData<String> get() = _liveEditName
+    var masterId = 0L
 
-    private val _liveEditDate = MutableLiveData<Date>()
-    val liveEditDate: LiveData<Date> get() = _liveEditDate
+    private val _liveRoutineName = MutableLiveData<String>()
+    val liveRoutineName: LiveData<String> = _liveRoutineName.asLiveData()
 
-    private val _liveEditDuration = MutableLiveData(0)
-    val liveEditDuration: LiveData<Int> get() = _liveEditDuration
+    private val _liveStartDate = MutableLiveData<Date>()
+    val liveStartDate: LiveData<Date> = _liveStartDate.asLiveData()
 
-    var dailyCourses = 0
+    private val _liveSectionDuration = MutableLiveData<Int>()
+    val liveSectionDuration: LiveData<Int> = _liveSectionDuration.asLiveData()
 
-    private val _liveEditSectionList = MutableLiveData<List<Section>>()
-    val liveEditSectionList: LiveData<List<Section>> get() = _liveEditSectionList
+    private val _liveSectionList = MutableLiveData<List<Section>>()
+    val liveSectionList: LiveData<List<Section>> = _liveSectionList.asLiveData()
 
     override suspend fun onPlace() {
         super.onPlace()
         viewModelScope.launch(Dispatchers.Default) {
             launch {
-                Pipette.forInt.subscribe(courseDuration) {
+                Pipette.forString.subscribe(KEY_ROUTINE_NAME) {
                     withContext(Dispatchers.Main) {
-                        refreshDuration(it)
+                        _liveRoutineName.value = it
                     }
                 }
             }
             launch {
-                Pipette.forString.subscribe(dailyRoutineName) {
+                Pipette.forString.subscribe(KEY_ROUTINE_START_DATE) {
                     withContext(Dispatchers.Main) {
-                        refreshName(it)
+                        _liveStartDate.value = Date.fromString(it)
+                    }
+                }
+            }
+            launch {
+                Pipette.forInt.subscribe(KEY_ROUTINE_SECTION_DURATION) {
+                    withContext(Dispatchers.Main) {
+                        refreshSectionDuration(it)
+                    }
+                }
+            }
+            launch {
+                Pipette.forString.subscribe(KEY_ROUTINE_SECTION_START_TIME) {
+                    val s = it.split(delimiters = arrayOf("@"), ignoreCase = false, limit = 0)
+                    val time = Time.from(s[0])
+                    val index = s[1].toInt()
+                    withContext(Dispatchers.Main) {
+                        if (index < 0) {
+                            insertSectionByTime(time)
+                        } else {
+                            updateSectionByIndex(index, time)
+                        }
                     }
                 }
             }
         }
     }
 
-    fun refreshName(name: String) {
-        _liveEditName.value = name
+    fun refreshRoutineName(name: String) {
+        _liveRoutineName.value = name
     }
 
-    fun refreshDate(date: Date) {
-        _liveEditDate.value = date
+    fun refreshStartDate(date: Date) {
+        _liveStartDate.value = date
     }
 
-    fun refreshDuration(duration: Int) {
-        val old = _liveEditDuration.value ?: 0
+    fun refreshSectionDuration(duration: Int) {
+        val old = _liveSectionDuration.value ?: 0
         if (duration == 0 || duration == old)
             return
-        val sectionList = _liveEditSectionList.value?.map {
-            Section(it.from, it.from + duration * 60)
+        val sectionList = _liveSectionList.value?.mapIndexed { i, s ->
+            val order = i + 1
+            val from = s.from
+            val to = s.from + (duration * 60)
+            Section(order, from, to)
         }
-        sectionList?.also { _liveEditSectionList.value = it }
-        _liveEditDuration.value = duration
+        sectionList?.also { _liveSectionList.value = it }
+        _liveSectionDuration.value = duration
     }
 
-    fun refreshSectionList(list: MutableList<Time>) {
-        val duration = _liveEditDuration.value ?: 0
-        _liveEditSectionList.value = list.map { Section(it, it + duration * 60) }
+    fun refreshSectionListByString(list: List<String>) {
+        list.map { Section.fromString(it) }.also {
+            _liveSectionList.value = it
+            inferDurationBySectionList(it)
+        }
     }
 
-    fun refreshRoutines(list: List<Section>) {
-        _liveEditSectionList.value = list
+    fun refreshSectionListByTime(list: List<Time>) {
+        val duration = _liveSectionDuration.value ?: 0
+        _liveSectionList.value = list.mapIndexed { i, t ->
+            val order = i + 1
+            val to = t + (duration * 60)
+            Section(order, t, to)
+        }.also {
+            inferDurationBySectionList(it)
+        }
+    }
+
+    fun refreshSectionListBySection(list: List<Section>) {
+        _liveSectionList.value = list
+        inferDurationBySectionList(list)
+    }
+
+    private fun inferDurationBySectionList(list: List<Section>) {
+        val duration = if (list.isEmpty()) {
+            0
+        } else {
+            (list[0].duration) / 60
+        }
+        if (duration == _liveSectionDuration.value) {
+            return
+        }
+        _liveSectionDuration.value = duration
     }
 
     private fun deleteTime(list: MutableList<Time>, index: Int) {
@@ -107,76 +161,68 @@ class EditRoutineViewModel : BaseViewModel() {
     }
 
     fun deleteSectionByIndex(index: Int) {
-        _liveEditSectionList.value?.let { sectionList ->
+        _liveSectionList.value?.also { sectionList ->
             val timeList = sectionList.map { it.from }.toMutableList()
             deleteTime(timeList, index)
-            refreshSectionList(timeList)
+            refreshSectionListByTime(timeList)
         }
     }
 
     fun insertSectionByTime(time: Time) {
-        _liveEditSectionList.value?.let { sectionList ->
+        _liveSectionList.value?.also { sectionList ->
             val timeList = sectionList.map { it.from }.toMutableList()
             insertTime(timeList, time)
-            refreshSectionList(timeList)
+            refreshSectionListByTime(timeList)
         }
     }
 
     fun updateSectionByIndex(oldTimeIndex: Int, newTime: Time) {
-        _liveEditSectionList.value?.let { sectionList ->
+        _liveSectionList.value?.also { sectionList ->
             val timeList = sectionList.map { it.from }.toMutableList()
             updateTime(timeList, oldTimeIndex, newTime)
-            refreshSectionList(timeList)
+            refreshSectionListByTime(timeList)
         }
     }
 
-    private fun checkDailyRoutine(): Boolean {
-        if (_liveEditName.value.isNullOrBlank())
+    private fun checkRoutine(): Boolean {
+        if (_liveRoutineName.value.isNullOrBlank())
             return false
-        if (_liveEditDate.value == null)
+        if (_liveStartDate.value == null)
             return false
-        if ((_liveEditDuration.value ?: 0) == 0)
+        if ((_liveSectionDuration.value ?: 0) == 0)
             return false
-        _liveEditSectionList.value?.also {
-            if (it.isNotEmpty()) {
-                for (i in it.indices) {
-                    if (i != 0) {
-                        val p = i - 1
-                        if (it[i].from.toSeconds() <= it[p].to.toSeconds()) {
-                            return false
-                        }
+        _liveSectionList.value?.also {
+            if (it.isEmpty() || it.size != sectionSize) {
+                return false
+            }
+            for (i in it.indices) {
+                if (i != 0) {
+                    val p = i - 1
+                    if (it[i].from.toSeconds() <= it[p].to.toSeconds()) {
+                        return false
                     }
                 }
-            } else return false
+            }
         } ?: return false
         return true
     }
 
-    suspend fun submitDailyRoutine(): Boolean = withContext(Dispatchers.IO) {
-//        val condition = checkDailyRoutine()
-//        return@withContext if (condition) {
-//            val dailyRoutine = Routine(
-//                dailyRoutineId = dailyRoutineId,
-//                parentScheduleId = parentScheduleId,
-//                name = liveEditName.value!!,
-//                startDate = liveEditDate.value!!,
-//                routines = liveEditSectionList.value!!
-//            )
-//            val jsonString = Pipette.gson.toJson(dailyRoutine)
-//            Pipette.forString.emit(
-//                Drop(
-//                    EditScheduleViewModel.sharedDailyRoutines,
-//                    jsonString
-//                )
-//            )
-//            true
-//        } else false
-        false
+    suspend fun submitRoutine(): Boolean = withContext(Dispatchers.IO) {
+        val condition = checkRoutine()
+        return@withContext if (condition) {
+            val ri = routineId
+            val mi = masterId
+            val rn = liveRoutineName.value!!
+            val sd = liveStartDate.value!!.toString()
+            val sl = liveSectionList.value!!.map { it.toString() }
+            val routine = Routine(ri, mi, rn, sd, sl)
+            Pipette.forString.distribute(KEY_ROUTINE) {
+                Pipette.gson.toJson(routine)
+            }
+            true
+        } else {
+            false
+        }
     }
 
-    companion object {
-
-        const val dailyRoutineName = "daily_routine_name"
-        const val courseDuration = "course_duration"
-    }
 }

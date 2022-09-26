@@ -4,43 +4,36 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_shape_rectangle_16_0"
-    android:backgroundTint="@color/md_theme_light_background">
-
-    <View
-        android:id="@+id/dialog_date_picker_placeholder"
-        android:layout_width="@dimen/floating_center_dialog_width"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:backgroundTint="?android:colorBackground">
 
     <TextView
-        android:id="@+id/dialog_date_picker_title"
-        android:layout_width="wrap_content"
+        android:id="@+id/dialog_time_picker_title"
+        android:layout_width="@dimen/floating_center_dialog_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/dialog_date_picker_title"
+        android:gravity="center"
+        android:text="@string/dialog_time_picker_title"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/dialog_date_picker_cancel"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:id="@+id/dialog_time_picker_close"
+        android:layout_width="@dimen/clickable_icon_width"
+        android:layout_height="@dimen/clickable_icon_height"
         android:layout_marginEnd="16dp"
         android:contentDescription="@string/close"
         android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="@id/dialog_date_picker_title"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_time_picker_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/dialog_date_picker_title"
+        app:layout_constraintTop_toTopOf="@+id/dialog_time_picker_title"
         app:srcCompat="@drawable/ic_baseline_cross_24" />
 
-    <com.github.gzuliyujiang.wheelpicker.widget.DateWheelLayout
-        android:id="@+id/dialog_date_picker_picker"
+    <com.github.gzuliyujiang.wheelpicker.widget.TimeWheelLayout
+        android:id="@+id/dialog_time_picker_picker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -48,15 +41,16 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dialog_date_picker_title"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_time_picker_title"
         app:wheel_cyclicEnabled="true"
         app:wheel_indicatorColor="?attr/colorSecondary"
         app:wheel_itemTextBoldSelected="true"
         app:wheel_itemTextColorSelected="?attr/colorPrimary"
+        app:wheel_timeMode="hour_24_no_second"
         app:wheel_visibleItemCount="3" />
 
     <TextView
-        android:id="@+id/dialog_date_picker_confirm"
+        android:id="@+id/dialog_time_picker_confirm"
         android:layout_width="80dp"
         android:layout_height="36dp"
         android:layout_marginTop="16dp"
@@ -70,7 +64,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_date_picker_picker" />
-
+        app:layout_constraintTop_toBottomOf="@+id/dialog_time_picker_picker" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

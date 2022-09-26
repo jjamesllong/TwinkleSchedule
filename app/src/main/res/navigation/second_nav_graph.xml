@@ -133,20 +133,38 @@
         android:label="EditRoutineFragment"
         tools:layout="@layout/fragment_edit_routine">
         <action
-            android:id="@+id/action_editDailyRoutineFragment_to_dailyRoutineNameDialog"
-            app:destination="@id/dailyRoutineNameDialog" />
+            android:id="@+id/action_editRoutineFragment_to_routineNameDialog"
+            app:destination="@id/routineNameDialog" />
         <action
-            android:id="@+id/action_editDailyRoutineFragment_to_courseDurationDialog"
-            app:destination="@id/courseDurationDialog" />
+            android:id="@+id/action_editRoutineFragment_to_routineDurationDialog"
+            app:destination="@id/routineDurationDialog" />
+        <action
+            android:id="@+id/action_editRoutineFragment_to_routineStartDateDialog"
+            app:destination="@id/routineStartDateDialog" />
+        <action
+            android:id="@+id/action_editRoutineFragment_to_routineSectionTimeDialog"
+            app:destination="@id/routineSectionTimeDialog" />
     </fragment>
     <dialog
-        android:id="@+id/dailyRoutineNameDialog"
-        android:name="com.keycome.twinkleschedule.dialog.DailyRoutineNameDialog"
-        android:label="DailyRoutineNameDialog" />
+        android:id="@+id/routineStartDateDialog"
+        android:name="com.keycome.twinkleschedule.dialog.RoutineStartDateDialog"
+        android:label="RoutineStartDateDialog"
+        tools:layout="@layout/dialog_date_picker" />
     <dialog
-        android:id="@+id/courseDurationDialog"
-        android:name="com.keycome.twinkleschedule.dialog.CourseDurationDialog"
-        android:label="CourseDurationDialog" />
+        android:id="@+id/routineNameDialog"
+        android:name="com.keycome.twinkleschedule.dialog.RoutineNameDialog"
+        android:label="RoutineNameDialog"
+        tools:layout="@layout/dialog_edit_text" />
+    <dialog
+        android:id="@+id/routineDurationDialog"
+        android:name="com.keycome.twinkleschedule.dialog.RoutineDurationDialog"
+        android:label="routineDurationDialog"
+        tools:layout="@layout/dialog_routine_duration" />
+    <dialog
+        android:id="@+id/routineSectionTimeDialog"
+        android:name="com.keycome.twinkleschedule.dialog.RoutineSectionTimeDialog"
+        android:label="RoutineSectionTimeDialog"
+        tools:layout="@layout/dialog_time_picker" />
     <fragment
         android:id="@+id/manageScheduleFragment"
         android:name="com.keycome.twinkleschedule.fragment.SelectToManageScheduleFragment"
