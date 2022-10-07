@@ -10,8 +10,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentDisplayBinding
-import com.keycome.twinkleschedule.viewmodel.DisplayViewModel
 import com.keycome.twinkleschedule.util.const.KEY_COURSE
+import com.keycome.twinkleschedule.viewmodel.DisplayViewModel
 import com.keycome.twinkleschedule.widget.timetable.PagingAdapter
 
 class DisplayFragment : BaseFragment() {

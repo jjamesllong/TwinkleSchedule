@@ -13,8 +13,8 @@ import androidx.constraintlayout.widget.Guideline
 
 class TimetableView : ConstraintLayout {
 
-    var topBarMargin = 0
-    var sideBarMargin = 0
+    var topBarSize = 0
+    var sideBarSize = 0
 
     var row = 0
         set(value) {
@@ -41,8 +41,7 @@ class TimetableView : ConstraintLayout {
 
     private var sectionBar: List<TextView> = emptyList()
     private var dayBar: List<TextView> = emptyList()
-    private val courseBlockList: MutableList<TextView> = mutableListOf()
-    private val courseBlockDeque: ArrayDeque<TextView> = ArrayDeque()
+    private var courseBlockList: List<TextView> = emptyList()
 
     private var onCourseClickListener: OnCourseClickListener? = null
 
@@ -61,7 +60,7 @@ class TimetableView : ConstraintLayout {
         val height = MeasureSpec.getSize(heightMeasureSpec)
         if (verticalGuidelines.isNotEmpty()) {
             val count = verticalGuidelines.size
-            val offset = topBarMargin
+            val offset = topBarSize
             val gap = (width - offset) / count
             verticalGuidelines.forEachIndexed { index, guideline ->
                 guideline.setGuidelineBegin(offset + index * gap)
@@ -69,7 +68,7 @@ class TimetableView : ConstraintLayout {
         }
         if (horizontalGuidelines.isNotEmpty()) {
             val count = horizontalGuidelines.size
-            val offset = sideBarMargin
+            val offset = sideBarSize
             val gap = (height - offset) / count
             horizontalGuidelines.forEachIndexed { index, guideline ->
                 guideline.setGuidelineBegin(offset + index * gap)
@@ -84,29 +83,27 @@ class TimetableView : ConstraintLayout {
         courseBlockList.forEach { removeView(it) }
         sectionBar = emptyList()
         dayBar = emptyList()
-        courseBlockList.clear()
+        courseBlockList = emptyList()
     }
 
     fun bindSectionBar(texts: List<String>) {
         ensureSectionBar(row)
-        if (row != texts.size) return
+        if (row != texts.size) {
+            return
+        }
         sectionBar.forEachIndexed { index, textView -> textView.text = texts[index] }
     }
 
     fun bindDayBar(texts: List<String>) {
         ensureDayBar(column)
-        if (column != texts.size) return
+        if (column != texts.size) {
+            return
+        }
         dayBar.forEachIndexed { index, textView -> textView.text = texts[index] }
     }
 
     fun bindCourses(courses: List<CourseDesign>) {
-        val iterator = courseBlockList.iterator()
-        while (iterator.hasNext()) {
-            val textView = iterator.next()
-            courseBlockDeque.addLast(textView)
-            removeView(textView)
-            iterator.remove()
-        }
+        courseBlockList.forEach { removeView(it) }
         configureCourses(courses)
     }
 
@@ -162,8 +159,11 @@ class TimetableView : ConstraintLayout {
                     startToStart = LayoutParams.PARENT_ID
                     endToEnd = verticalGuidelines[0].id
                     topToTop = horizontalGuidelines[i].id
-                    bottomToBottom = if (i == count - 1)
-                        LayoutParams.PARENT_ID else horizontalGuidelines[i + 1].id
+                    bottomToBottom = if (i == count - 1) {
+                        LayoutParams.PARENT_ID
+                    } else {
+                        horizontalGuidelines[i + 1].id
+                    }
                 }
                 gravity = Gravity.CENTER
                 setTextColor(Color.BLACK)
@@ -177,8 +177,11 @@ class TimetableView : ConstraintLayout {
                 id = View.generateViewId()
                 layoutParams = LayoutParams(0, 0).apply {
                     startToStart = verticalGuidelines[i].id
-                    endToEnd = if (i == count - 1)
-                        LayoutParams.PARENT_ID else verticalGuidelines[i + 1].id
+                    endToEnd = if (i == count - 1) {
+                        LayoutParams.PARENT_ID
+                    } else {
+                        verticalGuidelines[i + 1].id
+                    }
                     topToTop = LayoutParams.PARENT_ID
                     bottomToBottom = horizontalGuidelines[0].id
                 }
@@ -189,57 +192,61 @@ class TimetableView : ConstraintLayout {
     }
 
     private fun configureCourses(courses: List<CourseDesign>) {
-        courses.map { requireTextView(it) }
-    }
-
-    private fun requireTextView(design: CourseDesign) {
-        val h = design.day
-        val t = design.sectionStart
-        val b = design.sectionEnd
-        val tv = courseBlockDeque.removeFirstOrNull() ?: TextView(context).apply {
-            val p = 4.dp
-            setPadding(p, p, p, p)
-            gravity = Gravity.CENTER
-        }
-        val lp = LayoutParams(0, 0).apply {
-            val margin = 4.dp
-            marginStart = margin
-            marginEnd = margin
-            topMargin = margin
-            bottomMargin = margin
-            startToStart = verticalGuidelines[h - 1].id
-            endToEnd = if (h == verticalGuidelines.size)
-                LayoutParams.PARENT_ID else verticalGuidelines[h].id
-            topToTop = horizontalGuidelines[t - 1].id
-            bottomToBottom = if (b == horizontalGuidelines.size)
-                LayoutParams.PARENT_ID else horizontalGuidelines[b].id
-        }
-        val bg = StateListDrawable().apply {
-            val radius = 8.dp.toFloat()
-            setEnterFadeDuration(50)
-            setExitFadeDuration(400)
-            addState(
-                intArrayOf(android.R.attr.state_pressed),
-                GradientDrawable().apply {
-                    cornerRadius = radius
-                    setColor((0x88A9A9A9).toInt())
+        courses.map { design ->
+            val h = design.day
+            val t = design.sectionStart
+            val b = design.sectionEnd
+            val tv = TextView(context).apply {
+                val p = 4.dp
+                setPadding(p, p, p, p)
+                gravity = Gravity.CENTER
+            }
+            val lp = LayoutParams(0, 0).apply {
+                val margin = 4.dp
+                marginStart = margin
+                marginEnd = margin
+                topMargin = margin
+                bottomMargin = margin
+                startToStart = verticalGuidelines[h - 1].id
+                endToEnd = if (h == verticalGuidelines.size) {
+                    LayoutParams.PARENT_ID
+                } else {
+                    verticalGuidelines[h].id
                 }
-            )
-            addState(
-                intArrayOf(-android.R.attr.state_pressed),
-                GradientDrawable().apply {
-                    cornerRadius = radius
-                    setColor(design.color)
+                topToTop = horizontalGuidelines[t - 1].id
+                bottomToBottom = if (b == horizontalGuidelines.size) {
+                    LayoutParams.PARENT_ID
+                } else {
+                    horizontalGuidelines[b].id
                 }
-            )
-        }
-        tv.layoutParams = lp
-        tv.background = bg
-        tv.setOnClickListener { onCourseClickListener?.onCourseClick(design.id) }
-        tv.text = design.text
-        tv.setTextColor(design.textColor)
-        addView(tv)
-        courseBlockList.add(tv)
+            }
+            val bg = StateListDrawable().apply {
+                val radius = 8.dp.toFloat()
+                setEnterFadeDuration(50)
+                setExitFadeDuration(400)
+                addState(
+                    intArrayOf(android.R.attr.state_pressed),
+                    GradientDrawable().apply {
+                        cornerRadius = radius
+                        setColor((0x88A9A9A9).toInt())
+                    }
+                )
+                addState(
+                    intArrayOf(-android.R.attr.state_pressed),
+                    GradientDrawable().apply {
+                        cornerRadius = radius
+                        setColor(design.color)
+                    }
+                )
+            }
+            tv.layoutParams = lp
+            tv.background = bg
+            tv.setOnClickListener { onCourseClickListener?.onCourseClick(design.id) }
+            tv.text = design.text
+            tv.setTextColor(design.textColor)
+            addView(tv)
+            return@map tv
+        }.also { courseBlockList = it }
     }
 
     fun setOnCourseClickListener(l: OnCourseClickListener) {

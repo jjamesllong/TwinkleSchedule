@@ -25,7 +25,8 @@ class PagingAdapter(
     private val weekToSectionText = mutableMapOf<Int, List<String>>()
 
     private val dayText: List<String> by lazy {
-        List(timetableDescriber!!.schedule.endDay) {
+        val size = timetableDescriber?.schedule?.endDay ?: 0
+        return@lazy List(size) {
             requestDayText(it)
         }
     }
@@ -39,8 +40,8 @@ class PagingAdapter(
             row = pageRow
             column = pageColumn
             val v = (50 * resources.displayMetrics.density + 0.5f).toInt()
-            topBarMargin = v
-            sideBarMargin = v
+            topBarSize = v
+            sideBarSize = v
             setOnCourseClickListener(l)
         })
     }
@@ -50,7 +51,9 @@ class PagingAdapter(
         val week = position + 1
 
         if (weeklyCourseDesign[position] == null) {
-            val weeklyCourses = timetableDescriber!!.courses.filter { it.week.contains(week) }
+            val weeklyCourses = timetableDescriber?.courses?.filter {
+                it.week.contains(week)
+            } ?: emptyList()
             val courseDesign = weeklyCourses.map {
                 val id = it.courseId
                 val day = it.day
@@ -63,7 +66,7 @@ class PagingAdapter(
                     .toString()
                 val color = it.color.toIntFromHex()
                 val textColor = it.textColor.toIntFromHex()
-                CourseDesign(id, day, sectionStart, sectionEnd, text, color, textColor)
+                return@map CourseDesign(id, day, sectionStart, sectionEnd, text, color, textColor)
             }
             weeklyCourseDesign[position] = courseDesign
         }
@@ -85,10 +88,10 @@ class PagingAdapter(
     }
 
     private fun sectionTextOfWeek(week: Int): List<String> {
-        return weekToSectionText[week] ?: putSectionText(week)
+        return weekToSectionText[week] ?: requestSectionText(week)
     }
 
-    private fun putSectionText(week: Int): List<String> {
+    private fun requestSectionText(week: Int): List<String> {
         var i = 0
         val oneWeek = 7 * 24 * 60 * 60 * 1000
         val startTime = Date.fromString(timetableDescriber!!.schedule.startDate).toMilliSeconds()
@@ -102,9 +105,8 @@ class PagingAdapter(
             }
         }
         val routine = timetableDescriber!!.routines[i]
-        return routine.sectionList.mapIndexed { index, segment ->
-            val number = index + 1
-            requestSectionText(number, segment)
+        return routine.sectionList.map {
+            requestSectionText(it)
         }.also { weekToSectionText[i] = it }
     }
 
@@ -112,11 +114,12 @@ class PagingAdapter(
         return Day.fromOrdinal(ordinal).toCharacter()
     }
 
-    private fun requestSectionText(number: Int, segment: String): String {
+    private fun requestSectionText(section: String): String {
+        val s = section.split(delimiters = arrayOf("~", "@"))
         return StringBuilder()
-            .append(number)
+            .append(s[2].toInt())
             .append("\n")
-            .append(segment)
+            .append(s[0])
             .toString()
     }
 

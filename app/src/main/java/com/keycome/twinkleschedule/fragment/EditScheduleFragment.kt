@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +18,9 @@ import com.keycome.twinkleschedule.record.interval.Day
 import com.keycome.twinkleschedule.util.const.KEY_ROUTINE
 import com.keycome.twinkleschedule.util.const.KEY_ROUTINE_SECTION_SIZE
 import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_ID
+import com.keycome.twinkleschedule.util.dialogs.DatePickerDialog
 import com.keycome.twinkleschedule.viewmodel.EditScheduleViewModel
+import kotlinx.coroutines.launch
 
 class EditScheduleFragment : BaseFragment() {
 
@@ -47,7 +51,7 @@ class EditScheduleFragment : BaseFragment() {
 
         val adapter = RoutinesNameAdapter { v, r ->
             when (v.id) {
-                R.id.cell_routines_name_name -> {
+                R.id.cell_routines_name_root -> {
                     navController.navigate(
                         R.id.action_editScheduleFragment_to_editRoutineFragment,
                         Bundle().apply {
@@ -57,6 +61,7 @@ class EditScheduleFragment : BaseFragment() {
                     )
                 }
                 R.id.cell_routines_name_delete -> {
+                    viewModel.deleteRoutine(r.routineId)
                 }
                 else -> {}
             }
@@ -71,13 +76,35 @@ class EditScheduleFragment : BaseFragment() {
             navController.navigateUp()
         }
         binding.editScheduleSubmission.setOnClickListener {
-
+            val toDisplay = binding.editScheduleToDisplaySwitch.isChecked
+            val isModification = scheduleId != 0L
+            lifecycleScope.launch {
+                val result = viewModel.writeSchedule(toDisplay, isModification)
+                if (result) {
+                    if (toDisplay) {
+                        navController.navigate(
+                            R.id.action_editScheduleFragment_to_displayCoursesFragment
+                        )
+                    } else {
+                        navController.navigateUp()
+                    }
+                } else {
+                    Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show()
+                }
+            }
         }
         binding.editScheduleNameItem.setOnClickListener {
             navController.navigate(R.id.action_editScheduleFragment_to_scheduleNameDialog)
         }
         binding.editScheduleStartDateItem.setOnClickListener {
-            navController.navigate(R.id.action_editScheduleFragment_to_scheduleStartDateDialog)
+            navController.navigate(
+                R.id.action_editScheduleFragment_to_scheduleStartDateDialog,
+                Bundle().apply {
+                    viewModel.liveStartDate.value?.let { date ->
+                        putString(DatePickerDialog.KEY_DATE_SELECTED, date.toString())
+                    }
+                }
+            )
         }
         binding.editScheduleEndSectionItem.setOnClickListener {
             navController.navigate(R.id.action_editScheduleFragment_to_scheduleEndSectionDialog)

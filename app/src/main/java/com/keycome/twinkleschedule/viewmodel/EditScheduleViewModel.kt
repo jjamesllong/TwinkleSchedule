@@ -118,10 +118,6 @@ class EditScheduleViewModel : BaseViewModel() {
         }
     }
 
-    fun setStartDate(date: Date) {
-        _liveStartDate.value = date
-    }
-
     private fun ensureScheduleId(): Long {
         return if (scheduleId == 0L) {
             System.currentTimeMillis().also { scheduleId = it }
@@ -132,27 +128,29 @@ class EditScheduleViewModel : BaseViewModel() {
 
     fun newRoutine(): Routine {
         val duration = _liveRoutines.value?.let { routineList ->
-            if (routineList.isEmpty()) {
+            return@let if (routineList.isEmpty()) {
                 requestDefaultDuration()
             } else {
-                routineList[0].sectionList.let { sectionList ->
-                    if (sectionList.isEmpty()) {
-                        requestDefaultDuration()
-                    } else {
-                        Section.fromString(sectionList[0]).duration
-                    }
+                if (routineList[0].sectionList.isEmpty()) {
+                    requestDefaultDuration()
+                } else {
+                    Section.fromString(routineList[0].sectionList[0]).duration
                 }
             }
         } ?: requestDefaultDuration()
-        val defaultRoutine = requestDefaultRoutine(duration)
         val routine = _liveRoutines.value?.let { routineList ->
-            if (routineList.isEmpty()) {
-                defaultRoutine
+            return@let if (routineList.isEmpty()) {
+                requestDefaultRoutine(duration)
             } else {
-                routineList[0]
+                routineList[0].copy(routineId = System.currentTimeMillis())
             }
-        } ?: defaultRoutine
+        } ?: requestDefaultRoutine(duration)
         return routine
+    }
+
+    fun deleteRoutine(routineId: Long) {
+        val routines = _liveRoutines.value?.filter { it.routineId != routineId }
+        routines?.also { _liveRoutines.value = it }
     }
 
     private fun requestDefaultDuration(): Int {
@@ -185,17 +183,54 @@ class EditScheduleViewModel : BaseViewModel() {
         )
     }
 
-    private fun requestSchedule(): Schedule {
-        TODO()
+    private fun requestSchedule(): Schedule? {
+        val scheduleId = ensureScheduleId()
+        val scheduleName = _liveScheduleName.value?.let {
+            it.ifBlank { return null }
+        } ?: return null
+        val startDate = _liveStartDate.value?.toString() ?: return null
+        val endSection = _liveEndSection.value?.let {
+            if (it > 20) {
+                return null
+            } else {
+                return@let it
+            }
+        } ?: return null
+        val endDay = _liveEndDay.value?.let {
+            if (it !in 1..7) {
+                return null
+            } else {
+                return@let it
+            }
+        } ?: return null
+        val endWeek = _liveEndWeek.value?.let {
+            if (it !in 1..30) {
+                return null
+            } else {
+                return@let it
+            }
+        } ?: return null
+        return Schedule(scheduleId, scheduleName, startDate, endSection, endDay, endWeek)
     }
 
     private fun requestRoutines(): List<Routine> {
-        TODO()
+        return _liveRoutines.value?.let { routineList ->
+            val endSection = _liveEndSection.value ?: -1
+            routineList.forEach {
+                if (it.sectionList.size != endSection) {
+                    return emptyList()
+                }
+            }
+            return@let routineList
+        } ?: emptyList()
     }
 
-    suspend fun writeSchedule(display: Boolean, requestModification: Boolean) {
-        val schedule = requestSchedule()
+    suspend fun writeSchedule(display: Boolean, requestModification: Boolean): Boolean {
+        val schedule = requestSchedule() ?: return false
         val routines = requestRoutines()
+        if (routines.isEmpty()) {
+            return false
+        }
         withContext(NonCancellable) {
             if (requestModification) {
                 ScheduleRepository.updateSchedule(schedule)
@@ -209,6 +244,7 @@ class EditScheduleViewModel : BaseViewModel() {
                 Pipette.forEvent.distribute { EVENT_WRITE_DISPLAY_SCHEDULE_ID }
             }
         }
+        return true
     }
 
 }

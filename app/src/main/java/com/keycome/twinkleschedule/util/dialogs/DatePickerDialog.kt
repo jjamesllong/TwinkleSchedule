@@ -64,7 +64,7 @@ abstract class DatePickerDialog : BaseDialogFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(KEY_DATE_SELECTED, defaultDate.toString())
+        selectedDate?.let { outState.putString(KEY_DATE_SELECTED, it.toString()) }
     }
 
     override fun onDestroyView() {

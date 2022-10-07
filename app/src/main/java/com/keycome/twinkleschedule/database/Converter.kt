@@ -10,7 +10,7 @@ class Converter {
 
     private val stringListTypeToken = object : TypeToken<List<String>>() {}
 
-    private val intListTypeToken = object : TypeToken<List<String>>() {}
+    private val intListTypeToken = object : TypeToken<List<Int>>() {}
 
     @TypeConverter
     fun stringListRevert(json: String): List<String> =
