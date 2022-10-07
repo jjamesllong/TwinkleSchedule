@@ -26,7 +26,11 @@ class CourseDetailsDialog : BaseDialogFragment() {
     }
 
     override fun getDialogAnimations(): Int {
-        return R.anim.slide_in_from_bottom
+        return R.style.FullBottomDialogAnimation
+    }
+
+    override fun getDialogMode(): Int {
+        return MODE_FILL
     }
 
     override fun onCreateView(
