@@ -2,6 +2,7 @@ package com.keycome.twinkleschedule.database
 
 import androidx.room.*
 import com.keycome.twinkleschedule.record.timetable.Schedule
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ScheduleDao {
@@ -10,7 +11,10 @@ interface ScheduleDao {
     suspend fun insertSchedule(schedule: Schedule)
 
     @Query("SELECT * FROM schedule ORDER BY start_date DESC")
-    suspend fun queryAllSchedule(): List<Schedule>
+    suspend fun querySchedules(): List<Schedule>
+
+    @Query("SELECT * FROM schedule ORDER BY start_date DESC")
+    fun querySchedulesFlow(): Flow<List<Schedule>>
 
     @Query("SELECT COUNT(schedule_id) FROM schedule")
     suspend fun queryScheduleCount(): Int

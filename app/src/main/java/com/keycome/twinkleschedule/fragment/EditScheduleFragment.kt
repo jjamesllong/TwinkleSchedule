@@ -142,9 +142,7 @@ class EditScheduleFragment : BaseFragment() {
             binding.editScheduleEndSectionText.text = it.toString()
         }
         viewModel.liveEndDay.observe(viewLifecycleOwner) {
-            with(requireContext()) {
-                binding.editScheduleEndDayText.text = Day.fromNumber(it).toLocalWord()
-            }
+            binding.editScheduleEndDayText.text = Day.fromNumber(it).toLocalWord(requireContext())
         }
         viewModel.liveEndWeek.observe(viewLifecycleOwner) {
             binding.editScheduleEndWeekText.text = it.toString()
@@ -163,10 +161,5 @@ class EditScheduleFragment : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-
-        const val KEY_EDIT_SCHEDULE_ID = "EDIT_SCHEDULE_ID"
     }
 }

@@ -10,7 +10,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
 
         <TextView
             android:id="@+id/dialog_schedule_details_title"
@@ -22,163 +23,181 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="测试课表" />
+            tools:text="课表占位符" />
 
         <ImageView
             android:id="@+id/dialog_schedule_details_cancel"
             android:layout_width="@dimen/clickable_icon_width"
             android:layout_height="@dimen/clickable_icon_height"
             android:layout_marginEnd="16dp"
+            android:contentDescription="@string/close"
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/dialog_schedule_details_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/dialog_schedule_details_title"
             app:srcCompat="@drawable/ic_baseline_cross_24" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        <View
+            android:id="@+id/view7"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="-16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="-16dp"
             android:background="@drawable/bg_shape_rectangle_16_0"
-            android:backgroundTint="@color/md_theme_light_surfaceVariant"
-            android:orientation="vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:backgroundTint="@color/md_theme_light_primaryContainer"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_schedule_details_end_week_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dialog_schedule_details_title">
+            app:layout_constraintTop_toTopOf="@+id/dialog_schedule_details_date_hint" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
+        <TextView
+            android:id="@+id/dialog_schedule_details_date_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/dialog_schedule_details_date"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_schedule_details_title" />
 
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="开学日期"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp" />
+        <TextView
+            android:id="@+id/dialog_schedule_details_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:gravity="center_vertical"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_schedule_details_date_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dialog_schedule_details_date_hint"
+            tools:text="2022. 3. 19" />
 
-                <TextView
-                    android:id="@+id/dialog_schedule_details_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="14sp"
-                    tools:text="2022. 3. 19" />
-            </LinearLayout>
+        <View
+            android:id="@+id/dialog_schedule_details_divider_1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#D0D3D4"
+            app:layout_constraintEnd_toEndOf="@+id/dialog_schedule_details_date"
+            app:layout_constraintStart_toStartOf="@+id/dialog_schedule_details_date_hint"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_schedule_details_date_hint" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#D0D3D4" />
+        <TextView
+            android:id="@+id/dialog_schedule_details_end_section_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/dialog_schedule_details_end_section"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/dialog_schedule_details_date_hint"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_schedule_details_divider_1" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
+        <TextView
+            android:id="@+id/dialog_schedule_details_end_section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_schedule_details_end_section_hint"
+            app:layout_constraintEnd_toEndOf="@+id/dialog_schedule_details_date"
+            app:layout_constraintTop_toTopOf="@+id/dialog_schedule_details_end_section_hint"
+            tools:text="10" />
 
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="每日课程节数"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp" />
+        <View
+            android:id="@+id/dialog_schedule_details_divider_2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#D0D3D4"
+            app:layout_constraintEnd_toEndOf="@+id/dialog_schedule_details_divider_1"
+            app:layout_constraintStart_toStartOf="@+id/dialog_schedule_details_divider_1"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_schedule_details_end_section_hint" />
 
-                <TextView
-                    android:id="@+id/dialog_schedule_details_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="14sp"
-                    tools:text="10" />
-            </LinearLayout>
+        <TextView
+            android:id="@+id/dialog_schedule_details_end_day_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/dialog_schedule_details_end_day"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/dialog_schedule_details_end_section_hint"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_schedule_details_divider_2" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#D0D3D4" />
+        <TextView
+            android:id="@+id/dialog_schedule_details_end_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_schedule_details_end_day_hint"
+            app:layout_constraintEnd_toEndOf="@+id/dialog_schedule_details_end_section"
+            app:layout_constraintTop_toTopOf="@+id/dialog_schedule_details_end_day_hint"
+            tools:text="Friday" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
+        <View
+            android:id="@+id/dialog_schedule_details_divider_3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#D0D3D4"
+            app:layout_constraintEnd_toEndOf="@+id/dialog_schedule_details_divider_2"
+            app:layout_constraintStart_toStartOf="@+id/dialog_schedule_details_divider_2"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_schedule_details_end_day_hint" />
 
-                <TextView
-                    android:id="@+id/textView31"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="课程结束天"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp" />
+        <TextView
+            android:id="@+id/dialog_schedule_details_end_week_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/dialog_schedule_details_end_week"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/dialog_schedule_details_end_day_hint"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_schedule_details_divider_3" />
 
-                <TextView
-                    android:id="@+id/dialog_schedule_details_day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="14sp"
-                    tools:text="Friday" />
-            </LinearLayout>
+        <TextView
+            android:id="@+id/dialog_schedule_details_end_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_schedule_details_end_week_hint"
+            app:layout_constraintEnd_toEndOf="@+id/dialog_schedule_details_end_day"
+            app:layout_constraintTop_toTopOf="@+id/dialog_schedule_details_end_week_hint"
+            tools:text="20" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#D0D3D4" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView34"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="学期周数"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/dialog_schedule_details_weeks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="14sp"
-                    tools:text="20" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#D0D3D4" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/dialog_schedule_details_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp" />
-
-        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dialog_schedule_details_routines"
+            android:layout_width="0dp"
+            android:layout_height="170dp"
+            android:layout_marginStart="-32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="-32dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@+id/dialog_schedule_details_end_week"
+            app:layout_constraintStart_toStartOf="@+id/dialog_schedule_details_end_week_hint"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_schedule_details_end_week_hint"
+            tools:itemCount="2"
+            tools:listitem="@layout/cell_routines_name" />
 
 
         <TextView
@@ -186,8 +205,6 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
             android:background="@drawable/bg_selector_rectangle_16_0"
             android:backgroundTint="@color/md_theme_light_surfaceVariant"
             android:backgroundTintMode="screen"
@@ -197,17 +214,15 @@
             android:paddingTop="8dp"
             android:paddingEnd="0dp"
             android:paddingBottom="0dp"
-            android:text="删除"
+            android:text="@string/delete"
             android:textAlignment="center"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="12sp"
             app:drawableTopCompat="@drawable/ic_baseline_crash_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/dialog_schedule_details_modify"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            app:layout_constraintStart_toStartOf="@+id/dialog_schedule_details_routines"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_schedule_details_routines" />
 
         <TextView
             android:id="@+id/dialog_schedule_details_modify"
@@ -223,13 +238,12 @@
             android:paddingTop="8dp"
             android:paddingEnd="0dp"
             android:paddingBottom="0dp"
-            android:text="修改"
+            android:text="@string/modify"
             android:textAlignment="center"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="12sp"
             app:drawableTopCompat="@drawable/ic_baseline_edit_24"
             app:layout_constraintBottom_toBottomOf="@+id/dialog_schedule_details_delete"
-            app:layout_constraintEnd_toStartOf="@+id/dialog_schedule_details_use"
             app:layout_constraintStart_toEndOf="@+id/dialog_schedule_details_delete"
             app:layout_constraintTop_toTopOf="@+id/dialog_schedule_details_delete" />
 
@@ -247,7 +261,7 @@
             android:paddingTop="8dp"
             android:paddingEnd="0dp"
             android:paddingBottom="0dp"
-            android:text="使用"
+            android:text="@string/use"
             android:textAlignment="center"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="12sp"

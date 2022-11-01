@@ -6,18 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.adapter.RoutinesNameAdapter
 import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.databinding.DialogScheduleDetailsBinding
-import com.keycome.twinkleschedule.delivery.Drop
-import com.keycome.twinkleschedule.delivery.Pipette
+import com.keycome.twinkleschedule.extension.days.toLocalWord
 import com.keycome.twinkleschedule.extension.viewbindings.acquire
-import com.keycome.twinkleschedule.fragment.EditScheduleFragment
 import com.keycome.twinkleschedule.record.interval.Day
 import com.keycome.twinkleschedule.record.timetable.Routine
 import com.keycome.twinkleschedule.util.const.KEY_DISPLAY_SCHEDULE_ID
+import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_ID
 import com.keycome.twinkleschedule.viewmodel.ScheduleDetailsViewModel
 import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.launch
@@ -33,14 +31,16 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
 
     private val event: (View, Routine) -> Unit = { _, _ -> }
 
-    private val adapter = RoutinesNameAdapter(event)
-
     override fun getDialogGravity(): Int {
         return GRAVITY_BOTTOM
     }
 
+    override fun getDialogMode(): Int {
+        return MODE_FILL
+    }
+
     override fun getDialogAnimations(): Int {
-        return R.anim.slide_in_from_bottom
+        return R.style.FullBottomDialogAnimation
     }
 
     override fun onCreateView(
@@ -59,24 +59,15 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.onFirstPresent {
-            arguments?.getLong(KEY_SCHEDULE)?.let {
+            arguments?.getLong(KEY_SCHEDULE_ID)?.also {
                 viewModel.querySchedule(it)
             }
         }
-        binding.dialogScheduleDetailsRecyclerView.adapter = adapter
-        binding.dialogScheduleDetailsRecyclerView.layoutManager =
-            LinearLayoutManager(context).apply {
-                orientation = LinearLayoutManager.HORIZONTAL
-            }
-        viewModel.liveSchedule.observe(viewLifecycleOwner) {
-            binding.dialogScheduleDetailsTitle.text = it.scheduleName
-            binding.dialogScheduleDetailsDate.text = it.startDate
-            binding.dialogScheduleDetailsCount.text = it.endSection.toString()
-            binding.dialogScheduleDetailsDay.text = Day.fromNumber(it.endDay).name
-            binding.dialogScheduleDetailsWeeks.text = it.endWeek.toString()
 
-        }
+        val adapter = RoutinesNameAdapter(event)
+        binding.dialogScheduleDetailsRoutines.adapter = adapter
         binding.dialogScheduleDetailsCancel.setOnClickListener {
             navController.navigateUp()
         }
@@ -85,7 +76,6 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
                 val id = viewModel.queryScheduleId()
                 if (id != 0L) {
                     viewModel.deleteSchedule(id)
-                    Pipette.forString.emit(Drop(KEY_SCHEDULE_OPERATION, DELETE))
                     navController.navigateUp()
                 }
             }
@@ -95,7 +85,7 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
             if (id != 0L) {
                 navController.navigate(
                     R.id.action_scheduleDetailsDialog_to_editScheduleFragment,
-                    Bundle().apply { putLong(EditScheduleFragment.KEY_EDIT_SCHEDULE_ID, id) }
+                    Bundle().apply { putLong(KEY_SCHEDULE_ID, id) }
                 )
             }
         }
@@ -106,17 +96,23 @@ class ScheduleDetailsDialog : BaseDialogFragment() {
                 navController.navigateUp()
             }
         }
+
+        viewModel.liveSchedule.observe(viewLifecycleOwner) {
+            binding.dialogScheduleDetailsTitle.text = it.scheduleName
+            binding.dialogScheduleDetailsDate.text = it.startDate
+            binding.dialogScheduleDetailsEndSection.text = it.endSection.toString()
+            binding.dialogScheduleDetailsEndDay.text = Day.fromNumber(it.endDay).toLocalWord(
+                requireContext()
+            )
+            binding.dialogScheduleDetailsEndWeek.text = it.endWeek.toString()
+        }
+        viewModel.liveRoutines.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-
-        const val KEY_SCHEDULE = "SCHEDULE"
-        const val KEY_SCHEDULE_OPERATION = "SCHEDULE_OPERATION"
-        const val DELETE = "DELETE"
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.base.BaseDialogFragment
 import com.keycome.twinkleschedule.databinding.DialogCourseDetailsBinding
+import com.keycome.twinkleschedule.extension.days.toLocalWord
 import com.keycome.twinkleschedule.record.interval.Day
 import com.keycome.twinkleschedule.record.timetable.Course
 import com.keycome.twinkleschedule.util.const.KEY_COURSE
@@ -52,7 +53,9 @@ class CourseDetailsDialog : BaseDialogFragment() {
         binding.courseDetailsDialogCancel.setOnClickListener { dismiss() }
         course?.also {
             binding.courseDetailsDialogTitle.text = it.title
-            binding.courseDetailsDialogDayText.text = Day.fromNumber(it.day).name
+            binding.courseDetailsDialogDayText.text = Day.fromNumber(it.day).toLocalWord(
+                requireContext()
+            )
             binding.courseDetailsDialogSectionText.text = it.section.toString()
             binding.courseDetailsDialogClassroomText.text = it.classroom
             binding.courseDetailsDialogTeacherText.text = it.teacher

@@ -1,6 +1,7 @@
 package com.keycome.twinkleschedule.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,10 +10,9 @@ import com.keycome.twinkleschedule.databinding.CellScheduleListBinding
 import com.keycome.twinkleschedule.record.timetable.Schedule
 
 class ScheduleListAdapter(
-    private val event: (Int) -> Unit
-) : ListAdapter<Schedule, ScheduleListAdapter.ScheduleItem>(ScheduleDiff) {
-
-    object ScheduleDiff : DiffUtil.ItemCallback<Schedule>() {
+    private val itemClickCallback: (Int) -> Unit
+) : ListAdapter<Schedule, ScheduleListAdapter.ScheduleItem>(
+    object : DiffUtil.ItemCallback<Schedule>() {
         override fun areItemsTheSame(oldItem: Schedule, newItem: Schedule): Boolean {
             return oldItem.scheduleId == newItem.scheduleId
         }
@@ -20,20 +20,32 @@ class ScheduleListAdapter(
         override fun areContentsTheSame(oldItem: Schedule, newItem: Schedule): Boolean {
             return oldItem.scheduleId == newItem.scheduleId
         }
-
     }
+) {
+
+    private var usingScheduleId = 0L
 
     class ScheduleItem(
         private val binding: CellScheduleListBinding,
-        private val event: (Int) -> Unit
+        private val clickCallback: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.cellScheduleManagerTitle.setOnClickListener { event(bindingAdapterPosition) }
+            binding.root.setOnClickListener {
+                clickCallback(bindingAdapterPosition)
+            }
         }
 
-        fun onBind(schedule: Schedule) {
-            binding.cellScheduleManagerTitle.text = schedule.scheduleName
+        fun bind(schedule: Schedule) {
+            binding.cellScheduleListTitle.text = schedule.scheduleName
+        }
+
+        fun showUseStatus() {
+            binding.cellScheduleListUsing.visibility = View.VISIBLE
+        }
+
+        fun hideUseStatus() {
+            binding.cellScheduleListUsing.visibility = View.INVISIBLE
         }
     }
 
@@ -43,10 +55,27 @@ class ScheduleListAdapter(
             parent,
             false
         )
-        return ScheduleItem(binding, event)
+        return ScheduleItem(binding, itemClickCallback)
     }
 
     override fun onBindViewHolder(holder: ScheduleItem, position: Int) {
-        holder.onBind(getItem(position))
+        val schedule = getItem(position)
+        holder.bind(schedule)
+        if (usingScheduleId == schedule.scheduleId) {
+            holder.showUseStatus()
+        } else {
+            holder.hideUseStatus()
+        }
+    }
+
+    fun setUsingScheduleId(id: Long) {
+        usingScheduleId = id
+        for (index in currentList.indices) {
+            val schedule = currentList[index]
+            if (id == schedule.scheduleId) {
+                notifyItemChanged(index)
+                break
+            }
+        }
     }
 }

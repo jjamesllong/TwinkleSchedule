@@ -11,6 +11,9 @@
     <string name="submit">提交</string>
     <string name="save">保存</string>
     <string name="check">检查</string>
+    <string name="delete">删除</string>
+    <string name="modify">修改</string>
+    <string name="use">使用</string>
 
     <!--  day  -->
     <string name="monday">星期一</string>
@@ -106,6 +109,12 @@
     <!--  DialogTimePicker  -->
     <string name="dialog_time_picker_title">选择时间</string>
 
-    <string name="adapter_edit_daily_routine_header_node">%1$d / %2$d</string>
-    <string name="adapter_edit_daily_routine_section">第 %1$d 节 %2$s - %3$s</string>
+    <!--  DialogScheduleDetails  -->
+    <string name="dialog_schedule_details_date">开学日期</string>
+    <string name="dialog_schedule_details_end_section">每日课程节数</string>
+    <string name="dialog_schedule_details_end_day">每星期课程结束日</string>
+    <string name="dialog_schedule_details_end_week">学期总周数</string>
+
+    <!--  CellScheduleList  -->
+    <string name="cell_schedule_list_using">使用中</string>
 </resources>

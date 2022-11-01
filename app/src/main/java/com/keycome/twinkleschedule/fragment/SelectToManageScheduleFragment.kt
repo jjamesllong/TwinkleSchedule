@@ -4,17 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.keycome.twinkleschedule.R
 import com.keycome.twinkleschedule.adapter.ScheduleListAdapter
 import com.keycome.twinkleschedule.base.BaseFragment
 import com.keycome.twinkleschedule.databinding.FragmentScheduleListBinding
-import com.keycome.twinkleschedule.delivery.Pipette
-import com.keycome.twinkleschedule.delivery.Pipette.subscribe
-import com.keycome.twinkleschedule.dialog.ScheduleDetailsDialog
 import com.keycome.twinkleschedule.extension.viewbindings.acquire
+import com.keycome.twinkleschedule.util.const.KEY_SCHEDULE_ID
 import com.keycome.twinkleschedule.viewmodel.ScheduleListViewModel
 
 class SelectToManageScheduleFragment : BaseFragment() {
@@ -26,11 +22,11 @@ class SelectToManageScheduleFragment : BaseFragment() {
 
     private val navController by lazy { findNavController() }
 
-    private val adapterEvent: (Int) -> Unit = { position ->
-        viewModel.getScheduleByIndex(position)?.also { s ->
+    private val itemClickCallback: (Int) -> Unit = { position ->
+        viewModel.getScheduleByIndex(position)?.also { schedule ->
             navController.navigate(
                 R.id.action_manageScheduleFragment_to_scheduleDetailsDialog,
-                Bundle().apply { putLong(ScheduleDetailsDialog.KEY_SCHEDULE, s.scheduleId) }
+                Bundle().apply { putLong(KEY_SCHEDULE_ID, schedule.scheduleId) }
             )
         }
     }
@@ -50,24 +46,16 @@ class SelectToManageScheduleFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val scheduleListAdapter = ScheduleListAdapter(adapterEvent)
+        val scheduleListAdapter = ScheduleListAdapter(itemClickCallback)
         binding.fragmentScheduleListRecyclerView.adapter = scheduleListAdapter
-        binding.fragmentScheduleListRecyclerView.layoutManager =
-            LinearLayoutManager(context).apply {
-                orientation = LinearLayoutManager.VERTICAL
-            }
         binding.fragmentScheduleListToolbar.setNavigationOnClickListener {
             navController.navigateUp()
         }
+        viewModel.liveUsingScheduleId.observe(viewLifecycleOwner) {
+            scheduleListAdapter.setUsingScheduleId(it)
+        }
         viewModel.liveScheduleList.observe(viewLifecycleOwner) {
             scheduleListAdapter.submitList(it)
-        }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            Pipette.forString.subscribe(ScheduleDetailsDialog.KEY_SCHEDULE_OPERATION) {
-                if (it == ScheduleDetailsDialog.DELETE) {
-                    viewModel.queryScheduleList()
-                }
-            }
         }
     }
 

@@ -5,6 +5,7 @@ import com.keycome.twinkleschedule.database.TimetableDatabase
 import com.keycome.twinkleschedule.record.timetable.Schedule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -14,7 +15,11 @@ object ScheduleRepository {
     private val scheduleDao: ScheduleDao = database.scheduleDao()
 
     suspend fun querySchedules(): List<Schedule> {
-        return withContext(Dispatchers.IO) { scheduleDao.queryAllSchedule() }
+        return withContext(Dispatchers.IO) { scheduleDao.querySchedules() }
+    }
+
+    fun querySchedulesFlow(): Flow<List<Schedule>> {
+        return scheduleDao.querySchedulesFlow()
     }
 
     suspend fun querySchedule(id: Long): Schedule? {

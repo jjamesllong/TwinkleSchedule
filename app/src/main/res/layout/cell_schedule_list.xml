@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cell_schedule_manager_title"
     android:layout_width="match_parent"
     android:layout_height="70dp"
@@ -8,8 +7,22 @@
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="16dp"
     android:background="@drawable/bg_selector_rectangle_16_0_tinted"
-    android:gravity="start|center_vertical"
     android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:textColor="?android:attr/textColorPrimary"
-    tools:text="大三(下)" />
+    android:paddingEnd="16dp">
+
+    <TextView
+        android:id="@+id/cell_schedule_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:textColor="?android:attr/textColorPrimary" />
+
+    <TextView
+        android:id="@+id/cell_schedule_list_using"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:text="@string/cell_schedule_list_using"
+        android:textColor="?android:attr/textColorSecondary"
+        android:visibility="invisible" />
+</FrameLayout>
