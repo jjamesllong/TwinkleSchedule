@@ -11,7 +11,11 @@
         tools:layout="@layout/fragment_display">
         <action
             android:id="@+id/action_displayFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/scale_popup"
+            app:exitAnim="@anim/scale_popup_exit"
+            app:popEnterAnim="@anim/scale_rebound_enter"
+            app:popExitAnim="@anim/scale_rebound" />
         <action
             android:id="@+id/action_displayFragment_to_courseDetailsDialog"
             app:destination="@id/courseDetailsDialog" />

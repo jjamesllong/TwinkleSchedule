@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/edit_daily_routine_toolbar"
+        app:menu="@menu/edit_routine_toolbar"
         app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
         app:subtitleCentered="true"
         app:title="@string/title_edit_routine_fragment"

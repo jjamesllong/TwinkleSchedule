@@ -39,6 +39,16 @@ class DisplayFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.fragmentDisplayCoursesToolbar.setOnMenuItemClickListener { menuItem ->
+            return@setOnMenuItemClickListener when (menuItem.itemId) {
+                R.id.display_toolbar_settings -> {
+                    navController.navigate(R.id.action_displayFragment_to_settingsFragment)
+                    true
+                }
+                else -> false
+            }
+        }
         val adapter = PagingAdapter {
             viewModel.getDisplayCourseById(it)?.also { course ->
                 navController.navigate(
