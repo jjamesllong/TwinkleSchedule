@@ -1,273 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/windowBackground"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/toolbar_height"
-    android:paddingBottom="@dimen/route_bar_height"
     tools:context=".fragment.SettingsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/settings_fragment_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/tool_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+        app:subtitleCentered="true"
+        app:title="@string/title_settings_fragment"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-        <androidx.constraintlayout.helper.widget.Layer
-            android:id="@+id/settings_container_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_shape_rectangle_16_0"
-            android:backgroundTint="@color/md_theme_light_primaryContainer"
-            android:paddingStart="16dp"
-            android:paddingTop="24dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="32dp"
-            app:constraint_referenced_ids="settings_title_schedule,settings_hint_image_add_schedule,settings_hint_text_add_schedule,settings_divider_1,settings_hint_image_manage_schedule,settings_hint_text_manage_schedule"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:contentDescription="@string/fragment_settings_start_setting"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_fragment_toolbar">
 
-        <androidx.constraintlayout.helper.widget.Layer
-            android:id="@+id/settings_container_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_shape_rectangle_16_0"
-            android:backgroundTint="@color/md_theme_light_primaryContainer"
-            android:paddingStart="16dp"
-            android:paddingTop="24dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="32dp"
-            app:constraint_referenced_ids="settings_title_course,settings_hint_image_add_course,settings_hint_text_add_course,settings_divider_2,settings_hint_image_manage_course,settings_hint_text_manage_course"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="188dp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.helper.widget.Layer
-            android:id="@+id/settings_item_add_schedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_selector_rectangle_0_0"
-            android:paddingStart="16dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
-            app:constraint_referenced_ids="settings_hint_image_add_schedule,settings_hint_text_add_schedule"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="67dp" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/settings_guideline_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
 
-        <androidx.constraintlayout.helper.widget.Layer
-            android:id="@+id/settings_item_manage_schedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_selector_rectangle_0_0"
-            android:paddingStart="16dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
-            app:constraint_referenced_ids="settings_hint_image_manage_schedule,settings_hint_text_manage_schedule"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="124dp" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/settings_guideline_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
 
-        <androidx.constraintlayout.helper.widget.Layer
-            android:id="@+id/settings_item_add_course"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_selector_rectangle_0_0"
-            android:paddingStart="16dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
-            app:constraint_referenced_ids="settings_hint_image_add_course,settings_hint_text_add_course"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="255dp" />
+            <View
+                android:id="@+id/settings_container_1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="-16dp"
+                android:background="@drawable/bg_shape_rectangle_16_0"
+                android:backgroundTint="@color/md_theme_light_primaryContainer"
+                app:layout_constraintBottom_toBottomOf="@id/settings_item_manage_schedule"
+                app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
+                app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.helper.widget.Layer
-            android:id="@+id/settings_item_manage_course"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_selector_rectangle_0_0"
-            android:paddingStart="16dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
-            app:constraint_referenced_ids="settings_hint_image_manage_course,settings_hint_text_manage_course"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="312dp" />
+            <TextView
+                android:id="@+id/settings_title_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:gravity="start"
+                android:text="@string/fragment_settings_schedule"
+                android:textColor="@color/md_theme_light_onSurfaceVariant"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/settings_guideline_1"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/settings_title_schedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:gravity="start"
-            android:text="课表"
-            android:textColor="@color/md_theme_light_onSurfaceVariant"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/settings_guideline_1"
-            app:layout_constraintTop_toTopOf="parent" />
+            <View
+                android:id="@+id/settings_item_add_schedule"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="-16dp"
+                android:layout_marginBottom="-16dp"
+                android:background="@drawable/bg_selector_rectangle_0_0"
+                app:layout_constraintBottom_toBottomOf="@id/settings_hint_text_add_schedule"
+                app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
+                app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
+                app:layout_constraintTop_toTopOf="@id/settings_hint_text_add_schedule" />
 
-        <ImageView
-            android:id="@+id/settings_hint_image_add_schedule"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="24dp"
-            android:src="@drawable/ic_baseline_settings_24"
-            app:layout_constraintStart_toStartOf="@+id/settings_title_schedule"
-            app:layout_constraintTop_toBottomOf="@+id/settings_title_schedule" />
+            <TextView
+                android:id="@+id/settings_hint_text_add_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/fragment_settings_add_schedule"
+                android:textColor="@color/md_theme_light_onSurface"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/settings_title_schedule"
+                app:layout_constraintTop_toBottomOf="@+id/settings_title_schedule" />
 
-        <TextView
-            android:id="@+id/settings_hint_text_add_schedule"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center_vertical"
-            android:text="添加课表"
-            android:textColor="@color/md_theme_light_onSurface"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/settings_hint_image_add_schedule"
-            app:layout_constraintEnd_toStartOf="@+id/settings_guideline_2"
-            app:layout_constraintStart_toEndOf="@+id/settings_hint_image_add_schedule"
-            app:layout_constraintTop_toTopOf="@+id/settings_hint_image_add_schedule" />
+            <View
+                android:id="@+id/settings_divider_1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
+                app:layout_constraintStart_toStartOf="@+id/settings_guideline_1"
+                app:layout_constraintTop_toBottomOf="@+id/settings_item_add_schedule" />
 
-        <View
-            android:id="@+id/settings_divider_1"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="72dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/settings_hint_text_add_schedule"
-            app:layout_constraintTop_toBottomOf="@+id/settings_hint_image_add_schedule" />
+            <View
+                android:id="@+id/settings_item_manage_schedule"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="-16dp"
+                android:layout_marginBottom="-16dp"
+                android:background="@drawable/bg_selector_rectangle_0_0"
+                app:layout_constraintBottom_toBottomOf="@id/settings_hint_text_manage_schedule"
+                app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
+                app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
+                app:layout_constraintTop_toTopOf="@id/settings_hint_text_manage_schedule" />
 
-        <ImageView
-            android:id="@+id/settings_hint_image_manage_schedule"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_baseline_settings_24"
-            app:layout_constraintStart_toStartOf="@+id/settings_hint_image_add_schedule"
-            app:layout_constraintTop_toBottomOf="@+id/settings_divider_1" />
+            <TextView
+                android:id="@+id/settings_hint_text_manage_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/fragment_settings_manage_schedule"
+                android:textColor="@color/md_theme_light_onSurface"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/settings_hint_text_add_schedule"
+                app:layout_constraintTop_toBottomOf="@id/settings_divider_1" />
 
-        <TextView
-            android:id="@+id/settings_hint_text_manage_schedule"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center_vertical"
-            android:text="管理课表"
-            android:textColor="@color/md_theme_light_onSurface"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/settings_hint_image_manage_schedule"
-            app:layout_constraintEnd_toStartOf="@+id/settings_guideline_2"
-            app:layout_constraintStart_toEndOf="@+id/settings_hint_image_manage_schedule"
-            app:layout_constraintTop_toTopOf="@+id/settings_hint_image_manage_schedule" />
+            <View
+                android:id="@+id/settings_container_2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="-16dp"
+                android:background="@drawable/bg_shape_rectangle_16_0"
+                android:backgroundTint="@color/md_theme_light_primaryContainer"
+                app:layout_constraintBottom_toBottomOf="@id/settings_item_manage_course"
+                app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
+                app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
+                app:layout_constraintTop_toBottomOf="@id/settings_container_1" />
 
-        <TextView
-            android:id="@+id/settings_title_course"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="72dp"
-            android:gravity="start"
-            android:text="课程"
-            android:textColor="@color/md_theme_light_onSurfaceVariant"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/settings_hint_image_manage_schedule"
-            app:layout_constraintTop_toBottomOf="@+id/settings_hint_image_manage_schedule" />
+            <TextView
+                android:id="@+id/settings_title_course"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="start"
+                android:text="@string/fragment_settings_course"
+                android:textColor="@color/md_theme_light_onSurfaceVariant"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/settings_hint_text_manage_schedule"
+                app:layout_constraintTop_toBottomOf="@+id/settings_container_1" />
 
-        <ImageView
-            android:id="@+id/settings_hint_image_add_course"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="24dp"
-            android:src="@drawable/ic_baseline_settings_24"
-            app:layout_constraintStart_toStartOf="@+id/settings_title_course"
-            app:layout_constraintTop_toBottomOf="@+id/settings_title_course" />
+            <View
+                android:id="@+id/settings_item_add_course"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="-16dp"
+                android:layout_marginBottom="-16dp"
+                android:background="@drawable/bg_selector_rectangle_0_0"
+                app:layout_constraintBottom_toBottomOf="@id/settings_hint_text_add_course"
+                app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
+                app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
+                app:layout_constraintTop_toTopOf="@id/settings_hint_text_add_course" />
 
-        <TextView
-            android:id="@+id/settings_hint_text_add_course"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="向课表添加课程"
-            android:textColor="@color/md_theme_light_onSurface"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/settings_hint_image_add_course"
-            app:layout_constraintEnd_toStartOf="@+id/settings_guideline_2"
-            app:layout_constraintStart_toEndOf="@+id/settings_hint_image_add_course"
-            app:layout_constraintTop_toTopOf="@+id/settings_hint_image_add_course" />
+            <TextView
+                android:id="@+id/settings_hint_text_add_course"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/fragment_settings_add_course"
+                android:textColor="@color/md_theme_light_onSurface"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/settings_title_course"
+                app:layout_constraintTop_toBottomOf="@+id/settings_title_course" />
 
-        <View
-            android:id="@+id/settings_divider_2"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="72dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/settings_hint_text_add_course"
-            app:layout_constraintTop_toBottomOf="@+id/settings_hint_image_add_course" />
+            <View
+                android:id="@+id/settings_divider_2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
+                app:layout_constraintStart_toStartOf="@+id/settings_guideline_1"
+                app:layout_constraintTop_toBottomOf="@+id/settings_item_add_course" />
 
-        <ImageView
-            android:id="@+id/settings_hint_image_manage_course"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="32dp"
-            android:src="@drawable/ic_baseline_settings_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/settings_hint_image_add_course"
-            app:layout_constraintTop_toBottomOf="@+id/settings_divider_2" />
+            <View
+                android:id="@+id/settings_item_manage_course"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="-16dp"
+                android:layout_marginBottom="-16dp"
+                android:background="@drawable/bg_selector_rectangle_0_0"
+                app:layout_constraintBottom_toBottomOf="@id/settings_hint_text_manage_course"
+                app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
+                app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
+                app:layout_constraintTop_toTopOf="@id/settings_hint_text_manage_course" />
 
-        <TextView
-            android:id="@+id/settings_hint_text_manage_course"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="管理课表中的课程"
-            android:textColor="@color/md_theme_light_onSurface"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/settings_hint_image_manage_course"
-            app:layout_constraintEnd_toStartOf="@+id/settings_guideline_2"
-            app:layout_constraintStart_toEndOf="@+id/settings_hint_image_manage_course"
-            app:layout_constraintTop_toTopOf="@+id/settings_hint_image_manage_course" />
+            <TextView
+                android:id="@+id/settings_hint_text_manage_course"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/fragment_settings_manage_course"
+                android:textColor="@color/md_theme_light_onSurface"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/settings_hint_text_add_course"
+                app:layout_constraintTop_toBottomOf="@id/settings_divider_2" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/settings_guideline_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="16dp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/settings_guideline_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="16dp" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

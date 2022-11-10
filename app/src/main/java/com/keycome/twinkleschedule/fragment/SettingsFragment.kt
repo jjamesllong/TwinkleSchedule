@@ -31,6 +31,10 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.settingsFragmentToolbar.setNavigationOnClickListener {
+            navController.navigateUp()
+        }
         binding.settingsItemAddSchedule.setOnClickListener {
             navController.navigate(R.id.action_settingsFragment_to_scheduleCreateWayFragment)
         }

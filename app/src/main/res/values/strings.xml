@@ -62,6 +62,15 @@
     <string name="fragment_display_upcoming">未开始</string>
     <string name="fragment_display_ended">已结束</string>
 
+    <!--  FragmentSettings  -->
+    <string name="fragment_settings_start_setting">开始设置</string>
+    <string name="fragment_settings_schedule">课表</string>
+    <string name="fragment_settings_add_schedule">添加课表</string>
+    <string name="fragment_settings_manage_schedule">管理课表</string>
+    <string name="fragment_settings_course">课程</string>
+    <string name="fragment_settings_add_course">向课表添加课程</string>
+    <string name="fragment_settings_manage_course">管理课表中的课程</string>
+
     <!--  FragmentEditSchedule  -->
     <string name="fragment_edit_schedule_new">新建课表</string>
     <string name="fragment_edit_schedule_modify">修改课表</string>

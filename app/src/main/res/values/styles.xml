@@ -2,7 +2,7 @@
 <resources>
 
     <style name="Toolbar" parent="Widget.Material3.Toolbar">
-        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="android:layout_height">@dimen/tool_bar_height</item>
         <item name="android:layout_width">match_parent</item>
         <item name="navigationIcon">@drawable/ic_baseline_arrow_back_24</item>
         <item name="subtitleCentered">true</item>
