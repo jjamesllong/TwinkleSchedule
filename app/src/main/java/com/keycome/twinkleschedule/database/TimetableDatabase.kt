@@ -25,8 +25,7 @@ abstract class TimetableDatabase : RoomDatabase() {
 
     companion object {
 
-        private const val databaseName = "timetable_database"
-
+        private const val databaseName = "timetable.db"
 
         @Volatile
         private var INSTANCE: TimetableDatabase? = null

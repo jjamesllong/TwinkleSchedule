@@ -17,7 +17,7 @@ import com.keycome.twinkleschedule.extension.fragments.viewModelDelegate
 abstract class BaseDialogFragment : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = AppCompatDialog(context)
+        val dialog = AppCompatDialog(requireContext())
         dialog.window?.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             requestFeature(Window.FEATURE_NO_TITLE)

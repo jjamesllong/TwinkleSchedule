@@ -2,7 +2,7 @@ package com.keycome.twinkleschedule
 
 import android.app.Application
 import android.content.Context
-import com.tencent.mmkv.MMKV
+import com.keycome.twinkleschedule.preference.Preference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -12,14 +12,17 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        nullableContext = applicationContext
-        MMKV.initialize(this)
+        _context = applicationContext
+        _preference = Preference.new(applicationContext)
     }
 
     companion object {
 
-        private var nullableContext: Context? = null
-        val context get() = nullableContext!!
+        private var _context: Context? = null
+        val context get() = _context!!
+
+        private var _preference: Preference? = null
+        val preference get() = _preference!!
 
         val applicationScope: CoroutineScope =
             CoroutineScope(SupervisorJob() + Dispatchers.Default)

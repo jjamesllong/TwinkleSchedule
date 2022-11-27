@@ -3,9 +3,8 @@ package com.keycome.twinkleschedule.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
+import com.keycome.twinkleschedule.App
 import com.keycome.twinkleschedule.base.BaseViewModel
-import com.keycome.twinkleschedule.delivery.Pipette
-import com.keycome.twinkleschedule.delivery.Pipette.subscribe
 import com.keycome.twinkleschedule.extension.asLiveData
 import com.keycome.twinkleschedule.record.timetable.Course
 import com.keycome.twinkleschedule.record.timetable.Schedule
@@ -13,10 +12,8 @@ import com.keycome.twinkleschedule.record.timetable.TimetableDescriber
 import com.keycome.twinkleschedule.repository.CourseDecorationRepository
 import com.keycome.twinkleschedule.repository.RoutineRepository
 import com.keycome.twinkleschedule.repository.ScheduleRepository
-import com.keycome.twinkleschedule.util.const.EVENT_WRITE_DISPLAY_SCHEDULE_ID
 import com.keycome.twinkleschedule.util.const.KEY_DISPLAY_SCHEDULE_ID
 import com.keycome.twinkleschedule.util.const.VALUE_DISPLAY_SCHEDULE_ID
-import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -78,23 +75,13 @@ class DisplayViewModel : BaseViewModel() {
     override suspend fun onPlace() {
         super.onPlace()
 
-        viewModelScope.launch {
-            Pipette.forEvent.subscribe(EVENT_WRITE_DISPLAY_SCHEDULE_ID) {
-                _liveScheduleId.value = MMKV.defaultMMKV().getLong(
-                    KEY_DISPLAY_SCHEDULE_ID,
-                    VALUE_DISPLAY_SCHEDULE_ID
-                )
-            }
-        }
-
         liveScheduleId.observeForever(scheduleIdObserver)
         liveSchedule.observeForever(scheduleObserver)
         liveDisplayStatus.observeForever(statusObserver)
 
-        _liveScheduleId.value = MMKV.defaultMMKV().getLong(
-            KEY_DISPLAY_SCHEDULE_ID,
-            VALUE_DISPLAY_SCHEDULE_ID
-        )
+        App.preference.ofLong(KEY_DISPLAY_SCHEDULE_ID, VALUE_DISPLAY_SCHEDULE_ID).collect {
+            _liveScheduleId.value = it
+        }
     }
 
     override fun onRemove() {
