@@ -8,37 +8,41 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.withContext
-import java.lang.ref.WeakReference
 
 class Preference private constructor(private val mmkv: MMKV) {
 
-    private val channel: Channel<PrefType> = Channel()
+    private val longChannel: MutableMap<String, MutableSet<Channel<Long>>> = mutableMapOf()
 
-    private val prefLong: MutableMap<String, WeakReference<Flow<Long>>> = mutableMapOf()
-
-    fun ofLong(name: String, default: Long): Flow<Long> {
-        return prefLong[name]?.get() ?: flow {
+    fun decodeLong(name: String, default: Long): Flow<Long> {
+        val channel = Channel<Long>()
+        return flow {
             var oldValue = mmkv.getLong(name, default)
             emit(oldValue)
-            for (type in channel) {
-                if (type == PrefType.Long) {
-                    val newValue = mmkv.getLong(name, default)
-                    if (oldValue != newValue) {
-                        emit(newValue)
-                        oldValue = newValue
-                    }
+            val set = longChannel[name] ?: mutableSetOf()
+            set.add(channel)
+            longChannel[name] = set
+            for (newValue in channel) {
+                if (oldValue != newValue) {
+                    emit(newValue)
+                    oldValue = newValue
                 }
             }
-        }.flowOn(Dispatchers.IO).also { flow ->
-            prefLong[name] = WeakReference(flow)
+        }.flowOn(Dispatchers.IO).onCompletion {
+            longChannel[name]?.remove(channel)
+            if ((longChannel[name]?.size ?: 0) == 0) {
+                longChannel.remove(name)
+            }
         }
     }
 
-    suspend fun writeLong(name: String, value: Long) {
+    suspend fun encodeLong(name: String, value: Long) {
         withContext(Dispatchers.IO) {
             mmkv.encode(name, value)
-            channel.send(PrefType.Long)
+            longChannel[name]?.forEach { channel ->
+                channel.send(value)
+            }
         }
     }
 

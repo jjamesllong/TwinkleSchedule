@@ -79,7 +79,7 @@ class DisplayViewModel : BaseViewModel() {
         liveSchedule.observeForever(scheduleObserver)
         liveDisplayStatus.observeForever(statusObserver)
 
-        App.preference.ofLong(KEY_DISPLAY_SCHEDULE_ID, VALUE_DISPLAY_SCHEDULE_ID).collect {
+        App.preference.decodeLong(KEY_DISPLAY_SCHEDULE_ID, VALUE_DISPLAY_SCHEDULE_ID).collect {
             _liveScheduleId.value = it
         }
     }
