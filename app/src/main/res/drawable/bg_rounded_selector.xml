@@ -7,7 +7,7 @@
             <!--圆角-->
             <corners android:radius="0dp" />
             <!--内部填充色-->
-            <solid android:color="@color/transparent_gray" />
+            <solid android:color="@color/md_theme_dark_error" />
         </shape>
     </item>
 

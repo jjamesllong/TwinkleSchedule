@@ -1,5 +1,7 @@
 package com.keycome.twinkleschedule.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -48,6 +50,16 @@ class SettingsFragment : BaseFragment() {
         }
         binding.settingsItemManageCourse.setOnClickListener {
             navController.navigate(R.id.action_settingsFragment_to_selectToManageCourseFragment)
+        }
+        binding.settingsItemFedByEmail.setOnClickListener {
+            val uri = Uri.parse("mailto:524270005@qq.com")
+            val intent = Intent(Intent.ACTION_SENDTO, uri).apply {
+                putExtra(Intent.EXTRA_EMAIL, arrayOf("524270005@qq.com"))
+                val subject = getString(R.string.fragment_settings_feedback_subject)
+                putExtra(Intent.EXTRA_SUBJECT, subject)
+            }
+            val title = getString(R.string.fragment_settings_chooser_title)
+            startActivity(Intent.createChooser(intent, title))
         }
     }
 

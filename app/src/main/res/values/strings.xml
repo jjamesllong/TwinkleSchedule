@@ -54,6 +54,7 @@
     <string name="title_schedule_start_date_dialog">开学日期</string>
     <string name="title_schedule_end_week_dialog">学期总周数</string>
     <string name="title_edit_routine_fragment">编辑作息表</string>
+    <string name="title_schedule_create_way_fragment">添加课表</string>
 
     <!--  FragmentDisplay  -->
     <string name="fragment_display_week">第 %1$d 周</string>
@@ -70,6 +71,15 @@
     <string name="fragment_settings_course">课程</string>
     <string name="fragment_settings_add_course">向课表添加课程</string>
     <string name="fragment_settings_manage_course">管理课表中的课程</string>
+    <string name="fragment_settings_feedback">反馈与建议</string>
+    <string name="fragment_settings_fed_by_email">通过电子邮件反馈</string>
+    <string name="fragment_settings_feedback_subject">关于闪课表的反馈与建议</string>
+    <string name="fragment_settings_chooser_title">选择邮箱客户端</string>
+
+    <!--  FragmentScheduleCreateWay  -->
+    <string name="fragment_schedule_create_way_manual">手动添加</string>
+    <string name="fragment_schedule_create_way_file_import">从文件导入</string>
+    <string name="fragment_schedule_create_way_network_import">从网络导入</string>
 
     <!--  FragmentEditSchedule  -->
     <string name="fragment_edit_schedule_new">新建课表</string>

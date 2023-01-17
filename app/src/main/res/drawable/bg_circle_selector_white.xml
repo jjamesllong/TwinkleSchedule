@@ -3,14 +3,14 @@
     <item android:state_pressed="true">
         <shape android:shape="oval">
             <size android:width="40dp" android:height="40dp" />
-            <solid android:color="@color/transparent_gray" />
+            <solid android:color="@color/md_theme_dark_errorContainer" />
         </shape>
     </item>
 
     <item>
         <shape android:shape="oval">
             <size android:width="40dp" android:height="40dp" />
-            <solid android:color="@color/white" />
+            <solid android:color="@color/md_theme_dark_error" />
         </shape>
     </item>
 </selector>

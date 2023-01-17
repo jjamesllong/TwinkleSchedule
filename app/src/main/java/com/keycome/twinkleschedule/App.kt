@@ -24,7 +24,7 @@ class App : Application() {
         private var _preference: Preference? = null
         val preference get() = _preference!!
 
-        val applicationScope: CoroutineScope =
+        val appScope: CoroutineScope =
             CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     }
