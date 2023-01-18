@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/windowBackground"
+    android:background="?android:attr/colorBackground"
     tools:context=".fragment.SettingsFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -18,7 +18,7 @@
         app:subtitleCentered="true"
         app:title="@string/title_settings_fragment"
         app:titleCentered="true"
-        app:titleTextAppearance="@style/TextAppearance.AppCompat.Medium" />
+        app:titleTextAppearance="?attr/textAppearanceTitleMedium" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
                 android:layout_height="0dp"
                 android:layout_marginBottom="-16dp"
                 android:background="@drawable/bg_shape_rectangle_16_0"
-                android:backgroundTint="@color/md_theme_light_primaryContainer"
+                android:backgroundTint="?attr/colorPrimaryContainer"
                 app:layout_constraintBottom_toBottomOf="@id/settings_item_manage_schedule"
                 app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
                 app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
@@ -75,7 +75,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/fragment_settings_schedule"
-                android:textColor="@color/md_theme_light_onSurfaceVariant"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/settings_guideline_1"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -86,7 +86,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="-16dp"
                 android:layout_marginBottom="-16dp"
-                android:background="@drawable/bg_selector_rectangle_0_0"
+                android:background="@drawable/bg_sel_rec_0_0"
                 app:layout_constraintBottom_toBottomOf="@id/settings_hint_text_add_schedule"
                 app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
                 app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/fragment_settings_add_schedule"
-                android:textColor="@color/md_theme_light_onSurface"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/settings_title_schedule"
                 app:layout_constraintTop_toBottomOf="@+id/settings_title_schedule" />
@@ -120,7 +120,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="-16dp"
                 android:layout_marginBottom="-16dp"
-                android:background="@drawable/bg_selector_rectangle_0_0"
+                android:background="@drawable/bg_sel_rec_0_0"
                 app:layout_constraintBottom_toBottomOf="@id/settings_hint_text_manage_schedule"
                 app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
                 app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/fragment_settings_manage_schedule"
-                android:textColor="@color/md_theme_light_onSurface"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/settings_hint_text_add_schedule"
                 app:layout_constraintTop_toBottomOf="@id/settings_divider_1" />
@@ -144,7 +144,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="-16dp"
                 android:background="@drawable/bg_shape_rectangle_16_0"
-                android:backgroundTint="@color/md_theme_light_primaryContainer"
+                android:backgroundTint="?attr/colorPrimaryContainer"
                 app:layout_constraintBottom_toBottomOf="@id/settings_item_manage_course"
                 app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
                 app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
@@ -156,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:text="@string/fragment_settings_course"
-                android:textColor="@color/md_theme_light_onSurfaceVariant"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/settings_hint_text_manage_schedule"
                 app:layout_constraintTop_toBottomOf="@+id/settings_container_1" />
@@ -167,7 +167,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="-16dp"
                 android:layout_marginBottom="-16dp"
-                android:background="@drawable/bg_selector_rectangle_0_0"
+                android:background="@drawable/bg_sel_rec_0_0"
                 app:layout_constraintBottom_toBottomOf="@id/settings_hint_text_add_course"
                 app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
                 app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
@@ -179,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/fragment_settings_add_course"
-                android:textColor="@color/md_theme_light_onSurface"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/settings_title_course"
                 app:layout_constraintTop_toBottomOf="@+id/settings_title_course" />
@@ -201,7 +201,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="-16dp"
                 android:layout_marginBottom="-16dp"
-                android:background="@drawable/bg_selector_rectangle_0_0"
+                android:background="@drawable/bg_sel_rec_0_0"
                 app:layout_constraintBottom_toBottomOf="@id/settings_hint_text_manage_course"
                 app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
                 app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
@@ -213,7 +213,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/fragment_settings_manage_course"
-                android:textColor="@color/md_theme_light_onSurface"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/settings_hint_text_add_course"
                 app:layout_constraintTop_toBottomOf="@id/settings_divider_2" />
@@ -225,7 +225,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="-16dp"
                 android:background="@drawable/bg_shape_rectangle_16_0"
-                android:backgroundTint="@color/md_theme_light_primaryContainer"
+                android:backgroundTint="?attr/colorPrimaryContainer"
                 app:layout_constraintBottom_toBottomOf="@id/settings_item_fed_by_email"
                 app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
                 app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
@@ -237,7 +237,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:text="@string/fragment_settings_feedback"
-                android:textColor="@color/md_theme_light_onSurfaceVariant"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@id/settings_hint_text_manage_course"
                 app:layout_constraintTop_toBottomOf="@id/settings_container_2" />
@@ -248,7 +248,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="-16dp"
                 android:layout_marginBottom="-16dp"
-                android:background="@drawable/bg_selector_rectangle_0_0"
+                android:background="@drawable/bg_sel_rec_0_0"
                 app:layout_constraintBottom_toBottomOf="@id/settings_hint_text_fed_by_email"
                 app:layout_constraintEnd_toEndOf="@id/settings_guideline_2"
                 app:layout_constraintStart_toStartOf="@id/settings_guideline_1"
@@ -260,7 +260,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/fragment_settings_fed_by_email"
-                android:textColor="@color/md_theme_light_onSurface"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/settings_title_feedback"
                 app:layout_constraintTop_toBottomOf="@id/settings_title_feedback" />

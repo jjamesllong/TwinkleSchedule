@@ -1,0 +1,2 @@
+include ':core:record'
+project(':core:record').projectDir = File(settingsDir, '../../core/record')

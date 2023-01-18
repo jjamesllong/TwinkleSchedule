@@ -10,16 +10,16 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/fragment_display_courses_toolbar"
         android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:layout_height="@dimen/tool_bar_height"
+        android:minHeight="@dimen/tool_bar_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/display_toolbar"
         app:subtitleCentered="true"
-        app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Small"
-        app:titleCentered="true" />
+        app:subtitleTextAppearance="?attr/textAppearanceTitleSmall"
+        app:titleCentered="true"
+        app:titleTextAppearance="?attr/textAppearanceTitleMedium" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/table_view_pager"
