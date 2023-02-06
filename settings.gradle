@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Twinkle Schedule"
+rootProject.name = "TwinkleSchedule"
 include ':app'
 include ':data:database'
 include ':core:record'
