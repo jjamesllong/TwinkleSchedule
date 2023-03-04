@@ -4,10 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import com.keycome.twinkleschedule.data.database.dao.*
 import com.keycome.twinkleschedule.data.database.entity.*
-import com.keycome.twinkleschedule.data.database.util.RecordConverter
 
 @Database(
     entities = [
@@ -19,9 +17,6 @@ import com.keycome.twinkleschedule.data.database.util.RecordConverter
     ],
     version = 1,
     exportSchema = false,
-)
-@TypeConverters(
-    value = [RecordConverter::class]
 )
 abstract class TimetableDatabase : RoomDatabase() {
 
@@ -38,7 +33,7 @@ abstract class TimetableDatabase : RoomDatabase() {
         @Volatile
         private var db: TimetableDatabase? = null
 
-        fun instance(context: Context): TimetableDatabase {
+        fun getDbBy(context: Context): TimetableDatabase {
             return db ?: synchronized(TimetableDatabase::class) {
                 db ?: Room.databaseBuilder(
                     context.applicationContext,

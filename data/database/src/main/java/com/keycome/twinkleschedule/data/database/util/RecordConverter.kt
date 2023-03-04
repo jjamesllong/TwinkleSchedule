@@ -1,12 +1,10 @@
 package com.keycome.twinkleschedule.data.database.util
 
-import androidx.room.TypeConverter
 import com.keycome.twinkleschedule.core.record.timetable.*
 import com.keycome.twinkleschedule.data.database.entity.*
 
-class RecordConverter {
+object RecordConverter {
 
-    @TypeConverter
     fun fromCourse(course: Course): CourseEntity {
         return CourseEntity(
             course.id,
@@ -15,7 +13,6 @@ class RecordConverter {
         )
     }
 
-    @TypeConverter
     fun toCourse(entity: CourseEntity): Course {
         return Course(
             entity.id,
@@ -24,7 +21,6 @@ class RecordConverter {
         )
     }
 
-    @TypeConverter
     fun fromRoutine(routine: Routine): RoutineEntity {
         return RoutineEntity(
             routine.id,
@@ -34,7 +30,6 @@ class RecordConverter {
         )
     }
 
-    @TypeConverter
     fun toRoutine(entity: RoutineEntity): Routine {
         return Routine(
             entity.id,
@@ -44,7 +39,6 @@ class RecordConverter {
         )
     }
 
-    @TypeConverter
     fun fromSchedule(schedule: Schedule): ScheduleEntity {
         return ScheduleEntity(
             schedule.id,
@@ -56,7 +50,6 @@ class RecordConverter {
         )
     }
 
-    @TypeConverter
     fun toSchedule(entity: ScheduleEntity): Schedule {
         return Schedule(
             entity.id,
@@ -68,7 +61,6 @@ class RecordConverter {
         )
     }
 
-    @TypeConverter
     fun fromSection(section: Section): SectionEntity {
         return SectionEntity(
             section.id,
@@ -82,7 +74,6 @@ class RecordConverter {
         )
     }
 
-    @TypeConverter
     fun toSection(entity: SectionEntity): Section {
         return Section(
             entity.id,
@@ -96,7 +87,6 @@ class RecordConverter {
         )
     }
 
-    @TypeConverter
     fun fromZone(zone: Zone): ZoneEntity {
         return ZoneEntity(
             zone.id,
@@ -107,7 +97,6 @@ class RecordConverter {
         )
     }
 
-    @TypeConverter
     fun toZone(entity: ZoneEntity): Zone {
         return Zone(
             entity.id,
